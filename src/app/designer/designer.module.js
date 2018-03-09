@@ -26,31 +26,31 @@
         // Known Routes:
         $routeProvider
             .when('/', {
-                templateUrl: 'src/html/components/dashboard.html',
+                templateUrl: '/src/app/html/components/dashboard.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/service', {
-                templateUrl: 'src/html/components/form_service_configuration.html',
+                templateUrl: '/src/app/html/components/form_service_configuration.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/endpoints', {
-                templateUrl: 'src/html/components/form_endpoints.html',
+                templateUrl: '/src/app/html/components/form_endpoints.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/oauth', {
-                templateUrl: 'src/html/components/form_oauth.html',
+                templateUrl: '/src/app/html/components/form_oauth.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/security', {
-                templateUrl: 'src/html/components/form_security.html',
+                templateUrl: '/src/app/html/components/form_security.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/service-discovery', {
-                templateUrl: 'src/html/components/form_service_discovery.html',
+                templateUrl: '/src/app/html/components/form_service_discovery.html',
                 controller: 'KrakenDesignerController'
             })
              .when('/logging', {
-                templateUrl: 'src/html/components/form_logging.html',
+                templateUrl: '/src/app/html/components/form_logging.html',
                 controller: 'KrakenDesignerController'
             })
             .otherwise({

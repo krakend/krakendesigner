@@ -5,12 +5,12 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     ngtemplates:  {
       app:        {
-        src:      'src/html/components/**.html',
+        src:      'src/app/html/components/**.html',
         dest:     'src/app/compiled_templates.js',
         options:  {
           module: 'KrakenDesigner',
           standalone: false,
-          usemin: 'dist/vendors.js'// <~~ This came from the <!-- build:js --> block
+          prefix: '/'
         }
       }
     }

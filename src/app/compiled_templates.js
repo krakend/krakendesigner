@@ -1,7 +1,7 @@
 angular.module('KrakenDesigner').run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('src/html/components/dashboard.html',
+  $templateCache.put('/src/app/html/components/dashboard.html',
     "<div class=\"col-lg-6\">\n" +
     "    <div class=\"box box-primary\">\n" +
     "        <div class=\"box-header with-border\">\n" +
@@ -14,18 +14,18 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "\n" +
     "            <ul class=\"nav nav-pills nav-justified setup-panel\">\n" +
     "                <li ng-class=\"service.sd_providers.length === 0 || !service.sd_providers ? '' : 'bg-success'\">\n" +
-    "                    <a href=\"/designer/#/service\">\n" +
+    "                    <a href=\"/#/service\">\n" +
     "                        <h4 class=\"list-group-item-heading\">Step 1</h4>\n" +
     "                        <p class=\"list-group-item-text text-bold\">Set the configuration</p>\n" +
     "                    </a></li>\n" +
     "                <li ng-class=\"service.endpoints.length === 0 || !service.endpoints? '' : 'bg-success'\">\n" +
-    "                    <a href=\"/designer/#/endpoints\">\n" +
+    "                    <a href=\"/#/endpoints\">\n" +
     "                    <h4 class=\"list-group-item-heading\">Step 2</h4>\n" +
     "                    <p class=\"list-group-item-text text-bold\">Add an endpoint</p>\n" +
     "                </a>\n" +
     "                </li>\n" +
     "                <li ng-class=\"saved_once ? 'bg-success' : '' \">\n" +
-    "                    <a href=\"/designer/#/\" ng-click=\"save()\">\n" +
+    "                    <a href=\"/#/\" ng-click=\"save()\">\n" +
     "                    <h4 class=\"list-group-item-heading\">Step 3</h4>\n" +
     "                    <p class=\"list-group-item-text text-bold\">Download config</p>\n" +
     "                </a></li>\n" +
@@ -103,11 +103,11 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "    <!-- /.modal-dialog -->\n" +
     "</div>\n" +
     "\n" +
-    "<script src=\"/js/dragndrop.js\"></script>\n"
+    "<script src=\"http://www.krakend.io/js/dragndrop.js\"></script>\n"
   );
 
 
-  $templateCache.put('src/html/components/form_backends.html',
+  $templateCache.put('/src/app/html/components/form_backends.html',
     "<div class=\"box box-success\">\n" +
     "    <div class=\"box-header with-border\">\n" +
     "        <h3 class=\"box-title\">Available hosts</h3>\n" +
@@ -157,7 +157,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "              <input type=\"radio\" ng-model=\"service_discovery_type\" value=\"etcd\" ng-disabled=\"!service.sd_providers.providers.etcd\">\n" +
     "              Etcd\n" +
     "          </label>\n" +
-    "          <a href=\"/designer/#/service-discovery\" ng-click=\"service.sd_providers.providers.etcd=true\" ng-if=\"!service.sd_providers.providers.etcd\">(enable &amp; configure)</a>\n" +
+    "          <a href=\"/#/service-discovery\" ng-click=\"service.sd_providers.providers.etcd=true\" ng-if=\"!service.sd_providers.providers.etcd\">(enable &amp; configure)</a>\n" +
     "      </div>\n" +
     "      <div class=\"radio\">\n" +
     "        <label>\n" +
@@ -184,7 +184,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
   );
 
 
-  $templateCache.put('src/html/components/form_endpoints.html',
+  $templateCache.put('/src/app/html/components/form_endpoints.html',
     "<div class=\"box box-primary collapsed-box\" ng-repeat=\"(endpoint_index,endpoint) in service.endpoints\"\n" +
     "     ng-class=\"isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'\">\n" +
     "    <div class=\"box-header with-border\">\n" +
@@ -377,7 +377,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "                                <div class=\"form-group\">\n" +
     "                                    <div class=\"col-md-12\">\n" +
     "                                        <label>Service Discovery</label>\n" +
-    "                                        <span class=\"help-block\">Service Discovery options you enabled. <a href=\"/designer/#/service-discovery\">(add more)</a></span>\n" +
+    "                                        <span class=\"help-block\">Service Discovery options you enabled. <a href=\"/#/service-discovery\">(add more)</a></span>\n" +
     "                                         <div class=\"radio\" ng-repeat=\"(sd,enabled) in service.sd_providers.providers\" ng-init=\"backend.sd='static'\">\n" +
     "                                            <label>\n" +
     "                                              <input type=\"radio\" ng-model=\"backend.sd\" value=\"{{ sd }}\"  ng-disabled=\"!enabled\">\n" +
@@ -763,7 +763,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "                        setting one or several values here means overriding the settings for this specific endpoint\n" +
     "                        only.</p>\n" +
     "\n" +
-    "                    <p ng-include src=\"'time_units.html'\"></p>\n" +
+    "                    <p ng-include src=\"/src/app/html/components/time_units.html\"></p>\n" +
     "\n" +
     "                    <div class=\"row\">\n" +
     "                        <div class=\"form-group\">\n" +
@@ -860,7 +860,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
   );
 
 
-  $templateCache.put('src/html/components/form_logging.html',
+  $templateCache.put('/src/app/html/components/form_logging.html',
     "<div class=\"col-md-6\">\n" +
     "  <div class=\"box box-primary\">\n" +
     "    <div class=\"box-header with-border\">\n" +
@@ -939,7 +939,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
   );
 
 
-  $templateCache.put('src/html/components/form_oauth.html',
+  $templateCache.put('/src/app/html/components/form_oauth.html',
     "<div class=\"box box-primary\">\n" +
     "    <div class=\"box-header with-border\">\n" +
     "        <h3 class=\"box-title\">OAuth settings</h3>\n" +
@@ -959,7 +959,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
   );
 
 
-  $templateCache.put('src/html/components/form_security.html',
+  $templateCache.put('/src/app/html/components/form_security.html',
     "\n" +
     "\n" +
     "<div class=\"box box-primary\">\n" +
@@ -982,7 +982,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
   );
 
 
-  $templateCache.put('src/html/components/form_service_configuration.html',
+  $templateCache.put('/src/app/html/components/form_service_configuration.html',
     "<div class=\"col-md-12\">\n" +
     "  <div class=\"box\">\n" +
     "    <div class=\"box-header with-border\">\n" +
@@ -1004,7 +1004,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "  </div>\n" +
     "</div>\n" +
     "<div class=\"col-md-6\">\n" +
-    "  <div ng-include src=\"'form_backends.html'\"></div>\n" +
+    "  <div ng-include src=\"'/src/app/html/components/form_backends.html'\"></div>\n" +
     "<div class=\"box box-primary\">\n" +
     "  <div class=\"box-header with-border\">\n" +
     "    <h3 class=\"box-title\">Throttling and limits</h3>\n" +
@@ -1090,7 +1090,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "    <div class=\"box-body\">\n" +
     "      <p>All settings below are used across all backends unless specifically overridden in each endpoint</p>\n" +
     "\n" +
-    "      <p ng-include src=\"'time_units.html'\"></p>\n" +
+    "      <p ng-include src=\"'/src/app/html/components/time_units.html'\"></p>\n" +
     "\n" +
     "      <div class=\"form-group\" ng-class=\"isValidTimeUnit(service.timeout) ? '' : 'has-error'\">\n" +
     "        <label class=\"control-label\" for=\"service.timeout\">Backend Timeout</label>\n" +
@@ -1102,7 +1102,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "        ng-init=\"service.timeout='3000ms'\"\n" +
     "        type=\"text\">\n" +
     "        <div class=\"help-block\">\n" +
-    "          <p ng-hide=\"isValidTimeUnit(service.timeout)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "          <p ng-hide=\"isValidTimeUnit(service.timeout)\" ng-include src=\"'/src/app/html/components/time_units.html'\"></p>\n" +
     "          <p>This is the <strong>default timeout</strong> for all the outgoing connections against your\n" +
     "            backends and takes into account the duration of all the pipe. This value can be overridden later on specific endpoints.</p>\n" +
     "        </div>\n" +
@@ -1117,7 +1117,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "        ng-init=\"service.read_timeout='0s'\"\n" +
     "        type=\"text\">\n" +
     "        <div class=\"help-block\">\n" +
-    "          <p ng-hide=\"isValidTimeUnit(service.read_timeout)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "          <p ng-hide=\"isValidTimeUnit(service.read_timeout)\" ng-include src=\"'/src/app/html/components/time_units.html'\"></p>\n" +
     "          <p>Maximum duration for reading the entire http request, including the body.</p>\n" +
     "        </div>\n" +
     "      </div>\n" +
@@ -1131,7 +1131,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "        ng-init=\"service.write_timeout='0s'\"\n" +
     "        type=\"text\">\n" +
     "        <div class=\"help-block\">\n" +
-    "          <p ng-hide=\"isValidTimeUnit(service.write_timeout)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "          <p ng-hide=\"isValidTimeUnit(service.write_timeout)\" ng-include src=\"'/src/app/html/components/time_units.html'\"></p>\n" +
     "          <p>Maximum duration before timing out writes of the response</p>\n" +
     "        </div>\n" +
     "      </div>\n" +
@@ -1145,7 +1145,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "        ng-init=\"service.idle_timeout='0s'\"\n" +
     "        type=\"text\">\n" +
     "        <div class=\"help-block\">\n" +
-    "          <p ng-hide=\"isValidTimeUnit(service.idle_timeout)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "          <p ng-hide=\"isValidTimeUnit(service.idle_timeout)\" ng-include src=\"'/src/app/html/components/time_units.html'\"></p>\n" +
     "          <p>Maximum amount of time to wait for the next request when keep-alives are enabled\n" +
     "        </div>\n" +
     "      </div>\n" +
@@ -1159,7 +1159,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "        ng-init=\"service.read_header_timeout='0s'\"\n" +
     "        type=\"text\">\n" +
     "        <div class=\"help-block\">\n" +
-    "          <p ng-hide=\"isValidTimeUnit(service.read_header_timeout)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "          <p ng-hide=\"isValidTimeUnit(service.read_header_timeout)\" ng-include src=\"'/src/app/html/components/time_units.html'\"></p>\n" +
     "          <p>Amount of time allowed to read request headers</p>\n" +
     "        </div>\n" +
     "      </div>\n" +
@@ -1173,7 +1173,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "\n" +
     "\n" +
     "        <div class=\"help-block\">\n" +
-    "          <p ng-hide=\"isValidTimeUnit(service.cache_ttl)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "          <p ng-hide=\"isValidTimeUnit(service.cache_ttl)\" ng-include src=\"'/src/app/html/components/time_units.html'\"></p>\n" +
     "          <p ng-hide=\"isInteger(service.cache_ttl)\">Value must be an integer expressing the number of seconds</p>\n" +
     "        </p>\n" +
     "        <p>Time the service considers the origin is still valid. Applies\n" +
@@ -1189,7 +1189,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
   );
 
 
-  $templateCache.put('src/html/components/form_service_discovery.html',
+  $templateCache.put('/src/app/html/components/form_service_discovery.html',
     "<div class=\"col-md-6\">\n" +
     "  <div class=\"box box-primary\">\n" +
     "    <div class=\"box-header with-border\">\n" +
@@ -1272,7 +1272,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "      ng-init=\"service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout='5s'\"\n" +
     "      type=\"text\" />\n" +
     "      <div class=\"help-block\">\n" +
-    "        <p ng-hide=\"isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "        <p ng-hide=\"isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout)\" ng-include src=\"/src/app/html/components/time_units.html\"></p>\n" +
     "        <p>Dial timeout includes name resolution.</p>\n" +
     "      </div>\n" +
     "    </div>\n" +
@@ -1286,7 +1286,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "      ng-init=\"service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive='30s'\"\n" +
     "      type=\"text\" />\n" +
     "      <div class=\"help-block\">\n" +
-    "        <p ng-hide=\"isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "        <p ng-hide=\"isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive)\" ng-include src=\"/src/app/html/components/time_units.html\"></p>\n" +
     "\n" +
     "        <p>KeepAlive specifies the keep-alive period for an active network connection. If zero, keep-alives are not enabled.</p>\n" +
     "      </div>\n" +
@@ -1301,7 +1301,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "      ng-init=\"service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout='1s'\"\n" +
     "      type=\"text\" />\n" +
     "      <div class=\"help-block\">\n" +
-    "        <p ng-hide=\"isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout)\" ng-include src=\"'time_units.html'\"></p>\n" +
+    "        <p ng-hide=\"isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout)\" ng-include src=\"/src/app/html/components/time_units.html\"></p>\n" +
     "        <p>Header sent to determine the maximum timeout per request</p>\n" +
     "      </div>\n" +
     "    </div>\n" +
@@ -1351,20 +1351,20 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "</div>\n" +
     "\n" +
     "<div class=\"col-md-6\">\n" +
-    "  <div ng-include src=\"'form_backends.html'\"></div>\n" +
+    "  <div ng-include src=\"/src/app/html/components/form_backends.html\"></div>\n" +
     "</div>\n"
   );
 
 
-  $templateCache.put('src/html/components/sidebar.html',
+  $templateCache.put('/src/app/html/components/sidebar.html',
     "<!-- Sidebar Menu -->\n" +
     "<ul class=\"sidebar-menu\">\n" +
     "    <li class=\"header\">Navigation</li>\n" +
     "    <li class=\"active\">\n" +
-    "        <a href=\"/designer/#/\"><i class=\"fa fa-dashboard\"></i> <span>Dashboard</span></a>\n" +
+    "        <a href=\"/#/\"><i class=\"fa fa-dashboard\"></i> <span>Dashboard</span></a>\n" +
     "    </li>\n" +
     "    <li>\n" +
-    "        <a href=\"/designer/#/service\"><i class=\"fa fa-wrench\"></i> <span>Service configuration</span>\n" +
+    "        <a href=\"/#/service\"><i class=\"fa fa-wrench\"></i> <span>Service configuration</span>\n" +
     "            <span ng-if=\"service.sd_providers.hosts.length === 0 || !service.sd_providers.hosts\" class=\"pull-right-container\" data-toggle=\"tooltip\"\n" +
     "                  data-original-title=\"No backends configured yet!\">\n" +
     "                    <i class=\"fa fa-warning pull-right icon-warning\"></i>\n" +
@@ -1372,16 +1372,16 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "        </a>\n" +
     "    </li>\n" +
     "    <li>\n" +
-    "        <a href=\"/designer/#/service-discovery\"><i class=\"fa fa-connectdevelop\"></i> <span>Service Discovery and hosts</span></a>\n" +
+    "        <a href=\"/#/service-discovery\"><i class=\"fa fa-connectdevelop\"></i> <span>Service Discovery and hosts</span></a>\n" +
     "    </li>\n" +
-    "    <li class=\"treeview\"><a href=\"/designer/#/endpoints\"><i class=\"fa fa-gear\"></i> <span>Endpoints</span>\n" +
+    "    <li class=\"treeview\"><a href=\"/#/endpoints\"><i class=\"fa fa-gear\"></i> <span>Endpoints</span>\n" +
     "        <span class=\"pull-right-container\">\n" +
     "                    <i class=\"fa fa-angle-left pull-right\"></i>\n" +
     "                </span>\n" +
     "    </a>\n" +
     "        <ul class=\"treeview-menu menu-open\">\n" +
     "            <li ng-repeat=\"endpoint in service.endpoints\">\n" +
-    "                <a href=\"/designer/#/endpoints\"><i class=\"fa fa-circle-o }}\"></i> {{ endpoint.endpoint }}\n" +
+    "                <a href=\"/#/endpoints\"><i class=\"fa fa-circle-o }}\"></i> {{ endpoint.endpoint }}\n" +
     "                    <span class=\"pull-right-container\">\n" +
     "                            <i class=\"fa fa-angle-left pull-right\"></i>\n" +
     "                        </span>\n" +
@@ -1405,12 +1405,12 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
     "            </span>\n" +
     "        </a>\n" +
     "        <ul class=\"treeview-menu\">\n" +
-    "            <li><a href=\"/designer/#/oauth\"><i class=\"fa fa-user-secret\"></i>OAuth</a></li>\n" +
-    "            <li><a href=\"/designer/#/security\"><i class=\"fa fa-key\"></i>Security headers</a></li>\n" +
+    "            <li><a href=\"/#/oauth\"><i class=\"fa fa-user-secret\"></i>OAuth</a></li>\n" +
+    "            <li><a href=\"/#/security\"><i class=\"fa fa-key\"></i>Security headers</a></li>\n" +
     "        </ul>\n" +
     "    </li>\n" +
     "    <li>\n" +
-    "        <a href=\"/designer/#/logging\"><i class=\"fa fa-area-chart\"></i> <span>Logging and metrics</span></a>\n" +
+    "        <a href=\"/#/logging\"><i class=\"fa fa-area-chart\"></i> <span>Logging and metrics</span></a>\n" +
     "    </li>\n" +
     "    <li><a href=\"/docs/overview/introduction\"><i class=\"fa fa-book\"></i> <span>Documentation</span></a>\n" +
     "    </li>\n" +
@@ -1429,7 +1429,7 @@ angular.module('KrakenDesigner').run(['$templateCache', function($templateCache)
   );
 
 
-  $templateCache.put('src/html/components/time_units.html',
+  $templateCache.put('/src/app/html/components/time_units.html',
     "<strong>Valid time units are:</strong>\n" +
     "<code><abbr title=\"Nanoseconds\">ns</abbr></code>,\n" +
     "<code><abbr title=\"Microseconds\">us</abbr></code>, (or <code>µs</code>),\n" +

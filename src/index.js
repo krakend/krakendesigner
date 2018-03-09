@@ -12,7 +12,6 @@ import './app/designer/endpoint/json-formatter.directive.js';
 import './app/compiled_templates.js';
 
 
-alert('ola k ase');
   function component() {
     var element = document.createElement('div');
     return element;

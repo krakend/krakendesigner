@@ -1,8 +1,18 @@
-angular.module('KrakenDesigner').controller('KrakenDesignerController', function ($scope, $rootScope, $location, DataService) {
+angular.module('KrakenDesigner').controller('KrakenDesignerController', function ($scope, $rootScope, $location) {
 
     // Default initial values set in any configuration generation:
-    DataService.loadConfiguration('/js/app/default_config.json');
-    $rootScope.service = DataService.configuration;
+
+    $rootScope.service = {
+        version: 2,
+        extra_config: {
+          'github_com/devopsfaith/krakend-gologging': {
+            level:  "ERROR",
+            prefix: "[KRAKEND]",
+            syslog: false,
+            stdout: true
+          }
+        }
+    };
 
     $rootScope.save = function () {
         if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
@@ -289,27 +299,7 @@ angular.module('KrakenDesigner').controller('KrakenDesignerController', function
         $rootScope.service.endpoints[endpoint_index].headers_to_pass.splice(header_index,1);
     };
 
-})
-.factory("DataService", function ($http) {
-
-    var service = {
-        configuration: {},
-        loadConfiguration: loadConfiguration
-    };
-
-    function loadConfiguration(file) {
-            // Do not replace existing configuration:
-            if (Object.keys(service.configuration).length === 0)
-            {
-                $http.get(file).then(function (data) {
-                    service.configuration = data.data;
-                });
-            }
-        }
-
-        return service;
-
-    });
+});
 
 function downloadDocument(name, content) {
     saveAs(new Blob([content], {type: "text/plain;charset=UTF-8"}), name);

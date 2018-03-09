@@ -8,11 +8,11 @@ module.exports = {
 	plugins: [
 	new HtmlWebpackPlugin({
 		title: 'API Gateway',
-		template: './src/html/layout.html'
+		template: './src/app/html/layout.html'
 	})
 	],
 	output: {
 		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, 'designer')
 	}
 };
