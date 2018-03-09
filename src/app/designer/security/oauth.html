@@ -1,0 +1,94 @@
+<label>
+	<input type="checkbox"
+	ng-model="data.extra_config[config_namespace].is_disabled">
+	Disable <strong>OAuth</strong>
+</label>
+<div id="oauth-options-wrapper" ng-hide="data.extra_config[config_namespace].is_disabled">
+	<div class="form-group">
+		<div class="col-md-6">
+			<label class="control-label" for="data.extra_config[config_namespace].client_id">Client ID</label>
+			<input class="form-control"
+			ng-model="data.extra_config[config_namespace].client_id"
+			id="data.extra_config[config_namespace].client_id"
+			name="data.extra_config[config_namespace].client_id"
+			type="text">
+			<span class="help-block">The Client ID as it will provided to the Auth server</span>
+		</div>
+
+		<div class="col-md-6">
+			<label class="control-label" for="data.extra_config[config_namespace].client_secret">Client Secret</label>
+			<input class="form-control"
+			ng-model="data.extra_config[config_namespace].client_secret"
+			id="data.extra_config[config_namespace].client_secret"
+			name="data.extra_config[config_namespace].client_secret"
+			type="text">
+			<span class="help-block">The Client secret as it will provided to the Auth server</span>
+		</div>
+	</div>
+	<div class="form-group ">
+		<div class="col-md-6">
+			<label class="control-label" for="data.extra_config[config_namespace].token_url">Token URL</label>
+			<input class="form-control"
+			ng-model="data.extra_config[config_namespace].token_url"
+			id="data.extra_config[config_namespace].token_url"
+			name="data.extra_config[config_namespace].token_url"
+			type="text">
+			<span class="help-block">The URL where the negotiation of the token will happen</span>
+		</div>
+
+		<div class="col-md-6">
+			<label class="control-label" for="data.extra_config[config_namespace].scopes">Scopes</label>
+			<input class="form-control"
+			ng-model="data.extra_config[config_namespace].scopes"
+			id="data.extra_config[config_namespace].scopes"
+			name="data.extra_config[config_namespace].scopes"
+			type="text">
+			<span class="help-block">Comma separated list of scopes needed</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-12">
+			<label>Additional endpoint parameters</label>
+		</div>
+		<div class="col-md-6">
+
+			<div class="input-group row">
+				<div class="col-md-4">
+					<input class="form-control"
+					placeholder="name"
+					type="text"
+					ng-model="endpoint_parameters_key">
+				</div>
+				<div class="col-md-4">
+					<input class="form-control"
+					placeholder="value"
+					type="text"
+					ng-model="endpoint_parameters_value">
+				</div>
+				<div class="col-md-4">
+					<button type="button" class="btn btn-success" ng-click="addOAuthParameters(endpoint_parameters_key,endpoint_parameters_value)">
+						<i class="fa fa-plus"></i> Add  parameter
+					</button>
+				</div>
+			</div>
+			<span class="help-block">
+				Enter here any additional parameters that you want to <strong>include in the payload</strong>
+				when requesting the token. For instance, it is frequent to add the <code>audience</code>
+				request parameter that denotes the target API for which the token should be issued.
+			</span>
+
+		</div>
+		<div class="col-md-6">
+			<ul class="list-unstyled">
+				<li ng-repeat="(index,param) in data.extra_config[config_namespace].endpoint_params">
+					<a class="badge badge-remove"
+					ng-click="deleteOAuthParameters(index)"
+					title="Click to delete parameter"><i class="fa fa-times"></i> {{ index }}={{ param }} </a>
+				</li>
+				<li ng-if="!data.extra_config[config_namespace].endpoint_params">
+					No additional parameters are active yet.
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

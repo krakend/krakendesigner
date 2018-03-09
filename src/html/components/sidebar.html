@@ -1,0 +1,69 @@
+<!-- Sidebar Menu -->
+<ul class="sidebar-menu">
+    <li class="header">Navigation</li>
+    <li class="active">
+        <a href="/designer/#/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+    </li>
+    <li>
+        <a href="/designer/#/service"><i class="fa fa-wrench"></i> <span>Service configuration</span>
+            <span ng-if="service.sd_providers.hosts.length === 0 || !service.sd_providers.hosts" class="pull-right-container" data-toggle="tooltip"
+                  data-original-title="No backends configured yet!">
+                    <i class="fa fa-warning pull-right icon-warning"></i>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="/designer/#/service-discovery"><i class="fa fa-connectdevelop"></i> <span>Service Discovery and hosts</span></a>
+    </li>
+    <li class="treeview"><a href="/designer/#/endpoints"><i class="fa fa-gear"></i> <span>Endpoints</span>
+        <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+    </a>
+        <ul class="treeview-menu menu-open">
+            <li ng-repeat="endpoint in service.endpoints">
+                <a href="/designer/#/endpoints"><i class="fa fa-circle-o }}"></i> {{ endpoint.endpoint }}
+                    <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                </a>
+                <ul class="treeview-menu menu-open">
+                    <li ng-repeat="backend in endpoint.backend">
+                        <a><i class="fa fa-arrow-right"></i> {{ backend.url_pattern }}</a>
+                    </li>
+                </ul>
+
+            </li>
+
+        </ul>
+
+
+    </li>
+    <li class="treeview">
+        <a><i class="fa fa-shield"></i> <span>Security options</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="/designer/#/oauth"><i class="fa fa-user-secret"></i>OAuth</a></li>
+            <li><a href="/designer/#/security"><i class="fa fa-key"></i>Security headers</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="/designer/#/logging"><i class="fa fa-area-chart"></i> <span>Logging and metrics</span></a>
+    </li>
+    <li><a href="/docs/overview/introduction"><i class="fa fa-book"></i> <span>Documentation</span></a>
+    </li>
+</ul>
+
+<hr/>
+
+<ul class="sidebar-menu">
+    <li>
+        <a  ng-click="save()"
+            data-toggle="tooltip"
+            data-original-title="Save configuration!"><i class="fa fa-save"></i> <span>Save</span>
+        </a>
+    </li>
+</ul>
