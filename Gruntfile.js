@@ -9,7 +9,6 @@ module.exports = function(grunt) {
         dest:     'src/app/cached_templates.js',
         options:  {
           module: 'KrakenDesigner',
-          standalone: false,
           prefix: '/'
         }
       }

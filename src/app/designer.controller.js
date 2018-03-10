@@ -1,18 +1,7 @@
-angular.module('KrakenDesigner').controller('KrakenDesignerController', function ($scope, $rootScope, $location) {
+angular.module('KrakenDesigner').controller('KrakenDesignerController', function ($scope, $rootScope, $location, DataService) {
 
     // Default initial values set in any configuration generation:
-
-    $rootScope.service = {
-        version: 2,
-        extra_config: {
-          'github_com/devopsfaith/krakend-gologging': {
-            level:  "ERROR",
-            prefix: "[KRAKEND]",
-            syslog: false,
-            stdout: true
-          }
-        }
-    };
+    $rootScope.service = DataService.configuration;
 
     $rootScope.save = function () {
         if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
@@ -44,8 +33,8 @@ angular.module('KrakenDesigner').controller('KrakenDesignerController', function
 
         for( var i=0; i<$rootScope.service.endpoints.length; i++) {
             if ( typeof $rootScope.service.endpoints[i].extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'] === 'undefined' )
-            $rootScope.service.endpoints[i].extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router']
-        = $rootScope.service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router']
+                $rootScope.service.endpoints[i].extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router']
+            = $rootScope.service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router']
 
         }
     };
@@ -105,45 +94,45 @@ angular.module('KrakenDesigner').controller('KrakenDesignerController', function
 
         // Avoid duplicates:
         for (var i=0; i < $rootScope.service.sd_providers.hosts.length; i++) {
-           if ( $rootScope.service.sd_providers.hosts[i].sd === sd_type &&
-                $rootScope.service.sd_providers.hosts[i].host === host ) {
-                return false;
-            }
+         if ( $rootScope.service.sd_providers.hosts[i].sd === sd_type &&
+            $rootScope.service.sd_providers.hosts[i].host === host ) {
+            return false;
+    }
+}
+
+$rootScope.service.sd_providers.hosts.push({ "sd": sd_type, "host": host });
+
+};
+
+$rootScope.addEtcdMachine = function () {
+    var sd_container = '#addEtcdMachine';
+    var sd = $(sd_container).val();
+
+    if (/^https?:\/\/.+/i.test(sd)) {
+
+        if (typeof $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines === "undefined") {
+            $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines = [];
         }
 
-        $rootScope.service.sd_providers.hosts.push({ "sd": sd_type, "host": host });
-
-    };
-
-    $rootScope.addEtcdMachine = function () {
-        var sd_container = '#addEtcdMachine';
-        var sd = $(sd_container).val();
-
-        if (/^https?:\/\/.+/i.test(sd)) {
-
-            if (typeof $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines === "undefined") {
-                $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines = [];
-            }
-
-            $rootScope.addTermToArray(sd, "$rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines");
-        }
-    };
+        $rootScope.addTermToArray(sd, "$rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines");
+    }
+};
 
 
 
 
-    $rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
-        $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
-    };
+$rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
+    $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
+};
 
-    $rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
-        $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
-    };
+$rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
+    $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
+};
 
 
-    $rootScope.addWhitelist = function (endpoint_index, backend_index) {
+$rootScope.addWhitelist = function (endpoint_index, backend_index) {
 
-        var container_name_with_value = '#wl' + endpoint_index + backend_index;
+    var container_name_with_value = '#wl' + endpoint_index + backend_index;
 
         // Create object if it doesn't exist yet
         if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist) {
@@ -299,6 +288,23 @@ angular.module('KrakenDesigner').controller('KrakenDesignerController', function
         $rootScope.service.endpoints[endpoint_index].headers_to_pass.splice(header_index,1);
     };
 
+})
+.factory("DataService", function ($http) {
+    var service = {
+        configuration: {
+            version: 2,
+            extra_config: {
+                'github_com/devopsfaith/krakend-gologging': {
+                    level:  "ERROR",
+                    prefix: "[KRAKEND]",
+                    syslog: false,
+                    stdout: true
+                }
+            }
+        }
+    };
+
+    return service;
 });
 
 function downloadDocument(name, content) {
