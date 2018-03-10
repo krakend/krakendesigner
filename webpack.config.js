@@ -7,8 +7,7 @@ module.exports = {
 	entry: './src/index.js',
 	plugins: [
 	new HtmlWebpackPlugin({
-		title: 'API Gateway',
-		template: './src/app/html/layout.html'
+		template: './src/app/layout.html'
 	})
 	],
 	output: {

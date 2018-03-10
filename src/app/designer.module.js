@@ -3,17 +3,6 @@
 
     'use strict';
 
-    /**
-     * Word of advice. This was coded by a backend monkey who didn't do frontend for the past 15 years and played with
-     * Angular only for a while. The monkey went through a period of sickness after this week, but now looks like he is
-     * fully recovered. Despite everything the application works.
-     *
-     * @TODO: Refactor and data validation.
-     *
-     * PRs are more than welcome.
-     */
-
-
     angular
         .module('KrakenDesigner', ['ngRoute'])
         .config(config);
@@ -26,31 +15,31 @@
         // Known Routes:
         $routeProvider
             .when('/', {
-                templateUrl: '/src/app/html/components/dashboard.html',
+                templateUrl: '/src/app/forms/dashboard.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/service', {
-                templateUrl: '/src/app/html/components/form_service_configuration.html',
+                templateUrl: '/src/app/forms/service_configuration.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/endpoints', {
-                templateUrl: '/src/app/html/components/form_endpoints.html',
+                templateUrl: '/src/app/forms/endpoints.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/oauth', {
-                templateUrl: '/src/app/html/components/form_oauth.html',
+                templateUrl: '/src/app/forms/oauth.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/security', {
-                templateUrl: '/src/app/html/components/form_security.html',
+                templateUrl: '/src/app/forms/security.html',
                 controller: 'KrakenDesignerController'
             })
             .when('/service-discovery', {
-                templateUrl: '/src/app/html/components/form_service_discovery.html',
+                templateUrl: '/src/app/forms/service_discovery.html',
                 controller: 'KrakenDesignerController'
             })
              .when('/logging', {
-                templateUrl: '/src/app/html/components/form_logging.html',
+                templateUrl: '/src/app/forms/logging.html',
                 controller: 'KrakenDesignerController'
             })
             .otherwise({

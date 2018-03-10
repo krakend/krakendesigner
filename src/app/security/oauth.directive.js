@@ -3,7 +3,7 @@ angular
 .directive("oauth", function() {
     return {
         restrict : "E",
-        templateUrl: '/js/app/designer/security/oauth.html',
+        templateUrl: '/src/app/security/oauth.html',
         scope: {
             data: '=',
             inherit: '='

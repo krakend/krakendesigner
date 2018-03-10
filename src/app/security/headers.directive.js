@@ -3,7 +3,7 @@ angular
 .directive("securityHeaders", function() {
     return {
         restrict : "E",
-        templateUrl: '/js/app/designer/security/headers.html',
+        templateUrl: '/src/app/security/headers.html',
         scope: {
             data: '=',
             inherit: "="

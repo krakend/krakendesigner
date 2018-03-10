@@ -1,0 +1,163 @@
+<div class="col-md-6">
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Enable Service Discovery</h3>
+    </div>
+
+    <div class="box-body">
+      <p>Select <strong>all</strong> the service discovery providers you want to enable across all endpoints. You can enable one or multiple service discovery providers and choose which of them are used in each backend query, be an external provider or an API of your own.</p>
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" disabled="disabled" value="static" ng-model="service.sd_providers.providers.static" ng-init="service.sd_providers.providers.static=true" >
+            <strong>Static</strong>/None - No service discovery strategy set. KrakenD will try to resolve directly any DNS entries using the machine resolver.
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="dns" ng-model="service.sd_providers.providers.dns" >
+            <strong>DNS SRV</strong> - Given host names will use a <a href="https://en.wikipedia.org/wiki/SRV_record">SRV record</a> for resolution.
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="etcd" ng-model="service.sd_providers.providers.etcd" ng-model="service.sd_providers.providers.etcd">
+            <strong>Etcd</strong> - Configuration retrieved dynamically from an <code>etcd</code> daemon.
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="custom" ng-model="service.sd_providers.providers.custom" >
+            <strong>Custom</strong> - You can specify your own service discovery namespace (manual addition in the .json file)
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-primary" ng-hide="!service.sd_providers.providers.etcd">
+    <div class="box-header with-border">
+      <h3 class="box-title">Etcd settings</h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      </div>
+    </div>
+    <div class="box-body">
+     <!-- etcd -->
+
+     <p>List of all the etcd servers you want KrakenD to make use of for host resolution</p>
+     <p><code>http(s)://hostname[:port]</code></p>
+     <ul class="list-unstyled">
+      <li ng-repeat="(index,host) in service.extra_config['github_com/devopsfaith/krakend-etcd'].machines">
+        <a class="badge badge-remove" ng-click="deleteEtcdMachine(index)"
+        title="Click to delete server"><i class="fa fa-times"></i> {{ host }}</a>
+      </li>
+    </ul>
+
+    <form name="addBackend">
+      <div class="input-group">
+        <input class="form-control"
+        placeholder="http://x.x.x.x:4001"
+        type="url"
+        id="addEtcdMachine"
+        required="">
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-success" ng-click="addEtcdMachine()"><i
+            class="fa fa-plus"></i> Add Etcd machine
+          </button>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="form-group" ng-class="isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout) ? '' : 'has-error'">
+      <label class="control-label" for="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout">Dial Timeout</label>
+      <input class="form-control"
+      id="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout"
+      ng-model="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout"
+      name="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout"
+      placeholder="5s"
+      ng-init="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout='5s'"
+      type="text" />
+      <div class="help-block">
+        <p ng-hide="isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+        <p>Dial timeout includes name resolution.</p>
+      </div>
+    </div>
+    <div class="form-group" ng-class="isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive) ? '' : 'has-error'">
+      <label class="control-label" for="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive">Dial Keep Alive</label>
+      <input class="form-control"
+      id="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive"
+      ng-model="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive"
+      name="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive"
+      placeholder="30s"
+      ng-init="service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive='30s'"
+      type="text" />
+      <div class="help-block">
+        <p ng-hide="isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].dial_keepalive)" ng-include src="'/src/app/forms/time_units.html'"></p>
+
+        <p>KeepAlive specifies the keep-alive period for an active network connection. If zero, keep-alives are not enabled.</p>
+      </div>
+    </div>
+    <div class="form-group" ng-class="isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout) ? '' : 'has-error'">
+      <label class="control-label" for="service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout">Timeout per request</label>
+      <input class="form-control"
+      id="service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout"
+      ng-model="service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout"
+      name="service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout"
+      placeholder="1s"
+      ng-init="service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout='1s'"
+      type="text" />
+      <div class="help-block">
+        <p ng-hide="isValidTimeUnit(service.extra_config['github_com/devopsfaith/krakend-etcd'].header_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+        <p>Header sent to determine the maximum timeout per request</p>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="control-label" for="service.extra_config['github_com/devopsfaith/krakend-etcd'].cert">Certificate</label>
+      <input class="form-control"
+      id="service.extra_config['github_com/devopsfaith/krakend-etcd'].cert"
+      ng-model="service.extra_config['github_com/devopsfaith/krakend-etcd'].cert"
+      name="service.extra_config['github_com/devopsfaith/krakend-etcd'].cert"
+      placeholder="/path/to/file"
+      type="text" />
+      <div class="help-block">
+        <p>Absolute path to the certificate</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label" for="service.extra_config['github_com/devopsfaith/krakend-etcd'].key">Private key</label>
+      <input class="form-control"
+      id="service.extra_config['github_com/devopsfaith/krakend-etcd'].key"
+      ng-model="service.extra_config['github_com/devopsfaith/krakend-etcd'].key"
+      name="service.extra_config['github_com/devopsfaith/krakend-etcd'].key"
+      placeholder="/path/to/file"
+      type="text" />
+      <div class="help-block">
+        <p>Absolute path to the private key</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label" for="service.extra_config['github_com/devopsfaith/krakend-etcd'].cacert">CA Cert</label>
+      <input class="form-control"
+      id="service.extra_config['github_com/devopsfaith/krakend-etcd'].cacert"
+      ng-model="service.extra_config['github_com/devopsfaith/krakend-etcd'].cacert"
+      name="service.extra_config['github_com/devopsfaith/krakend-etcd'].cacert"
+      placeholder="/path/to/file"
+      type="text" />
+      <div class="help-block">
+        <p>Absolute path to the CA Cert</p>
+      </div>
+    </div>
+  <!-- /etcd -->
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+  <div ng-include src="'/src/app/forms/backends.html'"></div>
+</div>
