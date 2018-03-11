@@ -18,6 +18,6 @@ An application made in AngularJS.
 ## Build
 The build process leaves a single html file and a single JS file in the `designer` folder that is later deployed inside the KrakenD images. Build with:
 
-	make build
+	make
 
 The `node_modules` folder is deleted not leaving any trace in your machine.
