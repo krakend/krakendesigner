@@ -1,4 +1,6 @@
-angular.module('KrakenDesigner').controller('KrakenDesignerController', function ($scope, $rootScope, $location, DataService) {
+angular
+.module('KrakenDesigner')
+.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DataService) {
 
     // Default initial values set in any configuration generation:
     $rootScope.service = DataService.configuration;
@@ -76,7 +78,6 @@ angular.module('KrakenDesigner').controller('KrakenDesignerController', function
     };
 
 
-
     $rootScope.addHost = function (host, sd_type) {
 
         if ('static' === sd_type && ! /^https?:\/\/.+/i.test(host)) {
@@ -94,45 +95,41 @@ angular.module('KrakenDesigner').controller('KrakenDesignerController', function
 
         // Avoid duplicates:
         for (var i=0; i < $rootScope.service.sd_providers.hosts.length; i++) {
-         if ( $rootScope.service.sd_providers.hosts[i].sd === sd_type &&
-            $rootScope.service.sd_providers.hosts[i].host === host ) {
-            return false;
-    }
-}
-
-$rootScope.service.sd_providers.hosts.push({ "sd": sd_type, "host": host });
-
-};
-
-$rootScope.addEtcdMachine = function () {
-    var sd_container = '#addEtcdMachine';
-    var sd = $(sd_container).val();
-
-    if (/^https?:\/\/.+/i.test(sd)) {
-
-        if (typeof $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines === "undefined") {
-            $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines = [];
+            if ( $rootScope.service.sd_providers.hosts[i].sd === sd_type &&
+                $rootScope.service.sd_providers.hosts[i].host === host ) {
+                return false;
+            }
         }
 
-        $rootScope.addTermToArray(sd, "$rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines");
-    }
-};
+        $rootScope.service.sd_providers.hosts.push({ "sd": sd_type, "host": host });
+    };
+
+    $rootScope.addEtcdMachine = function () {
+        var sd_container = '#addEtcdMachine';
+        var sd = $(sd_container).val();
+
+        if (/^https?:\/\/.+/i.test(sd)) {
+
+            if (typeof $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines === "undefined") {
+                $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines = [];
+            }
+
+            $rootScope.addTermToArray(sd, "$rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines");
+        }
+    };
+
+    $rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
+        $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
+    };
+
+    $rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
+        $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
+    };
 
 
+    $rootScope.addWhitelist = function (endpoint_index, backend_index) {
 
-
-$rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
-    $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
-};
-
-$rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
-    $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
-};
-
-
-$rootScope.addWhitelist = function (endpoint_index, backend_index) {
-
-    var container_name_with_value = '#wl' + endpoint_index + backend_index;
+        var container_name_with_value = '#wl' + endpoint_index + backend_index;
 
         // Create object if it doesn't exist yet
         if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist) {

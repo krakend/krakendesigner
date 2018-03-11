@@ -6,9 +6,9 @@ import './app/endpoint/json-formatter.directive.js';
 import './app/cached_templates.js';
 
 
-  function component() {
-    var element = document.createElement('div');
-    return element;
-  }
+function component() {
+	var element = document.createElement('div');
+	return element;
+}
 
-  document.body.appendChild(component());
+document.body.appendChild(component());
