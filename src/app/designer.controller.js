@@ -1,5 +1,22 @@
 angular
 .module('KrakenDesigner')
+.service("DataService", function () {
+    var service = {
+        configuration: {
+            version: 2,
+            extra_config: {
+                'github_com/devopsfaith/krakend-gologging': {
+                    level:  "ERROR",
+                    prefix: "[KRAKEND]",
+                    syslog: false,
+                    stdout: true
+                }
+            }
+        }
+    };
+
+    return service;
+})
 .controller('KrakenDesignerController', function ($scope, $rootScope, $location, DataService) {
 
     // Default initial values set in any configuration generation:
@@ -285,23 +302,6 @@ angular
         $rootScope.service.endpoints[endpoint_index].headers_to_pass.splice(header_index,1);
     };
 
-})
-.factory("DataService", function ($http) {
-    var service = {
-        configuration: {
-            version: 2,
-            extra_config: {
-                'github_com/devopsfaith/krakend-gologging': {
-                    level:  "ERROR",
-                    prefix: "[KRAKEND]",
-                    syslog: false,
-                    stdout: true
-                }
-            }
-        }
-    };
-
-    return service;
 });
 
 function downloadDocument(name, content) {
