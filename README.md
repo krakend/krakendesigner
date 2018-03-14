@@ -17,7 +17,7 @@ An application made with AngularJS to visually create the `krakend.json` file.
 
 [Try it live!](http://designer.krakend.io)
 
-![Screenshot](media/screnshot.png)
+![Screenshot](https://github.com/devopsfaith/krakendesigner/blob/master/media/screenshot.png?raw=true)
 
 [Download KrakenD](http://www.krakend.io/download/) | [Build KrakenD](https://github.com/devopsfaith/krakend-ce) | [Documentation](http://www.krakend.io/docs/overview/introduction/) | [Blog](http://www.krakend.io/blog)
 
