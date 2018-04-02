@@ -1,3 +1,5 @@
+var FileSaver = require('file-saver');
+
 angular
 .module('KrakenDesigner')
 .service("DataService", function () {
@@ -305,7 +307,7 @@ angular
 });
 
 function downloadDocument(name, content) {
-    saveAs(new Blob([content], {type: "text/plain;charset=UTF-8"}), name);
+    FileSaver.saveAs(new Blob([content], {type: "text/plain;charset=UTF-8"}), name);
 }
 
 // Avoid losing the configuration:
