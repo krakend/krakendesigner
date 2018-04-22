@@ -9,10 +9,11 @@ angular
 			function toObject(input) {
 				try {
 					json_object = JSON.parse(input);
-					scope.$parent.backend.martian_syntax_validation = true;
+					delete scope.service.extra_config['krakendesigner'].json_errors;
 					return json_object;
 				} catch(e) {
-					scope.$parent.backend.martian_syntax_validation = e.message;
+					scope.service.extra_config['krakendesigner'].json_valid = true;
+					scope.service.extra_config['krakendesigner'].json_errors = e.message;
 					return false;
 				}
 			}
