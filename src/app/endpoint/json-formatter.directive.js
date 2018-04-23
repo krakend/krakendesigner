@@ -8,7 +8,10 @@ angular
 		link: function(scope, element, attrs, ngModel) {
 			function toObject(input) {
 				try {
-					json_object = JSON.parse(input);
+					var json_object = null;
+					if ( '' != input ) {
+						json_object = JSON.parse(input);
+					}
 					delete scope.service.extra_config['krakendesigner'].json_errors;
 					return json_object;
 				} catch(e) {
