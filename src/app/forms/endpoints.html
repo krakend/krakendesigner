@@ -14,6 +14,7 @@
 
         <div class="box-tools pull-right">
             <span ng-hide="isValidEndpoint(endpoint.endpoint)" class="badge label-danger"><i class="fa fa-warning"></i> Error(s)</span>
+            <span class="badge">{{ endpoint.output_encoding }}</span>
             <span class="badge method_{{ endpoint.method }}">{{ endpoint.method }}</span>
             <button type="button" class="btn btn-box-tool"
                     ng-click="deleteEndpoint(endpoint_index, 'This endpoint and all the information will be deleted. Do you want to proceed?')">
@@ -47,7 +48,7 @@
         <form class="form-horizontal" novalidate>
             <fieldset>
                 <div ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'has-error'" class="form-group form-group-lg">
-                    <div class="col-md-10 col-sm-8">
+                    <div class="col-md-8 col-sm-6">
                         <label>KrakenD Endpoint</label>
                         <input type="text"
                                placeholder="/users/{username}"
@@ -70,6 +71,20 @@
                             <option value="DELETE">DELETE</option>
                         </select>
                         <span class="help-block">HTTP verb</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <label>Output</label>
+                        <select class="form-control"
+                            ng-model="endpoint.output_encoding"
+                            id="endpoint.output_encoding"
+                            name="endpoint.output_encoding"
+                            ng-init="endpoint.output_encoding=service.output_encoding">
+                            <option value="json">JSON</option>
+                            <option value="negotiate">Negotiate content</option>
+                            <option value="string">String (text/plain)</option>
+                            <option value="noop">No-op (just proxy)</option>
+                        </select>
+                        <span class="help-block">Encoding used</span>
                     </div>
                 </div>
                 <div class="form-group">
