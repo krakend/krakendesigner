@@ -182,7 +182,44 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <h4>Backend queries (where the data comes from)</h4>
+                         <h4>Backend API calls (where the data comes from)</h4>
+                    </div>
+                    <div class="col-md-12" ng-if="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static">
+                        <div class="box box-info box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Static Response</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" ng-click="deleteStaticResponse(endpoint_index)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <p>The following static data will be added to the response following the selected strategy. The input must be a JSON object (ensure to start and end with curly braces <code>{}</code>)</p>
+                                <div class="col-md-8">
+
+                                    <label class="control-label">Response</label>
+                                    <textarea json-formatter class="form-control" ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.data"></textarea>
+                                    <p ng-show="service.extra_config['krakendesigner'].json_errors" class="badge label-danger">
+                                        <i class="fa fa-warning"></i> Syntax error - {{ service.extra_config['krakendesigner'].json_errors}}
+                                    </p>
+                                    <span class="help-block">Paste here your JSON response</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Strategy</label>
+                                    <select class="form-control" ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.strategy">
+                                        <option value="always">Always - Present in every response</option>
+                                        <option value="success">Success - Present in every non-failed response </option>
+                                        <option value="errored">Errored - Present in every failed response (error not nil)</option>
+                                        <option value="incomplete">Incomplete - Present in incomplete responses</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12"
                          ng-repeat="(backend_index,backend) in endpoint.backend">
@@ -556,6 +593,12 @@
 
 
                 </div>
+                <button class="btn btn-primary"
+                    ng-click="addDefaultStaticResponse(endpoint_index)"
+                    ng-if="! endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static  &&   !(endpoint.output_encoding == 'noop' && endpoint.backend.length > 0)">
+                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Add static response
+                </button>
                 <button class="btn btn-primary"
                         ng-click="addBackendQuery(endpoint_index)"
                         ng-if="! endpoint.backend || endpoint.backend.length < 1 || ( endpoint.method =='GET' && !(endpoint.output_encoding == 'noop' && endpoint.backend.length > 0))">

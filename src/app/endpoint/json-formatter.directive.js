@@ -8,11 +8,15 @@ angular
 		link: function(scope, element, attrs, ngModel) {
 			function toObject(input) {
 				try {
-					json_object = JSON.parse(input);
-					scope.$parent.backend.martian_syntax_validation = true;
+					var json_object = null;
+					if ( '' != input ) {
+						json_object = JSON.parse(input);
+					}
+					delete scope.service.extra_config['krakendesigner'].json_errors;
 					return json_object;
 				} catch(e) {
-					scope.$parent.backend.martian_syntax_validation = e.message;
+					scope.service.extra_config['krakendesigner'].json_valid = true;
+					scope.service.extra_config['krakendesigner'].json_errors = e.message;
 					return false;
 				}
 			}
