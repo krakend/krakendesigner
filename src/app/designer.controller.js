@@ -118,38 +118,38 @@ angular
             if ( $rootScope.service.sd_providers.hosts[i].sd === sd_type &&
                 $rootScope.service.sd_providers.hosts[i].host === host ) {
                 return false;
-            }
+        }
+    }
+
+    $rootScope.service.sd_providers.hosts.push({ "sd": sd_type, "host": host });
+};
+
+$rootScope.addEtcdMachine = function () {
+    var sd_container = '#addEtcdMachine';
+    var sd = $(sd_container).val();
+
+    if (/^https?:\/\/.+/i.test(sd)) {
+
+        if (typeof $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines === "undefined") {
+            $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines = [];
         }
 
-        $rootScope.service.sd_providers.hosts.push({ "sd": sd_type, "host": host });
-    };
+        $rootScope.addTermToArray(sd, "$rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines");
+    }
+};
 
-    $rootScope.addEtcdMachine = function () {
-        var sd_container = '#addEtcdMachine';
-        var sd = $(sd_container).val();
+$rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
+    $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
+};
 
-        if (/^https?:\/\/.+/i.test(sd)) {
-
-            if (typeof $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines === "undefined") {
-                $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines = [];
-            }
-
-            $rootScope.addTermToArray(sd, "$rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines");
-        }
-    };
-
-    $rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
-        $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
-    };
-
-    $rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
-        $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
-    };
+$rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
+    $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
+};
 
 
-    $rootScope.addWhitelist = function (endpoint_index, backend_index) {
+$rootScope.addWhitelist = function (endpoint_index, backend_index) {
 
-        var container_name_with_value = '#wl' + endpoint_index + backend_index;
+    var container_name_with_value = '#wl' + endpoint_index + backend_index;
 
         // Create object if it doesn't exist yet
         if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist) {
@@ -311,6 +311,28 @@ angular
             $rootScope.service.endpoints[endpoint_index].backend.splice(backend_index, 1);
         }
     };
+
+    $rootScope.addStaticResponse = function (endpoint_index) {
+
+        if (typeof $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] === "undefined") {
+            $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {
+                "static": {
+                    "data" : {
+                        "new_field_a": 123,
+                        "new_field_b": ["arr1","arr2"],
+                        "new_field_c": {"obj": "obj1"}
+                    },
+                    "strategy": "incomplete"
+                }
+            }
+        }
+    };
+
+     $rootScope.deleteStaticResponse = function (endpoint_index) {
+            delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
+    };
+
+
 
     $rootScope.addQuerystring = function (endpoint_index) {
 
