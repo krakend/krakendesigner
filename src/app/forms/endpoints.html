@@ -78,7 +78,8 @@
                             ng-model="endpoint.output_encoding"
                             id="endpoint.output_encoding"
                             name="endpoint.output_encoding"
-                            ng-init="endpoint.output_encoding=service.output_encoding">
+                            ng-init="endpoint.output_encoding=service.output_encoding",
+                            ng-change="setNoOpEncoding(endpoint_index, endpoint.output_encoding, '{{ endpoint.output_encoding }}', null)">
                             <option value="json">JSON</option>
                             <option value="negotiate">Negotiate content</option>
                             <option value="string">String (text/plain)</option>
@@ -294,16 +295,19 @@
                                 <h4>Authorization</h4>
                                 <oauth data="backend" inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']"></oauth>
                                 <hr/>
+                                <div ng-if="endpoint.output_encoding != 'noop'">
                                 <h4>Response Parsing</h4>
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <label>Decode as:</label>
                                         <select class="form-control" ng-model="backend.encoding"
-                                                ng-init="backend.encoding ='json'">
+                                                ng-init="backend.encoding ='json'"
+                                                ng-change="setNoOpEncoding(endpoint_index, backend.encoding, '{{ backend.encoding }}', backend_index)">
                                             <option selected value="json">JSON</option>
                                             <option value="xml">XML</option>
                                             <option value="rss">RSS</option>
                                             <option value="string">String</option>
+                                            <option value="noop">No-Op</option>
                                         </select>
                                         <span class="help-block">How to decode the response of the backend.</span>
                                     </div>
@@ -335,7 +339,9 @@
                                 </div>
                                 <hr/>
 
+
                                 <h4>Response manipulation</h4>
+
                                 <p>Transform here the response with a lighter version, include only the attributes that
                                     your
                                     application needs.</p>
@@ -470,8 +476,8 @@
                                         <span class="help-block">You can rename any attributes returned by the backend and use a name more convenient for you.</span>
                                     </div>
                                 </div>
-
                                 <hr/>
+
                                 <h4>Advanced - Martian DSL</h4>
                                 <p>Paste here any additional configuration you want to add to <a href="https://github.com/google/martian#modifiers-all-the-way-down">Martian</a>. The input must be a JSON object (ensure to start and end with curly braces <code>{}</code>)</p>
                                  <div class="form-group">
@@ -488,6 +494,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </div><!-- ngif output_encoding != noop -->
                             <!-- /.box-body -->
                         </div>
 
@@ -551,7 +558,7 @@
                 </div>
                 <button class="btn btn-primary"
                         ng-click="addBackendQuery(endpoint_index)"
-                        ng-if="! endpoint.backend || endpoint.backend.length < 1 || endpoint.method =='GET'">
+                        ng-if="! endpoint.backend || endpoint.backend.length < 1 || ( endpoint.method =='GET' && !(endpoint.output_encoding == 'noop' && endpoint.backend.length > 0))">
                     <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
                     Add backend query
                 </button>
