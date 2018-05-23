@@ -255,7 +255,7 @@ angular
      * It deletes all backend configuration and adds a backend with no-op.
      */
     $rootScope.setNoOpEncoding = function(endpoint_index, new_value, old_value, backend_index) {
-        var message = "Working with the No-Operation encoder/decoder means that the endpoint will proxy all content using a *single backend* and response manipulation is not available.\n\nSelecting this option will set the encoding of both the endpoint and the backend to noop and will leave the backend for proxying only.\n Do you want to proceed?";
+        var message = "Selecting the No-Operation means that this endpoint will proxy all content to a *single backend* where no response manipulation is desired.\n\nThe noop option will be automatically set for both the backend and the endpoint. Existing backend settings for this endpoint will be discarded.\n\n Do you want to proceed?";
         var num_backends = ( 'undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend ? 0 : $rootScope.service.endpoints[endpoint_index].backend.length );
 
         // Endpoint encoding and backend encoding must match to 'no-op':
@@ -267,6 +267,11 @@ angular
                 delete $rootScope.service.endpoints[endpoint_index].backend
                 $rootScope.service.endpoints[endpoint_index].output_encoding = 'noop';
                 $rootScope.addBackendQuery(endpoint_index);
+
+                // Delete also static_response
+                if ( 'undefined' !== typeof $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] ) {
+                    delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
+                }
 
             } else { // Angular already updated the values, revert endpoint or backend:
 
@@ -310,6 +315,26 @@ angular
         if (confirm(message)) {
             $rootScope.service.endpoints[endpoint_index].backend.splice(backend_index, 1);
         }
+    };
+
+    $rootScope.addDefaultStaticResponse = function (endpoint_index) {
+        if (typeof $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] == "undefined") {
+
+            $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {
+                "static": {
+                    "data" : {
+                        "new_field_a": 123,
+                        "new_field_b": ["arr1","arr2"],
+                        "new_field_c": {"obj": "obj1"}
+                    },
+                    "strategy": "incomplete"
+                }
+            }
+        }
+    };
+
+     $rootScope.deleteStaticResponse = function (endpoint_index) {
+            delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
     };
 
     $rootScope.addQuerystring = function (endpoint_index) {
