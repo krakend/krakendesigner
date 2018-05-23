@@ -48,7 +48,8 @@ angular
     };
 
     $rootScope.setDefaultData = function () {
-        if ( typeof $rootScope.service.extra_config['krakendesigner']['endpoint_defaults'] === 'undefined') {
+        if ('undefined' === typeof $rootScope.service.extra_config['krakendesigner'] ||
+            'undefined' === typeof $rootScope.service.extra_config['krakendesigner']['endpoint_defaults']) {
             return false;
         }
 
@@ -249,6 +250,40 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         }
     };
 
+    /**
+     * The setNoOpEncoding is called when the backend or the endpoint change their encoding.
+     * It deletes all backend configuration and adds a backend with no-op.
+     */
+    $rootScope.setNoOpEncoding = function(endpoint_index, new_value, old_value, backend_index) {
+        var message = "Working with the No-Operation encoder/decoder means that the endpoint will proxy all content using a *single backend* and response manipulation is not available.\n\nSelecting this option will set the encoding of both the endpoint and the backend to noop and will leave the backend for proxying only.\n Do you want to proceed?";
+        var num_backends = ( 'undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend ? 0 : $rootScope.service.endpoints[endpoint_index].backend.length );
+
+        // Endpoint encoding and backend encoding must match to 'no-op':
+        if (new_value == 'noop' && num_backends > 0) {
+
+            if ( confirm(message) )
+            {
+                // Delete all backend queries and add just one, inheriting encoding:
+                delete $rootScope.service.endpoints[endpoint_index].backend
+                $rootScope.service.endpoints[endpoint_index].output_encoding = 'noop';
+                $rootScope.addBackendQuery(endpoint_index);
+
+            } else { // Angular already updated the values, revert endpoint or backend:
+
+                if ( null === backend_index )
+                {
+                    // Backend encoding
+                    $rootScope.service.endpoints[endpoint_index].output_encoding = old_value;
+                }
+                else
+                {
+                    $rootScope.service.endpoints[endpoint_index].backend[backend_index].encoding = old_value;
+                }
+            }
+        }
+    }
+
+
 
     $rootScope.addBackendQuery = function (endpoint_index) {
 
@@ -256,7 +291,10 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
             $rootScope.service.endpoints[endpoint_index].backend = [];
         }
 
-        $rootScope.service.endpoints[endpoint_index].backend.push({"url_pattern": "/"});
+        $rootScope.service.endpoints[endpoint_index].backend.push({
+            "url_pattern": "/",
+            "encoding": $rootScope.service.endpoints[endpoint_index].output_encoding
+        });
     };
 
     $rootScope.toggleCaching = function($event, endpoint_index, backend_index) {

@@ -12,12 +12,14 @@ ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'">
         </a>
     </h3>
 
-    <div class="box-tools pull-right">
-        <span ng-hide="isValidEndpoint(endpoint.endpoint)" class="badge label-danger"><i class="fa fa-warning"></i> Error(s)</span>
-        <span class="badge method_{{ endpoint.method }}">{{ endpoint.method }}</span>
-        <button type="button" class="btn btn-box-tool"
-        ng-click="deleteEndpoint(endpoint_index, 'This endpoint and all the information will be deleted. Do you want to proceed?')">
-        <i class="fa fa-trash"></i></button>
+        <div class="box-tools pull-right">
+            <span ng-hide="isValidEndpoint(endpoint.endpoint)" class="badge label-danger"><i class="fa fa-warning"></i> Error(s)</span>
+            <span class="badge">{{ endpoint.output_encoding }}</span>
+            <span class="badge method_{{ endpoint.method }}">{{ endpoint.method }}</span>
+            <button type="button" class="btn btn-box-tool"
+                    ng-click="deleteEndpoint(endpoint_index, 'This endpoint and all the information will be deleted. Do you want to proceed?')">
+                <i class="fa fa-trash"></i></button>
+        </div>
     </div>
 </div>
 <!-- /.box-header -->
@@ -43,85 +45,48 @@ ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'">
                 <a><strong>No results found...</strong></a>
             </li>
         </ul>
-    -->
-    <form class="form-horizontal" novalidate>
-        <fieldset>
-            <div ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'has-error'" class="form-group form-group-lg">
-                <div class="col-md-10 col-sm-8">
-                    <label>KrakenD Endpoint</label>
-                    <input type="text"
-                    placeholder="/users/{username}"
-                    class="form-control input-md"
-                    required="" ng-model="endpoint.endpoint">
-                    <span class="help-block">This is the URI your clients will connect to. Must start with slash.
-                      Use curly braces to insert <code>{placeholders}</code> that can be passed to the
-                  backends.</span>
-              </div>
-              <div class="col-md-2 col-sm-4">
-                <label>Method</label>
-                <select id="endpoint.method"
-                ng-model="endpoint.method"
-                name="endpoint.method"
-                class="form-control"
-                ng-change="updateNonGETBackends(endpoint_index, '{{ endpoint.method }}', 'Non-GET methods forward the request to a single backend query (the first one). The rest will be deleted from this form. Proceed?')">
-                <option value="GET">GET</option>
-                <option value="POST">POST</option>
-                <option value="PUT">PUT</option>
-                <option value="DELETE">DELETE</option>
-            </select>
-            <span class="help-block">HTTP verb</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-6">
-            <label>Recognized query string parameters (?param=value)</label>
-            <div class="input-group">
-                <input class="form-control"
-                placeholder="parameter_name"
-                type="url"
-                id="addQuerystring_{{ endpoint_index }}">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-success" ng-click="addQuerystring(endpoint_index)">
-                        <i class="fa fa-plus"></i> Enable query string
-                    </button>
-                </div>
-            </div>
-            <span class="help-block">Enter here any additional parameters that don't fit in the endpoint URI
-                that will be sent to the backends as query string when present. Write only the name of the
-            parameter, no question mark or equal symbols.</span>
-        </div>
-        <div class="col-md-6">
-            <label>Active:</label>
-            <ul class="list-unstyled">
-                <li ng-repeat="(qs_index,qs) in endpoint.querystring_params">
-                    <a class="badge badge-remove"
-                    ng-click="deleteQuerystring(qs_index,endpoint_index)"
-                    title="Click to delete parameter"><i class="fa fa-times"></i> {{ qs }} </a>
-                </li>
-                <li ng-if="!endpoint.querystring_params.length">No query parameters are active yet. Typical
-                    parameters are <code>page</code>, <code>limit</code>, <code>search</code>...
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-3" ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
-            <label>Concurrent Calls</label>
-            <input type="text" class="form-control" ng-model="endpoint.concurrent_calls" ng-init="endpoint.concurrent_calls=1">
-            <span class="help-block">
-                <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
-                    <i class="fa fa-warning"></i> Use an integer</p>
-                    <p>Parallel requests you want to send to the backend <strong>for the same request</strong>. Fastest request is taken and the rest are discarded. This value should be between 1 and 3 (or higher if your backend can support very high load)</p>
-                </span>
-            </div>
-            <div class="col-md-3">
-                <label>Headers passing to backend</label>
-                <div class="input-group">
-                    <input class="form-control" placeholder="header_name" type="text" required="" ng-model="input_header">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-success" ng-click="addHeaderPassing(endpoint_index,input_header)">
-                            <i class="fa fa-plus"></i> Add header
-                        </button>
+        -->
+        <form class="form-horizontal" novalidate>
+            <fieldset>
+                <div ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'has-error'" class="form-group form-group-lg">
+                    <div class="col-md-8 col-sm-6">
+                        <label>KrakenD Endpoint</label>
+                        <input type="text"
+                               placeholder="/users/{username}"
+                               class="form-control input-md"
+                               required="" ng-model="endpoint.endpoint">
+                        <span class="help-block">This is the URI your clients will connect to. Must start with slash.
+                                  Use curly braces to insert <code>{placeholders}</code> that can be passed to the
+                            backends.</span>
+                    </div>
+                    <div class="col-md-2 col-sm-4">
+                        <label>Method</label>
+                        <select id="endpoint.method"
+                                ng-model="endpoint.method"
+                                name="endpoint.method"
+                                class="form-control"
+                                ng-change="updateNonGETBackends(endpoint_index, '{{ endpoint.method }}', 'Non-GET methods forward the request to a single backend query (the first one). The rest will be deleted from this form. Proceed?')">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                        <span class="help-block">HTTP verb</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <label>Output</label>
+                        <select class="form-control"
+                            ng-model="endpoint.output_encoding"
+                            id="endpoint.output_encoding"
+                            name="endpoint.output_encoding"
+                            ng-init="endpoint.output_encoding=service.output_encoding",
+                            ng-change="setNoOpEncoding(endpoint_index, endpoint.output_encoding, '{{ endpoint.output_encoding }}', null)">
+                            <option value="json">JSON</option>
+                            <option value="negotiate">Negotiate content</option>
+                            <option value="string">String (text/plain)</option>
+                            <option value="noop">No-op (just proxy)</option>
+                        </select>
+                        <span class="help-block">Encoding used</span>
                     </div>
                 </div>
                 <span class="help-block">Allowed headers to pass from client to each of the backends. These headers are not an addition, but a replacement when they are set. Use only if you need custom headers to pass back but ensure to declare all needed headers (including <code>Content-Type</code>).</span>
@@ -363,39 +328,75 @@ data-target="#advanced-pipe-{{ endpoint_index }}">
 </div>
 <hr/>
 
-<h4>Response manipulation</h4>
-<p>Transform here the response with a lighter version, include only the attributes that
-    your
-application needs.</p>
-<div class="form-group">
-    <label class="col-md-2 control-label">Filtering mode</label>
-    <div class="col-md-10">
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a data-target="#tab_black-{{ endpoint_index }}-{{ backend_index }}"
-                    data-toggle="tab"
-                    aria-expanded="false">Blacklist (fastest)</a>
-                </li>
-                <li>
-                    <a data-target="#tab_white-{{ endpoint_index }}-{{ backend_index }}"
-                    data-toggle="tab"
-                    aria-expanded="true">Whitelist</a></li>
-                </ul>
-                <div class="tab-content">
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <h4>Authorization</h4>
+                                <oauth data="backend" inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']"></oauth>
+                                <hr/>
+                                <div ng-if="endpoint.output_encoding != 'noop'">
+                                <h4>Response Parsing</h4>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Decode as:</label>
+                                        <select class="form-control" ng-model="backend.encoding"
+                                                ng-init="backend.encoding ='json'"
+                                                ng-change="setNoOpEncoding(endpoint_index, backend.encoding, '{{ backend.encoding }}', backend_index)">
+                                            <option selected value="json">JSON</option>
+                                            <option value="xml">XML</option>
+                                            <option value="rss">RSS</option>
+                                            <option value="string">String</option>
+                                            <option value="noop">No-Op</option>
+                                        </select>
+                                        <span class="help-block">How to decode the response of the backend.</span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>Root object:</label>
+                                        <input type="text" class="form-control" ng-model="backend.target"
+                                               ng-disabled="backend.is_collection == true"
+                                               placeholder="Leave blank to use all the reponse">
+                                        <span class="help-block">Some APIs return all the content encapsulated inside
+                                            a root object (usually named like <code>data</code>, <code>response</code>,
+                                            <code>items</code>). Specifying here a root object will put all its children
+                                            in the first level. When manipulating the data only its children are visible.</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Non-object response</label>
+                                        <div class="input-group">
+                                            <input type="checkbox"
+                                                   ng-model="backend.is_collection"
+                                                   ng-change="backend.target = ''"> Treat the response as a
+                                            collection, not an object.
+                                            <span class="help-block">KrakenD expects the returned content encapsulated in
+                                            an object (in json inside brackets, e.g: <code>{ "status":"OK" }</code> but if
+                                            the backend returns a collection instead (e.g: <code>[ "a", "b" ]</code>) check
+                                            this option. The collection will be returned inside the <code>collection</code>
+                                            attribute. Use the renaming below to rename it to anything else.</span>
 
 
-                    <div class="tab-pane active"
-                    id="tab_black-{{ endpoint_index }}-{{ backend_index }}">
-                    <p>Attributes that you will NOT pick from the response:</p>
-                    <ul class="list-inline">
-                        <li ng-repeat="white in backend.blacklist">
-                            <a class="badge badge-remove"
-                            ng-click="deleteBlacklist(black,backend_index,endpoint_index)"><i
-                            class="fa fa-times"></i>
-                        {{ white }}</a>
-                    </li>
-                </ul>
+
+                                <h4>Response manipulation</h4>
+
+                                <p>Transform here the response with a lighter version, include only the attributes that
+                                    your
+                                    application needs.</p>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Filtering mode</label>
+                                    <div class="col-md-10">
+                                        <div class="nav-tabs-custom">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active">
+                                                    <a data-target="#tab_black-{{ endpoint_index }}-{{ backend_index }}"
+                                                       data-toggle="tab"
+                                                       aria-expanded="false">Blacklist (fastest)</a>
+                                                </li>
+                                                <li>
+                                                    <a data-target="#tab_white-{{ endpoint_index }}-{{ backend_index }}"
+                                                       data-toggle="tab"
+                                                       aria-expanded="true">Whitelist</a></li>
+                                            </ul>
+                                            <div class="tab-content">
 
                 <div class="input-group">
                     <input class="form-control"
@@ -546,7 +547,26 @@ application needs.</p>
                                     class="fa fa-warning"></i> Invalid format</p>
                                     <p>Maximum requests per second you want to accept in this backend.</p>
                                 </div>
+                                <hr/>
+
+                                <h4>Advanced - Martian DSL</h4>
+                                <p>Paste here any additional configuration you want to add to <a href="https://github.com/google/martian#modifiers-all-the-way-down">Martian</a>. The input must be a JSON object (ensure to start and end with curly braces <code>{}</code>)</p>
+                                 <div class="form-group">
+                                    <label class="col-md-2 control-label">Martian DSL</label>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                               <textarea json-formatter class="form-control" ng-model="backend.extra_config['github.com/devopsfaith/krakend-martian']"></textarea>
+                                            </div>
+                                        </div>
+                                        <p ng-show="backend.martian_syntax_validation.length" class="badge label-danger">
+                                            <i class="fa fa-warning"></i> Syntax error - {{backend.martian_syntax_validation}}</p>
+                                        <span class="help-block">Paste here your JSON configuration to be used in the martian modifier. See <a href="https://github.com/devopsfaith/krakend-martian/blob/master/example/krakend.json#L26">an example</a></span>
+                                    </div>
+                                </div>
                             </div>
+                            </div><!-- ngif output_encoding != noop -->
+                            <!-- /.box-body -->
                         </div>
 
                         <div class="form-group" ng-class="isInteger(backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity) ? '' : 'has-error'">
@@ -570,9 +590,14 @@ application needs.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- /Modal backend -->
-        </div>
+                <button class="btn btn-primary"
+                        ng-click="addBackendQuery(endpoint_index)"
+                        ng-if="! endpoint.backend || endpoint.backend.length < 1 || ( endpoint.method =='GET' && !(endpoint.output_encoding == 'noop' && endpoint.backend.length > 0))">
+                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Add backend query
+                </button>
+            </fieldset>
+        </form>
     </div>
     <button class="btn btn-primary"
 ng-click="addStaticResponse(endpoint_index)"
