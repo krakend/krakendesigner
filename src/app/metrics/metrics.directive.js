@@ -31,6 +31,11 @@ angular
                 {
                     return false;
                 }
+                return true;
+            }
+
+            scope.metricIsEnabled = function(metric) {
+                return scope.shouldShowSettings() && 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters && 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters[metric];
             }
 
             scope.toggleMetricsBackend = function (isEnabled, metric) {
@@ -40,7 +45,6 @@ angular
                     scope.data.extra_config[NAMESPACE] = default_metrics_settings;
                 }
 
-
                 if (isEnabled) {
                     scope.data.extra_config[NAMESPACE].exporters[metric] = {};
                 }
@@ -49,10 +53,9 @@ angular
                     delete scope.data.extra_config[NAMESPACE].exporters[metric];
 
                     // If this is the last metric delete the whole module to leave config clean:
-                    if (!scope.shouldShowSettings())
+                    if (!Object.keys(scope.data.extra_config[NAMESPACE].exporters).length)
                     {
                         delete scope.data.extra_config[NAMESPACE];
-                        console.log({"GOODBYE ---": scope.data.extra_config});
                     }
                 }
             }

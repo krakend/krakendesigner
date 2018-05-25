@@ -9,16 +9,16 @@
         <label>
           <input type="checkbox"
           ng-model="exporters.logger"
-          ng-checked="isObject(data.extra_config[config_namespace].exporters.logger)"
+          ng-checked="metricIsEnabled('logger')"
           ng-click="toggleMetricsBackend(exporters.logger,'logger')">
-          <strong>Logger</strong> - No backend needed
+          <strong>Logger</strong> - Will use your Logger settings to expose the metrics
         </label>
       </div>
       <div class="checkbox">
         <label>
           <input type="checkbox"
           ng-model="exporters.zipkin"
-          ng-checked="isObject(data.extra_config[config_namespace].exporters.zipkin)"
+          ng-checked="metricIsEnabled('zipkin')"
           ng-click="toggleMetricsBackend(exporters.zipkin,'zipkin')">
           <strong>Zipkin</strong> - Distributed tracing system
         </label>
@@ -27,7 +27,7 @@
         <label>
           <input type="checkbox"
           ng-model="exporters.jaeger"
-          ng-checked="isObject(data.extra_config[config_namespace].exporters.jaeger)"
+          ng-checked="metricIsEnabled('jaeger')"
           ng-click="toggleMetricsBackend(exporters.jaeger,'jaeger')">
           <strong>Jaeger</strong> - Distributed tracing system
         </label>
@@ -36,7 +36,7 @@
         <label>
           <input type="checkbox"
           ng-model="exporters.influxdb"
-          ng-checked="isObject(data.extra_config[config_namespace].exporters.influxdb)"
+          ng-checked="metricIsEnabled('influxdb')"
           ng-click="toggleMetricsBackend(exporters.influxdb,'influxdb')">
           <strong>InfluxDB</strong> - Time series database
         </label>
@@ -45,7 +45,7 @@
         <label>
           <input type="checkbox"
           ng-model="exporters.prometheus"
-          ng-checked="isObject(data.extra_config[config_namespace].exporters.prometheus)"
+          ng-checked="metricIsEnabled('prometheus')"
           ng-click="toggleMetricsBackend(exporters.prometheus,'prometheus')">
           <strong>Prometheus</strong> - Monitoring and alerting toolkit
         </label>
@@ -84,13 +84,17 @@
     </div>
   </div>
 </div>
-<div class="box box-primary" ng-if="data.extra_config[config_namespace].exporters.influxdb">
+<div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.logger">
+  <div class="box-header with-border">
+    <h3 class="box-title">Logger</h3>
+  </div>
+  <div class="box-body">
+    <p>Sending metrics to the logger do not require any additional configuration. Metrics will be displayed as per the Logging configuration shown in the right</p>
+  </div>
+</div>
+<div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.influxdb">
   <div class="box-header with-border">
     <h3 class="box-title">InfluxDB configuration</h3>
-    <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" ng-click="deleteMetric('influxdb')">
-      <i class="fa fa-trash"></i></button>
-    </div>
   </div>
   <div class="box-body">
     <div class="form-group">
@@ -121,7 +125,7 @@
     </div>
   </div>
 </div>
-<div class="box box-primary" ng-if="data.extra_config[config_namespace].exporters.zipkin">
+<div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.zipkin">
   <div class="box-header with-border">
     <h3 class="box-title">Zipkin configuration</h3>
   </div>
@@ -144,7 +148,7 @@
     </div>
   </div>
 </div>
-<div class="box box-primary" ng-if="data.extra_config[config_namespace].exporters.jaeger">
+<div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.jaeger">
   <div class="box-header with-border">
     <h3 class="box-title">Jaeger configuration</h3>
   </div>
@@ -167,7 +171,7 @@
     </div>
   </div>
 </div>
-<div class="box box-primary" ng-if="data.extra_config[config_namespace].exporters.prometheus">
+<div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.prometheus">
   <div class="box-header with-border">
     <h3 class="box-title">Prometheus configuration</h3>
   </div>
