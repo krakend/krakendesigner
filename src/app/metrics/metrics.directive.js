@@ -59,6 +59,15 @@ angular
                     }
                 }
             }
+
+            scope.isValidTimeUnit = function (time_with_unit) {
+
+                return (
+                    'undefined' === typeof time_with_unit ||
+                    '' == time_with_unit ||
+                    /^\d+(ns|us|µs|ms|s|m|h)$/.test(time_with_unit)
+                    );
+            };
         }
     }
 });

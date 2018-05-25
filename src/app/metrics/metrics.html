@@ -112,7 +112,7 @@
         ng-model="data.extra_config[config_namespace].exporters.influxdb.db"
         placeholder="e.g: krakend">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" ng-class="isValidTimeUnit(data.extra_config[config_namespace].exporters.influxdb.timeout) ? '' : 'has-error'">
         <label class="control-label">Write Timeout</label>
         <input type="text"
         class="form-control"
