@@ -8,7 +8,7 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body">
-    <p>These are specific settings to deal with the HTTP client used to query your backends.</p>
+    <p>These are specific settings to deal with the HTTP client used to query your backends. You usually don't need to set any of these values</p>
     <div class="col-md-12">
       <h4>Timeouts</h4>
     </div>
@@ -63,7 +63,7 @@
         <input class="form-control"
         ng-model="service.max_idle_connections"
         type="text">
-        <span class="help-block">Maximum number of idle (keep-alive) connections across all hosts. <code>250</code> means no limit.
+        <span class="help-block">Maximum number of idle (keep-alive) connections across all hosts. <code>0</code> means no limit.
         </span>
       </div>
       <div class="col-md-3" ng-class="isInteger(service.max_idle_connections_per_host) ? '' : 'has-error'">
@@ -76,33 +76,35 @@
         </span>
       </div>
       <div class="col-md-3">
-        <label class="control-label" for="service.disable_keep_alives">Disable Keep-Alives</label>
-        <select class="form-control"
-          id="service.disable_keep_alives"
-          name="service.disable_keep_alives"
-          ng-model="service.disable_keep_alives"
-          placeholder="0s"
-          type="text">
-          <option ng-value="true">Yes</option>
-          <option ng-value="true">No</option>
-        </select>
-        <div class="help-block">
-          <p>If set prevents re-use of TCP connections between different HTTP request</p>
+        <div class="checkbox">
+          <label for="service.disable_keep_alives">
+            <input type="checkbox"
+            id="service.disable_keep_alives"
+            name="service.disable_keep_alives"
+            ng-model="service.disable_keep_alives"
+            placeholder="0s"
+            type="text">
+            <strong>Disable Keep-Alives</strong>
+          </label>
+          <div class="help-block">
+            <p>If set prevents re-use of TCP connections between different HTTP request</p>
+          </div>
         </div>
       </div>
       <div class="col-md-3">
-        <label class="control-label" for="service.disable_compression">Disable Compression</label>
-        <select class="form-control"
-          id="service.disable_compression"
-          name="service.disable_compression"
-          ng-model="service.disable_compression"
-          placeholder="0s"
-          type="text">
-          <option ng-value="true">Yes</option>
-          <option ng-value="true">No</option>
-        </select>
-        <div class="help-block">
-          <p>If set, prevents the Transport from requesting compression with an <code>"Accept-Encoding: gzip"</code> request header.</p>
+        <div class="checkbox">
+          <label for="service.disable_compression">
+            <input type="checkbox"
+            id="service.disable_compression"
+            name="service.disable_compression"
+            ng-model="service.disable_compression"
+            placeholder="0s"
+            type="text">
+            <strong>Disable Compression</strong>
+          </label>
+          <div class="help-block">
+            <p>If set, prevents the Transport from requesting compression with an <code>"Accept-Encoding: gzip"</code> request header.</p>
+          </div>
         </div>
       </div>
     </div>
