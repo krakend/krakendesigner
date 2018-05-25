@@ -1,0 +1,155 @@
+<div class="box box-primary collapsed-box">
+  <div class="box-header with-border">
+    <h3 class="box-title">HTTP Client settings (Advanced)</h3>
+    <div class="pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <p>These are specific settings to deal with the HTTP client used to query your backends.</p>
+    <div class="col-md-12">
+      <h4>Timeouts</h4>
+    </div>
+    <div class="form-group">
+      <div class="col-md-4"  ng-class="isValidTimeUnit(service.idle_connection_timeout) ? '' : 'has-error'">
+        <label class="control-label" for="service.idle_connection_timeout">IDLE Connection Timeout</label>
+        <input class="form-control"
+        id="service.idle_connection_timeout"
+        name="service.idle_connection_timeout"
+        ng-model="service.idle_connection_timeout"
+        placeholder="0s"
+        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.idle_connection_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Maximum amount of time an idle (keep-alive) connection will remain idle before closing itself.
+          Zero means no limit</p>
+        </div>
+      </div>
+      <div class="col-md-4" ng-class="isValidTimeUnit(service.response_header_timeout) ? '' : 'has-error'">
+        <label class="control-label" for="service.response_header_timeout">Response Header Timeout</label>
+        <input class="form-control"
+        id="service.response_header_timeout"
+        name="service.response_header_timeout"
+        ng-model="service.response_header_timeout"
+        placeholder="0s"        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.response_header_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Time to wait for a server's response headers after fully writing the request. This time does not include the time to read the response body.</p>
+        </div>
+      </div>
+      <div class="col-md-4" ng-class="isValidTimeUnit(service.expect_continue_timeout) ? '' : 'has-error'">
+        <label class="control-label" for="service.expect_continue_timeout">Expect Continue Timeout</label>
+        <input class="form-control"
+        id="service.expect_continue_timeout"
+        name="service.expect_continue_timeout"
+        ng-model="service.expect_continue_timeout"
+        placeholder="0s"
+        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.expect_continue_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Time to wait for a server's first response headers after fully writing the request headers if the request has an <code>"Expect: 100-continue"</code> header. Zero means no timeout</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <hr/>
+      <h4>Connections</h4>
+    </div>
+    <div class="form-group">
+      <div class="col-md-3" ng-class="isInteger(service.max_idle_connections) ? '' : 'has-error'">
+        <label class="control-label">Maximum IDLE connections</label>
+        <input class="form-control"
+        ng-model="service.max_idle_connections"
+        type="text">
+        <span class="help-block">Maximum number of idle (keep-alive) connections across all hosts. <code>250</code> means no limit.
+        </span>
+      </div>
+      <div class="col-md-3" ng-class="isInteger(service.max_idle_connections_per_host) ? '' : 'has-error'">
+        <label class="control-label">Maximum IDLE connections per host</label>
+        <input class="form-control"
+        ng-model="service.max_idle_connections_per_host"
+        type="text">
+        <span class="help-block">Maximum number of IDLE connections that you allow per-host.
+          Defaults to <code>250</code>.
+        </span>
+      </div>
+      <div class="col-md-3">
+        <label class="control-label" for="service.disable_keep_alives">Disable Keep-Alives</label>
+        <select class="form-control"
+          id="service.disable_keep_alives"
+          name="service.disable_keep_alives"
+          ng-model="service.disable_keep_alives"
+          placeholder="0s"
+          type="text">
+          <option ng-value="true">Yes</option>
+          <option ng-value="true">No</option>
+        </select>
+        <div class="help-block">
+          <p>If set prevents re-use of TCP connections between different HTTP request</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label class="control-label" for="service.disable_compression">Disable Compression</label>
+        <select class="form-control"
+          id="service.disable_compression"
+          name="service.disable_compression"
+          ng-model="service.disable_compression"
+          placeholder="0s"
+          type="text">
+          <option ng-value="true">Yes</option>
+          <option ng-value="true">No</option>
+        </select>
+        <div class="help-block">
+          <p>If set, prevents the Transport from requesting compression with an <code>"Accept-Encoding: gzip"</code> request header.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <hr/>
+      <h4>Dial settings</h4>
+    </div>
+    <div class="form-group">
+      <div class="col-md-4" ng-class="isValidTimeUnit(service.dialer_timeout) ? '' : 'has-error'">
+        <label class="control-label" for="service.dialer_timeout">Dialer Timeout</label>
+        <input class="form-control"
+        id="service.dialer_timeout"
+        name="service.dialer_timeout"
+        ng-model="service.dialer_timeout"
+        placeholder="0s"        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.dialer_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Maximum amount of time a dial will wait for a connect to complete</p>
+        </div>
+      </div>
+      <div class="col-md-4" ng-class="isValidTimeUnit(service.dialer_fallback_delay) ? '' : 'has-error'">
+        <label class="control-label" for="service.dialer_fallback_delay">Dialer Fallback Delay</label>
+        <input class="form-control"
+        id="service.dialer_fallback_delay"
+        name="service.dialer_fallback_delay"
+        ng-model="service.dialer_fallback_delay"
+        placeholder="0s"        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.dialer_fallback_delay)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Length of time to wait before spawning a fallback connection. If zero, a default delay of 300ms is used.</p>
+        </div>
+      </div>
+      <div class="col-md-4" ng-class="isValidTimeUnit(service.dialer_keep_alive) ? '' : 'has-error'">
+        <label class="control-label" for="service.dialer_keep_alive">Dialer Keep-Alive</label>
+        <input class="form-control"
+        id="service.dialer_keep_alive"
+        name="service.dialer_keep_alive"
+        ng-model="service.dialer_keep_alive"
+        placeholder="0s"        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.dialer_keep_alive)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Keep-alive period for an active network connection. If zero, keep-alives are not enabled.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box-footer">
+    <p><i class="fa fa-info"></i> For a more detailed explanation of this settings see the comments in the <a href="https://golang.org/src/net/http/transport.go#L160">HTTP client implementation</a></p>
+  </div>
+</div>

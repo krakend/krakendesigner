@@ -1,0 +1,69 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">HTTP Server settings</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <p>Settings of the KrakenD http server</p>
+    <div class="form-group">
+      <div class="col-md-6" ng-class="isValidTimeUnit(service.read_timeout) ? '' : 'has-error'">
+        <label class="control-label" for="service.read_timeout">HTTP Read Timeout</label>
+        <input class="form-control"
+        id="service.read_timeout"
+        name="service.read_timeout"
+        ng-model="service.read_timeout"
+        placeholder="0s"
+        ng-init="service.read_timeout='0s'"
+        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.read_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Maximum duration for reading the entire http request, including the body.</p>
+        </div>
+      </div>
+      <div class="col-md-6" ng-class="isValidTimeUnit(service.write_timeout) ? '' : 'has-error'">
+        <label class="control-label" for="service.write_timeout">HTTP Write Timeout</label>
+        <input class="form-control"
+        id="service.write_timeout"
+        name="service.write_timeout"
+        ng-model="service.write_timeout"
+        placeholder="0s"
+        ng-init="service.write_timeout='0s'"
+        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.write_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Maximum duration before timing out writes of the response</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-6" ng-class="isValidTimeUnit(service.idle_timeout) ? '' : 'has-error'">
+        <label class="control-label" for="service.idle_timeout">HTTP Idle Timeout</label>
+        <input class="form-control"
+        id="service.idle_timeout"
+        name="service.idle_timeout"
+        ng-model="service.idle_timeout"
+        placeholder="0s"
+        ng-init="service.idle_timeout='0s'"
+        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.idle_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Maximum amount of time to wait for the next request when keep-alives are enabled</p>
+        </div>
+      </div>
+      <div class="col-md-6" ng-class="isValidTimeUnit(service.read_header_timeout) ? '' : 'has-error'">
+        <label class="control-label" for="service.read_header_timeout">HTTP Read Header Timeout</label>
+        <input class="form-control"
+        id="service.read_header_timeout"
+        name="service.read_header_timeout"
+        ng-model="service.read_header_timeout"
+        placeholder="0s"
+        ng-init="service.read_header_timeout='0s'"
+        type="text">
+        <div class="help-block">
+          <p ng-hide="isValidTimeUnit(service.read_header_timeout)"ng-include src="'/src/app/forms/time_units.html'"></p>
+          <p>Amount of time allowed to read request headers</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
