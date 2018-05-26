@@ -1,0 +1,39 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Timeouts and TTL</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <p>All settings below are used across all backends unless specifically overridden in each endpoint</p>
+    <div class="form-group" ng-class="isValidTimeUnit(service.timeout) ? '' : 'has-error'">
+      <label class="control-label" for="service.timeout">Backend Timeout</label>
+      <input class="form-control"
+      id="service.timeout"
+      name="service.timeout"
+      ng-model="service.timeout"
+      placeholder="3000ms"
+      ng-init="service.timeout='3000ms'"
+      type="text">
+      <div class="help-block">
+        <p ng-hide="isValidTimeUnit(service.timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+        <p>This is the <strong>default timeout</strong> for all the outgoing connections against your
+        backends and takes into account the duration of all the pipe. This value can be overridden later on specific endpoints.</p>
+      </div>
+    </div>
+    <div class="form-group" ng-class="isValidTimeUnit(service.cache_ttl) ? '' : 'has-error'">
+      <label class="control-label" for="service.cache_ttl">Default Cache TTL</label>
+      <input
+      class="form-control"
+      ng-model="service.cache_ttl" type="text"
+      placeholder="300"
+      ng-init="service.cache_ttl='300s'">
+      <div class="help-block">
+        <p ng-hide="isValidTimeUnit(service.cache_ttl)" ng-include src="'/src/app/forms/time_units.html'"></p>
+        <p ng-hide="isInteger(service.cache_ttl)">Value must be an integer expressing the number of seconds</p>
+        <p>Time the service considers the origin is still valid. Applies
+          to GET requests only. The service does not cache anything but facilitates
+        the headers for proxies to do the caching (e.g: Varnish server).</p>
+      </div>
+    </div>
+  </div>
+</div>

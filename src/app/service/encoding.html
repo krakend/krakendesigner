@@ -1,0 +1,26 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Encoding</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <div class="form-group">
+      <label class="control-label">Output encoding</label>
+      <div class="input-group">
+        <select class="form-control"
+          ng-model="service.output_encoding"
+          id="service.output_encoding"
+          name="service.output_encoding"
+          ng-init="service.output_encoding='json'">
+          <option value="json">JSON</option>
+          <option value="negotiate">Negotiate content</option>
+          <option value="string">String (text/plain)</option>
+          <option value="noop">No-op (just proxy)</option>
+        </select>
+        <div class="help-block">
+          <p>Render register used <strong>by default</strong> to encode the output of KrakenD endpoints. You can change this setting later per endpoint.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
