@@ -1,6 +1,6 @@
 <div class="box box-primary">
   <div class="box-header with-border">
-    <h3 class="box-title">Encoding</h3>
+    <h3 class="box-title">Options</h3>
   </div>
   <!-- /.box-header -->
   <div class="box-body">
@@ -21,6 +21,17 @@
           <p>Render register used <strong>by default</strong> to encode the output of KrakenD endpoints. You can change this setting later per endpoint.</p>
         </div>
       </div>
+      <div class="checkbox">
+          <label for="service.disable_rest">
+            <input type="checkbox"
+            id="service.disable_rest"
+            name="service.disable_rest"
+            ng-model="service.disable_rest">
+            <strong>Allow non-RESTful resource naming</strong>
+          </label>
+          <div class="help-block">
+            <p>If your backends do not respect RESTful resource naming enable this option. KrakenD will allow you to query URL patterns like <code>/url.{some_variable}.json</code></p>
+          </div>
     </div>
   </div>
 </div>
