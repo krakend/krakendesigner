@@ -10,14 +10,16 @@ angular
         },
         link: function(scope, element, attrs) {
 
-            var default_metrics_settings = {
-                "sample_rate": 100,
-                "reporting_period": 1,
-                "exporters": {}
+            var default_opencensus_settings = {
+             "collection_time": "60s",
+             "proxy_disabled": false,
+             "router_disabled": false,
+             "backend_disabled": false,
+             "endpoint_disabled": false,
+             "listen_address": ":8090"
+         }
 
-            }
-
-            var NAMESPACE = 'github_com/devopsfaith/krakend-opencensus';
+         var NAMESPACE = 'github_com/devopsfaith/krakend-metrics';
 
             // Create extra_config namespace with default data and merge with existing content:
             scope.data.extra_config = Object.assign({}, scope.data.extra_config );
@@ -26,7 +28,7 @@ angular
             // Easier access for the template:
             scope.config_namespace = NAMESPACE;
 
-            scope.shouldShowSettings = function() {
+            scope.isMiddlewareEnabled = function() {
                 if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE] )
                 {
                     return false;
@@ -34,29 +36,14 @@ angular
                 return true;
             }
 
-            scope.metricIsEnabled = function(metric) {
-                return scope.shouldShowSettings() && 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters && 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters[metric];
-            }
+            scope.toggleMetricsMiddleware = function (enable) {
+                if (enable) {
 
-            scope.toggleMetricsBackend = function (isEnabled, metric) {
-
-                if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE])
-                {
-                    scope.data.extra_config[NAMESPACE] = default_metrics_settings;
-                }
-
-                if (isEnabled) {
-                    scope.data.extra_config[NAMESPACE].exporters[metric] = {};
+                    scope.data.extra_config[NAMESPACE] = default_opencensus_settings;
                 }
                 else
                 {
-                    delete scope.data.extra_config[NAMESPACE].exporters[metric];
-
-                    // If this is the last metric delete the whole module to leave config clean:
-                    if (!Object.keys(scope.data.extra_config[NAMESPACE].exporters).length)
-                    {
-                        delete scope.data.extra_config[NAMESPACE];
-                    }
+                    delete scope.data.extra_config[NAMESPACE];
                 }
             }
 

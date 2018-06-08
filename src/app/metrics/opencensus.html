@@ -1,0 +1,188 @@
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox"
+      ng-model="opencensus_enabled"
+      ng-checked="isMiddlewareEnabled()"
+      ng-click="toggleOpencensusMiddleware(opencensus_enabled)"> Opencensus</h3>
+    </div>
+    <div class="box-body" ng-if="isMiddlewareEnabled()">
+      <p>The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different backends. Select all the metric integrations you want to enable and configure below:</p>
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-model="exporters.logger"
+            ng-checked="backendIsEnabled('logger')"
+            ng-click="toggleOpencensusBackend(exporters.logger,'logger')">
+            <strong>Logger</strong> - Will use your Logger settings to expose the metrics
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-model="exporters.zipkin"
+            ng-checked="backendIsEnabled('zipkin')"
+            ng-click="toggleOpencensusBackend(exporters.zipkin,'zipkin')">
+            <strong>Zipkin</strong> - Distributed tracing system
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-model="exporters.jaeger"
+            ng-checked="backendIsEnabled('jaeger')"
+            ng-click="toggleOpencensusBackend(exporters.jaeger,'jaeger')">
+            <strong>Jaeger</strong> - Distributed tracing system
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-model="exporters.influxdb"
+            ng-checked="backendIsEnabled('influxdb')"
+            ng-click="toggleOpencensusBackend(exporters.influxdb,'influxdb')">
+            <strong>InfluxDB</strong> - Time series database
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-model="exporters.prometheus"
+            ng-checked="backendIsEnabled('prometheus')"
+            ng-click="toggleOpencensusBackend(exporters.prometheus,'prometheus')">
+            <strong>Prometheus</strong> - Monitoring and alerting toolkit
+          </label>
+        </div>
+      </div>
+      <h4>Global settings for all metrics</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="control-label">Sample rate</label>
+          <div class="input-group">
+            <input type="text"
+            class="form-control"
+            ng-model="data.extra_config[config_namespace].sample_rate"
+            placeholder="100">
+            <div class="input-group-addon">%</div>
+          </div>
+          <div class="help-block">
+            Percentage of requests you want to sample (0-100).
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Reporting period</label>
+          <div class="input-group">
+            <input type="text"
+            class="form-control"
+            ng-model="data.extra_config[config_namespace].reporting_period"
+            placeholder="1">
+            <div class="input-group-addon">seconds</div>
+          </div>
+          <div class="help-block">
+            Time between sent reports to the backend
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.logger">
+    <div class="box-header with-border">
+      <h3 class="box-title">Logger</h3>
+    </div>
+    <div class="box-body">
+      <p>Sending metrics to the logger do not require any additional configuration. Metrics will be displayed as per the Logging configuration shown in the right</p>
+    </div>
+  </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.influxdb">
+    <div class="box-header with-border">
+      <h3 class="box-title">InfluxDB configuration</h3>
+    </div>
+    <div class="box-body">
+      <div class="form-group">
+        <label class="control-label">Address</label>
+        <input type="text"
+        class="form-control"
+        ng-model="data.extra_config[config_namespace].exporters.influxdb.address"
+        placeholder="e.g: http://192.168.99.100:8086">
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <label class="control-label">Database</label>
+          <input type="text"
+          class="form-control"
+          ng-model="data.extra_config[config_namespace].exporters.influxdb.db"
+          placeholder="e.g: krakend">
+        </div>
+        <div class="col-md-4" ng-class="isValidTimeUnit(data.extra_config[config_namespace].exporters.influxdb.timeout) ? '' : 'has-error'">
+          <label class="control-label">Write Timeout</label>
+          <input type="text"
+          class="form-control"
+          ng-model="data.extra_config[config_namespace].exporters.influxdb.timeout"
+          ng-class="isValidTimeUnit(data.extra_config[config_namespace].exporters.influxdb.timeout) ? '' : 'has-error'">
+          <div class="help-block">
+            <p ng-hide="isValidTimeUnit(data.extra_config[config_namespace].exporters.influxdb.timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.zipkin">
+    <div class="box-header with-border">
+      <h3 class="box-title">Zipkin configuration</h3>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="control-label">Collector URL</label>
+          <input type="text"
+          class="form-control"
+          ng-model="data.extra_config[config_namespace].exporters.zipkin.collectorURL"
+          placeholder="e.g: http://192.168.99.100:9411/api/v2/spans">
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Service Name</label>
+          <input type="text"
+          class="form-control"
+          ng-model="data.extra_config[config_namespace].exporters.zipkin.serviceName"
+          placeholder="e.g: krakend">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.jaeger">
+    <div class="box-header with-border">
+      <h3 class="box-title">Jaeger configuration</h3>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="control-label">Endpoint</label>
+          <input type="text"
+          class="form-control"
+          ng-model="data.extra_config[config_namespace].exporters.jaeger.endpoint"
+          placeholder="e.g: http://192.168.99.100:9411/api/v2/spans">
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Service Name</label>
+          <input type="text"
+          class="form-control"
+          ng-model="data.extra_config[config_namespace].exporters.jaeger.serviceName"
+          placeholder="e.g: krakend">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.prometheus">
+    <div class="box-header with-border">
+      <h3 class="box-title">Prometheus configuration</h3>
+    </div>
+    <div class="box-body">
+      <div class="form-group">
+        <label class="control-label">Port</label>
+        <input type="text"
+        class="form-control"
+        ng-model="data.extra_config[config_namespace].exporters.prometheus.port"
+        placeholder="e.g:9091">
+      </div>
+    </div>
+  </div>
