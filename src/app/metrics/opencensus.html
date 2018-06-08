@@ -3,7 +3,7 @@
     <h3 class="box-title"><input type="checkbox"
       ng-model="opencensus_enabled"
       ng-checked="isMiddlewareEnabled()"
-      ng-click="toggleOpencensusMiddleware(opencensus_enabled)"> Opencensus</h3>
+      ng-click="toggleOpencensusMiddleware(opencensus_enabled)"> Opencensus <small>(Zipkin, InfluxDB, Prometheus...)</small></h3>
     </div>
     <div class="box-body" ng-if="isMiddlewareEnabled()">
       <p>The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different backends. Select all the metric integrations you want to enable and configure below:</p>
