@@ -370,7 +370,7 @@ angular
 });
 
 function downloadDocument(name, content) {
-    FileSaver.saveAs(new Blob([content], {type: "text/plain;charset=UTF-8"}), name);
+    FileSaver.saveAs(new Blob([content], {type: "text/plain;charset=UTF-8"}), name, true);
 }
 
 // Avoid losing the configuration:
