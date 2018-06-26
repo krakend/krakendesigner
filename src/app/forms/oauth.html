@@ -7,10 +7,9 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        <p>The OAuth settings are used per backend as every query will require different scopes/settings. Neverthless you
-        might want to set some initial settings that will be copied to the specific backend when you check OAuth is required.</p>
+        <p>The OAuth settings are used per backend as every query will require different scopes/settings. Nevertheless you might want to set some initial settings that will be copied to the specific backend when you check OAuth is required.</p>
 
-        <oauth data="service"></oauth>
+        <middleware data="service" template="oauth.html" namespace="'github_com/devopsfaith/krakend-oauth2-clientcredentials'"></middleware>
     </div><!-- ./box-body -->
 
 </div>

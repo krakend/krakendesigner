@@ -331,7 +331,7 @@
                                 </div>
                                 <hr/>
                                 <h4>Authorization</h4>
-                                <oauth data="backend" inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']"></oauth>
+                                <middleware data="backend" inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']" template="oauth.html" namespace="'github_com/devopsfaith/krakend-oauth2-clientcredentials'"></middleware>
                                 <hr/>
                                 <div ng-if="endpoint.output_encoding != 'noop'">
                                 <h4>Response Parsing</h4>

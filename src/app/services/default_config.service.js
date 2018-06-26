@@ -27,6 +27,9 @@ angular
                 "backend_disabled": false,
                 "endpoint_disabled": false,
                 "listen_address": ":8090"
+            },
+            'github_com/devopsfaith/krakend-oauth2-clientcredentials' : {
+                "endpoint_params": {}
             }
         }
     };

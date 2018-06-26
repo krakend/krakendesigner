@@ -4,7 +4,6 @@ import './app/services/default_config.service.js';
 import './app/services/input_validator.service.js';
 import './app/services/middleware.directive.js';
 import './app/security/headers.directive.js';
-import './app/security/oauth.directive.js';
 import './app/metrics/opencensus.directive.js';
 import './app/endpoint/json-formatter.directive.js';
 import './app/cached_templates.js';
