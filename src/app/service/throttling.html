@@ -1,59 +1,16 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">Throttling and limits</h3>
+		<h3 class="box-title">
+			<input type="checkbox" ng-model="metrics_enabled" ng-checked="hasMiddleware('github_com/devopsfaith/krakend-ratelimit/juju/router')" ng-click="toggleMiddleware('github_com/devopsfaith/krakend-ratelimit/juju/router')"> Throttling and limits
+		</h3>
 	</div>
 	<!-- /.box-header -->
 	<div class="box-body">
-		<p>Write here the default limits that will be used across all your endpoints. You can override rate limit and user quota
-			per endpoint if needed. <strong>Read more on <a href="/docs/throttling/rate-limit">rate limiting</a></strong></p>
-			<div class="form-group" ng-class="isInteger(service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].maxRate) ? '' : 'has-error'">
-				<label class="control-label">Default endpoint rate limit</label>
-				<div class="input-group">
-					<input class="form-control"
-					ng-model="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].maxRate"
-					id="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].maxRate"
-					name="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].maxRate"
-					type="text"
-					ng-init="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].maxRate=0">
-					<div class="input-group-addon">reqs/sec</div>
-				</div>
-				<span class="help-block">Maximum requests per second you want to let every endpoint handle. This value will
-					be used as a default for all the endpoints you create unless overridden in its specific configuration. Leave <code>0</code> for no default limit.
-				</span>
-			</div>
-			<div class="form-group" ng-class="isInteger(service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate) ? '' : 'has-error'">
-				<label class="control-label">Default user quota</label>
-				<div class="input-group">
-					<input class="form-control"
-					ng-model="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate"
-					id="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate"
-					name="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate"
-					type="text"
-					ng-init="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate=0">
-					<div class="input-group-addon">reqs/sec</div>
-				</div>
-				<span class="help-block">Maximum requests per second you want to allow to each different API user. This
-					value will be used as default for all the endpoints unless overridden in each of them. Use <code>0</code>
-					for no limitation.
-				</span>
-				<div ng-show="0 != service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate">
-					<p><strong>A unique user is identified by...</strong></p>
-					<div class="input-group" class="form-control">
-						<input type="radio" name="throttling_decorator" value="ip"
-						ng-checked="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].key==''"
-						ng-click="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].key=''"
-						ng-model="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].strategy">
-						Its originating IP
-					</div>
-					<div class="input-group" class="form-control">
-						<input type="radio" name="throttling_decorator" value="header"
-						ng-checked="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].key!=''"
-						ng-model="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].strategy">
-						A custom header:
-						<input type="text" ng-model="service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router'].key"
-						placeholder="X-TOKEN">
-					</div>
-				</div>
-			</div>
-		</div>
+		<middleware
+			data=service
+			namespace="'github_com/devopsfaith/krakend-ratelimit/juju/router'"
+			template="ratelimit.html"
+			ng-if="hasMiddleware('github_com/devopsfaith/krakend-ratelimit/juju/router')">
+		</middleware>
 	</div>
+</div>

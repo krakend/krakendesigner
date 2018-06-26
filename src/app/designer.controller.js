@@ -2,34 +2,16 @@ var FileSaver = require('file-saver');
 
 angular
 .module('KrakenDesigner')
-.service("DataService", function () {
-    var service = {
-        configuration: {
-            version: 2,
-            extra_config: {
-                'github_com/devopsfaith/krakend-gologging': {
-                    level:  "ERROR",
-                    prefix: "[KRAKEND]",
-                    syslog: false,
-                    stdout: true
-                }
-            }
-        }
-    };
-
-    return service;
-})
-.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DataService) {
+.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig) {
 
     // Default initial values set in any configuration generation:
-    $rootScope.service = DataService.configuration;
+    $rootScope.service = DefaultConfig.service;
 
     $rootScope.save = function () {
         if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
             alert("At least you need to define an endpoint");
             return false;
         }
-        $rootScope.setDefaultData();
 
         var date = new Date().getTime();
         downloadDocument(date + "-krakend.json", angular.toJson($rootScope.service, true)); // Beautify
@@ -39,30 +21,28 @@ angular
     $rootScope.loadFile = function () {
         try {
             var loaded_json = JSON.parse($scope.service_configuration);
-            DataService.configuration = loaded_json;
-            $rootScope.service = DataService.configuration;
+            DefaultConfig.service = loaded_json;
+            $rootScope.service = DefaultConfig.service;
             $rootScope.dropzone_loaded = true;
         } catch (e) {
             alert("Failed to parse the selected JSON file.\n\n" + e.message);
         }
     };
 
-    $rootScope.setDefaultData = function () {
-        if ('undefined' === typeof $rootScope.service.extra_config['krakendesigner'] ||
-            'undefined' === typeof $rootScope.service.extra_config['krakendesigner']['endpoint_defaults']) {
-            return false;
-        }
-
-        for( var i=0; i<$rootScope.service.endpoints.length; i++) {
-            if ( typeof $rootScope.service.endpoints[i].extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'] === 'undefined' )
-                $rootScope.service.endpoints[i].extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router']
-            = $rootScope.service.extra_config['krakendesigner']['endpoint_defaults']['github.com/devopsfaith/krakend-ratelimit/juju/router']
-
-        }
-    };
-
     $rootScope.hasMiddleware = function(namespace) {
-        return !( 'undefined' === typeof $rootScope.service.extra_config[namespace] );
+        return !(
+            'undefined' === typeof $rootScope.service.extra_config ||
+            'undefined' === typeof $rootScope.service.extra_config[namespace]
+            );
+    }
+
+    // Destroy middleware or create it with default data:
+    $rootScope.toggleMiddleware = function(namespace) {
+        if ($rootScope.hasMiddleware(namespace)) {
+            delete $rootScope.service.extra_config[namespace]
+        } else {
+            $rootScope.service.extra_config[namespace] = {};
+        }
     }
 
     /**
