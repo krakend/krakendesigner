@@ -19,6 +19,14 @@ angular
                 "maxRate": 0,
                 "clientMaxRate": 0,
                 "strategy": "ip"
+            },
+            'github_com/devopsfaith/krakend-metrics' : {
+                "collection_time": "60s",
+                "proxy_disabled": false,
+                "router_disabled": false,
+                "backend_disabled": false,
+                "endpoint_disabled": false,
+                "listen_address": ":8090"
             }
         }
     };

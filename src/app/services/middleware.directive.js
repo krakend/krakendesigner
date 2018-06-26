@@ -13,11 +13,11 @@ angular
 
 
       var NAMESPACE = scope.namespace;
-      var default_data = {};
+      var default_middleware_data = {};
 
       // Load default values from default_config.service.js when present:
       if (undefined !== DefaultConfig.extra_config[NAMESPACE]) {
-        default_data = DefaultConfig.extra_config[NAMESPACE];
+        default_middleware_data = DefaultConfig.extra_config[NAMESPACE];
       }
 
       // Create extra_config key and merge with existing content:
@@ -26,9 +26,7 @@ angular
       // Inherited configuration passed, use when empty:
       if( 'object' == typeof scope.inherit ) {
         NAMESPACE = NAMESPACE.replace('github_com', 'github.com');
-        scope.data.extra_config[NAMESPACE] = angular.copy( Object.assign(default_data, scope.inherit, scope.data.extra_config[NAMESPACE] ) );
-      } else {
-        scope.data.extra_config[NAMESPACE] = angular.copy( Object.assign(default_data, scope.data.extra_config[NAMESPACE] ) );
+        scope.data.extra_config[NAMESPACE] = angular.copy( Object.assign(default_middleware_data, scope.inherit, scope.data.extra_config[NAMESPACE] ) );
       }
 
       // Easier access for the template:
@@ -37,6 +35,23 @@ angular
 
       scope.getTemplate = function() {
         return '/src/app/middlewares/' + attrs.template;
+      }
+
+       // Destroy middleware or create it with default data:
+       scope.toggleMiddleware = function () {
+        if ( scope.isMiddlewareEnabled() ) {
+          delete scope.data.extra_config[NAMESPACE];
+        } else {
+          scope.data.extra_config[NAMESPACE] = default_middleware_data;
+        }
+      }
+
+      scope.isMiddlewareEnabled = function() {
+        if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE] )
+        {
+          return false;
+        }
+        return true;
       }
     }
   }
