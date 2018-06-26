@@ -624,11 +624,13 @@
                 </div>
                 <div class="modal-body">
 
-                        <security-headers
+                        <middleware
+                            template="httpsecure.html"
+                            namespace="'github_com/devopsfaith/krakend-httpsecure'"
                             ng-if="hasMiddleware('github_com/devopsfaith/krakend-httpsecure')"
                             data="endpoint"
                             inherit="service.extra_config['github_com/devopsfaith/krakend-httpsecure']">
-                        </security-headers>
+                        </middlware>
                 </div>
             </div>
         </div>

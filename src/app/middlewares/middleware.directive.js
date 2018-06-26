@@ -60,7 +60,7 @@ angular
         } else {
          scope.data.extra_config[NAMESPACE][key] = value;
        }
-     };
+     }
 
      scope.deleteKey = function (key,  in_object = false) {
       if ( in_object )
@@ -69,8 +69,17 @@ angular
       } else {
         delete scope.data.extra_config[NAMESPACE][key];
       }
+    }
 
-    };
+    scope.addTermInList = function(term, list) {
+      if ( scope.data.extra_config[NAMESPACE][list].indexOf(term) === -1 ) {
+        scope.data.extra_config[NAMESPACE][list].push(term);
+      }
+    }
+
+    scope.deleteIndexFromList = function(index,list) {
+      scope.data.extra_config[NAMESPACE][list].splice(index, 1);
+    }
   }
 }
 }]);

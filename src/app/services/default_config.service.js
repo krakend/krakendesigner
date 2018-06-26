@@ -30,6 +30,10 @@ angular
             },
             'github_com/devopsfaith/krakend-oauth2-clientcredentials' : {
                 "endpoint_params": {}
+            },
+            'github_com/devopsfaith/krakend-httpsecure': {
+                "allowed_hosts": [],
+                "ssl_proxy_headers": {}
             }
         }
     };
