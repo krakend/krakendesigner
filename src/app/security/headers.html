@@ -1,13 +1,15 @@
 <div class="form-group">
     <div class="checkbox">
         <label>
-            <input type="checkbox" ng-model="data.extra_config[config_namespace].disable" data-toggle="security-options-wrapper">
-            <strong>Disable all security checks</strong>
+            <input type="checkbox"
+                ng-checked="isMiddlewareEnabled()"
+                ng-click="toggleMiddleware()">
+            <strong>Enable HTTP secure middleware</strong> (<a href="https://github.com/devopsfaith/krakend-httpsecure" title="View middleware source code">source code</a>)
         </label>
-        <span class="help-block">When developing, the AllowedHosts, SSL, and HSTS options can cause some unwanted effects. If you would like for any reason your system to by-pass all the security policies mark the checkbox.</span>
+        <span class="help-block">Add AllowedHosts, SSL, HSTS options and other security policies.</span>
     </div>
 </div>
-<div id="security-options-wrapper" ng-hide="data.extra_config[config_namespace].disable">
+<div ng-if="isMiddlewareEnabled()">
     <div class="form-group">
         <h4>Allowed hosts</h4>
         <div class="input-group">

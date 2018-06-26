@@ -61,6 +61,9 @@ angular
         }
     };
 
+    $rootScope.hasMiddleware = function(namespace) {
+        return !( 'undefined' === typeof $rootScope.service.extra_config[namespace] );
+    }
 
     /**
      * Pushes the value of the given container to an array with the given name or object, only if it doesn't exist.

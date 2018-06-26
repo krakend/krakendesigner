@@ -168,7 +168,8 @@
                         <br/>
                         <button class="btn btn-default btn-flat"
                                 data-toggle="modal"
-                                data-target="#security-modal-{{ endpoint_index }}">
+                                data-target="#security-modal-{{ endpoint_index }}"
+                                ng-disabled="!hasMiddleware('github_com/devopsfaith/krakend-httpsecure')">
                             <i class="fa fa-wrench"></i> Override defaults
                         </button>
                         <span class="help-block">
