@@ -41,7 +41,11 @@ angular
         if ($rootScope.hasMiddleware(namespace)) {
             delete $rootScope.service.extra_config[namespace]
         } else {
-            $rootScope.service.extra_config[namespace] = {};
+            if (undefined !== DefaultConfig.extra_config[namespace]) {
+                $rootScope.service.extra_config[namespace] = DefaultConfig.extra_config[namespace];
+            } else {
+                $rootScope.service.extra_config[namespace] = {};
+            }
         }
     }
 
@@ -74,13 +78,6 @@ angular
         array.splice(index, 1);
     };
 
-    $rootScope.deleteEtcdMachine = function (index) {
-
-        var array = $scope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines;
-        array.splice(index, 1);
-    };
-
-
     $rootScope.addHost = function (host, sd_type) {
 
         if ('static' === sd_type && ! /^https?:\/\/.+/i.test(host)) {
@@ -105,20 +102,6 @@ angular
         }
 
         $rootScope.service.sd_providers.hosts.push({ "sd": sd_type, "host": host });
-    };
-
-    $rootScope.addEtcdMachine = function () {
-        var sd_container = '#addEtcdMachine';
-        var sd = $(sd_container).val();
-
-        if (/^https?:\/\/.+/i.test(sd)) {
-
-            if (typeof $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines === "undefined") {
-                $rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines = [];
-            }
-
-            $rootScope.addTermToArray(sd, "$rootScope.service.extra_config['github_com/devopsfaith/krakend-etcd'].machines");
-        }
     };
 
     $rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {

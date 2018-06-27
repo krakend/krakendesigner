@@ -6,7 +6,7 @@ angular
 			return angular.isNumber(integer)
 		},
 		isEmpty: function(value) {
-			return isEmpty(value)
+			return ( 'undefined' === typeof value || ( 'object' == typeof value && 1 > value.length) || !value )
 		},
 		isValidTimeUnit: function (time_with_unit) {
 
@@ -15,6 +15,9 @@ angular
 				'' == time_with_unit ||
 				/^\d+(ns|us|µs|ms|s|m|h)$/.test(time_with_unit)
 				);
+		},
+		hasHTTP: function(url) {
+			return( /^https?:\/\/.+/i.test(url) )
 		}
 	};
 })

@@ -34,6 +34,12 @@ angular
             'github_com/devopsfaith/krakend-httpsecure': {
                 "allowed_hosts": [],
                 "ssl_proxy_headers": {}
+            },
+            'github_com/devopsfaith/krakend-etcd': {
+                "machines": [],
+                "dial_timeout": "5s",
+                "dial_keepalive": "30s",
+                "header_timeout": "1s"
             }
         }
     };

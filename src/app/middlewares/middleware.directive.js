@@ -71,7 +71,12 @@ angular
       }
     }
 
-    scope.addTermInList = function(term, list) {
+    scope.addTermToList = function(term, list) {
+      if ( 'undefined' === scope.data.extra_config[NAMESPACE][list] )
+      {
+       scope.data.extra_config[NAMESPACE][list] = [];
+      }
+
       if ( scope.data.extra_config[NAMESPACE][list].indexOf(term) === -1 ) {
         scope.data.extra_config[NAMESPACE][list].push(term);
       }

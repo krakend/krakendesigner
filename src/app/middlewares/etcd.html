@@ -1,0 +1,117 @@
+<div class="box box-primary" ng-if="isMiddlewareEnabled()">
+  <div class="box-header with-border">
+    <h3 class="box-title">Etcd middleware <small>(<a href="https://github.com/devopsfaith/krakend-etcd">source code</a>)</small></h3>
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" ng-click="toggleMiddleware()"><i class="fa fa-trash"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <div class="form-group" ng-class="validator.isEmpty(data.extra_config[config_namespace].machines) ? 'has-error' : ''">
+      <label class="control-label" for="data.extra_config[config_namespace].machines">Available etcd machines</label>
+      <div class="input-group" ng-class="validator.hasHTTP(etcd_machine) || validator.isEmpty(etcd_machine) ? '' : 'has-error'">
+        <input class="form-control"
+        placeholder="http://x.x.x.x:4001"
+        type="text"
+        ng-model="etcd_machine"
+        name="data.extra_config[config_namespace].machines">
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-success" ng-click="validator.hasHTTP(etcd_machine) ? addTermToList(etcd_machine,'machines') : false"><i
+            class="fa fa-plus"></i> Add Etcd machine
+          </button>
+        </div>
+      </div>
+      <div class="help-block">
+        <p>Etcd servers you want KrakenD to make use of for host resolution</p>
+        <code>http(s)://hostname[:port]</code>
+      </div>
+      <div class="help-block">
+       <ul class="list-unstyled">
+        <li ng-repeat="(index,host) in data.extra_config[config_namespace].machines">
+          <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'machines')"
+          title="Click to delete server"><i class="fa fa-times"></i> {{ host }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="form-group" ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].dial_timeout) ? '' : 'has-error'">
+    <label class="control-label" for="data.extra_config[config_namespace].dial_timeout">Dial Timeout</label>
+    <input class="form-control"
+    id="data.extra_config[config_namespace].dial_timeout"
+    ng-model="data.extra_config[config_namespace].dial_timeout"
+    name="data.extra_config[config_namespace].dial_timeout"
+    placeholder="5s"
+    type="text" />
+    <div class="help-block">
+      <p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].dial_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+      <p>Dial timeout includes name resolution.</p>
+    </div>
+  </div>
+  <div class="form-group" ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].dial_keepalive) ? '' : 'has-error'">
+    <label class="control-label" for="data.extra_config[config_namespace].dial_keepalive">Dial Keep Alive</label>
+    <input class="form-control"
+    id="data.extra_config[config_namespace].dial_keepalive"
+    ng-model="data.extra_config[config_namespace].dial_keepalive"
+    name="data.extra_config[config_namespace].dial_keepalive"
+    placeholder="30s"
+    type="text" />
+    <div class="help-block">
+      <p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].dial_keepalive)" ng-include src="'/src/app/forms/time_units.html'"></p>
+
+      <p>KeepAlive specifies the keep-alive period for an active network connection. If zero, keep-alives are not enabled.</p>
+    </div>
+  </div>
+  <div class="form-group" ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].header_timeout) ? '' : 'has-error'">
+    <label class="control-label" for="data.extra_config[config_namespace].header_timeout">Timeout per request</label>
+    <input class="form-control"
+    id="data.extra_config[config_namespace].header_timeout"
+    ng-model="data.extra_config[config_namespace].header_timeout"
+    name="data.extra_config[config_namespace].header_timeout"
+    placeholder="1s"
+    type="text" />
+    <div class="help-block">
+      <p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].header_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+      <p>Header sent to determine the maximum timeout per request</p>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label class="control-label" for="data.extra_config[config_namespace].cert">Certificate</label>
+    <input class="form-control"
+    id="data.extra_config[config_namespace].cert"
+    ng-model="data.extra_config[config_namespace].cert"
+    name="data.extra_config[config_namespace].cert"
+    placeholder="/path/to/file"
+    type="text" />
+    <div class="help-block">
+      <p>Absolute path to the certificate</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="data.extra_config[config_namespace].key">Private key</label>
+    <input class="form-control"
+    id="data.extra_config[config_namespace].key"
+    ng-model="data.extra_config[config_namespace].key"
+    name="data.extra_config[config_namespace].key"
+    placeholder="/path/to/file"
+    type="text" />
+    <div class="help-block">
+      <p>Absolute path to the private key</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="data.extra_config[config_namespace].cacert">CA Cert</label>
+    <input class="form-control"
+    id="data.extra_config[config_namespace].cacert"
+    ng-model="data.extra_config[config_namespace].cacert"
+    name="data.extra_config[config_namespace].cacert"
+    placeholder="/path/to/file"
+    type="text" />
+    <div class="help-block">
+      <p>Absolute path to the CA Cert</p>
+    </div>
+  </div>
+</div>
+</div>
