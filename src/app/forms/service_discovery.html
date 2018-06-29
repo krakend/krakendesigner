@@ -1,49 +1,11 @@
 <div class="col-md-6">
-  <div class="box box-primary">
-    <div class="box-header with-border">
-      <h3 class="box-title">Enable Service Discovery</h3>
-    </div>
-
-    <div class="box-body">
-      <p>Select <strong>all</strong> the service discovery providers you want to enable across all endpoints. You can enable one or multiple service discovery providers and choose which of them are used in each backend query, be an external provider or an API of your own.</p>
-      <div class="form-group">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" disabled="disabled" value="static" ng-model="service.sd_providers.providers.static" ng-init="service.sd_providers.providers.static=true" >
-            <strong>Static</strong>/None - No service discovery strategy set. KrakenD will try to resolve directly any DNS entries using the machine resolver.
-          </label>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="dns" ng-model="service.sd_providers.providers.dns" >
-            <strong>DNS SRV</strong> - Given host names will use a <a href="https://en.wikipedia.org/wiki/SRV_record">SRV record</a> for resolution.
-          </label>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="etcd"
-              ng-checked="hasMiddleware('github_com/devopsfaith/krakend-etcd')"
-              ng-click="toggleMiddleware('github_com/devopsfaith/krakend-etcd')">
-            <strong>Etcd</strong> - Configuration retrieved dynamically from an <code>etcd</code> daemon.
-          </label>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="custom" ng-model="service.sd_providers.providers.custom" >
-            <strong>Custom</strong> - You can specify your own service discovery namespace (manual addition in the .json file)
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <middleware
-    data="service"
-    template="etcd.html"
-    namespace="'github_com/devopsfaith/krakend-etcd'"></middleware>
-
-</div>
-
-<div class="col-md-6">
   <div ng-include src="'/src/app/forms/backends.html'"></div>
+
+  <middleware data="service" template="etcd.html" namespace="'github_com/devopsfaith/krakend-etcd'"></middleware>
+
 </div>
+<div class="col-md-6">
+
+</div>
+
+

@@ -1,11 +1,16 @@
-<div class="box box-primary" ng-if="isMiddlewareEnabled()">
+<div class="box box-primary">
   <div class="box-header with-border">
-    <h3 class="box-title">Etcd middleware <small>(<a href="https://github.com/devopsfaith/krakend-etcd">source code</a>)</small></h3>
-    <div class="box-tools pull-right">
+    <h3 class="box-title">
+      <input
+        type="checkbox"
+        ng-checked="isMiddlewareEnabled()"
+        ng-click="toggleMiddleware()">
+        Etcd middleware <small>(<a href="https://github.com/devopsfaith/krakend-etcd">source code</a>)</small></h3>
+    <div class="box-tools pull-right" ng-if="isMiddlewareEnabled()">
       <button type="button" class="btn btn-box-tool" ng-click="toggleMiddleware()"><i class="fa fa-trash"></i></button>
     </div>
   </div>
-  <div class="box-body">
+  <div class="box-body"  ng-if="isMiddlewareEnabled()">
     <div class="form-group" ng-class="validator.isEmpty(data.extra_config[config_namespace].machines) ? 'has-error' : ''">
       <label class="control-label" for="data.extra_config[config_namespace].machines">Available etcd machines</label>
       <div class="input-group" ng-class="validator.hasHTTP(etcd_machine) || validator.isEmpty(etcd_machine) ? '' : 'has-error'">
