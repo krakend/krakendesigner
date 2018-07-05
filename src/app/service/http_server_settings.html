@@ -13,7 +13,6 @@
         name="service.read_timeout"
         ng-model="service.read_timeout"
         placeholder="0s"
-        ng-init="service.read_timeout='0s'"
         type="text">
         <div class="help-block">
           <p ng-hide="isValidTimeUnit(service.read_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
@@ -27,7 +26,6 @@
         name="service.write_timeout"
         ng-model="service.write_timeout"
         placeholder="0s"
-        ng-init="service.write_timeout='0s'"
         type="text">
         <div class="help-block">
           <p ng-hide="isValidTimeUnit(service.write_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
@@ -43,7 +41,6 @@
         name="service.idle_timeout"
         ng-model="service.idle_timeout"
         placeholder="0s"
-        ng-init="service.idle_timeout='0s'"
         type="text">
         <div class="help-block">
           <p ng-hide="isValidTimeUnit(service.idle_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
@@ -57,7 +54,6 @@
         name="service.read_header_timeout"
         ng-model="service.read_header_timeout"
         placeholder="0s"
-        ng-init="service.read_header_timeout='0s'"
         type="text">
         <div class="help-block">
           <p ng-hide="isValidTimeUnit(service.read_header_timeout)"ng-include src="'/src/app/forms/time_units.html'"></p>
