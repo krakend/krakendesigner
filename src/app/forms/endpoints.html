@@ -247,10 +247,10 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <label>Service Discovery</label>
-                                        <span class="help-block">Service Discovery options you enabled. <a href="/#/service-discovery">(add more)</a></span>
-                                         <div class="radio" ng-repeat="(sd,enabled) in service.sd_providers.providers" ng-init="backend.sd='static'">
+                                        <span class="help-block">Service Discovery options you have configured. <a href="/#/service-discovery">(add more)</a></span>
+                                         <div class="radio" ng-repeat="sd in sd_providers.providers" ng-init="backend.sd=sd_providers.providers[0]">
                                             <label>
-                                              <input type="radio" ng-model="backend.sd" value="{{ sd }}"  ng-disabled="!enabled">
+                                              <input type="radio" ng-model="backend.sd" value="{{ sd }}">
                                               {{ sd }}
                                           </label>
                                         </div>
@@ -265,7 +265,7 @@
                                                 ng-model="backend.host"
                                                 ng-change="backend.disable_host_sanitize=(backend.sd!='static')"
                                                 multiple="multiple">
-                                            <option ng-repeat="host in service.sd_providers.hosts | filter: backend.sd" value="{{ host.host }}">
+                                            <option ng-repeat="host in sd_providers.hosts | filter: backend.sd" value="{{ host.host }}">
                                                 {{ host.host }}
                                             </option>
                                         </select>

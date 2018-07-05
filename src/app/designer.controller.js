@@ -27,7 +27,31 @@ angular
         } catch (e) {
             alert("Failed to parse the selected JSON file.\n\n" + e.message);
         }
+
+        $rootScope.loadSDOptions();
     };
+
+    $rootScope.loadSDOptions = function() {
+        // Load Service Discovery options
+        var sd_provider = 'static';
+        if ( 'undefined' !== $rootScope.service.endpoints ) {
+            for( var e=0; e<$rootScope.service.endpoints.length; e++) {
+                if ( 'undefined' !== $rootScope.service.endpoints[e].backend ) {
+                        sd_provider = 'static'; // When provider is not defined
+                        for( var b=0; b<$rootScope.service.endpoints[e].backend.length; b++) {
+                            if ( 'undefined' !== $rootScope.service.endpoints[e].backend[b].sd ) {
+                                sd_provider = $rootScope.service.endpoints[e].backend[b].sd;
+                            }
+                            if ( 'undefined' !== $rootScope.service.endpoints[e].backend[b].host ) {
+                             for( var h=0; h<$rootScope.service.endpoints[e].backend[b].host.length; h++) {
+                                $rootScope.addHost($rootScope.service.endpoints[e].backend[b].host[h], sd_provider);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     $rootScope.hasMiddleware = function(namespace) {
         return !(
@@ -85,37 +109,42 @@ angular
             return false;
         }
 
-        if (typeof $rootScope.service.sd_providers === "undefined") {
-            $rootScope.service.sd_providers = {};
+        if (typeof $rootScope.sd_providers === "undefined") {
+            $rootScope.sd_providers = {};
         }
 
-        if (typeof $rootScope.service.sd_providers.hosts === "undefined") {
-            $rootScope.service.sd_providers.hosts = [];
+        if (typeof $rootScope.sd_providers.hosts === "undefined") {
+            $rootScope.sd_providers.hosts = [];
+        }
+
+        if (typeof $rootScope.sd_providers.providers === "undefined") {
+            $rootScope.sd_providers.providers = [];
         }
 
         // Avoid duplicates:
-        for (var i=0; i < $rootScope.service.sd_providers.hosts.length; i++) {
-            if ( $rootScope.service.sd_providers.hosts[i].sd === sd_type &&
-                $rootScope.service.sd_providers.hosts[i].host === host ) {
+        for (var i=0; i < $rootScope.sd_providers.hosts.length; i++) {
+            if ( $rootScope.sd_providers.hosts[i].sd === sd_type &&
+                $rootScope.sd_providers.hosts[i].host === host ) {
                 return false;
-            }
         }
+    }
 
-        $rootScope.service.sd_providers.hosts.push({ "sd": sd_type, "host": host });
-    };
+    $rootScope.sd_providers.hosts.push({ "sd": sd_type, "host": host });
+    $rootScope.addTermToArray(sd_type, $rootScope.sd_providers.providers);
+};
 
-    $rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
-        $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
-    };
+$rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
+    $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
+};
 
-    $rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
-        $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
-    };
+$rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
+    $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
+};
 
 
-    $rootScope.addWhitelist = function (endpoint_index, backend_index) {
+$rootScope.addWhitelist = function (endpoint_index, backend_index) {
 
-        var container_name_with_value = '#wl' + endpoint_index + backend_index;
+    var container_name_with_value = '#wl' + endpoint_index + backend_index;
 
         // Create object if it doesn't exist yet
         if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist) {
@@ -163,7 +192,7 @@ angular
 
     $rootScope.addEndpoint = function () {
 
-        if ( typeof $rootScope.service.sd_providers==="undefined" || typeof $rootScope.service.sd_providers.hosts === "undefined" || 1 < $rootScope.service.length) {
+        if ( typeof $rootScope.sd_providers==="undefined" || typeof $rootScope.sd_providers.hosts === "undefined" || 1 < $rootScope.service.length) {
             alert("You need to add at least one host in the Service Configuration or Service Discovery panels.");
             return false;
         }
@@ -220,7 +249,7 @@ angular
      * The setNoOpEncoding is called when the backend or the endpoint change their encoding.
      * It deletes all backend configuration and adds a backend with no-op.
      */
-    $rootScope.setNoOpEncoding = function(endpoint_index, new_value, old_value, backend_index) {
+     $rootScope.setNoOpEncoding = function(endpoint_index, new_value, old_value, backend_index) {
         var message = "Selecting the No-Operation means that this endpoint will proxy all content to a *single backend* where no response manipulation is desired.\n\nThe noop option will be automatically set for both the backend and the endpoint. Existing backend settings for this endpoint will be discarded.\n\n Do you want to proceed?";
         var num_backends = ( 'undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend ? 0 : $rootScope.service.endpoints[endpoint_index].backend.length );
 
@@ -299,8 +328,8 @@ angular
         }
     };
 
-     $rootScope.deleteStaticResponse = function (endpoint_index) {
-            delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
+    $rootScope.deleteStaticResponse = function (endpoint_index) {
+        delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
     };
 
     $rootScope.addQuerystring = function (endpoint_index) {
