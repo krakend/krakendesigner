@@ -3,15 +3,7 @@ angular
 .service("DefaultConfig", function () {
     return {
         service: {
-            version: 2,
-            extra_config: {
-                'github_com/devopsfaith/krakend-gologging': {
-                    level:  "ERROR",
-                    prefix: "[KRAKEND]",
-                    syslog: false,
-                    stdout: true
-                }
-            }
+            version: 2
         },
         // Default middleware config
         extra_config: {
@@ -40,6 +32,12 @@ angular
                 "dial_timeout": "5s",
                 "dial_keepalive": "30s",
                 "header_timeout": "1s"
+            },
+            'github_com/devopsfaith/krakend-gologging': {
+                level:  "ERROR",
+                prefix: "[KRAKEND]",
+                syslog: false,
+                stdout: true
             }
         }
     };
