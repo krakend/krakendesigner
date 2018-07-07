@@ -99,7 +99,7 @@
       <h3 class="box-title">Logger</h3>
     </div>
     <div class="box-body">
-      <p>Sending metrics to the logger do not require any additional configuration. Metrics will be displayed as per the Logging configuration shown in the right</p>
+      <p>Sending metrics to the logger do not require any additional configuration. Metrics will be displayed as per the Logging configuration</p>
     </div>
   </div>
   <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.influxdb">
@@ -222,13 +222,14 @@
         <div class="checkbox">
           <label>
             <input type="checkbox"
-            ng-model="exporters.xray.use_env">
+            ng-model="data.extra_config[config_namespace].exporters.xray.use_env"
+            ng-click="toggleXRayAuth()">
             <strong>Use credentials from ENV</strong>
           </label>
         </div>
         </div>
         <div class="form-group">
-          <div class="row" ng-if="!exporters.xray.use_env">
+          <div class="row" ng-if="!data.extra_config[config_namespace].exporters.xray.use_env">
             <div class="col-md-6">
               <label class="control-label">AWS Access Key</label>
               <input type="text"
