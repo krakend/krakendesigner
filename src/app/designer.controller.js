@@ -313,6 +313,10 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
     };
 
     $rootScope.addDefaultStaticResponse = function (endpoint_index) {
+        if ( 'undefined' === typeof $rootScope.service.endpoints[endpoint_index].extra_config ) {
+            $rootScope.service.endpoints[endpoint_index].extra_config = {};
+        }
+
         if (typeof $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] == "undefined") {
 
             $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {
