@@ -2,30 +2,14 @@
     <div class="box-header with-border">
         <h3 class="box-title">Available hosts</h3>
         <div class="pull-right">
-            <span ng-if="service.sd_providers.hosts.length === 0 || !service.sd_providers.hosts" class="pull-right-container" data-toggle="tooltip"
-            data-original-title="The service needs at least 1 host to work">
-            <i class="fa fa-warning pull-right icon-warning"></i>
-        </span>
+            <span ng-if="sd_providers.hosts.length === 0 || !sd_providers.hosts" class="pull-right-container" data-toggle="tooltip" data-original-title="The service needs at least 1 host to work">
+                <i class="fa fa-warning pull-right icon-warning"></i>
+            </span>
+        </div>
     </div>
-</div>
-<!-- /.box-header -->
-<div class="box-body">
-    <p>The hosts are the servers you will use to feed the content. You need to declare here any host you want the KrakenD to feed from.</p>
-    <ul class="list-unstyled">
-        <li ng-repeat="(index,host) in service.sd_providers.hosts">
-            <a class="badge badge-remove" ng-click="deleteIndexFromArray(index, '$scope.service.sd_providers.hosts')"
-            title="Click to delete host"><i class="fa fa-times"></i> {{ host.sd }} - {{ host.host }}</a>
-        </li>
-    </ul>
-</div>
-<!-- /.box-body -->
-<div class="box-header with-border">
-    <h3 class="box-title">Add new host ({{ service_discovery_type }} resolution)</h3>
-</div>
+    <div class="box-body">
+        <p>Add here all the API hostnames where KrakenD will retrieve the data from. If you don't use a service discovery to resolve host names choose <em>None</em> from the following <strong>discovery providers</strong> list:</p>
 
-<div class="box-body">
-    <p>Add here all the API hostnames where KrakenD will retrieve the data from. If you don't use a service discovery to resolve host names choose <em>None</em> from the following <strong>discovery providers</strong> list:</p>
-    <form name="addBackend">
         <div class="col-sm-6 form-group">
             <div class="radio">
                 <label>
@@ -35,39 +19,44 @@
             </div>
             <div class="radio">
                 <label>
-                  <input type="radio" ng-model="service_discovery_type" value="dns" ng-disabled="!service.sd_providers.providers.dns">
+                  <input type="radio" ng-model="service_discovery_type" value="dns">
                   DNS SRV
               </label>
-              <a ng-click="service.sd_providers.providers.dns=true" ng-if="!service.sd_providers.providers.dns">(enable)</a>
           </div>
       </div>
       <div class="col-sm-6 form-group">
         <div class="radio">
             <label>
-              <input type="radio" ng-model="service_discovery_type" value="etcd" ng-disabled="!service.sd_providers.providers.etcd">
+              <input type="radio" ng-model="service_discovery_type" value="etcd" ng-disabled="!hasMiddleware('github_com/devopsfaith/krakend-etcd')">
               Etcd
           </label>
-          <a href="/#/service-discovery" ng-click="service.sd_providers.providers.etcd=true" ng-if="!service.sd_providers.providers.etcd">(enable &amp; configure)</a>
       </div>
       <div class="radio">
         <label>
-          <input type="radio" ng-model="service_discovery_type" value="custom" ng-disabled="!service.sd_providers.providers.custom">
+          <input type="radio" ng-model="service_discovery_type" value="custom">
           Custom
       </label>
   </div>
 </div>
-<div class="col-sm-12">
+<div class="col-sm-12 form-group">
     <div class="input-group">
         <input class="form-control"
         placeholder="http://api.your.server:8080"
         ng-model="hostname">
         <div class="input-group-btn">
             <button type="button" class="btn btn-success" ng-click="addHost(hostname, service_discovery_type)"><i
-                class="fa fa-plus"></i> Add host
+                class="fa fa-plus"></i> Add {{ service_discovery_type }} host
             </button>
         </div>
     </div>
 </div>
-</form>
+<div class="col-sm-12 form-group">
+    <ul class="list-unstyled">
+        <li ng-repeat="(index,host) in sd_providers.hosts">
+            <a class="badge badge-remove" ng-click="deleteIndexFromArray(index, '$scope.sd_providers.hosts')"
+            title="Click to delete host"><i class="fa fa-times"></i> {{ host.sd }} - {{ host.host }}</a>
+        </li>
+    </ul>
+</div>
 </div>
 </div>

@@ -1,9 +1,9 @@
 <label>
 	<input type="checkbox"
-	ng-model="data.extra_config[config_namespace].is_disabled">
-	Disable <strong>OAuth</strong>
+	ng-checked="isMiddlewareEnabled()"
+	ng-click="toggleMiddleware()"> Enable <strong>OAuth2 Client Credentials</strong> middleware (<a href="https://github.com/devopsfaith/krakend-oauth2-clientcredentials">view source</a>)
 </label>
-<div id="oauth-options-wrapper" ng-hide="data.extra_config[config_namespace].is_disabled">
+<div id="oauth-options-wrapper" ng-hide="!isMiddlewareEnabled()">
 	<div class="form-group">
 		<div class="col-md-6">
 			<label class="control-label" for="data.extra_config[config_namespace].client_id">Client ID</label>
@@ -66,7 +66,7 @@
 					ng-model="endpoint_parameters_value">
 				</div>
 				<div class="col-md-4">
-					<button type="button" class="btn btn-success" ng-click="addOAuthParameters(endpoint_parameters_key,endpoint_parameters_value)">
+					<button type="button" class="btn btn-success" ng-click="addKeyPair(endpoint_parameters_key,endpoint_parameters_value,'endpoint_params')">
 						<i class="fa fa-plus"></i> Add  parameter
 					</button>
 				</div>
@@ -82,7 +82,7 @@
 			<ul class="list-unstyled">
 				<li ng-repeat="(index,param) in data.extra_config[config_namespace].endpoint_params">
 					<a class="badge badge-remove"
-					ng-click="deleteOAuthParameters(index)"
+					ng-click="deleteKey(index,'endpoint_params')"
 					title="Click to delete parameter"><i class="fa fa-times"></i> {{ index }}={{ param }} </a>
 				</li>
 				<li ng-if="!data.extra_config[config_namespace].endpoint_params">

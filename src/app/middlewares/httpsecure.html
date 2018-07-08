@@ -1,20 +1,22 @@
 <div class="form-group">
     <div class="checkbox">
         <label>
-            <input type="checkbox" ng-model="data.extra_config[config_namespace].disable" data-toggle="security-options-wrapper">
-            <strong>Disable all security checks</strong>
+            <input type="checkbox"
+                ng-checked="isMiddlewareEnabled()"
+                ng-click="toggleMiddleware()">
+            <strong>Enable HTTP secure middleware</strong> (<a href="https://github.com/devopsfaith/krakend-httpsecure" title="View middleware source code">source code</a>)
         </label>
-        <span class="help-block">When developing, the AllowedHosts, SSL, and HSTS options can cause some unwanted effects. If you would like for any reason your system to by-pass all the security policies mark the checkbox.</span>
+        <span class="help-block">Add AllowedHosts, SSL, HSTS options and other security policies.</span>
     </div>
 </div>
-<div id="security-options-wrapper" ng-hide="data.extra_config[config_namespace].disable">
+<div ng-if="isMiddlewareEnabled()">
     <div class="form-group">
         <h4>Allowed hosts</h4>
         <div class="input-group">
             <ul class="list-unstyled">
                 <li ng-repeat="(index,host) in data.extra_config[config_namespace].allowed_hosts">
                     <a class="badge badge-remove"
-                       ng-click="deleteAllowedHosts(index)"><i class="fa fa-times"></i>
+                       ng-click="deleteIndexFromList(index,'allowed_hosts')"><i class="fa fa-times"></i>
                         {{ host }}</a>
                 </li>
             </ul>
@@ -29,7 +31,7 @@
                    required=""
                    ng-model="input_hostname">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-success" ng-click="addAllowedHosts(input_hostname)">
+                <button type="button" class="btn btn-success" ng-click="addTermToList(input_hostname,'allowed_hosts')">
                     <i class="fa fa-plus"></i> Add host
                 </button>
             </div>
@@ -83,7 +85,7 @@
                 <td>{{ header }}</td>
                 <td>{{ value }}</td>
                 <td>
-                    <button type="button" class="btn btn-danger" ng-click="deleteSSLHeader(header)">
+                    <button type="button" class="btn btn-danger" ng-click="deleteKey(header,'ssl_proxy_headers')">
                         <i class="fa fa-trash"></i> Remove
                     </button>
                 </td>
@@ -92,7 +94,7 @@
                 <td><input type="text" class="form-control" ng-model="ssl_header" placeholder="X-Forwarded-Proto"></td>
                 <td><input type="text" class="form-control" ng-model="ssl_header_value" placeholder="https"></td>
                 <td>
-                    <button type="button" class="btn btn-success" ng-click="addSSLHeader(ssl_header,ssl_header_value)">
+                    <button type="button" class="btn btn-success" ng-click="addKeyPair(ssl_header,ssl_header_value,'ssl_proxy_headers')">
                         <i class="fa fa-plus"></i> Add header
                     </button>
                 </td>

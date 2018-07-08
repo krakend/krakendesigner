@@ -1,9 +1,8 @@
 <div class="box box-primary">
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox"
-          ng-model="metrics_enabled"
           ng-checked="isMiddlewareEnabled()"
-          ng-click="toggleMetricsMiddleware(metrics_enabled)"> Metrics</h3>
+          ng-click="toggleMiddleware()"> Metrics</h3>
   </div>
 
   <div class="box-body" ng-if="isMiddlewareEnabled()">
@@ -53,7 +52,7 @@
         </div>
       </div>
       <div class="col-md-6">
-       <div class="form-group" ng-class="isValidTimeUnit(data.extra_config[config_namespace].collection_time) ? '' : 'has-error'">
+       <div class="form-group" ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].collection_time) ? '' : 'has-error'">
         <label class="control-label">Collection time</label>
 
 
@@ -64,7 +63,7 @@
       </div>
 
       <div class="help-block">
-        <p ng-hide="isValidTimeUnit(data.extra_config[config_namespace].collection_time)" ng-include src="'/src/app/forms/time_units.html'"></p>
+        <p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].collection_time)" ng-include src="'/src/app/forms/time_units.html'"></p>
         Time window. Defaults to 60 seconds.
       </div>
     </div>

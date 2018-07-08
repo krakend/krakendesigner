@@ -46,6 +46,17 @@ angular
                 }
             }
 
+            scope.toggleXRayAuth = function() {
+                // Destroy
+                if ( 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters.xray.access_key_id ) {
+                    delete scope.data.extra_config[NAMESPACE].exporters.xray.access_key_id;
+                    delete scope.data.extra_config[NAMESPACE].exporters.xray.secret_access_key;
+                } else {
+                    scope.data.extra_config[NAMESPACE].exporters.xray.access_key_id = '';
+                    scope.data.extra_config[NAMESPACE].exporters.xray.secret_access_key = '';
+                }
+            }
+
             scope.backendIsEnabled = function(metric) {
                 return scope.isMiddlewareEnabled() && 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters && 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters[metric];
             }
