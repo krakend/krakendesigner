@@ -3,7 +3,8 @@ angular
 .service("DefaultConfig", function () {
     return {
         service: {
-            version: 2
+            version: 2,
+            extra_config: {}
         },
         // Default middleware config
         extra_config: {
