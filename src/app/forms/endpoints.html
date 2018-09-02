@@ -183,6 +183,21 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
+                        <middleware
+                            template="jose_validator.html"
+                            namespace="'github_com/devopsfaith/krakend-jose/validator'"
+                            data="endpoint">
+                        </middlware>
+
+                        <middleware
+                            template="jose_signer.html"
+                            namespace="'github_com/devopsfaith/krakend-jose/signer'"
+                            data="endpoint">
+                        </middlware>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
                          <h4>Backend API calls (where the data comes from)</h4>
                     </div>
                     <div class="col-md-12" ng-if="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static">
