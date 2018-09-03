@@ -13,6 +13,8 @@ angular
             return false;
         }
 
+        $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/validator', false);
+
         var date = new Date().getTime();
         downloadDocument(date + "-krakend.json", angular.toJson($rootScope.service, true)); // Beautify
         $rootScope.saved_once = true;
@@ -28,21 +30,43 @@ angular
             alert("Failed to parse the selected JSON file.\n\n" + e.message);
         }
 
+        $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/validator', true);
         $rootScope.loadSDOptions();
     };
 
-    $rootScope.loadSDOptions = function() {
-        // Load Service Discovery options
-        var sd_provider = 'static';
-        if ( 'undefined' !== $rootScope.service.endpoints ) {
+    // The krakend-jose cipher_suites need to be stored as integer but Angular treats multiselect as strings:
+    $rootScope.fixCipherSuitesType = function(ns, convertToString) {
+        if ( 'undefined' !== typeof $rootScope.service && 'undefined' !== typeof $rootScope.service.endpoints ) {
             for( var e=0; e<$rootScope.service.endpoints.length; e++) {
-                if ( 'undefined' !== $rootScope.service.endpoints[e].backend ) {
+                if('undefined' !== typeof $rootScope.service.endpoints[e].extra_config &&
+                 'undefined' !== typeof $rootScope.service.endpoints[e].extra_config[ns] &&
+                 'undefined' !== typeof $rootScope.service.endpoints[e].extra_config[ns].cipher_suites ) {
+
+                    for( var s=0; s<$rootScope.service.endpoints[e].extra_config[ns].cipher_suites.length; s++ ) {
+                        if ( convertToString ) {
+                            $rootScope.service.endpoints[e].extra_config[ns].cipher_suites[s] = '' + $rootScope.service.endpoints[e].extra_config[ns].cipher_suites[s];
+                        } else {
+                            // Convert to integer
+                            $rootScope.service.endpoints[e].extra_config[ns].cipher_suites[s] = parseInt($rootScope.service.endpoints[e].extra_config[ns].cipher_suites[s]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Load Service Discovery options
+    $rootScope.loadSDOptions = function() {
+        var sd_provider = 'static';
+        if ( 'undefined' !== typeof $rootScope.service.endpoints ) {
+            for( var e=0; e<$rootScope.service.endpoints.length; e++) {
+                if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend ) {
                         sd_provider = 'static'; // When provider is not defined
                         for( var b=0; b<$rootScope.service.endpoints[e].backend.length; b++) {
-                            if ( 'undefined' !== $rootScope.service.endpoints[e].backend[b].sd ) {
+                            if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend[b].sd ) {
                                 sd_provider = $rootScope.service.endpoints[e].backend[b].sd;
                             }
-                            if ( 'undefined' !== $rootScope.service.endpoints[e].backend[b].host ) {
+                            if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend[b].host ) {
                              for( var h=0; h<$rootScope.service.endpoints[e].backend[b].host.length; h++) {
                                 $rootScope.addHost($rootScope.service.endpoints[e].backend[b].host[h], sd_provider);
                             }
