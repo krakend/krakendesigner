@@ -14,35 +14,21 @@
             <span class="help-block">The JWK URL</span>
         </div>
         <div class="col-md-6">
-            <label>Issuer</label>
-            <input type="text" ng-model="data.extra_config[config_namespace].issuer" class="form-control"/>
-            <span class="help-block">Who is the issuer</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-6">
             <label class="control-label">Algorithm</label>
             <select class="form-control"
             ng-model="data.extra_config[config_namespace].alg"
             id="data.extra_config[config_namespace].alg"
-            name="data.extra_config[config_namespace].alg"
-            ng-init="data.extra_config[config_namespace].alg='HS256'">
-
-                <option value="EdDSA">EdDSA</option>
-                <option value="HS256">HS256 - HMAC using SHA-256</option>
-                <option value="HS384">HS384 - HMAC using SHA-384</option>
-                <option value="HS512">HS512 - HMAC using SHA-512</option>
-                <option value="RS256">RS256 - RSASSA-PKCS-v1.5 using SHA-256</option>
-                <option value="RS384">RS384 - RSASSA-PKCS-v1.5 using SHA-384</option>
-                <option value="RS512">RS512 - RSASSA-PKCS-v1.5 using SHA-512</option>
-                <option value="ES256">ES256 - ECDSA using P-256 and SHA-256</option>
-                <option value="ES384">ES384 - ECDSA using P-384 and SHA-384</option>
-                <option value="ES512">ES512 - ECDSA using P-521 and SHA-512</option>
-                <option value="PS256">PS256 - RSASSA-PSS using SHA256 and MGF1-SHA256</option>
-                <option value="PS384">PS384 - RSASSA-PSS using SHA384 and MGF1-SHA384</option>
-                <option value="PS512">PS512 - RSASSA-PSS using SHA512 and MGF1-SHA512</option>
+            name="data.extra_config[config_namespace].alg">
+                <option ng-repeat="(alg,desc) in constants.jose_algorithms" value="{{ alg }}">{{ desc }}</option>
             </select>
             <span class="help-block">Key management algorithm</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>Issuer</label>
+            <input type="text" ng-model="data.extra_config[config_namespace].issuer" class="form-control"/>
+            <span class="help-block">Who is the issuer</span>
         </div>
         <div class="col-md-6">
 
@@ -139,7 +125,7 @@
                 class="form-control"
                 ng-model="data.extra_config[config_namespace].cipher_suites"
                 multiple="multiple">
-                <option ng-repeat="(val,suite) in constants.cipher_suites" value="{{ val }}">{{ suite }}</option>
+                <option ng-repeat="(val,suite) in constants.jose_cipher_suites" value="{{ val }}">{{ suite }}</option>
             </select>
             <span class="help-block">Overrides the default cipher suites. Unless you have your own legacy JWK you don't need to choose anything here</span>
         </div>

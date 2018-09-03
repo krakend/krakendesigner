@@ -14,6 +14,7 @@ angular
             return false;
         }
 
+        $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/signer', false);
         $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/validator', false);
 
         var date = new Date().getTime();
@@ -32,6 +33,7 @@ angular
         }
 
         $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/validator', true);
+        $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/signer', true);
         $rootScope.loadSDOptions();
     };
 

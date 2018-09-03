@@ -39,7 +39,15 @@ angular
                 prefix: "[KRAKEND]",
                 syslog: false,
                 stdout: true
+            },
+            'github_com/devopsfaith/krakend-jose/signer' : {
+                "alg": "HS256"
+            },
+            'github_com/devopsfaith/krakend-jose/validator' : {
+                "alg": "HS256"
             }
+
+
         }
     };
 });

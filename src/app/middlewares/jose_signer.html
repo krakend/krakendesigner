@@ -1,29 +1,9 @@
-<pre>
-Alg                string   `json:"alg"`
-	KeyID              string   `json:"kid"`
-	URI                string   `json:"jwk-url"`
-	FullSerialization  bool     `json:"full,omitempty"`
-	KeysToSign         []string `json:"keys-to-sign,omitempty"`
-	CipherSuites       []uint16 `json:"cipher_suites,omitempty"`
-	DisableJWKSecurity bool     `json:"disable_jwk_security"`
-	Fingerprints       []string `json:"jwk_fingerprints,omitempty"`
-	</pre>
-
-
-	const (
-    A128CBC_HS256 = ContentEncryption("A128CBC-HS256") // AES-CBC + HMAC-SHA256 (128)
-    A192CBC_HS384 = ContentEncryption("A192CBC-HS384") // AES-CBC + HMAC-SHA384 (192)
-    A256CBC_HS512 = ContentEncryption("A256CBC-HS512") // AES-CBC + HMAC-SHA512 (256)
-    A128GCM       = ContentEncryption("A128GCM")       // AES-GCM (128)
-    A192GCM       = ContentEncryption("A192GCM")       // AES-GCM (192)
-    A256GCM       = ContentEncryption("A256GCM")       // AES-GCM (256)
-)
 <div class="form-group">
      <div class="col-md-12">
         <h4><input type="checkbox"
             ng-checked="isMiddlewareEnabled()"
             ng-click="toggleMiddleware()"> JWT token signing</h4>
-        <p>Sign JWT tokens
+        <p>Sign JWT tokens</p>
     </div>
 </div>
 <div ng-if="isMiddlewareEnabled()">
@@ -34,71 +14,23 @@ Alg                string   `json:"alg"`
             <span class="help-block">The JWK URL</span>
         </div>
         <div class="col-md-6">
-            <label>Key ID</label>
-            <input type="text" ng-model="data.extra_config[config_namespace].kid" class="form-control"/>
-            <span class="help-block"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-6">
             <label class="control-label">Algorithm</label>
             <select class="form-control"
             ng-model="data.extra_config[config_namespace].alg"
             id="data.extra_config[config_namespace].alg"
-            name="data.extra_config[config_namespace].alg"
-            ng-init="data.extra_config[config_namespace].alg='HS256'">
-
-                <option value="EdDSA">EdDSA</option>
-                <option value="HS256">HS256 - HMAC using SHA-256</option>
-                <option value="HS384">HS384 - HMAC using SHA-384</option>
-                <option value="HS512">HS512 - HMAC using SHA-512</option>
-                <option value="RS256">RS256 - RSASSA-PKCS-v1.5 using SHA-256</option>
-                <option value="RS384">RS384 - RSASSA-PKCS-v1.5 using SHA-384</option>
-                <option value="RS512">RS512 - RSASSA-PKCS-v1.5 using SHA-512</option>
-                <option value="ES256">ES256 - ECDSA using P-256 and SHA-256</option>
-                <option value="ES384">ES384 - ECDSA using P-384 and SHA-384</option>
-                <option value="ES512">ES512 - ECDSA using P-521 and SHA-512</option>
-                <option value="PS256">PS256 - RSASSA-PSS using SHA256 and MGF1-SHA256</option>
-                <option value="PS384">PS384 - RSASSA-PSS using SHA384 and MGF1-SHA384</option>
-                <option value="PS512">PS512 - RSASSA-PSS using SHA512 and MGF1-SHA512</option>
+            name="data.extra_config[config_namespace].alg">
+                <option ng-repeat="(alg,desc) in constants.jose_algorithms" value="{{ alg }}">{{ desc }}</option>
             </select>
             <span class="help-block">Key management algorithm</span>
         </div>
-        <div class="col-md-6">
 
-        </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-6">
-            <label class="control-label">Audience</label>
-            <div class="input-group">
-                <input class="form-control"
-                placeholder="http://api.example.com"
-                type="text"
-                required=""
-                ng-model="input_audience">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-success" ng-click="addTermToList(input_audience,'audience')">
-                        <i class="fa fa-plus"></i> Add audience
-                    </button>
-                </div>
-            </div>
-            <span class="help-block">List of all the audiences supported by this endpoint</span>
-            <ul class="list-unstyled">
-                <li ng-repeat="(index,aud) in data.extra_config[config_namespace].audience">
-                    <a class="badge badge-remove"
-                    ng-click="deleteIndexFromList(index,'audience')"><i class="fa fa-times"></i>
-                {{ aud }}</a>
-                </li>
-            </ul>
-
-        </div>
+     <div class="form-group">
         <div class="col-md-6">
             <label class="control-label">Keys to sign</label>
             <div class="input-group">
                 <input class="form-control"
-                placeholder="admin"
+                placeholder=""
                 type="text"
                 required=""
                 ng-model="input_key">
@@ -108,7 +40,7 @@ Alg                string   `json:"alg"`
                     </button>
                 </div>
             </div>
-            <span class="help-block">List of all the roles supported by this endpoint</span>
+            <span class="help-block">List of specific keys needing signing</span>
             <ul class="list-unstyled">
                 <li ng-repeat="(index,key) in data.extra_config[config_namespace]['keys-to-sign']">
                     <a class="badge badge-remove"
@@ -117,17 +49,10 @@ Alg                string   `json:"alg"`
                 </li>
             </ul>
         </div>
-    </div>
-     <div class="form-group">
         <div class="col-md-6">
-            <label>Roles Key</label>
-            <input type="text" ng-model="data.extra_config[config_namespace].roles_key" placeholder="roles" class="form-control"/>
-            <span class="help-block">Keyname where the roles are stored</span>
-        </div>
-        <div class="col-md-6">
-            <label>Cookie name</label>
-            <input type="text" ng-model="data.extra_config[config_namespace].cookie_key" class="form-control"/>
-            <span class="help-block">The key name of the cookie </span>
+            <label>Key ID</label>
+            <input type="text" ng-model="data.extra_config[config_namespace].kid" class="form-control"/>
+            <span class="help-block"></span>
         </div>
     </div>
     <div class="form-group">
@@ -149,38 +74,19 @@ Alg                string   `json:"alg"`
             </div>
         </div>
     </div>
- <div class="form-group">
+ 	<div class="form-group">
         <div class="col-md-12">
-            <label class="control-label">Cipher Suites</label>
+            <label class="control-label">
+                <input type="checkbox" ng-model="custom_cipher"> Custom Cipher Suites
+            </label>
             <select
+                ng-if="custom_cipher || data.extra_config[config_namespace].cipher_suites.length > 0"
                 class="form-control"
                 ng-model="data.extra_config[config_namespace].cipher_suites"
                 multiple="multiple">
-
-                <option value="5">TLS_RSA_WITH_RC4_128_SHA</option>
-                <option value="10">TLS_RSA_WITH_3DES_EDE_CBC_SHA</option>
-                <option value="47">TLS_RSA_WITH_AES_128_CBC_SHA</option>
-                <option value="53">TLS_RSA_WITH_AES_256_CBC_SHA</option>
-                <option value="60">TLS_RSA_WITH_AES_128_CBC_SHA256</option>
-                <option value="156">TLS_RSA_WITH_AES_128_GCM_SHA256</option>
-                <option value="157">TLS_RSA_WITH_AES_256_GCM_SHA384</option>
-                <option value="49159">TLS_ECDHE_ECDSA_WITH_RC4_128_SHA</option>
-                <option value="49161">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</option>
-                <option value="49162">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</option>
-                <option value="49169">TLS_ECDHE_RSA_WITH_RC4_128_SHA</option>
-                <option value="49170">TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA</option>
-                <option value="49171">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</option>
-                <option value="49172">TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</option>
-                <option value="49187">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256</option>
-                <option value="49191">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</option>
-                <option value="49199">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</option>
-                <option value="49195">TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</option>
-                <option value="49200">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</option>
-                <option value="49196">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</option>
-                <option value="52392">TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305</option>
-                <option value="52393">TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305</option>
+                <option ng-repeat="(val,suite) in constants.jose_cipher_suites" value="{{ val }}">{{ suite }}</option>
             </select>
-            <span class="help-block">Select all supported cipher suites</span>
+            <span class="help-block">Overrides the default cipher suites. Unless you have your own legacy JWK you don't need to choose anything here</span>
         </div>
     </div>
     <div class="form-group">
