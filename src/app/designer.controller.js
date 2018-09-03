@@ -2,10 +2,11 @@ var FileSaver = require('file-saver');
 
 angular
 .module('KrakenDesigner')
-.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig) {
+.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig, Constants) {
 
     // Default initial values set in any configuration generation:
     $rootScope.service = DefaultConfig.service;
+    $rootScope.constants = Constants;
 
     $rootScope.save = function () {
         if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
@@ -398,5 +399,5 @@ function downloadDocument(name, content) {
 
 // Avoid losing the configuration:
 window.onbeforeunload = function () {
-    return "Leaving now implies losing the changes configured so far. Are you sure?";
+    return "Leaving now implies losing the changes configured if you didn't save. Are you sure?";
 }

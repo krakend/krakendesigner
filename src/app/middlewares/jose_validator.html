@@ -131,36 +131,17 @@
     </div>
  <div class="form-group">
         <div class="col-md-12">
-            <label class="control-label">Cipher Suites</label>
+            <label class="control-label">
+                <input type="checkbox" ng-model="custom_cipher"> Custom Cipher Suites
+            </label>
             <select
+                ng-if="custom_cipher || data.extra_config[config_namespace].cipher_suites.length > 0"
                 class="form-control"
                 ng-model="data.extra_config[config_namespace].cipher_suites"
                 multiple="multiple">
-
-                <option value="5">TLS_RSA_WITH_RC4_128_SHA</option>
-                <option value="10">TLS_RSA_WITH_3DES_EDE_CBC_SHA</option>
-                <option value="47">TLS_RSA_WITH_AES_128_CBC_SHA</option>
-                <option value="53">TLS_RSA_WITH_AES_256_CBC_SHA</option>
-                <option value="60">TLS_RSA_WITH_AES_128_CBC_SHA256</option>
-                <option value="156">TLS_RSA_WITH_AES_128_GCM_SHA256</option>
-                <option value="157">TLS_RSA_WITH_AES_256_GCM_SHA384</option>
-                <option value="49159">TLS_ECDHE_ECDSA_WITH_RC4_128_SHA</option>
-                <option value="49161">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</option>
-                <option value="49162">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</option>
-                <option value="49169">TLS_ECDHE_RSA_WITH_RC4_128_SHA</option>
-                <option value="49170">TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA</option>
-                <option value="49171">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</option>
-                <option value="49172">TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</option>
-                <option value="49187">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256</option>
-                <option value="49191">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</option>
-                <option value="49199">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</option>
-                <option value="49195">TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</option>
-                <option value="49200">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</option>
-                <option value="49196">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</option>
-                <option value="52392">TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305</option>
-                <option value="52393">TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305</option>
+                <option ng-repeat="(val,suite) in constants.cipher_suites" value="{{ val }}">{{ suite }}</option>
             </select>
-            <span class="help-block">Select all supported cipher suites</span>
+            <span class="help-block">Overrides the default cipher suites. Unless you have your own legacy JWK you don't need to choose anything here</span>
         </div>
     </div>
     <div class="form-group">
