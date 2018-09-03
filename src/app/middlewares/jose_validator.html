@@ -21,7 +21,7 @@
             name="data.extra_config[config_namespace].alg">
                 <option ng-repeat="(alg,desc) in constants.jose_algorithms" value="{{ alg }}">{{ desc }}</option>
             </select>
-            <span class="help-block">Key management algorithm</span>
+            <span class="help-block">Digital signatures and MACs algorithm</span>
         </div>
     </div>
     <div class="form-group">
@@ -74,7 +74,7 @@
                     </button>
                 </div>
             </div>
-            <span class="help-block">List of all the roles supported by this endpoint</span>
+            <span class="help-block">List of all the roles allowed to access this endpoint</span>
             <ul class="list-unstyled">
                 <li ng-repeat="(index,aud) in data.extra_config[config_namespace].roles">
                     <a class="badge badge-remove"

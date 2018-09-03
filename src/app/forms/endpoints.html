@@ -185,13 +185,13 @@
                     <div class="col-md-12">
                         <middleware
                             template="jose_validator.html"
-                            namespace="'github_com/devopsfaith/krakend-jose/validator'"
+                            namespace="'github.com/devopsfaith/krakend-jose/validator'"
                             data="endpoint">
                         </middleware>
 
                         <middleware
                             template="jose_signer.html"
-                            namespace="'github_com/devopsfaith/krakend-jose/signer'"
+                            namespace="'github.com/devopsfaith/krakend-jose/signer'"
                             data="endpoint">
                         </middleware>
                     </div>
@@ -346,7 +346,7 @@
                                 </div>
                                 <hr/>
                                 <h4>Authorization</h4>
-                                <middleware data="backend" inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']" template="oauth.html" namespace="'github_com/devopsfaith/krakend-oauth2-clientcredentials'"></middleware>
+                                <middleware data="backend" inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']" template="oauth.html" namespace="'github.com/devopsfaith/krakend-oauth2-clientcredentials'"></middleware>
                                 <hr/>
                                 <div ng-if="endpoint.output_encoding != 'noop'">
                                 <h4>Response Parsing</h4>
@@ -641,7 +641,7 @@
 
                         <middleware
                             template="httpsecure.html"
-                            namespace="'github_com/devopsfaith/krakend-httpsecure'"
+                            namespace="'github.com/devopsfaith/krakend-httpsecure'"
                             ng-if="hasMiddleware('github_com/devopsfaith/krakend-httpsecure')"
                             data="endpoint"
                             inherit="service.extra_config['github_com/devopsfaith/krakend-httpsecure']">

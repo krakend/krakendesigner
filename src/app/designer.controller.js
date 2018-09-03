@@ -14,8 +14,8 @@ angular
             return false;
         }
 
-        $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/signer', false);
-        $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/validator', false);
+        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/signer', false);
+        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/validator', false);
 
         var date = new Date().getTime();
         downloadDocument(date + "-krakend.json", angular.toJson($rootScope.service, true)); // Beautify
@@ -32,8 +32,8 @@ angular
             alert("Failed to parse the selected JSON file.\n\n" + e.message);
         }
 
-        $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/validator', true);
-        $rootScope.fixCipherSuitesType('github_com/devopsfaith/krakend-jose/signer', true);
+        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/validator', true);
+        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/signer', true);
         $rootScope.loadSDOptions();
     };
 
