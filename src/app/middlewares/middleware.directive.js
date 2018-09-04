@@ -72,6 +72,10 @@ angular
     }
 
     scope.addTermToList = function(term, list) {
+      if ( 'undefined' === typeof term || term.length < 1 ) {
+        return;
+      }
+
       if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE][list] )
       {
         scope.data.extra_config[NAMESPACE][list] = [];
