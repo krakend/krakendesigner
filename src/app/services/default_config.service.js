@@ -41,6 +41,13 @@ angular
                 syslog: false,
                 stdout: true
             },
+            'github_com/devopsfaith/krakend-cors': {
+                "allow_methods": [
+                    "GET",
+                    "HEAD",
+                    "POST"
+                ]
+            },
             // // Endpoint level middleware (github.com)
             'github.com/devopsfaith/krakend-jose/signer' : {
                 "alg": "HS256"

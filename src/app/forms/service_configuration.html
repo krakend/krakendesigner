@@ -20,6 +20,11 @@
     </div>
     <div ng-include src="'/src/app/forms/backends.html'"></div>
     <div ng-include src="'/src/app/service/throttling.html'"></div>
+    <middleware
+        template="cors.html"
+        namespace="'github_com/devopsfaith/krakend-cors'"
+        data="service">
+    </middleware>
   </div>
   <div class="col-md-6">
     <div ng-include src="'/src/app/service/options.html'"></div>
