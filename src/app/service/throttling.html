@@ -5,12 +5,11 @@
 		</h3>
 	</div>
 	<!-- /.box-header -->
-	<div class="box-body">
+	<div class="box-body" ng-if="hasMiddleware('github_com/devopsfaith/krakend-ratelimit/juju/router')">
 		<middleware
 			data=service
 			namespace="'github_com/devopsfaith/krakend-ratelimit/juju/router'"
 			template="ratelimit.html"
-			ng-if="hasMiddleware('github_com/devopsfaith/krakend-ratelimit/juju/router')">
 		</middleware>
 	</div>
 </div>

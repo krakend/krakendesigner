@@ -1,0 +1,124 @@
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Cross-origin resource
+            sharing (CORS)
+        </h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body" ng-if="isMiddlewareEnabled()">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label">Allowed methods</label>
+                <span class="help-block">Select which methods will be allowed</span>
+                <select class="form-control" ng-model="data.extra_config[config_namespace].allow_methods" multiple>
+                    <optgroup label="Simple requests">
+                        <option>GET</option>
+                        <option>HEAD</option>
+                        <option>POST</option>
+                    </optgroup>
+                    <optgroup label="Preflighted requests">
+                        <option>PUT</option>
+                        <option>DELETE</option>
+                        <option>CONNECT</option>
+                        <option>OPTIONS</option>
+                        <option>TRACE</option>
+                        <option>PATCH</option>
+                    </optgroup>
+                </select>
+                <ul class="list-unstyled list-inline">
+                    <li ng-if="data.extra_config[config_namespace].allow_methods.length">Your choice:</li>
+                    <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow_methods">
+                        <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow_methods')"><i class="fa fa-times"></i>
+                            {{ val }}</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="control-label">Allowed origins</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="https://example.com" type="text" required="" ng-model="input_allow_origins">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-success" ng-click="addTermToList(input_allow_origins,'allow_origins')">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <span class="help-block">Add those origins you would like to accept. Or leave empty for any origin.</span>
+                <ul class="list-unstyled">
+                    <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow_origins">
+                        <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow_origins')"><i class="fa fa-times"></i>
+                            {{ val }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <label class="control-label">Allowed headers</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="e.g: Accept-Language" type="text" required="" ng-model="input_allow_headers">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-success" ng-click="addTermToList(input_allow_headers,'allow_headers')">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <span class="help-block">Only the headers added here will be allowed</span>
+                <ul class="list-unstyled">
+                    <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow_headers">
+                        <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow_headers')"><i class="fa fa-times"></i>
+                            {{ val }}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <label class="control-label">Expose headers</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="e.g: Accept-Language" type="text" required="" ng-model="input_expose_headers">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-success" ng-click="addTermToList(input_expose_headers,'expose_headers')">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <span class="help-block">Headers that are safe to expose to the API of a CORS API specification</span>
+                <ul class="list-unstyled">
+                    <li ng-repeat="(index,val) in data.extra_config[config_namespace].expose_headers">
+                        <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'expose_headers')"><i class="fa fa-times"></i>
+                            {{ val }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="data.extra_config[config_namespace].allow_credentials">
+                        <strong>Allow credentials</strong>
+                    </label>
+                    <span class="help-block">Let clients pass their credentials when CORS is active</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].max_age) ? '' : 'has-error'">
+                <label class="control-label">Max age</label>
+                <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].max_age" placeholder="300s">
+                <div class="help-block">
+                    <p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].max_age)" ng-include src="'/src/app/forms/time_units.html'"></p>
+                    For how long the response can be cached
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
