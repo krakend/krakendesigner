@@ -1,0 +1,144 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Enable JWT validation
+        </h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body">
+        <p ng-if="!isMiddlewareEnabled()">Enable to validate JWT tokens</p>
+        <div ng-if="isMiddlewareEnabled()">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>JWK URI</label>
+                    <input type="text" ng-model="data.extra_config[config_namespace]['jwk-url']" class="form-control" />
+                    <span class="help-block">The URL to your JWK endpoint with the set of public keys used to verify the
+                        authenticity of JWT</span>
+                </div>
+                <div class="col-md-6">
+                    <label class="control-label">Algorithm</label>
+                    <select class="form-control" ng-model="data.extra_config[config_namespace].alg" id="data.extra_config[config_namespace].alg"
+                        name="data.extra_config[config_namespace].alg">
+                        <option ng-repeat="(alg,desc) in constants.jose_algorithms" value="{{ alg }}">{{ desc }}</option>
+                    </select>
+                    <span class="help-block">Digital signatures and MACs algorithm</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label>Issuer</label>
+                    <input type="text" ng-model="data.extra_config[config_namespace].issuer" class="form-control" />
+                    <span class="help-block">Who is the expected issuer of the claim</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label class="control-label">Audience</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="http://api.example.com" type="text" required="" ng-model="input_audience">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_audience,'audience')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="help-block">List of all the audiences supported by this endpoint</span>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(index,aud) in data.extra_config[config_namespace].audience">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'audience')"><i class="fa fa-times"></i>
+                                {{ aud }}</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-md-6">
+                    <label class="control-label">Roles</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="admin" type="text" required="" ng-model="input_role">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_role,'roles')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="help-block">List of all the roles allowed to access this endpoint</span>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(index,aud) in data.extra_config[config_namespace].roles">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'roles')"><i class="fa fa-times"></i>
+                                {{ aud }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Roles Key</label>
+                    <input type="text" ng-model="data.extra_config[config_namespace].roles_key" placeholder="roles" class="form-control" />
+                    <span class="help-block">Keyname where the roles are stored</span>
+                </div>
+                <div class="col-md-6">
+                    <label>Cookie name</label>
+                    <input type="text" ng-model="data.extra_config[config_namespace].cookie_key" class="form-control" />
+                    <span class="help-block">The key name of the cookie </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label class="control-label">Fingerprints</label>
+                    <textarea class="form-control" style="margin-bottom:10px;" placeholder="e.g: S3Jha2VuRCBpcyB0aGUgYmVzdCBnYXRld2F5LCBhbmQgeW91IGtub3cgaXQ==" ng-model="fingerprint"></textarea>
+                    <button type="button" class="btn btn-success pull-right" ng-click="addTermToList(fingerprint,'jwk_fingerprints')">
+                        <i class="fa fa-plus"></i> Add fingerprint
+                    </button>
+                    <span class="help-block">All fingerprints <strong>must be in base64</strong></span>
+                </div>
+                <div class="col-md-12">
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(index,fingerprint) in data.extra_config[config_namespace].jwk_fingerprints">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'jwk_fingerprints')"><i class="fa fa-times"></i>
+                                {{ fingerprint }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label class="control-label">
+                        <input type="checkbox" ng-model="custom_cipher"> Custom Cipher Suites
+                    </label>
+                    <select ng-if="custom_cipher || data.extra_config[config_namespace].cipher_suites.length > 0" class="form-control" ng-model="data.extra_config[config_namespace].cipher_suites"
+                        multiple="multiple">
+                        <option ng-repeat="(val,suite) in constants.jose_cipher_suites" value="{{ val }}">{{ suite }}</option>
+                    </select>
+                    <span class="help-block">Overrides the default cipher suites. Unless you have your own legacy JWK you
+                        don't need to choose anything here</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].cache">
+                            <strong>Enable caching</strong>
+                        </label>
+                        <span class="help-block">If this value is set to true validated tokens will be stored in-memory for
+                            repeated validations</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].disable_jwk_security">
+                            <strong>Disable JWK security</strong>
+                        </label>
+                        <span class="help-block">When you are using an insecure connection (plain http)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

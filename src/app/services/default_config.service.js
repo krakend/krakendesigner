@@ -8,6 +8,7 @@ angular
         },
         // Default middleware config
         extra_config: {
+            // Service level middleware (github_com)
             'github_com/devopsfaith/krakend-ratelimit/juju/router': {
                 "maxRate": 0,
                 "clientMaxRate": 0,
@@ -39,6 +40,13 @@ angular
                 prefix: "[KRAKEND]",
                 syslog: false,
                 stdout: true
+            },
+            // // Endpoint level middleware (github.com)
+            'github.com/devopsfaith/krakend-jose/signer' : {
+                "alg": "HS256"
+            },
+            'github.com/devopsfaith/krakend-jose/validator' : {
+                "alg": "HS256"
             }
         }
     };

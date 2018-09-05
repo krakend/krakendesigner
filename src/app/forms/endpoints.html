@@ -136,7 +136,7 @@
                             <input class="form-control" placeholder="header_name" type="text" required="" ng-model="input_header">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-success" ng-click="addHeaderPassing(endpoint_index,input_header)">
-                                    <i class="fa fa-plus"></i> Add header
+                                    <i class="fa fa-plus"></i> Add
                                 </button>
                             </div>
                         </div>
@@ -180,6 +180,24 @@
                        data-target="#advanced-pipe-{{ endpoint_index }}">
                         <i class="fa fa-wrench"></i> Advanced pipe composition
                     </a>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <middleware
+                                template="jose_validator.html"
+                                namespace="'github.com/devopsfaith/krakend-jose/validator'"
+                                data="endpoint">
+                            </middleware>
+                        </div>
+                        <div class="col-md-6">
+                            <middleware
+                                template="jose_signer.html"
+                                namespace="'github.com/devopsfaith/krakend-jose/signer'"
+                                data="endpoint">
+                            </middleware>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
@@ -331,7 +349,7 @@
                                 </div>
                                 <hr/>
                                 <h4>Authorization</h4>
-                                <middleware data="backend" inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']" template="oauth.html" namespace="'github_com/devopsfaith/krakend-oauth2-clientcredentials'"></middleware>
+                                <middleware data="backend" inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']" template="oauth.html" namespace="'github.com/devopsfaith/krakend-oauth2-clientcredentials'"></middleware>
                                 <hr/>
                                 <div ng-if="endpoint.output_encoding != 'noop'">
                                 <h4>Response Parsing</h4>
@@ -626,7 +644,7 @@
 
                         <middleware
                             template="httpsecure.html"
-                            namespace="'github_com/devopsfaith/krakend-httpsecure'"
+                            namespace="'github.com/devopsfaith/krakend-httpsecure'"
                             ng-if="hasMiddleware('github_com/devopsfaith/krakend-httpsecure')"
                             data="endpoint"
                             inherit="service.extra_config['github_com/devopsfaith/krakend-httpsecure']">

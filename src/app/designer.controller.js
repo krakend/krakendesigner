@@ -2,16 +2,20 @@ var FileSaver = require('file-saver');
 
 angular
 .module('KrakenDesigner')
-.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig) {
+.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig, Constants) {
 
     // Default initial values set in any configuration generation:
     $rootScope.service = DefaultConfig.service;
+    $rootScope.constants = Constants;
 
     $rootScope.save = function () {
         if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
             alert("At least you need to define an endpoint");
             return false;
         }
+
+        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/signer', false);
+        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/validator', false);
 
         var date = new Date().getTime();
         downloadDocument(date + "-krakend.json", angular.toJson($rootScope.service, true)); // Beautify
@@ -28,21 +32,44 @@ angular
             alert("Failed to parse the selected JSON file.\n\n" + e.message);
         }
 
+        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/validator', true);
+        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/signer', true);
         $rootScope.loadSDOptions();
     };
 
-    $rootScope.loadSDOptions = function() {
-        // Load Service Discovery options
-        var sd_provider = 'static';
-        if ( 'undefined' !== $rootScope.service.endpoints ) {
+    // The krakend-jose cipher_suites need to be stored as integer but Angular treats multiselect as strings:
+    $rootScope.fixCipherSuitesType = function(ns, convertToString) {
+        if ( 'undefined' !== typeof $rootScope.service && 'undefined' !== typeof $rootScope.service.endpoints ) {
             for( var e=0; e<$rootScope.service.endpoints.length; e++) {
-                if ( 'undefined' !== $rootScope.service.endpoints[e].backend ) {
+                if('undefined' !== typeof $rootScope.service.endpoints[e].extra_config &&
+                 'undefined' !== typeof $rootScope.service.endpoints[e].extra_config[ns] &&
+                 'undefined' !== typeof $rootScope.service.endpoints[e].extra_config[ns].cipher_suites ) {
+
+                    for( var s=0; s<$rootScope.service.endpoints[e].extra_config[ns].cipher_suites.length; s++ ) {
+                        if ( convertToString ) {
+                            $rootScope.service.endpoints[e].extra_config[ns].cipher_suites[s] = '' + $rootScope.service.endpoints[e].extra_config[ns].cipher_suites[s];
+                        } else {
+                            // Convert to integer
+                            $rootScope.service.endpoints[e].extra_config[ns].cipher_suites[s] = parseInt($rootScope.service.endpoints[e].extra_config[ns].cipher_suites[s]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Load Service Discovery options
+    $rootScope.loadSDOptions = function() {
+        var sd_provider = 'static';
+        if ( 'undefined' !== typeof $rootScope.service.endpoints ) {
+            for( var e=0; e<$rootScope.service.endpoints.length; e++) {
+                if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend ) {
                         sd_provider = 'static'; // When provider is not defined
                         for( var b=0; b<$rootScope.service.endpoints[e].backend.length; b++) {
-                            if ( 'undefined' !== $rootScope.service.endpoints[e].backend[b].sd ) {
+                            if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend[b].sd ) {
                                 sd_provider = $rootScope.service.endpoints[e].backend[b].sd;
                             }
-                            if ( 'undefined' !== $rootScope.service.endpoints[e].backend[b].host ) {
+                            if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend[b].host ) {
                              for( var h=0; h<$rootScope.service.endpoints[e].backend[b].host.length; h++) {
                                 $rootScope.addHost($rootScope.service.endpoints[e].backend[b].host[h], sd_provider);
                             }
@@ -374,5 +401,5 @@ function downloadDocument(name, content) {
 
 // Avoid losing the configuration:
 window.onbeforeunload = function () {
-    return "Leaving now implies losing the changes configured so far. Are you sure?";
+    return "Leaving now implies losing the changes configured if you didn't save. Are you sure?";
 }

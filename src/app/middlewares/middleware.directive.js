@@ -1,6 +1,6 @@
 angular
 .module('KrakenDesigner')
-.directive("middleware", ['InputValidator', 'DefaultConfig', function(InputValidator,DefaultConfig) {
+.directive("middleware", ['InputValidator', 'DefaultConfig', 'Constants', function(InputValidator,DefaultConfig,Constants) {
   return {
     restrict : "E",
     template: '<div ng-include="getTemplate()"></div>',
@@ -10,7 +10,6 @@ angular
       namespace: '=' // e.g: github_com/devopsfaith/krakend-ratelimit/juju/router
     },
     link: function(scope, element, attrs) {
-
 
       var NAMESPACE = scope.namespace;
       var default_middleware_data = {};
@@ -32,6 +31,7 @@ angular
       // Easier access for the template:
       scope.config_namespace = NAMESPACE;
       scope.validator = InputValidator;
+      scope.constants = Constants;
 
       scope.getTemplate = function() {
         return '/src/app/middlewares/' + attrs.template;
@@ -72,10 +72,15 @@ angular
     }
 
     scope.addTermToList = function(term, list) {
-      if ( 'undefined' === scope.data.extra_config[NAMESPACE][list] )
-      {
-       scope.data.extra_config[NAMESPACE][list] = [];
+      if ( 'undefined' === typeof term || term.length < 1 ) {
+        return;
       }
+
+      if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE][list] )
+      {
+        scope.data.extra_config[NAMESPACE][list] = [];
+      }
+
 
       if ( scope.data.extra_config[NAMESPACE][list].indexOf(term) === -1 ) {
         scope.data.extra_config[NAMESPACE][list].push(term);
