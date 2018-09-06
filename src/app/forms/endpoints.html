@@ -98,26 +98,47 @@
                                    id="addQuerystring_{{ endpoint_index }}">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-success" ng-click="addQuerystring(endpoint_index)">
-                                    <i class="fa fa-plus"></i> Enable query string
+                                    <i class="fa fa-plus"></i> Add parameter
                                 </button>
                             </div>
                         </div>
-                        <span class="help-block">Enter here any additional parameters that don't fit in the endpoint URI
-                            that will be sent to the backends as query string when present. Write only the name of the
+                        <div class="help-block">
+                            <ul class="list-inline">
+                                <li ng-repeat="(qs_index,qs) in endpoint.querystring_params">
+                                    <a class="badge badge-remove"
+                                    ng-click="deleteQuerystring(qs_index,endpoint_index)"
+                                    title="Click to delete parameter"><i class="fa fa-times"></i> {{ qs }} </a>
+                                </li>
+                                <li ng-if="!endpoint.querystring_params.length">No query parameters are active yet. Typical
+                                    parameters are <code>page</code>, <code>limit</code>, <code>search</code>...
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="help-block">Query string parameters to be passed to the backends when present.
+                            Write only the name of the
                             parameter, no question mark or equal symbols.</span>
                     </div>
-                    <div class="col-md-6">
-                        <label>Active:</label>
-                        <ul class="list-unstyled">
-                            <li ng-repeat="(qs_index,qs) in endpoint.querystring_params">
-                                <a class="badge badge-remove"
-                                   ng-click="deleteQuerystring(qs_index,endpoint_index)"
-                                   title="Click to delete parameter"><i class="fa fa-times"></i> {{ qs }} </a>
-                            </li>
-                            <li ng-if="!endpoint.querystring_params.length">No query parameters are active yet. Typical
-                                parameters are <code>page</code>, <code>limit</code>, <code>search</code>...
-                            </li>
-                        </ul>
+                    <div class="col-md-3">
+                        <label>Rate limit</label>
+                        <span class="label label-success" ng-if="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router']">on</span>
+                        <span class="label label-default" ng-if="!endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router']">off</span>
+                        <br />
+                        <button class="btn btn-default btn-flat" data-toggle="modal" data-target="#throttling-modal-{{ endpoint_index }}">
+                            <i class="fa fa-wrench"></i> Throttling
+                        </button>
+                        <span class="help-block">
+                            Enable usage limits for this endpoint
+                        </span>
+                </div>
+                    <div class="col-md-3">
+                        <label>Pipe composition</label>
+                        <br />
+                        <button class="btn btn-default btn-flat" data-toggle="modal" data-target="#advanced-pipe-{{ endpoint_index }}">
+                            <i class="fa fa-wrench"></i> Override
+                        </button>
+                        <span class="help-block">
+                            Behaviour of the proxy pipe.
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -152,11 +173,9 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <label>Timeout, Cache TTL and Throttling</label>
-                        <br/>
-                        <button class="btn btn-default btn-flat"
-                                data-toggle="modal"
-                                data-target="#endpoint-modal-{{ endpoint_index }}">
+                        <label>Timeout and Cache TTL</label>
+                        <br />
+                        <button class="btn btn-default btn-flat" data-toggle="modal" data-target="#endpoint-modal-{{ endpoint_index }}">
                             <i class="fa fa-wrench"></i> Override defaults
                         </button>
                         <span class="help-block">
@@ -176,10 +195,6 @@
                           Override default settings for this endpoint.
                         </span>
                     </div>
-                    <a data-toggle="modal"
-                       data-target="#advanced-pipe-{{ endpoint_index }}">
-                        <i class="fa fa-wrench"></i> Advanced pipe composition
-                    </a>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
@@ -629,6 +644,24 @@
     </div>
     <!-- /.box-body -->
 
+
+    <!-- Modal Window for rate limiting-->
+    <div id="throttling-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Rate limiting (throttling)</code></h4>
+                </div>
+                <div class="modal-body">
+                    <middleware data=endpoint namespace="'github.com/devopsfaith/krakend-ratelimit/juju/router'"
+                        template="ratelimit_router.html">
+                    </middleware>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal Window for security in this endpoint-->
     <div id="security-modal-{{ endpoint_index }}" class="modal fade"
          tabindex="-1"
@@ -665,7 +698,7 @@
                     <h4 class="modal-title">Advanced pipe composition for <code>{{ endpoint.endpoint }}</code></h4>
                 </div>
                 <div class="modal-body">
-                    <p>The following options must be handled carefully as they modify how the pipe is composed.</p>
+                    <p>If you have a custom combiner configure it here to modify the proxy pipe with your custom configuration</p>
                     <div class="row form-group">
 
                             <div class="col-md-12">
@@ -675,7 +708,7 @@
                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].combiner"
                                        placeholder="combiner_name">
                                 <div class="help-block">
-                                   <p>Select the combiner for merging the backend responses.</p>
+                                   <p>Specify the combiner for merging the backend responses.</p>
                                 </div>
                             </div>
                     </div>
@@ -717,69 +750,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4" ng-class="isValidTimeUnit(endpoint.cache_ttl) ? '' : 'has-error'">
+                            <div class="col-md-6" ng-class="isValidTimeUnit(endpoint.cache_ttl) ? '' : 'has-error'">
                                 <label>Cache TTL</label>
-                                <input class="form-control"
-                                       type="text"
-                                       ng-model="endpoint.cache_ttl">
+                                <input class="form-control" type="text" ng-model="endpoint.cache_ttl">
                                 <div class="help-block">
                                     <p ng-hide="isValidTimeUnit(endpoint.cache_ttl)" class="badge label-danger"><i
                                             class="fa fa-warning"></i> Invalid format</p>
                                     <p>For how long a proxy can cache a request to this endpoint.</p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4" ng-class="isInteger(endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].maxRate) ? '' : 'has-error'">
-                                <label>Rate Limit</label>
-                                <div class="input-group">
-                                    <input class="form-control"
-                                           type="text"
-                                           ng-model="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].maxRate">
-                                    <div class="input-group-addon">reqs/sec</div>
-                                </div>
-                                <div class="help-block">
-                                    <p ng-hide="isInteger(endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].maxRate)" class="badge label-danger"><i
-                                            class="fa fa-warning"></i> Invalid format</p>
-                                    <p>Maximum requests you want to accept in this endpoint.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group" ng-class="isInteger(endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate) ? '' : 'has-error'">
-                            <div class="col-md-12">
-                                <label class="control-label">User quota limit</label>
-                                <div class="input-group">
-                                    <input class="form-control"
-                                           ng-model="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate"
-                                           id="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate"
-                                           name="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate"
-                                           type="text">
-                                    <div class="input-group-addon">reqs/sec</div>
-                                </div>
-                                <div class="help-block">
-                                    <p ng-hide="isInteger(endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate)" class="badge label-danger"><i
-                                            class="fa fa-warning"></i> Invalid format</p>
-                                    <p>Maximum requests per second you want to allow to each different API user for this
-                                        endpoint. Use <code>0</code> for no limitation.</p>
-                                </div>
-                                <div ng-show="0 != endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].clientMaxRate">
-                                    <p><strong>A unique user is identified by...</strong></p>
-                                    <div class="input-group" class="form-control">
-                                        <input type="radio" name="throttling_decorator" value="ip"
-                                        ng-checked="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].key==''"
-                                        ng-click="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].key=''"
-                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].strategy">
-                                        Its originating IP
-                                      </div>
-                                      <div class="input-group" class="form-control">
-                                        <input type="radio" name="throttling_decorator" value="header"
-                                        ng-checked="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].key!=''"
-                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].strategy">
-                                        A custom header:
-                                        <input type="text" ng-model="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router'].key"
-                                        placeholder="X-TOKEN">
-                                      </div>
                                 </div>
                             </div>
                         </div>
