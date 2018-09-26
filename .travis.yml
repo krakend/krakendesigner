@@ -1,0 +1,16 @@
+language: node_js
+
+install:
+  - npm install
+
+before_script:
+  - npm run-script build
+
+deploy:
+  provider: pages
+  local-dir: designer
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  #on:
+  #  branch: master
