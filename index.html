@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="generator" content="Hugo 0.36.1" />
+
+    <title>KrakenDesigner - KrakenD configuration editor</title>
+    <meta itemprop="name" content="KrakenDesigner - KrakenD configuration editor">
+    <meta name="twitter:title" content="KrakenDesigner - KrakenD configuration editor">
+    <meta property="og:title" content="KrakenDesigner - KrakenD configuration editor">
+
+    <meta property="description" content="KrakenD API Designer">
+    <meta itemprop="description" content="KrakenD API Designer">
+    <meta name="twitter:description" content="KrakenD API Designer">
+    <meta property="og:description" content="KrakenD API Designer">
+
+    <meta itemprop="image" content="http://www.krakend.io/images/logo.png">
+    <meta name="twitter:image:src" content="http://www.krakend.io/images/logo.png">
+    <meta property="og:image" content="http://krakend.io/images/logo.png" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://www.krakend.io/designer/" />
+
+    <meta name="twitter:site" content="@devopsfaith">
+    <meta name="twitter:creator" content="@devopsfaith">
+    <meta name="twitter:card" content="summary">
+    <meta property="og:site_name" content="KrakenDesigner, configuration editor" />
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="http://www.krakend.io/dist/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="http://www.krakend.io/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="http://www.krakend.io/dist/css/skin-black-light.min.css">
+    <link rel="stylesheet" href="http://www.krakend.io/dist/css/custom.css">
+</head>
+<body class="hold-transition sidebar-mini skin-black-light">
+    <div class="wrapper">
+        <header class="main-header">
+            <a href="http://www.krakend.io/" class="logo">
+              <span class="logo-mini">
+                <img src="http://www.krakend.io/images/logo-mini.png" alt="">
+            </span>
+            <img src="http://www.krakend.io/images/logo-inverse.png" alt="KrakenD logo" height="35">
+        </a>
+
+        <nav class="navbar navbar-static-top" role="navigation">
+            <button type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <div class="navbar-collapse pull-left collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="http://www.krakend.io/features">Features</a>
+                    </li>
+                    <li>
+                        <a href="http://www.krakend.io/download/">Download</a>
+                    </li>
+                    <li><a href="http://www.krakend.io/docs/overview/introduction">Documentation</a></li>
+
+
+                    <li><a href="http://www.krakend.io/blog">Blog</a></li>
+                    <li><a href="http://www.krakend.io/support">Support</a></li>
+                </ul>
+            </div>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="github-container">
+                        <a class="github-button" href="https://github.com/devopsfaith/krakend" data-icon="octicon-star" data-show-count="true" aria-label="Star devopsfaith/krakend on GitHub">Star</a>
+                    </li>
+                    <li>
+                        &nbsp;
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <div ng-app="KrakenDesigner">
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <div ng-include="'/src/app/forms/sidebar.html'"></div>
+            </section>
+        </aside>
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    KrakenDesigner
+                    <small ng-bind="service.name"></small>
+                </h1>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <section class="col-lg-12 connectedSortable ui-sortable">
+                        <ng-view></ng-view>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="http://www.krakend.io/images/logo-inverse.png" >
+                <p class="lead">The <strong>Ultra-High performance</strong> API Gateway with middlewares</p>
+                <span>KrakenD helps application developers release features quickly by eliminating all the complexities of SOA architectures, while offering a unique performance.</span>
+                <div class="social">
+                    <a href="https://www.facebook.com/apigateway" target="_blank"  title="Facebook">
+                        <i class="fa fa-facebook-official" aria-hidden="true"></i><span class="sr-only">Facebook</span>
+                    </a>
+                    <a href="https://twitter.com/devopsfaith" target="_blank" class="social-btn-twitter" title="Twitter">
+                        <i class="fa fa-twitter" aria-hidden="true"></i><span class="sr-only">Twitter</span>
+                    </a>
+                    <a href="https://github.com/devopsfaith" target="_blank" class="social-btn-github" title="GitHub">
+                        <i class="fa fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span>
+                    </a>
+                    <a href="mailto:hello@krakend.io" target="_blank" title="Send us an email">
+                        <i class="fa fa-envelope" aria-hidden="true"></i><span class="sr-only">Mail</span>
+                    </a>
+                </div>
+
+            </div>
+            <nav>
+                <div class="col-md-2 col-md-offset-1">
+                    <h6>Devops Faith</h6>
+                    <ul class="list-unstyled">
+
+                        <li><a href="http://devops.faith">Devops Faith</a></li>
+                        <li><a href="https://medium.com/devops-faith">Blog</a></li>
+                        <li><a href="mailto:hello@krakend.io">Contact Us</a></li>
+                    </ul>
+                    <h6>More products</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="http://api2html.com">API2HTML</a></li>
+                    </ul>
+
+                </div>
+                <div class="col-md-2">
+                    <h6>Product</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="http://www.krakend.io/features/">Features</a></li>
+                        <li><a href="http://www.krakend.io/docs/benchmarks/overview/">Benchmarks</a></li>
+                        <li><a href="http://www.krakend.io/download/">Download</a></li>
+                        <li><a href="http://www.krakend.io/blog/">KrakenD Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6>Support</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="http://www.krakend.io/docs/overview/introduction">Documentation</a></li>
+                        <li><a href="https://github.com/devopsfaith/krakend" target="_blank">Open Source</a></li>
+                        <li><a href="https://github.com/devopsfaith/krakend/issues">Report a problem</a></li>
+                        <li><a href="mailto:hello@krakend.io">Support</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-md-5 additional-links">
+                <strong>Copyright &copy; 2017-2018 <a href="http://devops.faith">Devops Faith</a>.</strong> All rights reserved.
+            </div>
+            <div class="pull-right hidden-xs">
+                Made with <i class="fa fa-heart-o" style="color:hotpink"></i> in Barcelona by <a href="https://twitter.com/devopsfaith">
+                    <img height="30px" src="http://www.krakend.io/images/devops-faith-logo-inverse.png" />
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-87994359-3', 'auto');
+    ga('send', 'pageview');
+</script>
+<script src="http://www.krakend.io/dist/js/jquery-2.2.3.min.js"></script>
+<script src="http://www.krakend.io/dist/js/bootstrap.min.js"></script>
+<script src="http://www.krakend.io/dist/js/app.min.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.4.8/angular-route.min.js"></script>
+<script type="text/javascript" src="bundle.js"></script></body>
+</html>
