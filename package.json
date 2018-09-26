@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"No tests yet!\"",
     "build": "node_modules/.bin/grunt ngtemplates && node_modules/.bin/webpack-cli --mode production"
   },
   "keywords": [],
