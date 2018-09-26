@@ -1,10 +1,16 @@
 language: node_js
+node_js:
+  - "node" #latest stable
 
 install:
   - npm install
 
 before_script:
   - npm run-script build
+
+cache:
+  directories:
+    - "node_modules"
 
 deploy:
   provider: pages
