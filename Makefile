@@ -4,8 +4,7 @@ all: docker_build clean
 
 local_build:
 	npm install
-	node_modules/.bin/grunt ngtemplates
-	node_modules/.bin/webpack-cli --mode production
+	npm run-script build
 
 docker_build:
 	docker run -it --rm -v ${PWD}:/app -w /app --entrypoint /usr/bin/make node local_build

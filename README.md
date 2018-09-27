@@ -3,18 +3,6 @@
 
 An application made with AngularJS to visually create the `krakend.json` file.
 
-
-	/**
-     * Word of advice. This was coded by a backend monkey who didn't do frontend for the past 15 years.
-     * The monkey went through a period of sickness after implementing the designer, but now is recovering just fine.
-     * Despite everything the application works well.
-     *
-     * If you are a frontend by profession, I would expect no less than you have a temper and flip the table
-     * when you look at the code.
-     *
-     * PRs are more than welcome and necessary (and even the whole app refactoring)
-     */
-
 [Try it live!](http://designer.krakend.io)
 
 ![Screenshot](https://github.com/devopsfaith/krakendesigner/blob/master/media/screenshot.png?raw=true)
@@ -32,10 +20,13 @@ The `node_modules` folder is deleted not leaving any trace in your machine. The 
 
 ### When you have `npm`
 
-     make local_build
-
+    make local_build
+    # Or also:
+    npm run-script build
+    
 Will use your local `npm` to install and build the project.
 
-## Get involved!
-The designer is currently working properly (if you find any bug please create an issue) but it needs love from frontend specialist. If you think the application needs reorganization, refactoring, webpack plugins or even a full rewrite in another framework please help us making it improve. We do know how to write go, performance, and all the boring stuff. Javascript is for decent people (that probably leave us out). We need you!
+You will need to put the files in the `designer/` folder into a web server of any kind, for instance, a PHP developer can do `php -S localhost:8081 -t designer`.
 
+## Get involved! - Please!
+The application is working properly (if you find any bug please create an issue) but it needs love from frontend specialists. If you think the application needs reorganization, refactoring, webpack plugins or even a full rewrite in another framework please help us make it improve. We do know how to write go, stuff about performance, and all the boring stuff. Javascript is for decent people (and that probably leave us out), so we need you!
