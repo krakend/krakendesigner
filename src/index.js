@@ -1,3 +1,10 @@
+import 'jquery';
+import 'bootstrap';
+import 'admin-lte';
+
+import 'angular';
+import 'angular-route';
+
 import './app/designer.module.js';
 import './app/designer.controller.js';
 import './app/services/default_config.service.js';
