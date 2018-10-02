@@ -14,7 +14,7 @@ angular.module("KrakenDesigner").directive("dropBox", function() {
         event.dataTransfer.effectAllowed = "copy";
         return false;
       };
-      validMimeTypes = attrs.fileDropzone;
+      validMimeTypes = attrs.dropBox;
       checkSize = function(size) {
         return true;
       };
@@ -52,7 +52,7 @@ angular.module("KrakenDesigner").directive("dropBox", function() {
               scope.file = name;
               scope.data = evt.target.result;
               // Show modal with data
-              $('#dropzone_modal').modal();
+              $("#dropzone_modal").modal();
             });
           }
         };
@@ -61,7 +61,7 @@ angular.module("KrakenDesigner").directive("dropBox", function() {
         type = file.type;
         size = file.size;
         reader.readAsText(file);
-        
+
         return false;
       });
     }
