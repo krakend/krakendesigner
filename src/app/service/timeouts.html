@@ -4,7 +4,7 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body">
-    <p>All settings below are used across all backends unless specifically overridden in each endpoint</p>
+    <p>All settings below are used across all backends unless overridden explicitly in each endpoint</p>
     <div class="form-group" ng-class="isValidTimeUnit(service.timeout) ? '' : 'has-error'">
       <label class="control-label" for="service.timeout">Backend Timeout</label>
       <input class="form-control"
@@ -16,8 +16,8 @@
       type="text">
       <div class="help-block">
         <p ng-hide="isValidTimeUnit(service.timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
-        <p>This is the <strong>default timeout</strong> for all the outgoing connections against your
-        backends and takes into account the duration of all the pipe. This value can be overridden later on specific endpoints.</p>
+        <p><strong>Default timeout</strong> for all connections against your backends, 
+          including the time spent in the whole pipe. This value can be overridden later on specific endpoints.</p>
       </div>
     </div>
     <div class="form-group" ng-class="isValidTimeUnit(service.cache_ttl) ? '' : 'has-error'">
@@ -30,9 +30,9 @@
       <div class="help-block">
         <p ng-hide="isValidTimeUnit(service.cache_ttl)" ng-include src="'/src/app/forms/time_units.html'"></p>
         <p ng-hide="isInteger(service.cache_ttl)">Value must be an integer expressing the number of seconds</p>
-        <p>Time the service considers the origin is still valid. Applies
-          to GET requests only. The service does not cache anything but facilitates
-        the headers for proxies to do the caching (e.g: Varnish server).</p>
+        <p>The time the service considers the origin is still valid. Applies
+          to GET requests only. The service does not cache anything but expedites
+        the headers for proxies to do the caching (e.g., a Varnish server).</p>
       </div>
     </div>
   </div>

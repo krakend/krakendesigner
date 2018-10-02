@@ -1,0 +1,33 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="hasTLS()" ng-click="toggleTLS()"> Enable HTTPS
+		</h3>
+		<div class="box-tools pull-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+		</div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!hasTLS()">Mark this option to enable TLS in the listening port.</p>
+		<div ng-if="hasTLS()">
+			<div class="form-group" ng-if="hasTLS()">
+				<div class="col-md-6">
+					<label class="control-label" for="data.tls.public_key">Public key</label>
+					<input class="form-control" id="data.tls.public_key" ng-model="data.tls.public_key" type="text">
+					<div class="help-block">
+						<p>Absolute path to the public key, or relative to the current working directory (<code>CWD</code>)</p>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<label class="control-label" for="data.tls.private_key">Private key</label>
+					<input class="form-control" id="data.tls.private_key" ng-model="data.tls.private_key" type="text">
+					<div class="help-block">
+						<p>Absolute path to the public key, or relative to the current working directory (<code>CWD</code>)</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
