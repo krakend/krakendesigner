@@ -277,17 +277,17 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
      * It deletes all backend configuration and adds a backend with no-op.
      */
      $rootScope.setNoOpEncoding = function(endpoint_index, new_value, old_value, backend_index) {
-        var message = "Selecting the No-Operation means that this endpoint will proxy all content to a *single backend* where no response manipulation is desired.\n\nThe noop option will be automatically set for both the backend and the endpoint. Existing backend settings for this endpoint will be discarded.\n\n Do you want to proceed?";
+        var message = "Selecting the No-Operation means that this endpoint will proxy all content to a *single backend* where no response manipulation is desired.\n\nThe no-op option will be automatically set for both the backend and the endpoint. Existing backend settings for this endpoint will be discarded.\n\n Do you want to proceed?";
         var num_backends = ( 'undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend ? 0 : $rootScope.service.endpoints[endpoint_index].backend.length );
 
         // Endpoint encoding and backend encoding must match to 'no-op':
-        if (new_value == 'noop' && num_backends > 0) {
+        if (new_value == 'no-op' && num_backends > 0) {
 
             if ( confirm(message) )
             {
                 // Delete all backend queries and add just one, inheriting encoding:
                 delete $rootScope.service.endpoints[endpoint_index].backend
-                $rootScope.service.endpoints[endpoint_index].output_encoding = 'noop';
+                $rootScope.service.endpoints[endpoint_index].output_encoding = 'no-op';
                 $rootScope.addBackendQuery(endpoint_index);
 
                 // Delete also static_response
