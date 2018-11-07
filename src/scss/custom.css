@@ -46,7 +46,7 @@ code {
 }
 
 .skin-black-light .navbar-collapse.pull-left {
-    background: rgba(2, 3, 37, 0.8);
+    background: #0f265c;
 }
 .skin-black-light .main-header .navbar-toggle {
     color: white;
@@ -94,7 +94,7 @@ code {
     margin: 0;
     width: 100%;
     padding: 0;
-    background-color: #020325;
+    background-color: #0f265c;
     z-index: 9999;
 }
 
@@ -144,7 +144,7 @@ code {
 }
 
 .footer {
-    background-color: #020325;
+    background-color: #0f265c;
     color: white;
 
     font-size: 14px;
@@ -264,7 +264,7 @@ section.title {
     background: -moz-radial-gradient(center, ellipse cover,  rgb(13, 58, 125) 0%, rgba(2,3,37,1) 70%); /* FF3.6-15 */
     background: -webkit-radial-gradient(center, ellipse cover,  rgb(13, 58, 125) 0%,rgba(2,3,37,1) 70%); /* Chrome10-25,Safari5.1-6 */
     background: radial-gradient(ellipse at center,  rgb(13, 58, 125) 0%,rgba(2,3,37,1) 70%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0E2548', endColorstr='#020325',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0E2548', endColorstr='#0f265c',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
     border-bottom: 4px solid rgba(255,255,255,.2);
 }
@@ -624,7 +624,7 @@ section.docs .TOC a {
 .blog .share a {
     font-size: 20px;
     padding: 0 5px;
-    color: #020325;
+    color: #0f265c;
 }
 
 .blog .share a:hover {
