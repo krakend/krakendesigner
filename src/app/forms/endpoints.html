@@ -587,7 +587,7 @@
                                                     <label>Max rate limit</label>
                                                     <div class="input-group">
                                                         <input class="form-control"
-                                                               type="text"
+                                                               type="number"
                                                                ng-model="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].maxRate"
                                                                ng-change="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity=backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].maxRate">
                                                         <div class="input-group-addon">reqs/sec</div>
@@ -608,7 +608,7 @@
                                                                ng-model="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity"
                                                                id="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity"
                                                                name="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity"
-                                                               type="text">
+                                                               type="number">
                                                         <div class="input-group-addon">reqs/sec</div>
                                                     </div>
                                                     <div class="help-block">
