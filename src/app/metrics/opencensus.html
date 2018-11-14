@@ -3,7 +3,7 @@
     <h3 class="box-title"><input type="checkbox"
       ng-model="opencensus_enabled"
       ng-checked="isMiddlewareEnabled()"
-      ng-click="toggleOpencensusMiddleware(opencensus_enabled)"> Opencensus <small>(Zipkin, InfluxDB, Prometheus...)</small></h3>
+      ng-click="toggleOpencensusMiddleware(opencensus_enabled)"> Opencensus <small>(Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver and more)</small></h3>
     </div>
     <div class="box-body" ng-if="isMiddlewareEnabled()">
       <p>The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different backends. Select all the metric integrations you want to enable and configure below:</p>
@@ -60,6 +60,15 @@
             ng-checked="backendIsEnabled('xray')"
             ng-click="toggleOpencensusBackend(exporters.xray,'xray')">
             <strong>AWS X-Ray</strong> - Analyze and debug production, distributed applications
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-model="exporters.stackdriver"
+            ng-checked="backendIsEnabled('stackdriver')"
+            ng-click="toggleOpencensusBackend(exporters.stackdriver,'stackdriver')">
+            <strong>Google Stackdriver</strong> - Logs, metrics, traces, and other signals
           </label>
         </div>
       </div>
@@ -243,6 +252,67 @@
               class="form-control"
               ng-model="data.extra_config[config_namespace].exporters.xray.secret_access_key"
               placeholder="e.g: 1.2.3">
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.stackdriver">
+    <div class="box-header with-border">
+      <h3 class="box-title">Stackdriver configuration</h3>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="control-label">Project ID</label>
+                <input type="text"
+                class="form-control"
+                ng-model="data.extra_config[config_namespace].exporters.stackdriver.project_id"
+                placeholder="Your GCE project ID">
+              </div>
+              <div class="col-md-6">
+                <label class="control-label">Metrics prefix</label>
+                <input type="text"
+                class="form-control"
+                ng-model="data.extra_config[config_namespace].exporters.stackdriver.metrics_prefix"
+                placeholder="e.g.: [KRAKEND]">
+              </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="control-label">Labels</label>
+              <input class="form-control"
+              placeholder="label"
+              type="text"
+              ng-model="label_key">
+              <span class="help-block">
+                Enter here any label that will be assigned by default to the reported metric so you can filter later on Stack Driver.
+              </span>
+            </div>
+            <div class="col-md-6">
+                <label>&nbsp;</label>
+                <div class="input-group">
+                    <input class="form-control"
+                    placeholder="Value"
+                    type="text"
+                    ng-model="label_value">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-info btn-flat" ng-click="addLabel(label_key,label_value)">
+                              <i class="fa fa-plus"></i> Add
+                            </button>
+                        </span>
+                  </div>
+              <ul class="list-inline help-block">
+                <li ng-repeat="(index,label) in data.extra_config[config_namespace].exporters.stackdriver.default_labels">
+                    <a class="badge badge-remove"
+                       ng-click="deleteLabel(index)"><i
+                            class="fa fa-times"></i>
+                        {{ index }}={{ label }}</a>
+                </li>
+            </ul>
             </div>
           </div>
         </div>
