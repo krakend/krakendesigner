@@ -84,6 +84,18 @@ angular
                 }
             }
 
+            scope.addLabel = function(key,value) {
+                if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels ) {
+                    scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels = {};
+                }
+
+                scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels[key] = value;
+            }
+
+            scope.deleteLabel = function(key) {
+                delete scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels[key];
+            }
+
             scope.isValidTimeUnit = function (time_with_unit) {
 
                 return (
