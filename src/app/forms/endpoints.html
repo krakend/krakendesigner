@@ -217,6 +217,17 @@
                 <div class="form-group">
                     <div class="col-md-12">
                          <h4>Backend API calls (where the data comes from)</h4>
+                         <input type="checkbox"
+                                ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].sequential">
+                                <strong>Enable sequential proxy</strong>
+                        <span class="help-block">
+                            When the sequential proxy is enabled a backend call can use data from a previous call. The data
+                            from previous calls is available in a variable like <code>{resp0_XXXX}</code> where <code>0</code>
+                            is the index of the backend and <code>XXXX</code> the attribute. E.g: <code>{resp1_hotel_id}</code>
+                            takes the field <code>hotel_id</code> from the second backend call (index starts at 0).
+                            Inject this variable in the desired backend endpoint.
+                        </span>
+
                     </div>
                     <div class="col-md-12" ng-if="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static">
                         <div class="box box-info box-solid">
@@ -627,6 +638,7 @@
 
 
                 </div>
+
                 <button class="btn btn-primary"
                     ng-click="addDefaultStaticResponse(endpoint_index)"
                     ng-if="! endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static  &&   !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0)">

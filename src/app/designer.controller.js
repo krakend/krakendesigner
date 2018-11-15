@@ -339,29 +339,34 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         }
     };
 
+
     $rootScope.addDefaultStaticResponse = function (endpoint_index) {
         if ( 'undefined' === typeof $rootScope.service.endpoints[endpoint_index].extra_config ) {
             $rootScope.service.endpoints[endpoint_index].extra_config = {};
         }
 
         if (typeof $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] == "undefined") {
+            $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {};
+        }
 
-            $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {
-                "static": {
-                    "data" : {
-                        "new_field_a": 123,
-                        "new_field_b": ["arr1","arr2"],
-                        "new_field_c": {"obj": "obj1"}
-                    },
-                    "strategy": "incomplete"
-                }
-            }
+        $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy']['static'] = {
+                "data" : {
+                    "new_field_a": 123,
+                    "new_field_b": ["arr1","arr2"],
+                    "new_field_c": {"obj": "obj1"}
+                },
+                "strategy": "incomplete"
         }
     };
 
     $rootScope.deleteStaticResponse = function (endpoint_index) {
-        delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
+            delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy']['static'];
+            // Last key
+            if ( Object.keys($rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy']).length == 0 ) {
+                delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
+            }
     };
+
 
     $rootScope.addQuerystring = function (endpoint_index) {
 
