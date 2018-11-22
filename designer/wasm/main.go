@@ -97,8 +97,8 @@ func (j JS) testEndpoint(i []js.Value) {
 			j.logger(err.Error())
 			return
 		case res := <-j.c.res:
-			body, _ := json.Marshal(res.Data)
-			headers, _ := json.Marshal(res.Metadata.Headers)
+			body, _ := json.MarshalIndent(res.Data, "", "\t")
+			headers, _ := json.MarshalIndent(res.Metadata.Headers, "", "\t")
 
 			i[4].Invoke(string(body), res.IsComplete, res.Metadata.StatusCode, string(headers))
 		}

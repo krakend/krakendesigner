@@ -44,14 +44,6 @@ angular
             alert(msg);
         }
         var okFunction = function(body, isComplete, statusCode, headers){
-            try { // Beautify response
-                bodyJSON = JSON.parse(body);
-                bodyJSON = JSON.stringify(bodyJSON, null, 4);
-                body = bodyJSON;
-            } catch(err) {
-                // Response is not JSON
-                console.log(err);
-            }
             $rootScope.run[endpoint_index].output = {
                 isComplete: isComplete,
                 body: body,
