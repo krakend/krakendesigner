@@ -7,6 +7,7 @@ angular
     // Default initial values set in any configuration generation:
     $rootScope.service = DefaultConfig.service;
     $rootScope.constants = Constants;
+    $rootScope.run = [];
 
     $rootScope.save = function () {
         if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
@@ -21,6 +22,49 @@ angular
         downloadDocument(date + "-krakend.json", angular.toJson($rootScope.service, true)); // Beautify
         $rootScope.saved_once = true;
     };
+
+    $rootScope.runEndpoint = function(endpoint_index) {
+        configuration = JSON.stringify($rootScope.service);
+
+        var requestHeaders = $rootScope.run[endpoint_index].input.headers;
+        var requestBody = $rootScope.run[endpoint_index].input.body;
+        var requestParams = $rootScope.run[endpoint_index].input.parameters;
+
+        if ( 'undefined' === typeof requestBody ) {
+            // GET or HEAD methods
+            requestBody = "";
+        }
+        if ( 'undefined' === typeof requestParams ) {
+            // GET or HEAD methods
+            requestParams = "{}";
+        }
+        console.log(requestBody);
+
+        var koFunction = function(msg) {
+            alert(msg);
+        }
+        var okFunction = function(body, isComplete, statusCode, headers){
+            try { // Beautify response
+                bodyJSON = JSON.parse(body);
+                bodyJSON = JSON.stringify(bodyJSON, null, 4);
+                body = bodyJSON;
+            } catch(err) {
+                // Response is not JSON
+                console.log(err);
+            }
+            $rootScope.run[endpoint_index].output = {
+                isComplete: isComplete,
+                body: body,
+                statusCode: statusCode,
+                headers: headers
+            };
+            $scope.$apply();
+        }
+
+        parse(configuration, function(f) {
+            f(endpoint_index, requestParams, requestHeaders, requestBody, okFunction);
+        }, koFunction);
+    }
 
     $rootScope.loadFile = function () {
         try {
