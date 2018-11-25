@@ -75,6 +75,7 @@ func (j *JSClient) Value() js.Value {
 	opt.Set("test", js.NewCallback(func(i []js.Value) {
 		if len(i) < 5 {
 			j.logger("the test function requires at least 5 arguments: method, path, body, headers and a callback")
+			return
 		}
 		var reqBody io.Reader
 		if b := i[2].String(); b != "" {
