@@ -188,6 +188,7 @@ func main() {
 	fmt.Println("WASM Go Initialized")
 
 	js.Global().Set("parse", js.NewCallback(parse))
+	js.Global().Get("onKrakendClientReady").Invoke()
 
 	select {}
 }
