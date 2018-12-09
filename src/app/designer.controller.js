@@ -7,6 +7,7 @@ angular
     // Default initial values set in any configuration generation:
     $rootScope.service = DefaultConfig.service;
     $rootScope.constants = Constants;
+    $rootScope.clientIsReady = false;
     $rootScope.run = [];
 
     $rootScope.save = function () {
@@ -24,18 +25,8 @@ angular
     };
 
 
-
-    jsonParser = function(r) {
-        console.log({
-          statusCode: r.statusCode,
-          header: r.header,
-          body: r.body
-          //body: JSON.parse(r.body)
-        });
-      };
-
       $rootScope.krakendPrepare = function() {
-
+        $rootScope.clientIsReady = false;
         if ( 'undefined' !== typeof krakendClient.close ) {
             krakendClient.close();
             console.log('Resetting KrakenD client');
@@ -49,20 +40,6 @@ angular
             })
         })
       };
-
-    $rootScope.runEndpoint = function(requestMethod, requestURL, requestBody, requestHeaders) {
-
-        if ( 'undefined' === typeof requestBody ) {
-            // GET or HEAD methods
-            requestBody = "";
-        }
-        if ( 'undefined' === typeof requestHeaders || requestHeaders == "" ) {
-            // GET or HEAD methods
-            requestHeaders = "{}";
-        }
-
-        krakendClient.test(requestMethod, requestURL, requestBody, requestHeaders, jsonParser);
-    };
 
     $rootScope.loadFile = function () {
         try {
