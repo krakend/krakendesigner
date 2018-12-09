@@ -166,31 +166,68 @@
                 </a>
             </div>
         </div>
-    </div>
-</footer>
-<script src='wasm/wasm_exec.js'></script>
-<script>
-    if (!WebAssembly.instantiateStreaming) { // polyfill
+        <div class="row">
+          <div class="col-md-5 additional-links">
+            <strong
+              >Copyright &copy; 2017-2018
+              <a href="http://devops.faith">Devops Faith</a>.</strong
+            >
+            All rights reserved.
+          </div>
+          <div class="pull-right hidden-xs">
+            Made with <i class="fa fa-heart-o" style="color:hotpink"></i> in
+            Barcelona by
+            <a href="https://twitter.com/devopsfaith">
+              <img
+                height="30px"
+                src="https://www.krakend.io/images/devops-faith-logo-inverse.png"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="wasm/wasm_exec.js"></script>
+    <script>
+      if (!WebAssembly.instantiateStreaming) {
+        // polyfill
         WebAssembly.instantiateStreaming = async (resp, importObject) => {
-            const source = await (await resp).arrayBuffer();
-            return await WebAssembly.instantiate(source, importObject);
+          const source = await (await resp).arrayBuffer();
+          return await WebAssembly.instantiate(source, importObject);
         };
-    }
+      }
 
-    const go = new Go();
-    let mod, inst;
-    WebAssembly.instantiateStreaming(fetch("wasm/main.wasm"), go.importObject).then(async (result) => {
+      const go = new Go();
+      let mod, inst;
+
+      var onKrakendClientReady = function(){};
+
+      var krakendClientReady = new Promise(function(resolve, reject) {
+        onKrakendClientReady=resolve;
+      });
+
+      WebAssembly.instantiateStreaming(
+        fetch("wasm/main.wasm"),
+        go.importObject
+      ).then(async result => {
         mod = result.module;
         inst = result.instance;
         await go.run(inst);
-    });
+      });
 
-</script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
-<script>
-    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-    ga('create', 'UA-87994359-3', 'auto');
-    ga('send', 'pageview');
-</script>
-</body>
+      var krakendClient = {};
+
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    <script>
+      window.ga =
+        window.ga ||
+        function() {
+          (ga.q = ga.q || []).push(arguments);
+        };
+      ga.l = +new Date();
+      ga("create", "UA-87994359-3", "auto");
+      ga("send", "pageview");
+    </script>
+  </body>
 </html>
