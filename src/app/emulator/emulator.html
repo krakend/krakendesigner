@@ -1,3 +1,4 @@
+<p>The KrakenD Emulator is an experimental feature that allows you to test KrakenD functionality right in your browser. Open the browser console to see more activity.</p>
 <div class="row">
 	<div class="form-group">
 		<div class="col-md-2">
@@ -34,7 +35,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-12">
+		<div class="col-md-12" ng-if="input_method != 'GET' && input_method != ''">
 			<label>Body</label>
 			<textarea
 				rows="1"
@@ -72,7 +73,7 @@
 			<p>Body:</p>
 			<div class="body"><pre>{{ output.body }}</pre></div>
 		</div>
-		<button class="btn btn-default" ng-click="output = {}">
+		<button class="btn btn-default" ng-click="deleteOutput()">
 			<i class="fa fa-trash"></i> Clean
 		</button>
 	</div>

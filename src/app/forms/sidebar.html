@@ -1,6 +1,6 @@
 <!-- Sidebar Menu -->
 <ul class="sidebar-menu">
-    <li class="header">Navigation</li>
+    <li class="header">KrakenDesigner</li>
     <li class="active">
         <a href="/#/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
     </li>
@@ -15,11 +15,12 @@
     <li>
         <a href="/#/service-discovery"><i class="fa fa-connectdevelop"></i> <span>Service Discovery and hosts</span></a>
     </li>
-    <li class="treeview"><a href="/#/endpoints"><i class="fa fa-gear"></i> <span>Endpoints</span>
+    <li class="treeview">
+        <a href="/#/endpoints"><i class="fa fa-gear"></i> <span>Endpoints</span>
         <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-    </a>
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
+        </a>
         <ul class="treeview-menu menu-open">
             <li ng-repeat="endpoint in service.endpoints">
                 <a href="/#/endpoints"><i class="fa fa-circle-o }}"></i> {{ endpoint.endpoint }}
@@ -36,8 +37,6 @@
             </li>
 
         </ul>
-
-
     </li>
     <li class="treeview">
         <a><i class="fa fa-shield"></i> <span>Security options</span>

@@ -2,12 +2,11 @@ var FileSaver = require('file-saver');
 
 angular
 .module('KrakenDesigner')
-.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig, Constants) {
+.controller('KrakenDesignerController', function ($scope, $rootScope, DefaultConfig, Constants) {
 
     // Default initial values set in any configuration generation:
     $rootScope.service = DefaultConfig.service;
     $rootScope.constants = Constants;
-    $rootScope.clientIsReady = false;
     $rootScope.run = [];
 
     $rootScope.save = function () {
@@ -26,7 +25,6 @@ angular
 
 
       $rootScope.krakendPrepare = function() {
-        $rootScope.clientIsReady = false;
         if ( 'undefined' !== typeof krakendClient.close ) {
             krakendClient.close();
             console.log('Resetting KrakenD client');
