@@ -1,4 +1,4 @@
-import 'jquery';
+import 'jquery'; // Expand/Collapse endpoints
 import 'bootstrap';
 import 'admin-lte';
 

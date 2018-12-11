@@ -4,7 +4,9 @@ angular
 	return {
 		restrict: 'A',
 		require: 'ngModel',
-		scope: true,
+		scope: {
+			syntax_problems: "=syntax"
+		},
 		link: function(scope, element, attrs, ngModel) {
 			function toObject(input) {
 				try {
@@ -12,11 +14,10 @@ angular
 					if ( '' != input ) {
 						json_object = JSON.parse(input);
 					}
-					delete scope.service.extra_config['krakendesigner'].json_errors;
+					scope.syntax_problems = false;
 					return json_object;
 				} catch(e) {
-					scope.service.extra_config['krakendesigner'].json_valid = true;
-					scope.service.extra_config['krakendesigner'].json_errors = e.message;
+					scope.syntax_problems = e.message;
 					return false;
 				}
 			}
