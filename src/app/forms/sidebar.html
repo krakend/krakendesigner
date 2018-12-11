@@ -1,11 +1,11 @@
 <!-- Sidebar Menu -->
-<ul class="sidebar-menu">
+<ul class="sidebar-menu" data-widget="tree">
     <li class="header">KrakenDesigner</li>
     <li class="active">
-        <a href="/#/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+        <a href="/#!/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
     </li>
     <li>
-        <a href="/#/service"><i class="fa fa-wrench"></i> <span>Service configuration</span>
+        <a href="/#!/service"><i class="fa fa-wrench"></i> <span>Service configuration</span>
             <span ng-if="sd_providers.hosts.length === 0 || !sd_providers.hosts" class="pull-right-container" data-toggle="tooltip"
                   data-original-title="No backends configured yet!">
                     <i class="fa fa-warning pull-right icon-warning"></i>
@@ -13,17 +13,17 @@
         </a>
     </li>
     <li>
-        <a href="/#/service-discovery"><i class="fa fa-connectdevelop"></i> <span>Service Discovery and hosts</span></a>
+        <a href="/#!/service-discovery"><i class="fa fa-connectdevelop"></i> <span>Service Discovery and hosts</span></a>
     </li>
     <li class="treeview">
-        <a href="/#/endpoints"><i class="fa fa-gear"></i> <span>Endpoints</span>
+        <a href="/#!/endpoints"><i class="fa fa-gear"></i> <span>Endpoints</span>
         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
         </a>
         <ul class="treeview-menu menu-open">
             <li ng-repeat="endpoint in service.endpoints">
-                <a href="/#/endpoints"><i class="fa fa-circle-o }}"></i> {{ endpoint.endpoint }}
+                <a href="/#!/endpoints"><i class="fa fa-circle-o }}"></i> {{ endpoint.endpoint }}
                     <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -45,15 +45,15 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="/#/oauth"><i class="fa fa-user-secret"></i>OAuth</a></li>
-            <li><a href="/#/security"><i class="fa fa-key"></i>Security headers</a></li>
+            <li><a href="/#!/oauth"><i class="fa fa-user-secret"></i>OAuth</a></li>
+            <li><a href="/#!/security"><i class="fa fa-key"></i>Security headers</a></li>
         </ul>
     </li>
     <li>
-        <a href="/#/logging"><i class="fa fa-area-chart"></i> <span>Logging and metrics</span></a>
+        <a href="/#!/logging"><i class="fa fa-area-chart"></i> <span>Logging and metrics</span></a>
     </li>
     <li>
-        <a href="/#/client"><i class="fa fa-gear"></i> <span>KrakenD Emulator</span></a>
+        <a href="/#!/client"><i class="fa fa-gear"></i> <span>KrakenD Emulator</span></a>
     </li>
     <li><a href="https://www.krakend.io/docs/overview/introduction"><i class="fa fa-book"></i> <span>Documentation</span></a>
     </li>

@@ -19,9 +19,9 @@
 					<div class="box-body">
 						<ul class="list-unstyled">
 							<li ng-repeat="(endpoint_index,endpoint) in service.endpoints">
-								<a href="/#/client?target={{ endpoint_index }}">
+								<a href="/#!/client?target={{ endpoint_index }}">
 									{{ endpoint.endpoint }}
-								</a> <span class="badge method_{{ endpoint.method }}">{{ endpoint.method }}</span> (<a href="/#/endpoints">Edit</a>)
+								</a> <span class="badge method_{{ endpoint.method }}">{{ endpoint.method }}</span> (<a href="/#!/endpoints">Edit</a>)
 							</li>
 						</ul>
 					</div>

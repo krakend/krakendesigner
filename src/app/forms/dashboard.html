@@ -10,18 +10,18 @@
 
             <ul class="nav nav-pills nav-justified setup-panel">
                 <li ng-class="sd_providers.length === 0 || !sd_providers ? '' : 'bg-success'">
-                    <a href="/#/service">
+                    <a href="/#!/service">
                         <h4 class="list-group-item-heading">Step 1</h4>
                         <p class="list-group-item-text text-bold">Set the configuration</p>
                     </a></li>
                 <li ng-class="service.endpoints.length === 0 || !service.endpoints? '' : 'bg-success'">
-                    <a href="/#/endpoints">
+                    <a href="/#!/endpoints">
                         <h4 class="list-group-item-heading">Step 2</h4>
                         <p class="list-group-item-text text-bold">Add an endpoint</p>
                     </a>
                 </li>
                 <li ng-class="saved_once ? 'bg-success' : '' ">
-                    <a href="/#/" ng-click="save()">
+                    <a href="/#!/" ng-click="save()">
                         <h4 class="list-group-item-heading">Step 3</h4>
                         <p class="list-group-item-text text-bold">Download config</p>
                     </a></li>

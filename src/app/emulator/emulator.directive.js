@@ -6,8 +6,7 @@ angular.module("KrakenDesigner").directive("emulator", [
 			restrict: "E",
 			templateUrl: "/src/app/emulator/emulator.html",
 			scope: {
-				endpoints: "=",
-				output: "="
+				endpoints: "="
 			},
 			link: function(scope, element, attrs) {
 				scope.constants = Constants;
