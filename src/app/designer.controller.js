@@ -2,7 +2,7 @@ var FileSaver = require('file-saver');
 
 angular
 .module('KrakenDesigner')
-.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig, Constants) {
+.controller('KrakenDesignerController', function ($scope, $rootScope, DefaultConfig, Constants) {
 
     // Default initial values set in any configuration generation:
     $rootScope.service = DefaultConfig.service;
@@ -23,40 +23,21 @@ angular
         $rootScope.saved_once = true;
     };
 
-    $rootScope.runEndpoint = function(endpoint_index) {
-        configuration = JSON.stringify($rootScope.service);
 
-        var requestHeaders = $rootScope.run[endpoint_index].input.headers;
-        var requestBody = $rootScope.run[endpoint_index].input.body;
-        var requestParams = $rootScope.run[endpoint_index].input.parameters;
-
-        if ( 'undefined' === typeof requestBody ) {
-            // GET or HEAD methods
-            requestBody = "";
-        }
-        if ( 'undefined' === typeof requestParams ) {
-            // GET or HEAD methods
-            requestParams = "{}";
-        }
-        console.log(requestBody);
-
-        var koFunction = function(msg) {
-            alert(msg);
-        }
-        var okFunction = function(body, isComplete, statusCode, headers){
-            $rootScope.run[endpoint_index].output = {
-                isComplete: isComplete,
-                body: body,
-                statusCode: statusCode,
-                headers: headers
-            };
-            $scope.$apply();
+      $rootScope.krakendPrepare = function() {
+        if ( 'undefined' !== typeof krakendClient.close ) {
+            krakendClient.close();
+            console.log('Resetting KrakenD client');
         }
 
-        parse(configuration, function(f) {
-            f(endpoint_index, requestParams, requestHeaders, requestBody, okFunction);
-        }, koFunction);
-    }
+        var cfg = JSON.stringify($rootScope.service);
+        krakendClientReady.then(function(){
+            parse(cfg, function(c) {
+                krakendClient = c;
+                console.log("KrakenD Client is ready");
+            })
+        })
+      };
 
     $rootScope.loadFile = function () {
         try {

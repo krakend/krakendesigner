@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-md-8">
+		<div class="box box-success">
+			<div class="box-header with-border">
+				<h3 class="box-title">KrakenD Emulator</h3>
+			</div>
+			<div class="box-body">
+				<div ng-init="krakendPrepare()">
+					<emulator endpoints="service.endpoints"></emulator>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+			<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Select an endpoint to test</h3>
+					</div>
+					<div class="box-body">
+						<ul class="list-unstyled">
+							<li ng-repeat="(endpoint_index,endpoint) in service.endpoints">
+								<a href="/#/client?target={{ endpoint_index }}">
+									{{ endpoint.endpoint }}
+								</a> <span class="badge method_{{ endpoint.method }}">{{ endpoint.method }}</span> (<a href="/#/endpoints">Edit</a>)
+							</li>
+						</ul>
+					</div>
+				</div>
+
+	</div>
+</div>
