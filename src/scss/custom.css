@@ -162,6 +162,9 @@ code {
 }
 
 /* KrakenDesigner */
+.method_header {
+    width: 6rem;
+}
 .method_GET {
     background-color: #00a65a;
     color: white;

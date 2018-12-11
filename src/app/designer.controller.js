@@ -2,13 +2,14 @@ var FileSaver = require('file-saver');
 
 angular
 .module('KrakenDesigner')
-.controller('KrakenDesignerController', function ($scope, $rootScope, DefaultConfig, Constants) {
+.controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig, Constants) {
 
     // Default initial values set in any configuration generation:
     $rootScope.service = DefaultConfig.service;
     $rootScope.constants = Constants;
     $rootScope.run = [];
 
+    $rootScope.selected_endpoint = ( 'undefined' === typeof ($location.search()).target ? false : ($location.search()).target );
     $rootScope.save = function () {
         if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
             alert("At least you need to define an endpoint");
@@ -244,7 +245,8 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         if (typeof $rootScope.service.endpoints === "undefined") {
             $rootScope.service.endpoints = [];
         }
-        $rootScope.service.endpoints.push({"endpoint": "/", "method": "GET"});
+
+        $rootScope.service.endpoints.push({"endpoint": "/new-endpoint", "method": "GET"});
     };
 
     // Valid endpoints start with Slash and do not contain /__debug[/]

@@ -1,10 +1,10 @@
-<div class="box box-primary collapsed-box" ng-repeat="(endpoint_index,endpoint) in service.endpoints"
-     ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'">
+<div class="box box-primary"
+    ng-repeat="(endpoint_index,endpoint) in service.endpoints"
+    ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'"
+    id="e{{ endpoint_index }}">
     <div class="box-header with-border">
         <h3 class="box-title">
-            <a data-widget="collapse" data-target="endpoint-form-{{ endpoint_index }}">
-                <i class="fa fa-plus"></i>
-
+            <a href="/#!/endpoints?target={{endpoint_index}}">
                 {{ endpoint.endpoint }}
                 <code class="small" ng-if="endpoint.querystring_params.length > 0">
                     ?<span ng-repeat="qs in endpoint.querystring_params">{{ qs }}=X{{ $last ? '' : '&' }}</span>
@@ -15,14 +15,14 @@
         <div class="box-tools pull-right">
             <span ng-hide="isValidEndpoint(endpoint.endpoint)" class="badge label-danger"><i class="fa fa-warning"></i> Error(s)</span>
             <span class="badge">{{ endpoint.output_encoding }}</span>
-            <span class="badge method_{{ endpoint.method }}">{{ endpoint.method }}</span>
+            <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{ endpoint.method.length ? endpoint.method : 'GET' }}</span>
             <button type="button" class="btn btn-box-tool"
                     ng-click="deleteEndpoint(endpoint_index, 'This endpoint and all the information will be deleted. Do you want to proceed?')">
                 <i class="fa fa-trash"></i></button>
         </div>
     </div>
     <!-- /.box-header -->
-    <div class="box-body" id="endpoint-form-{{ endpoint_index }}">
+    <div class="box-body" id="endpoint-detail-{{endpoint_index}}" ng-if="selected_endpoint == endpoint_index && selected_endpoint.length">
         <!-- Search Endpoints
         <form action="#" method="get" class="sidebar-form">
             <input type="search" id="q" ng-model="q" name="q" class="form-control" placeholder="Filter Endpoints...">

@@ -10,21 +10,25 @@ angular.module("KrakenDesigner").directive("emulator", [
 			},
 			link: function(scope, element, attrs) {
 				scope.constants = Constants;
-				// Get endpoint data from URL ?target=endpoint_index
-				if ("undefined" !== location.search().target) {
-					var endpoint_index = location.search().target;
-					if (
-						"undefined" !== typeof scope.endpoints[endpoint_index]
-					) {
-
-            scope.input_method =
+				scope.selectEndpoint = function(endpoint_index) {
+					if ("undefined" !== typeof scope.endpoints[endpoint_index]) {
+						scope.input_method =
 							scope.endpoints[endpoint_index].method == ""
 								? "GET"
 								: scope.endpoints[endpoint_index].method;
 
 						scope.input_URL =
 							scope.endpoints[endpoint_index].endpoint;
+
+						scope.selected_endpoint = endpoint_index;
 					}
+
+				};
+
+				// Get endpoint data from URL ?target=endpoint_index
+				if ("undefined" !== location.search().target) {
+					endpoint_index = location.search().target;
+					scope.selectEndpoint(endpoint_index);
 				}
 
 				scope.beautify = function(string) {
@@ -57,10 +61,7 @@ angular.module("KrakenDesigner").directive("emulator", [
 				) {
 					var has_undefined_parameters = /(\{[a-z0-9_]+\})+/;
 
-					if (
-						"undefined" === typeof requestURL ||
-						"" === requestURL
-					) {
+					if ( "undefined" === typeof requestURL || "" === requestURL	) {
 						return false;
 					}
 
@@ -74,17 +75,11 @@ angular.module("KrakenDesigner").directive("emulator", [
 					if ("undefined" === typeof requestBody) {
 						requestBody = "";
 					}
-					if (
-						"undefined" === typeof requestHeaders ||
-						requestHeaders == ""
-					) {
+					if ("undefined" === typeof requestHeaders || requestHeaders == "") {
 						requestHeaders = "{}";
 					}
 
-					if (
-						"undefined" === typeof requestMethod ||
-						requestMethod == ""
-					) {
+					if ("undefined" === typeof requestMethod || requestMethod == "") {
 						requestMethod = "GET";
 					}
 
@@ -106,56 +101,6 @@ angular.module("KrakenDesigner").directive("emulator", [
 
 				scope.deleteOutput = function() {
 					delete scope.output;
-				};
-
-				scope.addKeyPair = function(key, value, in_object = false) {
-					if (in_object) {
-						scope.endpoints.extra_config[NAMESPACE][in_object][
-							key
-						] = value;
-					} else {
-						scope.endpoints.extra_config[NAMESPACE][key] = value;
-					}
-				};
-
-				scope.deleteKey = function(key, in_object = false) {
-					if (in_object) {
-						delete scope.endpoints.extra_config[NAMESPACE][
-							in_object
-						][key];
-					} else {
-						delete scope.endpoints.extra_config[NAMESPACE][key];
-					}
-				};
-
-				scope.addTermToList = function(term, list) {
-					if ("undefined" === typeof term || term.length < 1) {
-						return;
-					}
-
-					if (
-						"undefined" ===
-						typeof scope.endpoints.extra_config[NAMESPACE][list]
-					) {
-						scope.endpoints.extra_config[NAMESPACE][list] = [];
-					}
-
-					if (
-						scope.endpoints.extra_config[NAMESPACE][list].indexOf(
-							term
-						) === -1
-					) {
-						scope.endpoints.extra_config[NAMESPACE][list].push(
-							term
-						);
-					}
-				};
-
-				scope.deleteIndexFromList = function(index, list) {
-					scope.endpoints.extra_config[NAMESPACE][list].splice(
-						index,
-						1
-					);
 				};
 			}
 		};
