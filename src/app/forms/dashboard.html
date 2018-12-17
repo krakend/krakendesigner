@@ -45,53 +45,5 @@
     </div>
 </div>
 <div class="col-lg-6">
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">Load a previous configuration file</h3>
-        </div>
-        <div class="box-body">
-            <div ng-if="dropzone_loaded" class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dropzone_loaded=!dropzone_loaded">×
-                </button>
-                <h4><i class="fa fa-check"></i> Configuration loaded</h4>
-                The configuration file <strong>{{filename}}</strong> has been successfully loaded in KrakenDesigner.
-            </div>
-            <p>Drag and drop a previous configuration file below to resume a configuration. After reviewing the values
-                press the button to load it in the application. Only <code>application/json</code> file type is
-                accepted
-                by the KrakenDesigner.
-            </p>
-
-            <div id="drop_zone" drop-box="[application/json, text/json]" file="filename" data="service_configuration"
-                data-max-file-size="3">
-                <h2>Drop configuration file to load it.</h2>
-                <small>(No content is uploaded to server, everything stays in your browser)</small>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div id="dropzone_modal" class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Load configuration from file <strong>{{filename}}</strong>?</h4>
-            </div>
-            <div class="modal-body">
-                <p>Current session data will be replaced with the configuration below. Proceed? </p>
-                <pre>{{ service_configuration }}</pre>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" ng-click="loadFile()" data-dismiss="modal" class="btn btn-primary">Yes, load this configuration
-                </button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
+    <div ng-include src="'/src/app/forms/drag-and-drop.html'"></div>
 </div>
