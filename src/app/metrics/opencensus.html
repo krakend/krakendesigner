@@ -1,9 +1,8 @@
 <div class="box box-primary">
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox"
-      ng-model="opencensus_enabled"
       ng-checked="isMiddlewareEnabled()"
-      ng-click="toggleOpencensusMiddleware(opencensus_enabled)"> Opencensus <small>(Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver and more)</small></h3>
+      ng-click="toggleOpencensusMiddleware()"> Opencensus <small>(Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver and more)</small></h3>
     </div>
     <div class="box-body" ng-if="isMiddlewareEnabled()">
       <p>The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different backends. Select all the metric integrations you want to enable and configure below:</p>
@@ -11,63 +10,56 @@
         <div class="checkbox">
           <label>
             <input type="checkbox"
-            ng-model="exporters.logger"
             ng-checked="backendIsEnabled('logger')"
-            ng-click="toggleOpencensusBackend(exporters.logger,'logger')">
+            ng-click="toggleOpencensusBackend('logger')">
             <strong>Logger</strong> - Will use your Logger settings to expose the metrics
           </label>
         </div>
         <div class="checkbox">
           <label>
             <input type="checkbox"
-            ng-model="exporters.zipkin"
             ng-checked="backendIsEnabled('zipkin')"
-            ng-click="toggleOpencensusBackend(exporters.zipkin,'zipkin')">
+            ng-click="toggleOpencensusBackend('zipkin')">
             <strong>Zipkin</strong> - Distributed tracing system
           </label>
         </div>
         <div class="checkbox">
           <label>
             <input type="checkbox"
-            ng-model="exporters.jaeger"
             ng-checked="backendIsEnabled('jaeger')"
-            ng-click="toggleOpencensusBackend(exporters.jaeger,'jaeger')">
+            ng-click="toggleOpencensusBackend('jaeger')">
             <strong>Jaeger</strong> - Distributed tracing system
           </label>
         </div>
         <div class="checkbox">
           <label>
             <input type="checkbox"
-            ng-model="exporters.influxdb"
             ng-checked="backendIsEnabled('influxdb')"
-            ng-click="toggleOpencensusBackend(exporters.influxdb,'influxdb')">
+            ng-click="toggleOpencensusBackend('influxdb')">
             <strong>InfluxDB</strong> - Time series database
           </label>
         </div>
         <div class="checkbox">
           <label>
             <input type="checkbox"
-            ng-model="exporters.prometheus"
             ng-checked="backendIsEnabled('prometheus')"
-            ng-click="toggleOpencensusBackend(exporters.prometheus,'prometheus')">
+            ng-click="toggleOpencensusBackend('prometheus')">
             <strong>Prometheus</strong> - Monitoring and alerting toolkit
           </label>
         </div>
         <div class="checkbox">
           <label>
             <input type="checkbox"
-            ng-model="exporters.xray"
             ng-checked="backendIsEnabled('xray')"
-            ng-click="toggleOpencensusBackend(exporters.xray,'xray')">
+            ng-click="toggleOpencensusBackend('xray')">
             <strong>AWS X-Ray</strong> - Analyze and debug production, distributed applications
           </label>
         </div>
         <div class="checkbox">
           <label>
             <input type="checkbox"
-            ng-model="exporters.stackdriver"
             ng-checked="backendIsEnabled('stackdriver')"
-            ng-click="toggleOpencensusBackend(exporters.stackdriver,'stackdriver')">
+            ng-click="toggleOpencensusBackend('stackdriver')">
             <strong>Google Stackdriver</strong> - Logs, metrics, traces, and other signals
           </label>
         </div>
