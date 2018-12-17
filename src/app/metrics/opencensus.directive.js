@@ -28,21 +28,14 @@ angular
 
 
             scope.isMiddlewareEnabled = function() {
-                if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE] )
-                {
-                    return false;
-                }
-                return true;
+                return !( 'undefined' === typeof scope.data.extra_config[NAMESPACE] );
             }
 
-            scope.toggleOpencensusMiddleware = function (enable) {
-                if (enable) {
-
-                    scope.data.extra_config[NAMESPACE] = default_opencensus_settings;
-                }
-                else
-                {
+            scope.toggleOpencensusMiddleware = function () {
+                if ( scope.isMiddlewareEnabled() ) {
                     delete scope.data.extra_config[NAMESPACE];
+                } else {
+                    scope.data.extra_config[NAMESPACE] = default_opencensus_settings;
                 }
             }
 
@@ -61,19 +54,9 @@ angular
                 return scope.isMiddlewareEnabled() && 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters && 'undefined' !== typeof scope.data.extra_config[NAMESPACE].exporters[metric];
             }
 
+            scope.toggleOpencensusBackend = function (metric) {
 
-            scope.toggleOpencensusBackend = function (isEnabled, metric) {
-
-                if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE])
-                {
-                    scope.data.extra_config[NAMESPACE] = default_opencensus_settings;
-                }
-
-                if (isEnabled) {
-                    scope.data.extra_config[NAMESPACE].exporters[metric] = {};
-                }
-                else
-                {
+                if (scope.backendIsEnabled(metric)) {
                     delete scope.data.extra_config[NAMESPACE].exporters[metric];
 
                     // If this is the last metric delete the whole module to leave config clean:
@@ -81,6 +64,10 @@ angular
                     {
                         delete scope.data.extra_config[NAMESPACE];
                     }
+                }
+                else
+                {
+                    scope.data.extra_config[NAMESPACE].exporters[metric] = {};
                 }
             }
 
