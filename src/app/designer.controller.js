@@ -4,12 +4,16 @@ angular
 .module('KrakenDesigner')
 .controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig, Constants) {
 
-    // Default initial values set in any configuration generation:
-    $rootScope.service = DefaultConfig.service;
-    $rootScope.constants = Constants;
-    $rootScope.run = [];
 
+    if ( 'undefined' === typeof $rootScope.service )
+    {
+        // Default initial values set in any configuration generation:
+        $rootScope.service = DefaultConfig.service;
+    }
+
+    $rootScope.constants = Constants;
     $rootScope.selected_endpoint = ( 'undefined' === typeof ($location.search()).target ? false : ($location.search()).target );
+
     $rootScope.save = function () {
         if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
             alert("At least you need to define an endpoint");
