@@ -11,7 +11,7 @@
         name="service.port"
         ng-model="service.port"
         placeholder="8080"
-        type="text">
+        type="number">
         <div class="help-block">
           <p ng-hide="isInteger(service.port)">Write a valid port number</p>
           <p>Port where KrakenD listens to connections, defaults to <code>8080</code>. The port can also be specified at startup time with the flag <code>-p</code></code></p>
