@@ -34,6 +34,32 @@
       <span class="help-block">Prepend a string before the the log lines</span>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label class="control-label">Message format</label>
+      <select class="form-control"
+      ng-model="data.extra_config[config_namespace].format"
+      id="data.extra_config[config_namespace].format"
+      name="data.extra_config[config_namespace].format"
+      ng-init="data.extra_config[config_namespace].format='default'"
+      ng-change="data.extra_config[config_namespace].format == 'custom' ? true : deleteKey('custom_format')">
+      <option value="default">default</option>
+      <option value="logstash">logstash</option>
+      <option value="custom">custom</option>
+    </select>
+    <span class="help-block">The format of the log record</span>
+  </div>
+  <div class="col-md-6" ng-if="data.extra_config[config_namespace].format == 'custom'">
+    <label class="control-label">Custom format</label>
+    <input class="form-control"
+    ng-model="data.extra_config[config_namespace].custom_format"
+    id="data.extra_config[config_namespace].custom_format"
+    name="data.extra_config[config_namespace].custom_format"
+    type="text"
+    ng-init="data.extra_config[config_namespace].custom_format='%{message}'">
+    <span class="help-block">The pattern to use is the same as in the <a href="https://github.com/op/go-logging/blob/master/format.go#L156">go-logging library</a></span>
+  </div>
+</div>
   <h4>Send logs to...</h4>
   <div class="form-group">
     <div class="checkbox">
