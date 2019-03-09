@@ -1,5 +1,6 @@
 <div class="col-md-6">
   <middleware data="service" template="gologging.html" namespace="'github_com/devopsfaith/krakend-gologging'"></middleware>
+  <middleware ng-if="service.extra_config['github_com/devopsfaith/krakend-gologging']" data="service" template="gelf.html" namespace="'github_com/devopsfaith/krakend-gelf'"></middleware>
   <middleware data="service" template="metrics.html" namespace="'github_com/devopsfaith/krakend-metrics'"></middleware>
 </div>
 <div class="col-md-6">
