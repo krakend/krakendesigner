@@ -34,7 +34,8 @@ angular
                     "level": "ERROR",
                     "prefix": "[KRAKEND]",
                     "syslog": false,
-                    "stdout": true
+                    "stdout": true,
+                    "format": "default"
                 },
                 'github_com/devopsfaith/krakend-cors': {
                     "allow_methods": [

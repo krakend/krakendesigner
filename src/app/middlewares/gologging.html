@@ -13,8 +13,7 @@
         <select class="form-control"
         ng-model="data.extra_config[config_namespace].level"
         id="data.extra_config[config_namespace].level"
-        name="data.extra_config[config_namespace].level"
-        ng-init="data.extra_config[config_namespace].level='WARNING'">
+        name="data.extra_config[config_namespace].level">
         <option value="DEBUG">DEBUG</option>
         <option value="INFO">INFO</option>
         <option value="WARNING">WARNING</option>
@@ -29,9 +28,21 @@
       ng-model="data.extra_config[config_namespace].prefix"
       id="data.extra_config[config_namespace].prefix"
       name="data.extra_config[config_namespace].prefix"
-      type="text"
-      ng-init="data.extra_config[config_namespace].prefix='[KRAKEND]'">
+      type="text">
       <span class="help-block">Prepend a string before the the log lines</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="checkbox">
+        <label>
+          <input
+          type="checkbox"
+          ng-model="data.extra_config['github_com/devopsfaith/krakend-logstash'].enabled"
+          ng-click="data.extra_config['github_com/devopsfaith/krakend-logstash'].enabled ? null : data.extra_config[config_namespace].format='logstash'">
+          <strong>Enable Logstash</strong>
+        </label>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -41,7 +52,6 @@
       ng-model="data.extra_config[config_namespace].format"
       id="data.extra_config[config_namespace].format"
       name="data.extra_config[config_namespace].format"
-      ng-init="data.extra_config[config_namespace].format='default'"
       ng-change="data.extra_config[config_namespace].format == 'custom' ? true : deleteKey('custom_format')">
       <option value="default">default</option>
       <option value="logstash">logstash</option>
@@ -56,7 +66,7 @@
     id="data.extra_config[config_namespace].custom_format"
     name="data.extra_config[config_namespace].custom_format"
     type="text"
-    ng-init="data.extra_config[config_namespace].custom_format='%{message}'">
+    placeholder="%{message}">
     <span class="help-block">The pattern to use is the same as in the <a href="https://github.com/op/go-logging/blob/master/format.go#L156">go-logging library</a></span>
   </div>
 </div>
@@ -67,8 +77,7 @@
         <input
         type="checkbox"
         value="dns"
-        ng-model="data.extra_config[config_namespace].syslog"
-        ng-init="data.extra_config[config_namespace].syslog=false">
+        ng-model="data.extra_config[config_namespace].syslog">
         <strong>Syslog</strong> - Send logs to syslog
       </label>
     </div>
@@ -77,8 +86,7 @@
         <input
         type="checkbox"
         value="etcd"
-        ng-model="data.extra_config[config_namespace].stdout"
-        ng-init="data.extra_config[config_namespace].stdout=true">
+        ng-model="data.extra_config[config_namespace].stdout">
         <strong>Stdout</strong> - Send logs to standard out
       </label>
     </div>
