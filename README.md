@@ -9,6 +9,11 @@ An application made with AngularJS to visually create the `krakend.json` file.
 
 [Download KrakenD](http://www.krakend.io/download/) | [Build KrakenD](https://github.com/devopsfaith/krakend-ce) | [Documentation](http://www.krakend.io/docs/overview/introduction/) | [Blog](http://www.krakend.io/blog)
 
+## Run as Docker container
+```
+docker run -it --rm -p 8080:8080 devopsfaith/krakendesigner:latest
+```
+
 ## Build
 The build process leaves a single html file and a single JS file in the `designer` folder that is later deployed inside the KrakenD images. Build with:
 
