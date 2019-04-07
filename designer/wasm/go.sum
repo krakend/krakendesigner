@@ -1,7 +1,7 @@
 github.com/devopsfaith/flatmap v0.0.0-20190327225844-8d71d61e07ac h1:blZXXPXthOwNqFKXULhRzPtn98SCi+r9AdqO7Pcfasw=
 github.com/devopsfaith/flatmap v0.0.0-20190327225844-8d71d61e07ac/go.mod h1:J9Y/58s7wx7HbHT3i4UKNwLGuBB9qCf0/JUdEFGDPmA=
-github.com/devopsfaith/krakend v0.0.0-20190404101742-1d20c1916774 h1:xbzKIZlS+FFO3ZHNzv7gOA57UvAiyUlKFJLS+hRUoXY=
-github.com/devopsfaith/krakend v0.0.0-20190404101742-1d20c1916774/go.mod h1:yxQ154W+9WspAsoGcnsttb30YJHuSbDZivUdLH09PiA=
+github.com/devopsfaith/krakend v0.0.0-20190407165247-f8b1cbc69da0 h1:yGKMWj9LSi/LJon7IsMcC+Yy7rQHa4khFksl30rAzZU=
+github.com/devopsfaith/krakend v0.0.0-20190407165247-f8b1cbc69da0/go.mod h1:yxQ154W+9WspAsoGcnsttb30YJHuSbDZivUdLH09PiA=
 github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 h1:t8FVkw33L+wilf2QiWkw0UV77qRpcH/JHPKGpKa2E8g=
 github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3/go.mod h1:VJ0WA2NBN22VlZ2dKZQPAPnyWw5XTlK1KymzLKsr59s=
 github.com/gin-gonic/gin v1.3.0 h1:kCmZyPklC0gVdL728E6Aj20uYBJV93nj/TkwBTKhFbs=

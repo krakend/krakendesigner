@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/devopsfaith/flatmap v0.0.0-20190327225844-8d71d61e07ac // indirect
-	github.com/devopsfaith/krakend v0.0.0-20190404101742-1d20c1916774
+	github.com/devopsfaith/krakend v0.0.0-20190407165247-f8b1cbc69da0
 	github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 // indirect
 	github.com/gin-gonic/gin v1.3.0
 	github.com/golang/protobuf v1.3.1 // indirect
