@@ -1,16 +1,24 @@
-.PHONY: all build clean
+.PHONY: all install watch docker_build clean create_image
 
-all: docker_build clean
+all: install clean
 
-local_build:
-	npm install
-	npm run-script build
+# Installs the dependencies and generates the JS bundle
+install:
+	docker run --rm -it -v "${PWD}:/app" -w /app node:10 sh -c 'npm install && npm run-script build'
 
+# Watches SCSS and JS for changes
+watch:
+	docker run --rm -it -v $PWD:/app -w /app node:10 npm run-script watch
+
+# Build the image
 docker_build:
-	docker run -it --rm -v ${PWD}:/app -w /app --entrypoint /usr/bin/make node local_build
+	docker build -t devopsfaith/krakendesigner .
 
 wasm_build:
 	cd designer/wasm && GOOS=js GOARCH=wasm go build -o main.wasm && cd ..
 
 clean:
 	rm -fr node_modules
+
+# Create the official docker image
+create_image: install docker_build clean
