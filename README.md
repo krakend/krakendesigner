@@ -29,10 +29,9 @@ Will use your local `npm` to install and build the project.
 You will need to put the files in the `designer/` folder into a web server of any kind, for instance, a PHP developer can do `php -S localhost:8081 -t designer`.
 
 ### Optional - Compile WASM
-In case you want to compile WASM again:
+In case you want to compile WASM again (golang required):
 
-    cd designer/wasm
-    GOOS=js GOARCH=wasm go build -o main.wasm
+    make wasm_build
 
 ## Get involved! - Please!
 The application is working properly (if you find any bug please create an issue) but it needs love from frontend specialists. If you think the application needs reorganization, refactoring, webpack plugins or even a full rewrite in another framework please help us make it improve. We do know how to write go, stuff about performance, and all the boring stuff. Javascript is for decent people (and that probably leave us out), so we need you!

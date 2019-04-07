@@ -19,15 +19,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func parse(i []js.Value) {
+func parse(_ js.Value, i []js.Value) interface{} {
 	if len(i) < 2 {
 		println("not enough args")
-		return
+		return nil
 	}
 
 	if i[1].Type() != js.TypeFunction {
 		println("arg 1 should be a function")
-		return
+		return nil
 	}
 
 	logger := func(msg string) {
@@ -44,10 +44,12 @@ func parse(i []js.Value) {
 	client, err := newJSClient(i[0].String(), logger)
 	if err != nil {
 		logger(err.Error())
-		return
+		return nil
 	}
 
 	i[1].Invoke(client.Value())
+
+	return nil
 }
 
 func newJSClient(cfg string, logger func(string)) (*JSClient, error) {
@@ -70,12 +72,15 @@ type JSClient struct {
 func (j *JSClient) Value() js.Value {
 	opt := js.Global().Get("Object").New()
 
-	opt.Set("close", js.NewCallback(func(_ []js.Value) { j.client.Close() }))
+	opt.Set("close", js.FuncOf(func(_ js.Value, _ []js.Value) interface{} {
+		j.client.Close()
+		return nil
+	}))
 
-	opt.Set("test", js.NewCallback(func(i []js.Value) {
+	opt.Set("test", js.FuncOf(func(_ js.Value, i []js.Value) interface{} {
 		if len(i) < 5 {
 			j.logger("the test function requires at least 5 arguments: method, path, body, headers and a callback")
-			return
+			return nil
 		}
 		var reqBody io.Reader
 		if b := i[2].String(); b != "" {
@@ -84,12 +89,12 @@ func (j *JSClient) Value() js.Value {
 		req, err := http.NewRequest(i[0].String(), i[1].String(), reqBody)
 		if err != nil {
 			j.logger(err.Error())
-			return
+			return nil
 		}
 		headers := map[string][]string{}
 		if err := json.Unmarshal([]byte(i[3].String()), &headers); err != nil {
 			j.logger(err.Error())
-			return
+			return nil
 		}
 		req.Header = headers
 
@@ -114,6 +119,7 @@ func (j *JSClient) Value() js.Value {
 
 			i[4].Invoke(jsResp)
 		}()
+		return nil
 	}))
 
 	return opt
@@ -187,7 +193,7 @@ func newServer(cfg string) (*LocalServer, error) {
 func main() {
 	fmt.Println("WASM Go Initialized")
 
-	js.Global().Set("parse", js.NewCallback(parse))
+	js.Global().Set("parse", js.FuncOf(parse))
 	js.Global().Get("onKrakendClientReady").Invoke()
 
 	select {}
