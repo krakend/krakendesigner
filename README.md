@@ -31,7 +31,13 @@ If you don't have Docker, you can se your local `npm` to install the dependencie
 ### Testing changes
 Start the web server pointing to `designer/` and mounting the volume:
 
-    docker run --rm -p 8080:80 -v "$PWD/designer:/usr/share/nginx/html" nginx
+    docker run --rm -d -p 8080:80 -v "$PWD/designer:/usr/share/nginx/html" devopsfaith/krakendesigner
+
+Remember to `make build` if you change HTML, CSS or JS. Or `node_modules/.bin/grunt ngtemplates && node_modules/.bin/webpack-cli --mode production`
+
+
+
+
 
 ### Optional - Compile WASM
 In case you want to compile WASM again (golang required):

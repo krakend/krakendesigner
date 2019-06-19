@@ -47,7 +47,7 @@
                             </button>
                         </div>
                     </div>
-                    <span class="help-block">Add those origins you would like to accept. Or leave empty for any origin.</span>
+                    <span class="help-block">Add those origins you would like to accept. Or use <code>*</code> for any origin.</span>
                     <ul class="list-inline">
                         <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow_origins">
                             <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow_origins')"><i class="fa fa-times"></i>

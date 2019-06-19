@@ -10,6 +10,9 @@ install:
 watch:
 	docker run --rm -it -v $PWD:/app -w /app node:10 npm run-script watch
 
+build:
+	docker run --rm -it -v "${PWD}:/app" -w /app node:10 npm run-script build
+
 # Build the image
 docker_build:
 	docker build -t devopsfaith/krakendesigner .
