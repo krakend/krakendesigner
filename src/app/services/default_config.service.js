@@ -38,6 +38,13 @@ angular
                     "format": "default"
                 },
                 'github_com/devopsfaith/krakend-cors': {
+                    "allow_origins": [
+                        "*"
+                      ],
+                    "expose_headers": [
+                        "Content-Length"
+                    ],
+                    "max_age": "12h",
                     "allow_methods": [
                         "GET",
                         "HEAD",
