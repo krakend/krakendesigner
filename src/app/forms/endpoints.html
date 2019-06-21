@@ -313,17 +313,18 @@
                                                 ng-model="backend.host"
                                                 ng-change="backend.disable_host_sanitize=(backend.sd!='static')"
                                                 multiple="multiple">
-                                            <option ng-repeat="host in sd_providers.hosts | filter: backend.sd" value="{{ host.host }}">
+                                            <option ng-repeat="host in sd_providers.hosts | filter: backend.sd" value="{{ host.host }}"
+                                                    ng-click="backend.disable_host_sanitize=host.disable_host_sanitize">
                                                 {{ host.host }}
                                             </option>
                                         </select>
+                                        <input type="checkbox" ng-model="backend.disable_host_sanitize"> Disable sanitize
+
+                                        <middleware data="backend" template="amqp.html" namespace="'github.com/devopsfaith/krakend-amqp/produce'"></middleware>
 
                                     </div>
                                     <div class="col-md-4">
-                                        <span class="help-block">Please select one or several backends that will receive
-                                            this request. Use multiple backends to send the same query to all and take
-                                            the fastest response (GET), the rest of methods (PUT,POST,DELETE) will pick
-                                            randomly one backend. between the selected ones.</span>
+                                        <span class="help-block">Please select all the backends available for this request (Round Robin).</span>
                                     </div>
                                 </div>
                                 <div class="form-group">

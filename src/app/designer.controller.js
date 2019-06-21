@@ -82,23 +82,48 @@ angular
 
     // Load Service Discovery options
     $rootScope.loadSDOptions = function() {
-        var sd_provider = 'static';
-        if ( 'undefined' !== typeof $rootScope.service.endpoints ) {
-            for( var e=0; e<$rootScope.service.endpoints.length; e++) {
-                if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend ) {
-                        sd_provider = 'static'; // When provider is not defined
-                        for( var b=0; b<$rootScope.service.endpoints[e].backend.length; b++) {
-                            if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend[b].sd ) {
-                                sd_provider = $rootScope.service.endpoints[e].backend[b].sd;
-                            }
-                            if ( 'undefined' !== typeof $rootScope.service.endpoints[e].backend[b].host ) {
-                             for( var h=0; h<$rootScope.service.endpoints[e].backend[b].host.length; h++) {
-                                $rootScope.addHost($rootScope.service.endpoints[e].backend[b].host[h], sd_provider);
-                            }
-                        }
-                    }
-                }
-            }
+        var sd_type = 'static';
+        var disable_host_sanitize = false;
+		// Default static hosts:
+		if ('undefined' !== typeof $rootScope.service.host) {
+			for (var h = 0; h < $rootScope.service.endpoints.length; h++) {
+				{
+					$rootScope.addHost($rootScope.service.host[h], sd_type, disable_host_sanitize);
+				}
+			}
+		}
+
+		// Hosts from endpoints
+		if ('undefined' !== typeof $rootScope.service.endpoints) {
+			for (var e = 0; e < $rootScope.service.endpoints.length; e++) {
+				if ('undefined' !== typeof $rootScope.service.endpoints[e].backend) {
+					for (var b = 0; b < $rootScope.service.endpoints[e].backend.length; b++) {
+						var current_backend = $rootScope.service.endpoints[e].backend[b];
+						if ('undefined' !== typeof current_backend.host) {
+							for (var h = 0; h < current_backend.host.length; h++) {
+								var current_host = current_backend.host[h];
+								if ('undefined' !== typeof current_backend.sd) {
+									sd_type = current_backend.sd;
+								}
+								else {
+                                    // Expected protocols:  http(s) or amqp
+									sd_type = (/amqp:\/\//.test(current_host) ? 'amqp' : 'static')
+                                }
+                                if ('undefined' !== typeof current_backend.disable_host_sanitize) {
+									disable_host_sanitize = current_backend.disable_host_sanitize;
+                                }
+                                else {
+                                    disable_host_sanitize = false;
+                                }
+								$rootScope.addHost(current_host, sd_type, disable_host_sanitize);
+							}
+
+						}
+					}
+				}
+			}
+
+
         }
     }
 
@@ -151,11 +176,28 @@ angular
         array.splice(index, 1);
     };
 
-    $rootScope.addHost = function (host, sd_type) {
+    $rootScope.deleteHost = function(index) {
+        var sd = $rootScope.sd_providers.hosts[index].sd;
+        $rootScope.deleteIndexFromArray(index, '$scope.sd_providers.hosts');
 
-        if ('static' === sd_type && ! /^https?:\/\/.+/i.test(host)) {
-            alert('Please include de protocol http in the URL');
-            return false;
+        // Remove the provider when all its hosts were deleted:
+        var remaining_hosts_in_provider = 0;
+        for ( i=0; i<$rootScope.sd_providers.hosts.length; i++) {
+            if ( $rootScope.sd_providers.hosts[i].sd == sd ) {
+                remaining_hosts_in_provider++;
+            }
+        }
+
+        if ( remaining_hosts_in_provider == 0) {
+            var remove = $rootScope.sd_providers.providers.indexOf(sd);
+            $rootScope.sd_providers.providers.splice(remove, 1);
+        }
+
+    }
+    $rootScope.addHost = function (host, sd_type, disable_host_sanitize) {
+
+        if ( 'undefined' === typeof disable_host_sanitize) {
+            disable_host_sanitize = false;
         }
 
         if (typeof $rootScope.sd_providers === "undefined") {
@@ -172,14 +214,19 @@ angular
 
         // Avoid duplicates:
         for (var i=0; i < $rootScope.sd_providers.hosts.length; i++) {
-            if ( $rootScope.sd_providers.hosts[i].sd === sd_type &&
-                $rootScope.sd_providers.hosts[i].host === host ) {
+            if ( $rootScope.sd_providers.hosts[i].host === host && $rootScope.sd_providers.hosts[i].sd === sd_type ) {
                 return false;
+            }
         }
-    }
 
-    $rootScope.sd_providers.hosts.push({ "sd": sd_type, "host": host });
-    $rootScope.addTermToArray(sd_type, $rootScope.sd_providers.providers);
+        //var needs_sd = ["dns","etcd"].includes(sd_type);
+        $rootScope.sd_providers.hosts.push({
+            "sd": sd_type,
+            "host": host,
+            "disable_host_sanitize": disable_host_sanitize
+        });
+
+        $rootScope.addTermToArray(sd_type, $rootScope.sd_providers.providers);
 };
 
 $rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
