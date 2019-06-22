@@ -395,6 +395,40 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         });
     };
 
+    $rootScope.syncHostsInBackend = function(endpoint_index, backend_index, checked, host, disable_host_sanitize) {
+
+        if ( 'undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].host ) {
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].host = [];
+        }
+
+        if (checked) {
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].host.push(host);
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].disable_host_sanitize=disable_host_sanitize;
+        } else {
+            var to_delete = $rootScope.service.endpoints[endpoint_index].backend[backend_index].host.indexOf(host);
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].host.splice(to_delete,1);
+
+            // Remove host if it's the last key (and use any global value instead):
+            if( 0 === $rootScope.service.endpoints[endpoint_index].backend[backend_index].host.length ) {
+                $rootScope.deleteHostsInBackend(endpoint_index,backend_index);
+            }
+        }
+    };
+
+    $rootScope.deleteHostsInBackend = function(endpoint_index, backend_index) {
+        if ( 'undefined' !== typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].host )
+        {
+            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].host;
+        }
+    };
+
+    $rootScope.OneOfHostsInBackend = function(endpoint_index, backend_index, host) {
+        return (
+            'undefined' !== typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].host
+            && $rootScope.service.endpoints[endpoint_index].backend[backend_index].host.includes(host)
+            );
+    }
+
     $rootScope.toggleCaching = function($event, endpoint_index, backend_index) {
         if ( $event.target.checked ) {
             // Create the key that enables caching:

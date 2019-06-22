@@ -292,31 +292,37 @@
                             <div class="box-body">
                                 <h4>Request</h4>
                                 <p>All the data needed to send the request to the servers.</p>
-                                <div class="form-group">
-                                    <div class="col-md-4">
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label>Service Discovery</label>
                                         <span class="help-block">Service Discovery options you have configured. <a href="/#!/service-discovery">(add more?)</a></span>
                                             <div class="radio" ng-repeat="sd in sd_providers.providers">
                                             <label>
-                                                <input type="radio" ng-model="backend.sd" value="{{ sd }}">
+                                                <input type="radio" ng-model="backend.sd" value="{{ sd }}" ng-change="deleteHostsInBackend(endpoint_index, backend_index)">
                                                 {{ sd }}
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" ng-model="backend.disable_host_sanitize"> Disable host sanitization
+                                        </label>
+                                        <span class="help-block">Check when the address doesn't need to verify the protocol. If unsure, leave the proposed value.</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
                                         <label>Hosts</label>
-                                        <select id="host" name="host"
-                                                class="form-control"
-                                                ng-model="backend.host"
-                                                ng-change="backend.disable_host_sanitize=(backend.sd!='static')"
-                                                multiple="multiple">
-                                            <option ng-repeat="host in sd_providers.hosts | filter: backend.sd" value="{{ host.host }}"
-                                                    ng-click="backend.disable_host_sanitize=host.disable_host_sanitize">
-                                                {{ host.host }}
-                                            </option>
-                                        </select>
-                                        <span class="help-block">Please select all the backends available for this request (Round Robin).</span>
-                                        <input type="checkbox" ng-model="backend.disable_host_sanitize"> Disable sanitize
+                                        <span class="help-block">Select all the backends that can used to fulfill this request. KrakenD balances between them using Round Robin.</span>
+                                        <div ng-repeat="host in sd_providers.hosts | filter: backend.sd" value="{{ host.host }}">
+                                            <label>
+                                                <input type="checkbox" ng-model="checked"
+                                                    ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
+                                                    ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)"> {{ host.host }}
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -351,16 +357,15 @@
                                 </div>
 
                                 <hr/>
-                                <h4>Caching</h4>
+                                <h4>Backend caching</h4>
                                 <div class="form-group">
-
                                     <div class="col-md-12">
-                                        <label> Backend caching</label>
                                         <div class="input-group">
-                                             <input type="checkbox"
-                                                ng-click="toggleCaching($event, endpoint_index, backend_index)"> Store backend response in-memory for the time specified in its <code>Cache-Control</code> header
-
-                                            <span class="help-block">This option increases the load and the memory consumption as KrakenD will keep in memory all the returned data. Use wisely.</span>
+                                            <label>
+                                                <input type="checkbox"
+                                                ng-click="toggleCaching($event, endpoint_index, backend_index)"> Store backend responses in-memory
+                                            </label>
+                                            <span class="help-block">Backend responses are stored in-memory for the time specified in their <code>Cache-Control</code> header. This option increases the load and the memory consumption as KrakenD keeps in memory all the returned data for as long the backend specifies. Use wisely.</span>
 
                                             <span class="help-block badge label-warning"
                                                 ng-show="backend.extra_config['github.com/devopsfaith/krakend-httpcache']" >
