@@ -293,19 +293,16 @@
                                 <h4>Request</h4>
                                 <p>All the data needed to send the request to the servers.</p>
                                 <div class="form-group">
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <label>Service Discovery</label>
-                                        <span class="help-block">Service Discovery options you have configured. <a href="/#!/service-discovery">(add more)</a></span>
-                                         <div class="radio" ng-repeat="sd in sd_providers.providers" ng-init="backend.sd=sd_providers.providers[0]">
+                                        <span class="help-block">Service Discovery options you have configured. <a href="/#!/service-discovery">(add more?)</a></span>
+                                            <div class="radio" ng-repeat="sd in sd_providers.providers">
                                             <label>
-                                              <input type="radio" ng-model="backend.sd" value="{{ sd }}">
-                                              {{ sd }}
-                                          </label>
+                                                <input type="radio" ng-model="backend.sd" value="{{ sd }}">
+                                                {{ sd }}
+                                            </label>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
                                     <div class="col-md-8">
                                         <label>Hosts</label>
                                         <select id="host" name="host"
@@ -318,13 +315,8 @@
                                                 {{ host.host }}
                                             </option>
                                         </select>
-                                        <input type="checkbox" ng-model="backend.disable_host_sanitize"> Disable sanitize
-
-                                        <middleware data="backend" template="amqp.html" namespace="'github.com/devopsfaith/krakend-amqp/produce'"></middleware>
-
-                                    </div>
-                                    <div class="col-md-4">
                                         <span class="help-block">Please select all the backends available for this request (Round Robin).</span>
+                                        <input type="checkbox" ng-model="backend.disable_host_sanitize"> Disable sanitize
                                     </div>
                                 </div>
                                 <div class="form-group">

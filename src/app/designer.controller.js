@@ -390,7 +390,8 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
 
         $rootScope.service.endpoints[endpoint_index].backend.push({
             "url_pattern": "/",
-            "encoding": $rootScope.service.endpoints[endpoint_index].output_encoding
+            "encoding": $rootScope.service.endpoints[endpoint_index].output_encoding,
+            "sd": $rootScope.sd_providers.providers[0] // Select first provider defined
         });
     };
 
