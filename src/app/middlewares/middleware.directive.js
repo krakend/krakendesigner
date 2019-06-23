@@ -11,11 +11,15 @@ angular
     },
     link: function(scope, element, attrs) {
 
+      if ( 'undefined' === typeof scope.data) {
+        return;
+      }
+
       var NAMESPACE = scope.namespace;
       var default_middleware_data = {};
 
       // Load default values from default_config.service.js when present:
-      if (undefined !== DefaultConfig.extra_config[NAMESPACE]) {
+      if ( 'undefined' !== typeof DefaultConfig.extra_config[NAMESPACE]) {
         default_middleware_data = DefaultConfig.extra_config[NAMESPACE];
       }
 
