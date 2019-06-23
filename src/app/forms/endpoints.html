@@ -220,48 +220,6 @@
                         </span>
 
                     </div>
-                    <div class="col-md-12" ng-if="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static">
-                        <div class="box box-info box-solid">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Static Response</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool"
-                                        ng-click="deleteStaticResponse(endpoint_index)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="box-body">
-                                <p>The following static data will be added to the response following the selected
-                                    strategy. The input must be a JSON object (ensure to start and end with curly braces
-                                    <code>{}</code>)</p>
-                                <div class="col-md-8">
-
-                                    <label class="control-label">Response</label>
-                                    <textarea json-formatter class="form-control"
-                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.data"></textarea>
-                                    <p ng-show="service.extra_config['krakendesigner'].json_errors"
-                                        class="badge label-danger">
-                                        <i class="fa fa-warning"></i> Syntax error -
-                                        {{ service.extra_config['krakendesigner'].json_errors}}
-                                    </p>
-                                    <span class="help-block">Paste here your JSON response</span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="control-label">Strategy</label>
-                                    <select class="form-control"
-                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.strategy">
-                                        <option value="always">Always - Present in every response</option>
-                                        <option value="success">Success - Present in every non-failed response </option>
-                                        <option value="errored">Errored - Present in every failed response (error not
-                                            nil)</option>
-                                        <option value="incomplete">Incomplete - Present in incomplete responses</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-12" ng-repeat="(backend_index,backend) in endpoint.backend">
                         <div class="box box-primary box-solid">
                             <div class="box-header with-border">
@@ -691,16 +649,59 @@
                         </div>
                     </div>
                     <!-- /Modal backend -->
+                    <div class="col-md-12" ng-if="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static">
+                        <div class="box box-info box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Static Response (stub data)</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool"
+                                        ng-click="deleteStaticResponse(endpoint_index)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <p>When the backend fails you can still return the static data provided below to the user. The data is merged
+                                    with any existing partial responses. If you still don't have a backend and want to have this data, add a fake one that cannot be resolved.
+                                </p>
+                                <div class="col-md-8">
+                                    <label class="control-label">Response</label>
+                                    <textarea json-formatter class="form-control"
+                                        syntax="syntax_validation_static[backend_index]"
+                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.data"></textarea>
+                                        <p ng-show="syntax_validation_static[backend_index].length"
+                                        class="badge label-danger">
+                                        <i class="fa fa-warning"></i> Syntax error -
+                                        {{syntax_validation_static[backend_index]}}</p>
+                                    </p>
+                                    <span class="help-block">Provide the JSON object you want to return (ensure to start and end with curly braces
+                                            <code>{}</code>)</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="control-label">Strategy</label>
+                                    <select class="form-control"
+                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.strategy">
+                                        <option value="always">Always - Present in every response</option>
+                                        <option value="success">Success - Present in every non-failed response </option>
+                                        <option value="errored">Errored - Present in every failed response (error not
+                                            nil)</option>
+                                        <option value="incomplete">Incomplete - Present in incomplete responses</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button class="btn btn-primary" ng-click="addDefaultStaticResponse(endpoint_index)"
-                    ng-if="! endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static  &&   !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0)">
-                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Add static response
-                </button>
                 <button class="btn btn-primary" ng-click="addBackendQuery(endpoint_index)"
                     ng-if="! endpoint.backend || endpoint.backend.length < 1 || ( endpoint.method =='GET' && !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0))">
                     <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
                     Add backend query
+                </button>
+                <button class="btn btn-primary" ng-click="addDefaultStaticResponse(endpoint_index)"
+                    ng-disabled="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static || endpoint.output_encoding == 'no-op' || endpoint.backend.length == 0">
+                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Add static response (stub)
                 </button>
             </fieldset>
         </form>
