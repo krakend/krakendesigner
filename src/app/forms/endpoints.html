@@ -243,6 +243,8 @@
                                         <h4>Request</h4>
                                         <p>All the data needed to send the request to the servers.</p>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-3">
                                         <label>Host resolution</label>
                                         <span class="help-block">Service Discovery options you have configured. <a
@@ -255,32 +257,34 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Select hosts</label>
-                                        <span class="help-block">All the backends that can be used to fulfill this
-                                            request, balanced using Round Robin.</span>
-                                        <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
-                                            value="{{ host.host }}">
-                                            <label>
-                                                <input type="checkbox" ng-model="checked"
-                                                    ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
-                                                    ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
-                                                {{ host.host }}
-                                            </label>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Select hosts</label>
+                                            <span class="help-block">All the backends that can be used to fulfill this
+                                                request, balanced using Round Robin.</span>
+                                            <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
+                                                value="{{ host.host }}">
+                                                <label>
+                                                    <input type="checkbox" ng-model="checked"
+                                                        ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
+                                                        ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
+                                                    {{ host.host }}
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <label>
+                                            <input type="checkbox" ng-model="backend.disable_host_sanitize">
+                                            Disable host sanitization
+                                        </label>
+                                        <span class="help-block">
+                                            Check when the address doesn't need to verify the
+                                            protocol. If unsure, leave the proposed value.
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label>
-                                        <input type="checkbox" ng-model="backend.disable_host_sanitize"> Disable host
-                                        sanitization
-                                    </label>
-                                    <span class="help-block">Check when the address doesn't need to verify the protocol.
-                                        If unsure, leave the proposed value.</span>
-                                </div>
-
+                                <hr/>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <middleware data="backend" template="amqp_consumer.html"
@@ -662,21 +666,24 @@
                             </div>
 
                             <div class="box-body">
-                                <p>When the backend fails you can still return the static data provided below to the user. The data is merged
-                                    with any existing partial responses. If you still don't have a backend and want to have this data, add a fake one that cannot be resolved.
+                                <p>When the backend fails you can still return the static data provided below to the
+                                    user. The data is merged
+                                    with any existing partial responses. If you still don't have a backend and want to
+                                    have this data, add a fake one that cannot be resolved.
                                 </p>
                                 <div class="col-md-8">
                                     <label class="control-label">Response</label>
                                     <textarea json-formatter class="form-control"
                                         syntax="syntax_validation_static[backend_index]"
                                         ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.data"></textarea>
-                                        <p ng-show="syntax_validation_static[backend_index].length"
+                                    <p ng-show="syntax_validation_static[backend_index].length"
                                         class="badge label-danger">
                                         <i class="fa fa-warning"></i> Syntax error -
                                         {{syntax_validation_static[backend_index]}}</p>
                                     </p>
-                                    <span class="help-block">Provide the JSON object you want to return (ensure to start and end with curly braces
-                                            <code>{}</code>)</span>
+                                    <span class="help-block">Provide the JSON object you want to return (ensure to start
+                                        and end with curly braces
+                                        <code>{}</code>)</span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="control-label">Strategy</label>
@@ -706,116 +713,116 @@
             </fieldset>
         </form>
     </div><!-- /.box-body -->
+
+    <!-- Modal Window for rate limiting-->
+    <div id="throttling-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Rate limiting (throttling)</code></h4>
+                </div>
+                <div class="modal-body">
+                    <middleware data="endpoint" namespace="'github.com/devopsfaith/krakend-ratelimit/juju/router'"
+                        template="ratelimit_router.html">
+                    </middleware>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Window for security in this endpoint-->
+    <div id="security-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Override security headers for <code>{{ endpoint.endpoint }}</code></h4>
+                </div>
+                <div class="modal-body">
+
+                    <middleware template="httpsecure.html" namespace="'github.com/devopsfaith/krakend-httpsecure'"
+                        ng-if="hasMiddleware('github_com/devopsfaith/krakend-httpsecure')" data="endpoint"
+                        inherit="service.extra_config['github_com/devopsfaith/krakend-httpsecure']">
+                    </middleware>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Window for advanced Pipe composition-->
+    <div id="advanced-pipe-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Advanced pipe composition for <code>{{ endpoint.endpoint }}</code></h4>
+                </div>
+                <div class="modal-body">
+                    <p>If you have a custom combiner configure it here to modify the proxy pipe with your custom
+                        configuration</p>
+                    <div class="row form-group">
+
+                        <div class="col-md-12">
+                            <label>Custom combiner</label>
+                            <input class="form-control" type="text"
+                                ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].combiner"
+                                placeholder="combiner_name">
+                            <div class="help-block">
+                                <p>Specify the combiner for merging the backend responses.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Window for endpoint-->
+    <div id="endpoint-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Override global configuration for <code>{{ endpoint.endpoint }}</code></h4>
+                </div>
+                <div class="modal-body">
+                    <p>All the settings below are defined in the <strong>Service configuration</strong>,
+                        setting one or several values here means overriding the settings for this specific endpoint
+                        only.</p>
+
+                    <p ng-include src="'/src/app/forms/time_units.html'"></p>
+
+                    <div class="row">
+                        <div class="form-group">
+
+                            <div class="col-md-4" ng-class="isValidTimeUnit(endpoint.timeout) ? '' : 'has-error'">
+                                <label>Timeout</label>
+                                <input class="form-control" type="text" ng-model="endpoint.timeout">
+                                <div class="help-block">
+                                    <p ng-hide="isValidTimeUnit(endpoint.timeout)" class="badge label-danger"><i
+                                            class="fa fa-warning"></i> Invalid format</p>
+                                    <p>Maximum time you'll wait for the slowest response. Usually in milliseconds
+                                        (ms)</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" ng-class="isValidTimeUnit(endpoint.cache_ttl) ? '' : 'has-error'">
+                                <label>Cache TTL</label>
+                                <input class="form-control" type="text" ng-model="endpoint.cache_ttl">
+                                <div class="help-block">
+                                    <p ng-hide="isValidTimeUnit(endpoint.cache_ttl)" class="badge label-danger"><i
+                                            class="fa fa-warning"></i> Invalid format</p>
+                                    <p>For how long a proxy can cache a request to this endpoint.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div><!-- endpoint index -->
-
-<!-- Modal Window for rate limiting-->
-<div id="throttling-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Rate limiting (throttling)</code></h4>
-            </div>
-            <div class="modal-body">
-                <middleware data=endpoint namespace="'github.com/devopsfaith/krakend-ratelimit/juju/router'"
-                    template="ratelimit_router.html">
-                </middleware>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Window for security in this endpoint-->
-<div id="security-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Override security headers for <code>{{ endpoint.endpoint }}</code></h4>
-            </div>
-            <div class="modal-body">
-
-                <middleware template="httpsecure.html" namespace="'github.com/devopsfaith/krakend-httpsecure'"
-                    ng-if="hasMiddleware('github_com/devopsfaith/krakend-httpsecure')" data="endpoint"
-                    inherit="service.extra_config['github_com/devopsfaith/krakend-httpsecure']">
-                    </middlware>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Window for advanced Pipe composition-->
-<div id="advanced-pipe-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Advanced pipe composition for <code>{{ endpoint.endpoint }}</code></h4>
-            </div>
-            <div class="modal-body">
-                <p>If you have a custom combiner configure it here to modify the proxy pipe with your custom
-                    configuration</p>
-                <div class="row form-group">
-
-                    <div class="col-md-12">
-                        <label>Custom combiner</label>
-                        <input class="form-control" type="text"
-                            ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].combiner"
-                            placeholder="combiner_name">
-                        <div class="help-block">
-                            <p>Specify the combiner for merging the backend responses.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal Window for endpoint-->
-<div id="endpoint-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Override global configuration for <code>{{ endpoint.endpoint }}</code></h4>
-            </div>
-            <div class="modal-body">
-                <p>All the settings below are defined in the <strong>Service configuration</strong>,
-                    setting one or several values here means overriding the settings for this specific endpoint
-                    only.</p>
-
-                <p ng-include src="'/src/app/forms/time_units.html'"></p>
-
-                <div class="row">
-                    <div class="form-group">
-
-                        <div class="col-md-4" ng-class="isValidTimeUnit(endpoint.timeout) ? '' : 'has-error'">
-                            <label>Timeout</label>
-                            <input class="form-control" type="text" ng-model="endpoint.timeout">
-                            <div class="help-block">
-                                <p ng-hide="isValidTimeUnit(endpoint.timeout)" class="badge label-danger"><i
-                                        class="fa fa-warning"></i> Invalid format</p>
-                                <p>Maximum time you'll wait for the slowest response. Usually in milliseconds
-                                    (ms)</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6" ng-class="isValidTimeUnit(endpoint.cache_ttl) ? '' : 'has-error'">
-                            <label>Cache TTL</label>
-                            <input class="form-control" type="text" ng-model="endpoint.cache_ttl">
-                            <div class="help-block">
-                                <p ng-hide="isValidTimeUnit(endpoint.cache_ttl)" class="badge label-danger"><i
-                                        class="fa fa-warning"></i> Invalid format</p>
-                                <p>For how long a proxy can cache a request to this endpoint.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 <button class="btn btn-lg btn-success" ng-click="addEndpoint()">Add endpoint</button>
