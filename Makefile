@@ -1,4 +1,4 @@
-.PHONY: all install watch docker_build clean create_image
+.PHONY: all install watch docker_build clean create_image serve
 
 all: install clean
 
@@ -19,6 +19,9 @@ docker_build:
 
 wasm_build:
 	cd designer/wasm && GOOS=js GOARCH=wasm go build -o main.wasm && cd ..
+
+serve:
+	docker run --rm -d -p 8080:80 -v "${PWD}/designer:/usr/share/nginx/html" devopsfaith/krakendesigner
 
 clean:
 	rm -fr node_modules
