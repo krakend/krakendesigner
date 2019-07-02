@@ -9,10 +9,9 @@ angular.module("KrakenDesigner").directive("dropBox", function() {
       var checkSize, isTypeValid, processDragOverOrEnter, validMimeTypes;
       processDragOverOrEnter = function(event) {
         if (event != null) {
+          event.stopPropagation();
           event.preventDefault();
         }
-        event.dataTransfer.effectAllowed = "copy";
-        return false;
       };
       validMimeTypes = attrs.dropBox;
       checkSize = function(size) {
@@ -35,20 +34,19 @@ angular.module("KrakenDesigner").directive("dropBox", function() {
       };
       element.bind("dragover", processDragOverOrEnter);
       element.bind("dragenter", processDragOverOrEnter);
-      return element.bind("drop", function(event) {
+      element.bind("drop", function(event) {
+
         var file, name, reader, size, type;
         if (event != null) {
+          event.stopPropagation();
           event.preventDefault();
         }
+
         reader = new FileReader();
         reader.onload = function(evt) {
           if (checkSize(size) && isTypeValid(type)) {
             return scope.$apply(function() {
               scope.file = evt.target.result;
-              //if (angular.isString(scope.data)) {
-              //  return (scope.data = name);
-              //}
-
               scope.file = name;
               scope.data = evt.target.result;
               // Show modal with data
@@ -56,13 +54,13 @@ angular.module("KrakenDesigner").directive("dropBox", function() {
             });
           }
         };
-        file = event.dataTransfer.files[0];
+        var dt = event.dataTransfer;
+        var files = dt.files;
+        file = files[0];
         name = file.name;
         type = file.type;
         size = file.size;
         reader.readAsText(file);
-
-        return false;
       });
     }
   };

@@ -8,53 +8,60 @@
         </div>
     </div>
     <div class="box-body">
-        <p>Add here all the API hostnames used by KrakenD to retrieve the data. If you don't use service discovery to resolve hostnames choose <em>None</em> from the following <strong>discovery providers</strong> list:</p>
+        <p>Add here all the addresses used by KrakenD to retrieve the data and if they are resolved by a <strong>service discovery</strong>:</p>
 
         <div class="col-sm-6 form-group">
             <div class="radio">
                 <label>
-                    <input type="radio" ng-model="service_discovery_type" value="static" ng-init="service_discovery_type='static'">
-                    None (static resolution)
+                    <input type="radio" ng-model="sd_type" value="static" ng-init="sd_type='static'" ng-change="disable_host_sanitize=(sd_type!='static')">
+                    Static address resolution
                 </label>
             </div>
             <div class="radio">
                 <label>
-                  <input type="radio" ng-model="service_discovery_type" value="dns">
-                  DNS SRV
+                  <input type="radio" ng-model="sd_type" value="dns" ng-change="disable_host_sanitize=(sd_type!='static')">
+                  DNS SRV (e.g: k8s)
               </label>
-          </div>
+            </div>
       </div>
       <div class="col-sm-6 form-group">
         <div class="radio">
             <label>
-              <input type="radio" ng-model="service_discovery_type" value="etcd" ng-disabled="!hasMiddleware('github_com/devopsfaith/krakend-etcd')">
-              Etcd
+              <input type="radio" ng-model="sd_type" value="etcd" ng-disabled="!hasMiddleware('github_com/devopsfaith/krakend-etcd')" ng-change="disable_host_sanitize=(sd_type!='static')">
+              Etcd <span if="!hasMiddleware('github_com/devopsfaith/krakend-etcd')">(<a href="http://localhost:8080/#!/service-discovery">enable</a>)</span>
           </label>
       </div>
       <div class="radio">
         <label>
-          <input type="radio" ng-model="service_discovery_type" value="custom">
-          Custom
+          <input type="radio" ng-model="sd_type" value="custom" ng-change="disable_host_sanitize=(sd_type!='static')">
+          Custom service discovery
       </label>
   </div>
 </div>
 <div class="col-sm-12 form-group">
     <div class="input-group">
+        <span class="input-group-addon">
+            <input type="checkbox" ng-model="disable_host_sanitize"> Disable sanitize
+        </span>
         <input class="form-control"
-        placeholder="http://api.your.server:8080"
+        placeholder="address"
         ng-model="hostname">
         <div class="input-group-btn">
-            <button type="button" class="btn btn-success" ng-click="addHost(hostname, service_discovery_type)"><i
-                class="fa fa-plus"></i> Add {{ service_discovery_type }} host
+            <button type="button" class="btn btn-success" ng-click="addHost(hostname, sd_type, disable_host_sanitize)"><i
+                class="fa fa-plus"></i> Add
             </button>
         </div>
+    </div>
+    <div class="help-block">
+        <p>The <strong>address</strong> where KrakenD connects to. Some valid examples can be <code>https://myapi</code>, <code>amqp://host</code>, <code>192.0.2.1:25</code>, <code>my.service.tld</code>.</p>
+        <p>Choose <strong>disable sanitization</strong> when the address string doesn't need to be checked for the protocol.</p>
     </div>
 </div>
 <div class="col-sm-12 form-group">
     <ul class="list-unstyled">
         <li ng-repeat="(index,host) in sd_providers.hosts">
-            <a class="badge badge-remove" ng-click="deleteIndexFromArray(index, '$scope.sd_providers.hosts')"
-            title="Click to delete host"><i class="fa fa-times"></i> {{ host.sd }} - {{ host.host }}</a>
+            <a class="badge badge-remove" ng-click="deleteHost(index)"
+            title="Click to delete host"><i class="fa fa-times"></i> {{ host.sd }} - {{ host.host }} <span ng-if="host.disable_host_sanitize">(no sanitize)</span></a>
         </li>
     </ul>
 </div>

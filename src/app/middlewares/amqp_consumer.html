@@ -1,0 +1,110 @@
+<div class="box box-default box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> AMQP consumer
+		</h3>
+		<div class="box-tools pull-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+		</div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">Enables consumption of messages using the Advanced Message Queuing Protocol in
+			servers such as RabbitMQ</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="row">
+				<div class="col-md-6">
+					<label>Queue name</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['name']" class="form-control" />
+					<span class="help-block">The name of the queue you want to connect to</span>
+				</div>
+				<div class="col-md-6">
+					<label>Exchange</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['exchange']"
+						class="form-control" />
+					<span class="help-block">The entity name where messages are sent for routing</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label class="control-label">Routing keys</label>
+					<div class="input-group">
+						<input class="form-control" placeholder="my-indexing" type="text" required=""
+							ng-model="input_routing_key">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-success"
+								ng-click="addTermToList(input_routing_key,'routing_key')">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+					</div>
+					<span class="help-block">List of all the routing keys or pattern to bind the queue to the
+						exchange</span>
+					<ul class="list-unstyled">
+						<li ng-repeat="(index,aud) in data.extra_config[config_namespace].routing_key">
+							<a class="badge badge-remove" ng-click="deleteIndexFromList(index,'routing_key')"><i
+									class="fa fa-times"></i>
+								{{ aud }}</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-6">
+					<label class="control-label">Prefetch Count</label>
+					<div class="input-group"
+						ng-class="validator.isInteger(data.extra_config[config_namespace].prefetch_count) ? '' : 'has-error'">
+						<input class="form-control" ng-model="data.extra_config[config_namespace].prefetch_count"
+							id="data.extra_config[config_namespace].prefetch_count"
+							name="data.extra_config[config_namespace].prefetch_count" type="number">
+						<div class="input-group-addon">msgs</div>
+					</div>
+					<span class="help-block">Specifies a prefetch window in terms of whole messages</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].durable">
+							<strong>Durable</strong>
+						</label>
+						<span class="help-block">Durable exchanges survive broker restart whereas transient
+							exchanges do
+							not</span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].delete">
+							<strong>Auto-delete</strong>
+						</label>
+						<span class="help-block">The exchange is deleted when last queue is unbound from it</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].no_wait">
+							<strong>No-wait</strong>
+						</label>
+						<span class="help-block">The AMQP broker won't wait for the acknowledgement.</span>
+					</div>
+				</div>
+				<div class="col-md-6">
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].no_local">
+							<strong>No-local</strong>
+						</label>
+						<span class="help-block">The server will not send messages to the connection that published
+							them.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
