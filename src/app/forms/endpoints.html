@@ -411,7 +411,7 @@
                                     <hr />
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4>Response manipulation</h4>
+                                            <h4>Response manipulation (objects)</h4>
 
                                             <p>Transform here the response with a lighter version, include only the
                                                 attributes that
@@ -441,11 +441,11 @@
                                                         id="tab_black-{{ endpoint_index }}-{{ backend_index }}">
                                                         <p>Attributes that you will NOT pick from the response:</p>
                                                         <ul class="list-inline">
-                                                            <li ng-repeat="white in backend.blacklist">
+                                                            <li ng-repeat="black in backend.blacklist">
                                                                 <a class="badge badge-remove"
                                                                     ng-click="deleteBlacklist(black,backend_index,endpoint_index)"><i
                                                                         class="fa fa-times"></i>
-                                                                    {{ white }}</a>
+                                                                    {{ black }}</a>
                                                             </li>
                                                         </ul>
 
@@ -547,6 +547,56 @@
                                             </div>
                                             <span class="help-block">You can rename any attributes returned by the
                                                 backend and use a name more convenient for you.</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>Array manipulation</h4>
+                                            <p>Responses using arrays need a special treatment. Add here your desired manipulations</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-2 control-label">Change array</label>
+                                        <div class="col-md-10">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <select class="form-control"
+                                                        ng-model="flatmap_type" ng-init="flatmap_type='move'">
+                                                        <option value="move">Move</option>
+                                                        <option value="del">Delete </option>
+                                                    </select>
+                                                    <label>Operation type</label>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <input type="text" class="form-control" placeholder="object.*.uninteresting"
+                                                    ng-model="flatmap_origin">
+                                                    <label>Original object</label>
+                                                </div>
+                                                <div class="col-xs-3" ng-show="flatmap_type!='del'">
+                                                    <input type="text" class="form-control" placeholder="object.*.new_element"
+                                                    ng-model="flatmap_dest">
+                                                    <label>Target object</label>
+                                                </div>
+                                                <div class="col-xs-1">
+                                                    <button type="button" class="btn btn-success"
+                                                        ng-click="addFlatmap(endpoint_index,backend_index,flatmap_type,flatmap_origin,flatmap_dest)">
+                                                        Apply
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <ul class="list-unstyled">
+                                                        <li ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter">
+                                                            <a class="badge badge-remove"
+                                                                ng-click="deleteFlatmap(flatmap_index,endpoint_index, backend_index)"><i
+                                                                    class="fa fa-times"></i>
+                                                                {{ flatmap_value.type }} <i class="fa fa-arrow-right"></i>
+                                                                {{ flatmap_value.args }}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <span class="help-block">You can rename any attributes returned by the
+                                                backend and use a name more convenient for you. <a href="https://www.krakend.io/docs/backends/flatmap/">Documentation</a></span>
                                         </div>
                                     </div>
 

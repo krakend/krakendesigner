@@ -286,6 +286,45 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].mapping[origin];
     };
 
+    $rootScope.addFlatmap = function(endpoint_index,backend_index,type,origin,destination) {
+        if (typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'] === "undefined") {
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {};
+        }
+
+        if (typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter === "undefined") {
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {
+                "flatmap_filter": []
+            };
+        }
+
+        var args = [];
+        args.push(origin);
+
+        if ( type === 'move' ) {
+            args.push(destination);
+        }
+
+        $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter.push(
+            {
+                "type": type,
+                "args": args
+            }
+        );
+    };
+
+    $rootScope.deleteFlatmap = function(index,endpoint_index, backend_index) {
+        $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter.splice(index,1);
+
+        if ( $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter.length == 0) {
+            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter;
+        }
+
+        if ( 0 === Object.keys($rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy']).length) {
+            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy']
+        }
+
+    };
+
     $rootScope.addEndpoint = function () {
 
         if ( typeof $rootScope.sd_providers==="undefined" || typeof $rootScope.sd_providers.hosts === "undefined" || 1 < $rootScope.service.length) {
