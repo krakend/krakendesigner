@@ -296,6 +296,16 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <middleware data="backend" template="pubsub_subscriber.html"
+                                            namespace="'github.com/devopsfaith/krakend-pubsub/subscriber'"></middleware>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <middleware data="backend" template="pubsub_publisher.html"
+                                        namespace="'github.com/devopsfaith/krakend-pubsub/publisher'"></middleware>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-8">
                                         <label>Backend endpoint</label>
                                         <div class="input-group">

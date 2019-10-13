@@ -2,6 +2,14 @@ angular
 .module('KrakenDesigner')
 .service("Constants", function () {
     return {
+        "pubsub_schemas": {
+			"GCP PubSub": "gcppubsub://myproject/mytopic_or_sub",
+			"NATS": "nats://mysubject",
+			"AWS SNS": "awssns:///arn:aws:service:region:accountid:resourceType/resourcePath",
+			"AWS SQS": "awssqs://sqs.us-east-2.amazonaws.com/123456789012/myqueue?region=us-east-2",
+			"Azure Service Bus Topic and Subscription": "azuresb://mytopic",
+			"RabbitMQ": "amqp://guest:guest@localhost:5672/myexchange"
+		},
         "jose_algorithms": {
            "EdDSA": "EdDSA",
            "HS256": "HS256 - HMAC using SHA-256",

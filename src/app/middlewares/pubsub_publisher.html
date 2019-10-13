@@ -1,0 +1,33 @@
+<div class="box box-default box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Pub/Sub: Publisher
+		</h3>
+		<div class="box-tools pull-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+		</div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">Pushes events to a queue</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="row">
+				<div class="col-md-12">
+					<label>Publisher type</label>
+					<select class="form-control" ng-model="schema_example" ng-change="data.extra_config[config_namespace]['topic_url'] = schema_example">
+						<option ng-repeat="(name,example) in constants.pubsub_schemas"
+						value="{{ example }}">{{ name }}</option>
+					</select>
+					<span class="help-block">Click on a publisher type to load an example URL.</span>
+					<label>Topic URL</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['topic_url']" class="form-control"
+						placeholder="schema://url" />
+					<span class="help-block">The publisher URL. See <a
+							href="https://www.krakend.io/docs/backends/pubsub/">the pub/sub documentation</a> for all
+						supported protocols</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
