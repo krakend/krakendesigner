@@ -25,6 +25,11 @@
   <div class="col-md-6">
     <div ng-include src="'/src/app/service/http_server_settings.html'"></div>
     <div ng-include src="'/src/app/service/options.html'"></div>
+    <middleware
+        template="bot_detector.html"
+        namespace="'github_com/devopsfaith/krakend-botdetector'"
+        data="service">
+    </middleware>
   </div>
 </div>
 </div>

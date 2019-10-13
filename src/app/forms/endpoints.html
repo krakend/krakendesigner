@@ -296,19 +296,40 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
+                                        <middleware data="backend" template="pubsub_subscriber.html"
+                                            namespace="'github.com/devopsfaith/krakend-pubsub/subscriber'"></middleware>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <middleware data="backend" template="pubsub_publisher.html"
+                                        namespace="'github.com/devopsfaith/krakend-pubsub/publisher'"></middleware>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <middleware data="backend" template="lambda.html"
+                                            namespace="'github.com/devopsfaith/krakend-lambda'"></middleware>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <label>Backend endpoint</label>
-                                        <div class="input-group">
-                                            <input type="text" placeholder="/users/{username}" class="form-control"
+                                        <input type="text" placeholder="/users/{username}" class="form-control"
                                                 required="" ng-model="backend.url_pattern">
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn method_{{ endpoint.method }}">
-                                                    {{ endpoint.method }}
-                                                </button>
-                                            </div>
-                                        </div>
+
                                         <span class="help-block">The endpoint of the backend server to query. Reuse here
                                             any <code>{parameters}</code> defined in the parent endpoint.</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>HTTP Verb</label>
+                                        <select id="backend.method" ng-model="backend.method" name="backend.method"
+                                            class="form-control"
+                                            ng-init="backend.method = endpoint.method">
+                                            <option value="GET">GET</option>
+                                            <option value="POST">POST</option>
+                                            <option value="PUT">PUT</option>
+                                            <option value="DELETE">DELETE</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-4">
                                         <label>Rate Limit</label>

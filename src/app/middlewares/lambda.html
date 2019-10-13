@@ -1,0 +1,61 @@
+<div class="box box-default box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> AWS Lambda
+		</h3>
+		<div class="box-tools pull-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+		</div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">Calls a Lambda function in AWS as its backend.</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="row">
+				<div class="col-md-6">
+					<label>Function name</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['function_name']"
+						class="form-control" placeholder="function" />
+					<span class="help-block">Name of the lambda function as saved in the AWS service. Leave EMPTY if taken from a parameter.</span>
+				</div>
+				<div class="col-md-6">
+					<label>Function param name</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['function_param_name']"
+						class="form-control" placeholder="function"
+						ng-change="delete data.extra_config[config_namespace]['function_name']" />
+					<span class="help-block">When the lambda function name comes in a {placeholder} inside the
+						endpoint.</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label>Region</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['region']" class="form-control" />
+					<span class="help-block">The AWS identifier region (e.g.: us-east-1, eu-west-2, etc. )</span>
+				</div>
+				<div class="col-md-6">
+					<label class="control-label">Max retries</label>
+					<div class="input-group"
+						ng-class="validator.isInteger(data.extra_config[config_namespace].max_retries) ? '' : 'has-error'">
+						<input class="form-control" ng-model="data.extra_config[config_namespace].max_retries"
+							id="data.extra_config[config_namespace].max_retries"
+							name="data.extra_config[config_namespace].max_retries" type="number">
+						<div class="input-group-addon">retries</div>
+					</div>
+					<span class="help-block">Maximum times you want to execute the function until you have a successful
+						response.</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label>Endpoint </label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['endpoint']"
+						class="form-control" />
+					<span class="help-block">An optional parameter to customize the Lambda endpoint to call. Useful
+						when Localstack is used for testing.</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
