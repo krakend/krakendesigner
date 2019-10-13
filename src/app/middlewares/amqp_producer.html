@@ -14,7 +14,12 @@
 			servers such as RabbitMQ</p>
 		<div ng-if="isMiddlewareEnabled()">
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-6">
+					<label>Queue name</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['name']" class="form-control" />
+					<span class="help-block">The name of the queue you want to connect to</span>
+				</div>
+				<div class="col-md-6">
 					<label>Exchange</label>
 					<input type="text" ng-model="data.extra_config[config_namespace]['exchange']"
 						class="form-control" />
