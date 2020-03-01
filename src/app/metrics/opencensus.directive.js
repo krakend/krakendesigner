@@ -83,6 +83,18 @@ angular
                 delete scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels[key];
             }
 
+            scope.addHeader = function(key,value) {
+                if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE].exporters.ocagent.headers ) {
+                    scope.data.extra_config[NAMESPACE].exporters.ocagent.headers = {};
+                }
+
+                scope.data.extra_config[NAMESPACE].exporters.ocagent.headers[key] = value;
+            }
+
+            scope.deleteHeader = function(key) {
+                delete scope.data.extra_config[NAMESPACE].exporters.ocagent.headers[key];
+            }            
+
             scope.isValidTimeUnit = function (time_with_unit) {
 
                 return (

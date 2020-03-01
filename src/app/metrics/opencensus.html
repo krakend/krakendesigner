@@ -63,6 +63,14 @@
             <strong>Google Stackdriver</strong> - Logs, metrics, traces, and other signals
           </label>
         </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-checked="backendIsEnabled('ocagent')"
+            ng-click="toggleOpencensusBackend('ocagent')">
+            <strong>OpenCensus Agent</strong> - Use ocagent protocol (Azure Monitor, Jaeger, Prometheus, OpenCensus)
+          </label>
+        </div>
       </div>
       <h4>Global settings for all metrics</h4>
       <div class="row">
@@ -308,5 +316,98 @@
             </div>
           </div>
         </div>
+    </div>
+  </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.ocagent">
+    <div class="box-header with-border">
+      <h3 class="box-title">Ocagent configuration</h3>
+    </div>
+    <div class="box-body">
+      <div class="form-group">
+        <label class="control-label">Collector's address</label>
+        <input type="text"
+          class="form-control"
+          ng-model="data.extra_config[config_namespace].exporters.ocagent.address"
+          placeholder="localhost:55678">        
+      </div>
+      <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+            <label class="control-label">Service Name</label>
+              <input type="text"
+              class="form-control"
+              ng-model="data.extra_config[config_namespace].exporters.ocagent.service_name"
+              placeholder="krakend/mygateway">
+            </div>
+              <div class="col-md-6" ng-class="isValidTimeUnit(data.extra_config[config_namespace].exporters.ocagent.reconnection) ? '' : 'has-error'">
+                <label class="control-label">Reconnection time</label>
+                <input type="text"
+                class="form-control"
+                ng-model="data.extra_config[config_namespace].exporters.ocagent.reconnection"
+                ng-class="isValidTimeUnit(data.extra_config[config_namespace].exporters.ocagent.reconnection) ? '' : 'has-error'">
+                <div class="help-block">
+                  <p ng-hide="isValidTimeUnit(data.extra_config[config_namespace].exporters.ocagent.reconnection)" ng-include src="'/src/app/forms/time_units.html'"></p>
+                </div>
+            </div>
+            
+      </div>
+      <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                  ng-model="data.extra_config[config_namespace].exporters.ocagent.insecure">
+                  <strong>Insecure (don't use SSL)</strong>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                  ng-model="data.extra_config[config_namespace].exporters.ocagent.enable_compression">
+                  <strong>Enable compression</strong>
+                </label>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="control-label">Headers</label>
+            <input class="form-control"
+            placeholder="Header"
+            type="text"
+            ng-model="header_key">
+            <span class="help-block">
+              Sent headers with its values.
+            </span>
+          </div>
+          <div class="col-md-6">
+              <label>&nbsp;</label>
+              <div class="input-group">
+                  <input class="form-control"
+                  placeholder="Value"
+                  type="text"
+                  ng-model="header_value">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-info btn-flat" ng-click="addHeader(header_key,header_value)">
+                            <i class="fa fa-plus"></i> Add
+                          </button>
+                      </span>
+                </div>
+            <ul class="list-inline help-block">
+              <li ng-repeat="(index,header) in data.extra_config[config_namespace].exporters.ocagent.headers">
+                  <a class="badge badge-remove"
+                      ng-click="deleteHeader(index)"><i
+                          class="fa fa-times"></i>
+                      {{ index }}={{ header }}</a>
+              </li>
+          </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
