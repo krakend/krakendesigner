@@ -8,7 +8,8 @@ angular
 			"AWS SNS": "awssns:///arn:aws:service:region:accountid:resourceType/resourcePath",
 			"AWS SQS": "awssqs://sqs.us-east-2.amazonaws.com/123456789012/myqueue?region=us-east-2",
 			"Azure Service Bus Topic and Subscription": "azuresb://mytopic",
-			"RabbitMQ": "amqp://guest:guest@localhost:5672/myexchange"
+            "RabbitMQ": "amqp://guest:guest@localhost:5672/myexchange",
+            "Kafka": "kafka://test (set the env var KAFKA_BROKERS)!"
 		},
         "jose_algorithms": {
            "EdDSA": "EdDSA",

@@ -1,6 +1,6 @@
 .PHONY: all install watch docker_build clean create_image serve
 
-all: install clean
+all: install 
 
 # Installs the dependencies and generates the JS bundle
 install:
