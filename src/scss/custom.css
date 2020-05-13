@@ -185,6 +185,11 @@ code {
     color: white;
 }
 
+.method_PATCH {
+    background-color: #00A0A7;
+    color: white;
+}
+
 .list-group-item-text.text-bold {
     color: #2752a3;
 }
