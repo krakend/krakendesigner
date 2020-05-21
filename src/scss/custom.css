@@ -8,6 +8,9 @@ code {
     color: #2752a3;
 }
 
+.badge {
+    background-color: #0071CE;
+}
 .wrapper {
     background-color: white !important;
 }
@@ -32,8 +35,8 @@ code {
 
 
 .skin-black-light .sidebar-menu>li:hover>a, .skin-black-light .sidebar-menu>li.active>a {
-    color: #17396b;
-    background: #cce6f5;
+    color: #0071CE;
+    background: #ececec;
 }
 
 .skin-black-light .main-header .navbar .navbar-custom-menu .navbar-nav > li > a,
@@ -46,7 +49,7 @@ code {
 }
 
 .skin-black-light .navbar-collapse.pull-left {
-    background: #0f265c;
+    background: #0071CE;
 }
 .skin-black-light .main-header .navbar-toggle {
     color: white;
@@ -94,7 +97,7 @@ code {
     margin: 0;
     width: 100%;
     padding: 0;
-    background-color: #0f265c;
+    background-color: #0071CE;
     z-index: 9999;
 }
 
@@ -105,12 +108,12 @@ code {
     border-left: 1px solid #eee;
 }
 
-.btn-primary {
+.btn-primary, .btn-success {
     background-color: #005ff2;
     border-color: #2977f7;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-success:hover {
     background-color: #0e57c7;
     border-color: #006cff;
 }
@@ -162,6 +165,9 @@ code {
 }
 
 /* KrakenDesigner */
+.logo-mini {
+    padding:1rem;
+}
 .method_header {
     width: 6rem;
 }
@@ -272,7 +278,7 @@ section.title {
     background: -moz-radial-gradient(center, ellipse cover,  rgb(13, 58, 125) 0%, rgba(2,3,37,1) 70%); /* FF3.6-15 */
     background: -webkit-radial-gradient(center, ellipse cover,  rgb(13, 58, 125) 0%,rgba(2,3,37,1) 70%); /* Chrome10-25,Safari5.1-6 */
     background: radial-gradient(ellipse at center,  rgb(13, 58, 125) 0%,rgba(2,3,37,1) 70%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0E2548', endColorstr='#0f265c',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0E2548', endColorstr='#0071CE',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
     border-bottom: 4px solid rgba(255,255,255,.2);
 }
@@ -632,7 +638,7 @@ section.docs .TOC a {
 .blog .share a {
     font-size: 20px;
     padding: 0 5px;
-    color: #0f265c;
+    color: #0071CE;
 }
 
 .blog .share a:hover {
