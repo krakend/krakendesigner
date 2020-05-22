@@ -1267,14 +1267,14 @@ a:focus {
   appearance: none;
 }
 .form-group.has-success label {
-  color: #00a65a;
+  color: #0e57c7;
 }
 .form-group.has-success .form-control {
-  border-color: #00a65a;
+  border-color: #0e57c7;
   box-shadow: none;
 }
 .form-group.has-success .help-block {
-  color: #00a65a;
+  color: #0e57c7;
 }
 .form-group.has-warning label {
   color: #f39c12;
@@ -1417,7 +1417,7 @@ a:focus {
 }
 .progress-bar-green,
 .progress-bar-success {
-  background-color: #00a65a;
+  background-color: #0e57c7;
 }
 .progress-striped .progress-bar-green,
 .progress-striped .progress-bar-success {
@@ -1427,7 +1427,7 @@ a:focus {
 }
 .progress-bar-aqua,
 .progress-bar-info {
-  background-color: #00c0ef;
+  background-color: #0071CE;
 }
 .progress-striped .progress-bar-aqua,
 .progress-striped .progress-bar-info {
@@ -1550,7 +1550,7 @@ a:focus {
   border-top-color: #3c8dbc;
 }
 .box.box-info {
-  border-top-color: #00c0ef;
+  border-top-color: #0071CE;
 }
 .box.box-danger {
   border-top-color: #dd4b39;
@@ -1559,7 +1559,7 @@ a:focus {
   border-top-color: #f39c12;
 }
 .box.box-success {
-  border-top-color: #00a65a;
+  border-top-color: #0e57c7;
 }
 .box.box-default {
   border-top-color: #d2d6de;
@@ -1620,12 +1620,12 @@ a:focus {
   color: #ffffff;
 }
 .box.box-solid.box-info {
-  border: 1px solid #00c0ef;
+  border: 1px solid #0071CE;
 }
 .box.box-solid.box-info > .box-header {
   color: #ffffff;
-  background: #00c0ef;
-  background-color: #00c0ef;
+  background: #0071CE;
+  background-color: #0071CE;
 }
 .box.box-solid.box-info > .box-header a,
 .box.box-solid.box-info > .box-header .btn {
@@ -1656,12 +1656,12 @@ a:focus {
   color: #ffffff;
 }
 .box.box-solid.box-success {
-  border: 1px solid #00a65a;
+  border: 1px solid #0e57c7;
 }
 .box.box-solid.box-success > .box-header {
   color: #ffffff;
-  background: #00a65a;
-  background-color: #00a65a;
+  background: #0e57c7;
+  background-color: #0e57c7;
 }
 .box.box-solid.box-success > .box-header a,
 .box.box-solid.box-success > .box-header .btn {
@@ -1930,10 +1930,10 @@ a:focus {
   border-left-color: #f39c12;
 }
 .todo-list .info {
-  border-left-color: #00c0ef;
+  border-left-color: #0071CE;
 }
 .todo-list .success {
-  border-left-color: #00a65a;
+  border-left-color: #0e57c7;
 }
 .todo-list .primary {
   border-left-color: #3c8dbc;
@@ -1965,7 +1965,7 @@ a:focus {
   border-radius: 50%;
 }
 .chat .item > .online {
-  border: 2px solid #00a65a;
+  border: 2px solid #0e57c7;
 }
 .chat .item > .offline {
   border: 2px solid #dd4b39;
@@ -2247,16 +2247,16 @@ a:focus {
   background-color: #367fa9;
 }
 .btn-success {
-  background-color: #00a65a;
-  border-color: #008d4c;
+  background-color: #0e57c7;
+  border-color: #006cff;
 }
 .btn-success:hover,
 .btn-success:active,
 .btn-success.hover {
-  background-color: #008d4c;
+  background-color: #006cff;
 }
 .btn-info {
-  background-color: #00c0ef;
+  background-color: #0071CE;
   border-color: #00acd6;
 }
 .btn-info:hover,
@@ -2376,7 +2376,7 @@ a:focus {
   border-color: #0097bc;
 }
 .callout.callout-success {
-  border-color: #00733e;
+  border-color: #006cff;
 }
 /*
  * Component: alert
@@ -2405,7 +2405,7 @@ a:focus {
   text-decoration: underline;
 }
 .alert-success {
-  border-color: #008d4c;
+  border-color: #006cff;
 }
 .alert-danger,
 .alert-error {
@@ -2566,7 +2566,7 @@ a:focus {
   border-top-color: #3c8dbc;
 }
 .nav-tabs-custom.tab-info > .nav-tabs > li.active {
-  border-top-color: #00c0ef;
+  border-top-color: #0071CE;
 }
 .nav-tabs-custom.tab-danger > .nav-tabs > li.active {
   border-top-color: #dd4b39;
@@ -2575,7 +2575,7 @@ a:focus {
   border-top-color: #f39c12;
 }
 .nav-tabs-custom.tab-success > .nav-tabs > li.active {
-  border-top-color: #00a65a;
+  border-top-color: #0e57c7;
 }
 .nav-tabs-custom.tab-default > .nav-tabs > li.active {
   border-top-color: #d2d6de;
@@ -2897,22 +2897,22 @@ table.text-center th {
   border-left-color: #f39c12;
 }
 .direct-chat-info .right > .direct-chat-text {
-  background: #00c0ef;
-  border-color: #00c0ef;
+  background: #0071CE;
+  border-color: #0071CE;
   color: #ffffff;
 }
 .direct-chat-info .right > .direct-chat-text:after,
 .direct-chat-info .right > .direct-chat-text:before {
-  border-left-color: #00c0ef;
+  border-left-color: #0071CE;
 }
 .direct-chat-success .right > .direct-chat-text {
-  background: #00a65a;
-  border-color: #00a65a;
+  background: #0e57c7;
+  border-color: #0e57c7;
   color: #ffffff;
 }
 .direct-chat-success .right > .direct-chat-text:after,
 .direct-chat-success .right > .direct-chat-text:before {
-  border-left-color: #00a65a;
+  border-left-color: #0e57c7;
 }
 /*
  * Component: Users List
@@ -3003,7 +3003,7 @@ table.text-center th {
 }
 .modal-success .modal-header,
 .modal-success .modal-footer {
-  border-color: #00733e;
+  border-color: #006cff;
 }
 .modal-danger .modal-header,
 .modal-danger .modal-footer {
@@ -4420,7 +4420,7 @@ table.text-center th {
 .alert-info,
 .label-info,
 .modal-info .modal-body {
-  background-color: #00c0ef !important;
+  background-color: #0071CE !important;
 }
 .bg-blue {
   background-color: #0073b7 !important;
@@ -4435,7 +4435,7 @@ table.text-center th {
 .alert-success,
 .label-success,
 .modal-success .modal-body {
-  background-color: #00a65a !important;
+  background-color: #0e57c7 !important;
 }
 .bg-navy {
   background-color: #001f3f !important;
@@ -4494,7 +4494,7 @@ table.text-center th {
 .bg-green-active,
 .modal-success .modal-header,
 .modal-success .modal-footer {
-  background-color: #008d4c !important;
+  background-color: #006cff !important;
 }
 .bg-navy-active {
   background-color: #001a35 !important;
@@ -4531,7 +4531,7 @@ table.text-center th {
   color: #f39c12 !important;
 }
 .text-aqua {
-  color: #00c0ef !important;
+  color: #0071CE !important;
 }
 .text-blue {
   color: #0073b7 !important;
@@ -4543,7 +4543,7 @@ table.text-center th {
   color: #3c8dbc !important;
 }
 .text-green {
-  color: #00a65a !important;
+  color: #0e57c7 !important;
 }
 .text-gray {
   color: #d2d6de !important;
@@ -4661,12 +4661,12 @@ table.text-center th {
   color: #fff;
 }
 .bg-aqua-gradient {
-  background: #00c0ef !important;
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #00c0ef), color-stop(1, #14d1ff)) !important;
-  background: -ms-linear-gradient(bottom, #00c0ef, #14d1ff) !important;
-  background: -moz-linear-gradient(center bottom, #00c0ef 0%, #14d1ff 100%) !important;
-  background: -o-linear-gradient(#14d1ff, #00c0ef) !important;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#14d1ff', endColorstr='#00c0ef', GradientType=0) !important;
+  background: #0071CE !important;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #0071CE), color-stop(1, #14d1ff)) !important;
+  background: -ms-linear-gradient(bottom, #0071CE, #14d1ff) !important;
+  background: -moz-linear-gradient(center bottom, #0071CE 0%, #14d1ff 100%) !important;
+  background: -o-linear-gradient(#14d1ff, #0071CE) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#14d1ff', endColorstr='#0071CE', GradientType=0) !important;
   color: #fff;
 }
 .bg-yellow-gradient {
@@ -4688,12 +4688,12 @@ table.text-center th {
   color: #fff;
 }
 .bg-green-gradient {
-  background: #00a65a !important;
-  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #00a65a), color-stop(1, #00ca6d)) !important;
-  background: -ms-linear-gradient(bottom, #00a65a, #00ca6d) !important;
-  background: -moz-linear-gradient(center bottom, #00a65a 0%, #00ca6d 100%) !important;
-  background: -o-linear-gradient(#00ca6d, #00a65a) !important;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ca6d', endColorstr='#00a65a', GradientType=0) !important;
+  background: #0e57c7 !important;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #0e57c7), color-stop(1, #00ca6d)) !important;
+  background: -ms-linear-gradient(bottom, #0e57c7, #00ca6d) !important;
+  background: -moz-linear-gradient(center bottom, #0e57c7 0%, #00ca6d 100%) !important;
+  background: -o-linear-gradient(#00ca6d, #0e57c7) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ca6d', endColorstr='#0e57c7', GradientType=0) !important;
   color: #fff;
 }
 .bg-red-gradient {
