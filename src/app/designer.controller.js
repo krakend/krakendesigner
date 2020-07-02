@@ -336,7 +336,11 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
             $rootScope.service.endpoints = [];
         }
 
-        $rootScope.service.endpoints.push({"endpoint": "/new-endpoint", "method": "GET"});
+        $rootScope.service.endpoints.push({
+            "endpoint": "/new-endpoint",
+            "method": "GET",
+            "output_encoding": (typeof $rootScope.service.output_encoding === undefined ? "json" : $rootScope.service.output_encoding )
+        });
     };
 
     // Valid endpoints start with Slash and do not contain /__debug[/]
@@ -430,7 +434,8 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         $rootScope.service.endpoints[endpoint_index].backend.push({
             "url_pattern": "/",
             "encoding": $rootScope.service.endpoints[endpoint_index].output_encoding,
-            "sd": $rootScope.sd_providers.providers[0] // Select first provider defined
+            "sd": $rootScope.sd_providers.providers[0], // Select first provider defined
+            "method": (typeof $rootScope.service.endpoints[endpoint_index].method === undefined ? "GET" : $rootScope.service.endpoints[endpoint_index].method )
         });
     };
 

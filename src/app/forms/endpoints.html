@@ -59,7 +59,7 @@
                     <div class="col-md-2 col-sm-2">
                         <label>Output</label>
                         <select class="form-control" ng-model="endpoint.output_encoding" id="endpoint.output_encoding"
-                            name="endpoint.output_encoding" ng-init="endpoint.output_encoding=service.output_encoding" ,
+                            name="endpoint.output_encoding"
                             ng-change="setNoOpEncoding(endpoint_index, endpoint.output_encoding, '{{ endpoint.output_encoding }}', null)">
                             <option value="json">JSON</option>
                             <option value="negotiate">Negotiate content</option>
@@ -127,8 +127,7 @@
                 <div class="form-group">
                     <div class="col-md-3" ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
                         <label>Concurrent Calls</label>
-                        <input type="text" class="form-control" ng-model="endpoint.concurrent_calls"
-                            ng-init="endpoint.concurrent_calls=1">
+                        <input type="number" class="form-control" ng-model="endpoint.concurrent_calls">
                         <span class="help-block">
                             <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
                                 <i class="fa fa-warning"></i> Use an integer</p>
@@ -324,8 +323,7 @@
                                     <div class="col-md-2">
                                         <label>HTTP Verb</label>
                                         <select id="backend.method" ng-model="backend.method" name="backend.method"
-                                            class="form-control"
-                                            ng-init="backend.method = endpoint.method">
+                                            class="form-control">
                                             <option value="GET">GET</option>
                                             <option value="POST">POST</option>
                                             <option value="PUT">PUT</option>
@@ -387,7 +385,6 @@
                                         <div class="col-md-4">
                                             <label>Decode as:</label>
                                             <select class="form-control" ng-model="backend.encoding"
-                                                ng-init="backend.encoding ='json'"
                                                 ng-change="setNoOpEncoding(endpoint_index, backend.encoding, '{{ backend.encoding }}', backend_index)">
                                                 <option selected value="json">JSON</option>
                                                 <option value="xml">XML</option>
