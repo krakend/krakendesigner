@@ -300,7 +300,7 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         var args = [];
         args.push(origin);
 
-        if ( type === 'move' ) {
+        if ( type === 'move' || type === 'append' ) {
             args.push(destination);
         }
 
