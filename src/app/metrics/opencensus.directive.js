@@ -71,7 +71,12 @@ angular
                 }
             }
 
-            scope.addLabel = function(key,value) {
+            scope.addStackDriverLabel = function(key,value) {
+                if ( undefined === typeof key || undefined === typeof value  ) {
+                    alert("Label name and value must be declared");
+                    return false;
+                }
+
                 if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels ) {
                     scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels = {};
                 }
@@ -79,11 +84,11 @@ angular
                 scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels[key] = value;
             }
 
-            scope.deleteLabel = function(key) {
+            scope.deleteStackDriverLabel = function(key) {
                 delete scope.data.extra_config[NAMESPACE].exporters.stackdriver.default_labels[key];
             }
 
-            scope.addHeader = function(key,value) {
+            scope.addOcagentHeader = function(key,value) {
                 if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE].exporters.ocagent.headers ) {
                     scope.data.extra_config[NAMESPACE].exporters.ocagent.headers = {};
                 }
@@ -91,9 +96,32 @@ angular
                 scope.data.extra_config[NAMESPACE].exporters.ocagent.headers[key] = value;
             }
 
-            scope.deleteHeader = function(key) {
+            scope.deleteOcagentHeader = function(key) {
                 delete scope.data.extra_config[NAMESPACE].exporters.ocagent.headers[key];
-            }            
+            }
+            
+            scope.addDatadogTag = function(tag, is_global = false) {
+                tag_type = is_global ? "global_tags" : "tags";
+
+                if ( 'undefined' === typeof tag || tag.length < 1 ) {
+                  return;
+                }
+               
+                if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE].exporters.datadog[tag_type] )
+                {
+                  scope.data.extra_config[NAMESPACE].exporters.datadog[tag_type] = [];
+                }
+          
+          
+                if ( scope.data.extra_config[NAMESPACE].exporters.datadog[tag_type].indexOf(tag) === -1 ) {
+                  scope.data.extra_config[NAMESPACE].exporters.datadog[tag_type].push(tag);
+                }
+              }
+          
+            scope.deleteDatadogTag = function(tag, is_global = false) {
+                 tag_type = is_global ? "global_tags" : "tags";
+                 scope.data.extra_config[NAMESPACE].exporters.datadog[tag_type].splice(index, 1);
+            }
 
             scope.isValidTimeUnit = function (time_with_unit) {
 

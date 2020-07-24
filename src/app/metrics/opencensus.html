@@ -2,7 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox"
       ng-checked="isMiddlewareEnabled()"
-      ng-click="toggleOpencensusMiddleware()"> Opencensus <small>(Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver and more)</small></h3>
+      ng-click="toggleOpencensusMiddleware()"> Opencensus <small>(Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver, Datadog, and more)</small></h3>
     </div>
     <div class="box-body" ng-if="isMiddlewareEnabled()">
       <p>The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different backends. Select all the metric integrations you want to enable and configure below:</p>
@@ -61,6 +61,14 @@
             ng-checked="backendIsEnabled('stackdriver')"
             ng-click="toggleOpencensusBackend('stackdriver')">
             <strong>Google Stackdriver</strong> - Logs, metrics, traces, and other signals
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-checked="backendIsEnabled('datadog')"
+            ng-click="toggleOpencensusBackend('datadog')">
+            <strong>Datadog</strong> - Stats and Tracing
           </label>
         </div>
         <div class="checkbox">
@@ -285,7 +293,7 @@
             <div class="col-md-6">
               <label class="control-label">Labels</label>
               <input class="form-control"
-              placeholder="label"
+              placeholder="label-name"
               type="text"
               ng-model="label_key">
               <span class="help-block">
@@ -300,7 +308,7 @@
                     type="text"
                     ng-model="label_value">
                         <span class="input-group-btn">
-                          <button type="button" class="btn btn-info btn-flat" ng-click="addLabel(label_key,label_value)">
+                          <button type="button" class="btn btn-info btn-flat" ng-click="addStackDriverLabel(label_key,label_value)">
                               <i class="fa fa-plus"></i> Add
                             </button>
                         </span>
@@ -308,7 +316,7 @@
               <ul class="list-inline help-block">
                 <li ng-repeat="(index,label) in data.extra_config[config_namespace].exporters.stackdriver.default_labels">
                     <a class="badge badge-remove"
-                       ng-click="deleteLabel(index)"><i
+                       ng-click="deleteStackDriverLabel(index)"><i
                             class="fa fa-times"></i>
                         {{ index }}={{ label }}</a>
                 </li>
@@ -318,6 +326,129 @@
         </div>
     </div>
   </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.datadog">
+    <div class="box-header with-border">
+      <h3 class="box-title">Datadog configuration</h3>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="control-label">Namespace</label>
+                <input type="text"
+                class="form-control"
+                ng-model="data.extra_config[config_namespace].exporters.datadog.namespace"
+                placeholder="krakendNS">
+                <span class="help-block">
+                  Namespace specifies the namespaces to which metric keys are appended
+                </span>
+              </div>
+              <div class="col-md-6">
+                <label class="control-label">Service</label>
+                <input type="text"
+                class="form-control"
+                ng-model="data.extra_config[config_namespace].exporters.datadog.service"
+                placeholder="krakendSRVC">
+                <span class="help-block">
+                  Service specifies the service name used for tracing.
+                </span>
+              </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="control-label">Trace address</label>
+              <input class="form-control"
+              placeholder="localhost:8126"
+              type="text"
+              ng-model="data.extra_config[config_namespace].exporters.datadog.trace_address">
+              <span class="help-block">
+                The host[:port] address of the Datadog Trace Agent. It defaults to localhost:8126
+              </span>
+            </div>
+            <div class="col-md-6">
+              <label class="control-label">Stats address</label>
+              <input class="form-control"
+              placeholder="localhost:8125"
+              type="text"
+              ng-model="data.extra_config[config_namespace].exporters.datadog.stats_address">
+              <span class="help-block">
+                the host[:port] address for DogStatsD. It defaults to localhost:8125
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+                <label>Tags</label>
+                <span class="help-block">
+                  Set of global tags to attach to each metric
+                </span>
+                <div class="input-group">
+                    <input class="form-control"
+                    placeholder="tag"
+                    type="text"
+                    ng-model="datadog_tag">
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-info btn-flat" ng-click="addDatadogTag(datadog_tag, false)">
+                              <i class="fa fa-plus"></i> Add Tag
+                            </button>
+                        </span>
+                  </div>
+              <ul class="list-inline help-block">
+                <li ng-repeat="(index,tag) in data.extra_config[config_namespace].exporters.datadog.tags">
+                    <a class="badge badge-remove"
+                       ng-click="deleteDatadogTag(index, false)"><i
+                            class="fa fa-times"></i>
+                        {{ tag }}</a>
+                </li>
+            </ul>
+            </div>
+            <div class="col-md-6">
+              <label>Global tags</label>
+              <span class="help-block">
+                Set of tags applied to all exported spans
+              </span>
+              <div class="input-group">
+                  <input class="form-control"
+                  placeholder="tag"
+                  type="text"
+                  ng-model="datadog_global_tag">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-info btn-flat" ng-click="addDatadogTag(datadog_global_tag, true)">
+                            <i class="fa fa-plus"></i> Add Global Tag
+                          </button>
+                      </span>
+                      
+                </div>
+            <ul class="list-inline help-block">
+              <li ng-repeat="(index,tag) in data.extra_config[config_namespace].exporters.datadog.global_tags">
+                  <a class="badge badge-remove"
+                     ng-click="deleteDatadogTag(index, true)"><i
+                          class="fa fa-times"></i>
+                      {{ tag }}</a>
+              </li>
+          </ul>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                  ng-model="data.extra_config[config_namespace].exporters.datadog.disable_count_per_buckets">
+                  Disable count per buckets
+                </label>
+                <span class="help-block">
+                  Specifies whether to emit count_per_bucket metrics
+                </span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+    </div>
+  </div> 
   <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.ocagent">
     <div class="box-header with-border">
       <h3 class="box-title">Ocagent configuration</h3>
@@ -393,7 +524,7 @@
                   type="text"
                   ng-model="header_value">
                       <span class="input-group-btn">
-                        <button type="button" class="btn btn-info btn-flat" ng-click="addHeader(header_key,header_value)">
+                        <button type="button" class="btn btn-info btn-flat" ng-click="addOcagentHeader(header_key,header_value)">
                             <i class="fa fa-plus"></i> Add
                           </button>
                       </span>
@@ -401,7 +532,7 @@
             <ul class="list-inline help-block">
               <li ng-repeat="(index,header) in data.extra_config[config_namespace].exporters.ocagent.headers">
                   <a class="badge badge-remove"
-                      ng-click="deleteHeader(index)"><i
+                      ng-click="deleteOcagentHeader(index)"><i
                           class="fa fa-times"></i>
                       {{ index }}={{ header }}</a>
               </li>
