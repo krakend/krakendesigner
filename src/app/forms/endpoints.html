@@ -342,39 +342,6 @@
                                             regardless of its endpoint configuration</span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <hr />
-                                        <h4>Backend caching</h4>
-                                        <div class="input-group">
-                                            <label>
-                                                <input type="checkbox"
-                                                    ng-click="toggleCaching($event, endpoint_index, backend_index)">
-                                                Store backend responses in-memory
-                                            </label>
-                                            <span class="help-block">Backend responses are stored in-memory for the time
-                                                specified in their <code>Cache-Control</code> header. This option
-                                                increases the load and the memory consumption as KrakenD keeps in memory
-                                                all the returned data for as long the backend specifies. Use
-                                                wisely.</span>
-
-                                            <span class="help-block badge label-warning"
-                                                ng-show="backend.extra_config['github.com/devopsfaith/krakend-httpcache']">
-                                                <i class="fa fa-warning"></i> Warning! Load will be increased
-                                            </span>
-
-                                        </div>
-
-                                        <hr />
-                                        <h4>Authorization</h4>
-                                        <middleware data="backend"
-                                            inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']"
-                                            template="oauth.html"
-                                            namespace="'github.com/devopsfaith/krakend-oauth2-clientcredentials'">
-                                        </middleware>
-                                        <hr />
-                                    </div>
-                                </div>
                                 <div ng-if="endpoint.output_encoding != 'no-op'">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -650,6 +617,45 @@
                                                 in the martian modifier. See <a
                                                     href="https://github.com/devopsfaith/krakend-martian/blob/master/example/krakend.json#L26">an
                                                     example</a></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <hr />
+                                            <h4>Backend caching</h4>
+                                            <div class="input-group">
+                                                <label>
+                                                    <input type="checkbox"
+                                                        ng-click="toggleCaching($event, endpoint_index, backend_index)">
+                                                    Store backend responses in-memory
+                                                </label>
+                                                <span class="help-block">Backend responses are stored in-memory for the time
+                                                    specified in their <code>Cache-Control</code> header. This option
+                                                    increases the load and the memory consumption as KrakenD keeps in memory
+                                                    all the returned data for as long the backend specifies. Use
+                                                    wisely.</span>
+
+                                                <span class="help-block badge label-warning"
+                                                    ng-show="backend.extra_config['github.com/devopsfaith/krakend-httpcache']">
+                                                    <i class="fa fa-warning"></i> Warning! Load will be increased
+                                                </span>
+
+                                            </div>
+                                            <hr />
+                                            <h4>Circuit breaker</h4>
+                                            <middleware data="backend"
+                                                inherit="service.extra_config['github_com/devopsfaith/krakend-circuitbreaker/gobreaker']"
+                                                template="gobreaker.html"
+                                                namespace="'github.com/devopsfaith/krakend-circuitbreaker/gobreaker'">
+                                            </middleware>
+                                            <hr />
+                                            <h4>Authorization</h4>
+                                            <middleware data="backend"
+                                                inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']"
+                                                template="oauth.html"
+                                                namespace="'github.com/devopsfaith/krakend-oauth2-clientcredentials'">
+                                            </middleware>
+                                            <hr />
                                         </div>
                                     </div>
                                 </div>
