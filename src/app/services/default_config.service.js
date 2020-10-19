@@ -82,6 +82,13 @@ angular
                 },
                 'github.com/devopsfaith/krakend-jose/validator': {
                     "alg": "HS256"
+                },
+                'github.com/devopsfaith/krakend-circuitbreaker/gobreaker': {
+                    "interval": 60,
+                    "name": "circuit-breaker-1",
+                    "timeout": 10,
+                    "maxErrors": 1,
+                    "logStatusChange": true
                 }
             }
         };
