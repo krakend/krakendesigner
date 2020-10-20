@@ -18,9 +18,9 @@ angular
       var NAMESPACE = scope.namespace;
       var default_middleware_data = {};
 
-      // Load default values from default_config.service.js when present:
+      // Copy default values from default_config.service.js when present:
       if ( 'undefined' !== typeof DefaultConfig.extra_config[NAMESPACE]) {
-        default_middleware_data = DefaultConfig.extra_config[NAMESPACE];
+        default_middleware_data = Object.assign({}, DefaultConfig.extra_config[NAMESPACE]);
       }
 
       // Create extra_config key and merge with existing content:
