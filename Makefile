@@ -17,9 +17,6 @@ build:
 docker_build:
 	docker build -t devopsfaith/krakendesigner .
 
-wasm_build:
-	cd designer/wasm && GOOS=js GOARCH=wasm go build -o main.wasm && cd ..
-
 serve:
 	docker run --rm -d -p 8080:80 -v "${PWD}/designer:/usr/share/nginx/html" devopsfaith/krakendesigner
 

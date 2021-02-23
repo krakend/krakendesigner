@@ -250,40 +250,6 @@
         </div>
       </div>
     </footer>
-    <script src="wasm/wasm_exec.js"></script>
-    <script>
-      if (!WebAssembly.instantiateStreaming) {
-        // polyfill
-        WebAssembly.instantiateStreaming = async (resp, importObject) => {
-          const source = await (await resp).arrayBuffer();
-          return await WebAssembly.instantiate(source, importObject);
-        };
-      }
-
-      const go = new Go();
-      let mod, inst;
-
-      var onKrakendClientReady = function(){};
-
-      var krakendClientReady = new Promise(function(resolve, reject) {
-        onKrakendClientReady = resolve;
-      });
-
-      WebAssembly.instantiateStreaming(
-        fetch("wasm/main.wasm"),
-        go.importObject
-      ).then(async result => {
-        mod = result.module;
-        inst = result.instance;
-        await go.run(inst);
-      });
-
-      var krakendClient = {};
-      krakendClient.test = function() {
-        alert("The KrakenD emulator is not running. Reload the page.");
-      }
-
-    </script>
     <script async src="//www.google-analytics.com/analytics.js"></script>
     <script>
       window.ga =

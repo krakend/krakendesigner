@@ -42,10 +42,6 @@
                 templateUrl: '/src/app/forms/logging.html',
                 controller: 'KrakenDesignerController'
             })
-             .when('/client', {
-                templateUrl: '/src/app/forms/client.html',
-                controller: 'KrakenDesignerController'
-            })
             .otherwise({
                 redirectTo: '/'
             });

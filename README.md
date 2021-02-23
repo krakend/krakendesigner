@@ -36,13 +36,5 @@ Start the web server pointing to `designer/` and mounting the volume:
 Remember to `make build` if you change HTML, CSS or JS. Or `node_modules/.bin/grunt ngtemplates && node_modules/.bin/webpack-cli --mode production`
 
 
-
-
-
-### Optional - Compile WASM
-In case you want to compile WASM again (golang required):
-
-    make wasm_build
-
 ## Get involved! - Please!
 The application is working properly (if you find any bug please create an issue) but it needs love from frontend specialists. If you think the application needs reorganization, refactoring, webpack plugins or even a full rewrite in another framework please help us make it improve. We do know how to write go, stuff about performance, and all the boring stuff. Javascript is for decent people (and that probably leave us out), so we need you!
