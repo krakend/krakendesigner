@@ -12,13 +12,8 @@
     <div class="box-body">
         <p ng-if="!isMiddlewareEnabled()">Enable to validate JWT tokens</p>
         <div ng-if="isMiddlewareEnabled()">
+            <p>Only the <strong>algorithm</strong> and the location of your <strong>jwk</strong> are mandatory fields.</p>
             <div class="form-group">
-                <div class="col-md-6">
-                    <label>JWK URI</label>
-                    <input type="text" ng-model="data.extra_config[config_namespace]['jwk-url']" class="form-control" />
-                    <span class="help-block">The URL to your JWK endpoint with the set of public keys used to verify the
-                        authenticity of JWT</span>
-                </div>
                 <div class="col-md-6">
                     <label class="control-label">Algorithm</label>
                     <select class="form-control" ng-model="data.extra_config[config_namespace].alg" id="data.extra_config[config_namespace].alg"
@@ -27,6 +22,33 @@
                     </select>
                     <span class="help-block">Digital signatures and MACs algorithm</span>
                 </div>
+                <div class="col-md-6">
+                    <label>JWK URI</label>
+                    <input type="text" ng-model="data.extra_config[config_namespace]['jwk-url']" class="form-control" />
+                    <span class="help-block">The URL to your JWK endpoint with the set of public keys used to verify the
+                        authenticity of JWT</span>
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <div class="col-md-4">
+                    <label>Scopes to validate</label>
+                    <input type="text" ng-model="data.extra_config[config_namespace]['scopes']" class="form-control" />
+                    <span class="help-block">List of all (or any) scopes that the user should have to access this endpoint. Space separated.</span>
+                </div>
+                <div class="col-md-2">
+                    <label>Matcher</label>
+                    <select class="form-control" ng-model="data.extra_config[config_namespace].scopes_matcher">
+                        <option value="any">Any</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Scopes Key</label>
+                    <input type="text" ng-model="data.extra_config[config_namespace].scopes_key" class="form-control" />
+                    <span class="help-block">The key name where the scopes can be found. The key can be a nested object using the . dot notation, e.g.: data.data2.scopes</span>
+                </div>
+                
             </div>
             <div class="form-group">
                 <div class="col-md-12">
