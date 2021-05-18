@@ -201,6 +201,15 @@ code {
     color: white;
 }
 
+.method_path {
+    display: inline-block;
+    width: 12rem;
+    margin: 8px 0 -8px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .list-group-item-text.text-bold {
     color: #2752a3;
 }
