@@ -24,8 +24,7 @@
         <ul class="treeview-menu">
             <li class="{{ selected_endpoint == endpoint_index ? 'active' : ''}}" ng-repeat="(endpoint_index,endpoint) in service.endpoints">
                 <a href="/#!/endpoints?target={{endpoint_index}}" title="Edit {{endpoint.endpoint}}">
-                    <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{ endpoint.method.length ? endpoint.method : 'GET' }}</span> {{ endpoint.endpoint }}
-                    <span class="pull-right-container">
+                    <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{ endpoint.method.length ? endpoint.method : 'GET' }}</span><span class="method_path" title="{{ endpoint.endpoint }}">{{ endpoint.endpoint }}</span><span class="pull-right-container">
                         <i class="fa fa-edit pull-right"></i>
                     </span>
                 </a>
