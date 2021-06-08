@@ -51,6 +51,11 @@ angular
                         "POST"
                     ]
                 },
+                'github_com/devopsfaith/krakend-instana': {
+                    "AgentHost": "localhost",
+                    "AgentPort": 46999,
+                    "Service": "krakend"
+                },
                 "github.com/devopsfaith/krakend-amqp/produce": {
                     "exchange":       "some-exchange",
                     "durable":        true,
