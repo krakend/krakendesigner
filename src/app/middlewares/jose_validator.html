@@ -33,8 +33,21 @@
             <div class="form-group">
                 <div class="col-md-4">
                     <label>Scopes to validate</label>
-                    <input type="text" ng-model="data.extra_config[config_namespace]['scopes']" class="form-control" />
-                    <span class="help-block">List of all (or any) scopes that the user should have to access this endpoint. Space separated.</span>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="" type="text" required="" ng-model="input_key">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_key,'scopes')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="help-block">List of all (or any) scopes that the user should have to access this endpoint.</span>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(index,key) in data.extra_config[config_namespace]['scopes']">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'scopes')"><i class="fa fa-times"></i>
+                                {{ key }}</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-md-2">
                     <label>Matcher</label>
