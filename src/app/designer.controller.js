@@ -50,6 +50,7 @@ angular
             DefaultConfig.service = loaded_json;
             $rootScope.service = DefaultConfig.service;
             $rootScope.dropzone_loaded = true;
+            $rootScope.sd_providers = {};
         } catch (e) {
             alert("Failed to parse the selected JSON file.\n\n" + e.message);
         }

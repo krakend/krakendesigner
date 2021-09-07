@@ -4,7 +4,9 @@ angular
         return {
             service: {
                 version: 2,
-                extra_config: {}
+                extra_config: {},
+                timeout: '3000ms',
+                cache_ttl: '300s'
             },
             // Default middleware config
             extra_config: {
