@@ -15,7 +15,7 @@
             <div class="form-group">
                 <div class="col-md-6">
                     <label>JWK URI</label>
-                    <input type="text" ng-model="data.extra_config[config_namespace]['jwk-url']" class="form-control" />
+                    <input type="text" ng-model="data.extra_config[config_namespace]['jwk_url']" class="form-control" />
                     <span class="help-block">The URL to your JWK endpoint with the set of private keys used to sign the token</span>
                 </div>
                 <div class="col-md-6">
@@ -33,15 +33,15 @@
                     <div class="input-group">
                         <input class="form-control" placeholder="" type="text" required="" ng-model="input_key">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_key,'keys-to-sign')">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_key,'keys_to_sign')">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
                     <span class="help-block">List of specific keys needing signing</span>
                     <ul class="list-unstyled">
-                        <li ng-repeat="(index,key) in data.extra_config[config_namespace]['keys-to-sign']">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'keys-to-sign')"><i class="fa fa-times"></i>
+                        <li ng-repeat="(index,key) in data.extra_config[config_namespace]['keys_to_sign']">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'keys_to_sign')"><i class="fa fa-times"></i>
                                 {{ key }}</a>
                         </li>
                     </ul>

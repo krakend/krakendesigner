@@ -17,7 +17,7 @@ angular
 
             }
 
-            var NAMESPACE = 'github_com/devopsfaith/krakend-opencensus';
+            var NAMESPACE = 'telemetry/opencensus';
 
             // Create extra_config namespace with default data and merge with existing content:
             scope.data.extra_config = Object.assign({}, scope.data.extra_config );

@@ -92,9 +92,9 @@
                     <div class="col-md-3">
                         <label>Rate limit</label>
                         <span class="label label-success"
-                            ng-if="endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router']">on</span>
+                            ng-if="endpoint.extra_config['qos/ratelimit/router']">on</span>
                         <span class="label label-default"
-                            ng-if="!endpoint.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/router']">off</span>
+                            ng-if="!endpoint.extra_config['qos/ratelimit/router']">off</span>
                         <br />
                         <button class="btn btn-default btn-flat" data-toggle="modal"
                             data-target="#throttling-modal-{{ endpoint_index }}">
@@ -170,7 +170,7 @@
                         <br />
                         <button class="btn btn-default btn-flat" data-toggle="modal"
                             data-target="#security-modal-{{ endpoint_index }}"
-                            ng-disabled="!hasMiddleware('github_com/devopsfaith/krakend-httpsecure')">
+                            ng-disabled="!hasMiddleware('security/http')">
                             <i class="fa fa-wrench"></i> Override defaults
                         </button>
                         <span class="help-block">
@@ -183,12 +183,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <middleware template="jose_validator.html"
-                                    namespace="'github.com/devopsfaith/krakend-jose/validator'" data="endpoint">
+                                    namespace="'auth/validator'" data="endpoint">
                                 </middleware>
                             </div>
                             <div class="col-md-6">
                                 <middleware template="jose_signer.html"
-                                    namespace="'github.com/devopsfaith/krakend-jose/signer'" data="endpoint">
+                                    namespace="'auth/signer'" data="endpoint">
                                 </middleware>
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                     <div class="col-md-12">
                         <h4>Backend API calls (where the data comes from)</h4>
                         <input type="checkbox"
-                            ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].sequential">
+                            ng-model="endpoint.extra_config['proxy'].sequential">
                         <strong>Enable sequential proxy</strong>
                         <span class="help-block">
                             When the sequential proxy is enabled a backend call can use data from a previous call. The
@@ -280,27 +280,27 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <middleware data="backend" template="amqp_consumer.html"
-                                            namespace="'github.com/devopsfaith/krakend-amqp/consume'"></middleware>
+                                            namespace="'backend/amqp/consumer'"></middleware>
                                     </div>
                                     <div class="col-md-6">
                                         <middleware data="backend" template="amqp_producer.html"
-                                            namespace="'github.com/devopsfaith/krakend-amqp/produce'"></middleware>
+                                            namespace="'backend/amqp/producer'"></middleware>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <middleware data="backend" template="pubsub_subscriber.html"
-                                            namespace="'github.com/devopsfaith/krakend-pubsub/subscriber'"></middleware>
+                                            namespace="'backend/pubsub/susbcriber'"></middleware>
                                     </div>
                                     <div class="col-md-6">
                                         <middleware data="backend" template="pubsub_publisher.html"
-                                        namespace="'github.com/devopsfaith/krakend-pubsub/publisher'"></middleware>
+                                        namespace="'backend/pubsub/publisher'"></middleware>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <middleware data="backend" template="lambda.html"
-                                            namespace="'github.com/devopsfaith/krakend-lambda'"></middleware>
+                                            namespace="'backend/lambda'"></middleware>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -420,7 +420,7 @@
                                                         id="tab_black-{{ endpoint_index }}-{{ backend_index }}">
                                                         <p>Attributes that you will NOT pick from the response:</p>
                                                         <ul class="list-inline">
-                                                            <li ng-repeat="black in backend.blacklist">
+                                                            <li ng-repeat="black in backend.deny">
                                                                 <a class="badge badge-remove"
                                                                     ng-click="deleteBlacklist(black,backend_index,endpoint_index)"><i
                                                                         class="fa fa-times"></i>
@@ -446,7 +446,7 @@
                                                         id="tab_white-{{ endpoint_index }}-{{ backend_index }}">
                                                         <p>Attributes that you will pick from the response</p>
                                                         <ul class="list-inline">
-                                                            <li ng-repeat="white in backend.whitelist">
+                                                            <li ng-repeat="white in backend.allow">
                                                                 <a class="badge badge-remove"
                                                                     ng-click="deleteWhitelist(white,backend_index,endpoint_index)"><i
                                                                         class="fa fa-times"></i>
@@ -473,8 +473,8 @@
                                                 </div>
                                             </div>
                                             <span class="help-block">If you want to filter the response, choose
-                                                between whitelisting or blacklisting attributes. If both are set,
-                                                whitelisting will be used. If it's the same for you, blacklisting
+                                                between allowing or denying attributes. If both are set,
+                                                allowing will be used. If it's the same for you, denying
                                                 performs much better.</span>
                                         </div>
                                     </div>
@@ -565,7 +565,7 @@
                                                 </div>
                                                 <div class="col-xs-3">
                                                     <ul class="list-unstyled">
-                                                        <li ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter">
+                                                        <li ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['proxy'].flatmap_filter">
                                                             <a class="badge badge-remove"
                                                                 ng-click="deleteFlatmap(flatmap_index,endpoint_index, backend_index)"><i
                                                                     class="fa fa-times"></i>
@@ -598,7 +598,7 @@
                                                     <textarea json-formatter
                                                         syntax="syntax_validation_martian[backend_index]"
                                                         class="form-control"
-                                                        ng-model="backend.extra_config['github.com/devopsfaith/krakend-martian']"></textarea>
+                                                        ng-model="backend.extra_config['modifier/martian']"></textarea>
                                                 </div>
                                             </div>
                                             <p ng-show="syntax_validation_martian[backend_index].length"
@@ -628,7 +628,7 @@
                                                     wisely.</span>
 
                                                 <span class="help-block badge label-warning"
-                                                    ng-show="backend.extra_config['github.com/devopsfaith/krakend-httpcache']">
+                                                    ng-show="backend.extra_config['qos/http-cache']">
                                                     <i class="fa fa-warning"></i> Warning! Load will be increased
                                                 </span>
 
@@ -638,14 +638,14 @@
                                             <middleware data="backend"
                                                 inherit="service.extra_config['github_com/devopsfaith/krakend-circuitbreaker/gobreaker']"
                                                 template="gobreaker.html"
-                                                namespace="'github.com/devopsfaith/krakend-circuitbreaker/gobreaker'">
+                                                namespace="'qos/circuit-breaker'">
                                             </middleware>
                                             <hr />
                                             <h4>Authorization</h4>
                                             <middleware data="backend"
                                                 inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']"
                                                 template="oauth.html"
-                                                namespace="'github.com/devopsfaith/krakend-oauth2-clientcredentials'">
+                                                namespace="'auth/client-credentials'">
                                             </middleware>
                                             <hr />
                                         </div>
@@ -674,16 +674,16 @@
                                             only.</p>
                                         <div class="form-group">
                                             <div class="col-md-12"
-                                                ng-class="isInteger(backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].maxRate) ? '' : 'has-error'">
+                                                ng-class="isInteger(backend.extra_config['qos/ratelimit/proxy'].max_rate) ? '' : 'has-error'">
                                                 <label>Max rate limit</label>
                                                 <div class="input-group">
                                                     <input class="form-control" type="number"
-                                                        ng-model="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].maxRate"
-                                                        ng-change="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity=backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].maxRate">
+                                                        ng-model="backend.extra_config['qos/ratelimit/proxy'].max_rate"
+                                                        ng-change="backend.extra_config['qos/ratelimit/proxy'].capacity=backend.extra_config['qos/ratelimit/proxy'].max_rate">
                                                     <div class="input-group-addon">reqs/sec</div>
                                                 </div>
                                                 <div class="help-block">
-                                                    <p ng-hide="isInteger(backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].maxRate)"
+                                                    <p ng-hide="isInteger(backend.extra_config['qos/ratelimit/proxy'].max_rate)"
                                                         class="badge label-danger"><i class="fa fa-warning"></i>
                                                         Invalid format</p>
                                                     <p>Maximum requests per second you want to accept in this
@@ -693,22 +693,22 @@
                                         </div>
 
                                         <div class="form-group"
-                                            ng-class="isInteger(backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity) ? '' : 'has-error'">
+                                            ng-class="isInteger(backend.extra_config['qos/ratelimit/proxy'].capacity) ? '' : 'has-error'">
                                             <div class="col-md-12">
                                                 <label class="control-label">Capacity (Burst size)</label>
                                                 <div class="input-group">
                                                     <input class="form-control"
-                                                        ng-model="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity"
-                                                        id="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity"
-                                                        name="backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity"
+                                                        ng-model="backend.extra_config['qos/ratelimit/proxy'].capacity"
+                                                        id="backend.extra_config['qos/ratelimit/proxy'].capacity"
+                                                        name="backend.extra_config['qos/ratelimit/proxy'].capacity"
                                                         type="number">
                                                     <div class="input-group-addon">reqs/sec</div>
                                                 </div>
                                                 <div class="help-block">
-                                                    <p ng-hide="isInteger(backend.extra_config['github.com/devopsfaith/krakend-ratelimit/juju/proxy'].capacity)"
+                                                    <p ng-hide="isInteger(backend.extra_config['qos/ratelimit/proxy'].capacity)"
                                                         class="badge label-danger"><i class="fa fa-warning"></i>
                                                         Invalid format</p>
-                                                    <p>Recommended value <code>capacity=maxRate</code>. A <a
+                                                    <p>Recommended value <code>capacity=max_rate</code>. A <a
                                                             href="https://en.wikipedia.org/wiki/Token_bucket">token
                                                             bucket</a> algorithm is used with a bucket capacity ==
                                                         tokens added per second. KrakenD is able to allow bursting
@@ -722,7 +722,7 @@
                         </div>
                     </div>
                     <!-- /Modal backend -->
-                    <div class="col-md-12" ng-if="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static">
+                    <div class="col-md-12" ng-if="endpoint.extra_config['proxy'].static">
                         <div class="box box-info box-solid">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Static Response (stub data)</h3>
@@ -744,7 +744,7 @@
                                     <label class="control-label">Response</label>
                                     <textarea json-formatter class="form-control"
                                         syntax="syntax_validation_static[backend_index]"
-                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.data"></textarea>
+                                        ng-model="endpoint.extra_config['proxy'].static.data"></textarea>
                                     <p ng-show="syntax_validation_static[backend_index].length"
                                         class="badge label-danger">
                                         <i class="fa fa-warning"></i> Syntax error -
@@ -757,7 +757,7 @@
                                 <div class="col-md-4">
                                     <label class="control-label">Strategy</label>
                                     <select class="form-control"
-                                        ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static.strategy">
+                                        ng-model="endpoint.extra_config['proxy'].static.strategy">
                                         <option value="always">Always - Present in every response</option>
                                         <option value="success">Success - Present in every non-failed response </option>
                                         <option value="errored">Errored - Present in every failed response (error not
@@ -775,7 +775,7 @@
                     Add backend query
                 </button>
                 <button class="btn btn-primary" ng-click="addDefaultStaticResponse(endpoint_index)"
-                    ng-disabled="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].static || endpoint.output_encoding == 'no-op' || endpoint.backend.length == 0">
+                    ng-disabled="endpoint.extra_config['proxy'].static || endpoint.output_encoding == 'no-op' || endpoint.backend.length == 0">
                     <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
                     Add static response (stub)
                 </button>
@@ -793,7 +793,7 @@
                     <h4 class="modal-title">Rate limiting (throttling)</code></h4>
                 </div>
                 <div class="modal-body">
-                    <middleware data="endpoint" namespace="'github.com/devopsfaith/krakend-ratelimit/juju/router'"
+                    <middleware data="endpoint" namespace="'qos/ratelimit/router'"
                         template="ratelimit_router.html">
                     </middleware>
                 </div>
@@ -811,9 +811,9 @@
                 </div>
                 <div class="modal-body">
 
-                    <middleware template="httpsecure.html" namespace="'github.com/devopsfaith/krakend-httpsecure'"
-                        ng-if="hasMiddleware('github_com/devopsfaith/krakend-httpsecure')" data="endpoint"
-                        inherit="service.extra_config['github_com/devopsfaith/krakend-httpsecure']">
+                    <middleware template="httpsecure.html" namespace="'security/http'"
+                        ng-if="hasMiddleware('security/http')" data="endpoint"
+                        inherit="service.extra_config['security/http']">
                     </middleware>
                 </div>
             </div>
@@ -836,7 +836,7 @@
                         <div class="col-md-12">
                             <label>Custom combiner</label>
                             <input class="form-control" type="text"
-                                ng-model="endpoint.extra_config['github.com/devopsfaith/krakend/proxy'].combiner"
+                                ng-model="endpoint.extra_config['proxy'].combiner"
                                 placeholder="combiner_name">
                             <div class="help-block">
                                 <p>Specify the combiner for merging the backend responses.</p>

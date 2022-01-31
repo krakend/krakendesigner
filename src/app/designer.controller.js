@@ -20,8 +20,8 @@ angular
             return false;
         }
 
-        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/signer', false);
-        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/validator', false);
+        $rootScope.fixCipherSuitesType('auth/signer', false);
+        $rootScope.fixCipherSuitesType('auth/validator', false);
 
         var date = new Date().getTime();
         downloadDocument(date + "-krakend.json", angular.toJson($rootScope.service, true)); // Beautify
@@ -55,8 +55,8 @@ angular
             alert("Failed to parse the selected JSON file.\n\n" + e.message);
         }
 
-        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/validator', true);
-        $rootScope.fixCipherSuitesType('github.com/devopsfaith/krakend-jose/signer', true);
+        $rootScope.fixCipherSuitesType('auth/validator', true);
+        $rootScope.fixCipherSuitesType('auth/signer', true);
         $rootScope.loadSDOptions();
     };
 
@@ -231,11 +231,11 @@ angular
 };
 
 $rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
-    $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist.splice(white - 1, 1);
+    $rootScope.service.endpoints[endpoint_index].backend[backend_index].allow.splice(white - 1, 1);
 };
 
 $rootScope.deleteBlacklist = function (black, backend_index, endpoint_index) {
-    $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist.splice(black - 1, 1);
+    $rootScope.service.endpoints[endpoint_index].backend[backend_index].deny.splice(black - 1, 1);
 };
 
 
@@ -244,13 +244,13 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
     var container_name_with_value = '#wl' + endpoint_index + backend_index;
 
         // Create object if it doesn't exist yet
-        if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist) {
-            $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist = [];
+        if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].allow) {
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].allow = [];
         }
 
         $rootScope.addTermToArray(
             $(container_name_with_value).val(),
-            $rootScope.service.endpoints[endpoint_index].backend[backend_index].whitelist
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].allow
             );
 
     };
@@ -261,13 +261,13 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         var container_name_with_value = '#bl' + endpoint_index + backend_index;
 
         // Create object if it doesn't exist yet
-        if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist) {
-            $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist = [];
+        if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].deny) {
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].deny = [];
         }
 
         $rootScope.addTermToArray(
             $(container_name_with_value).val(),
-            $rootScope.service.endpoints[endpoint_index].backend[backend_index].blacklist
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].deny
             );
 
     };
@@ -288,12 +288,12 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
     };
 
     $rootScope.addFlatmap = function(endpoint_index,backend_index,type,origin,destination) {
-        if (typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'] === "undefined") {
-            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {};
+        if (typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy'] === "undefined") {
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy'] = {};
         }
 
-        if (typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter === "undefined") {
-            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {
+        if (typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy'].flatmap_filter === "undefined") {
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy'] = {
                 "flatmap_filter": []
             };
         }
@@ -305,7 +305,7 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
             args.push(destination);
         }
 
-        $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter.push(
+        $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy'].flatmap_filter.push(
             {
                 "type": type,
                 "args": args
@@ -314,14 +314,14 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
     };
 
     $rootScope.deleteFlatmap = function(index,endpoint_index, backend_index) {
-        $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter.splice(index,1);
+        $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy'].flatmap_filter.splice(index,1);
 
-        if ( $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter.length == 0) {
-            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy'].flatmap_filter;
+        if ( $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy'].flatmap_filter.length == 0) {
+            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy'].flatmap_filter;
         }
 
-        if ( 0 === Object.keys($rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy']).length) {
-            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend/proxy']
+        if ( 0 === Object.keys($rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy']).length) {
+            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['proxy']
         }
 
     };
@@ -405,8 +405,8 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
                 $rootScope.addBackendQuery(endpoint_index);
 
                 // Delete also static_response
-                if ( 'undefined' !== typeof $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] ) {
-                    delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
+                if ( 'undefined' !== typeof $rootScope.service.endpoints[endpoint_index].extra_config['proxy'] ) {
+                    delete $rootScope.service.endpoints[endpoint_index].extra_config['proxy'];
                 }
 
             } else { // Angular already updated the values, revert endpoint or backend:
@@ -477,9 +477,9 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
     $rootScope.toggleCaching = function($event, endpoint_index, backend_index) {
         if ( $event.target.checked ) {
             // Create the key that enables caching:
-            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend-httpcache'] = {};
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['qos/http-cache'] = {};
         } else {
-            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['github.com/devopsfaith/krakend-httpcache'];
+            delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['qos/http-cache'];
         }
     }
 
@@ -495,11 +495,11 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
             $rootScope.service.endpoints[endpoint_index].extra_config = {};
         }
 
-        if (typeof $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] == "undefined") {
-            $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'] = {};
+        if (typeof $rootScope.service.endpoints[endpoint_index].extra_config['proxy'] == "undefined") {
+            $rootScope.service.endpoints[endpoint_index].extra_config['proxy'] = {};
         }
 
-        $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy']['static'] = {
+        $rootScope.service.endpoints[endpoint_index].extra_config['proxy']['static'] = {
                 "data" : {
                     "new_field_a": 123,
                     "new_field_b": ["arr1","arr2"],
@@ -510,10 +510,10 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
     };
 
     $rootScope.deleteStaticResponse = function (endpoint_index) {
-            delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy']['static'];
+            delete $rootScope.service.endpoints[endpoint_index].extra_config['proxy']['static'];
             // Last key
-            if ( Object.keys($rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy']).length == 0 ) {
-                delete $rootScope.service.endpoints[endpoint_index].extra_config['github.com/devopsfaith/krakend/proxy'];
+            if ( Object.keys($rootScope.service.endpoints[endpoint_index].extra_config['proxy']).length == 0 ) {
+                delete $rootScope.service.endpoints[endpoint_index].extra_config['proxy'];
             }
     };
 
