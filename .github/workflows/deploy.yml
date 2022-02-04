@@ -1,17 +1,20 @@
 name: Build and Deploy
 on: [push]
 jobs:
-  build-and-deploy:
+  checkout:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1
 
+  build:
+    runs-on: node:12
       - name: Install and Build 🔧
-        uses: node:12
         run: |
           make install
 
+  deploy:
+    runs-on: ubuntu-latest
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
