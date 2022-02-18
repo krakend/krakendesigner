@@ -28,22 +28,6 @@ angular
         $rootScope.saved_once = true;
     };
 
-
-      $rootScope.krakendPrepare = function() {
-        if ( 'undefined' !== typeof krakendClient.close ) {
-            krakendClient.close();
-            console.log('Resetting KrakenD client');
-        }
-
-        var cfg = JSON.stringify($rootScope.service);
-        krakendClientReady.then(function(){
-            parse(cfg, function(c) {
-                krakendClient = c;
-                console.log("KrakenD Client is ready");
-            })
-        })
-      };
-
     $rootScope.loadFile = function () {
         try {
             var loaded_json = JSON.parse($scope.service_configuration);
