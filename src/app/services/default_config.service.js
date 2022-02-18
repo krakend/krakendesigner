@@ -3,7 +3,7 @@ angular
     .service("DefaultConfig", function () {
         return {
             service: {
-                version: 2,
+                version: 3,
                 extra_config: {},
                 timeout: '3000ms',
                 cache_ttl: '300s'
@@ -72,6 +72,11 @@ angular
                     "no_local":       false,
                     "routing_key":    ["#"],
                     "prefetch_count": 10
+                },
+                "backend/graphql": {
+                    "type": "query",
+                    "operationName": "addMktPreferencesForUser",
+                    "variables":      {}
                 },
                 // // Endpoint level middleware (github.com)
                 'qos/ratelimit/router': {

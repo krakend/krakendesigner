@@ -14,8 +14,8 @@
             <span ng-hide="isValidEndpoint(endpoint.endpoint)" class="badge label-danger"><i class="fa fa-warning"></i>
                 Error(s)</span>
             <span class="badge">{{ endpoint.output_encoding }}</span>
-            <span
-                class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{ endpoint.method.length ? endpoint.method : 'GET' }}</span>
+            <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{
+                endpoint.method.length ? endpoint.method : 'GET' }}</span>
             <button type="button" class="btn btn-box-tool"
                 ng-click="deleteEndpoint(endpoint_index, 'This endpoint and all the information will be deleted. Do you want to proceed?')">
                 <i class="fa fa-trash"></i></button>
@@ -122,7 +122,8 @@
                         <input type="number" class="form-control" ng-model="endpoint.concurrent_calls">
                         <span class="help-block">
                             <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
-                                <i class="fa fa-warning"></i> Use an integer</p>
+                                <i class="fa fa-warning"></i> Use an integer
+                            </p>
                             <p>Parallel requests you want to send to the backend <strong>for the same request</strong>.
                                 Fastest request is taken and the rest are discarded. This value should be between 1 and
                                 3 (or higher if your backend can support very high load)</p>
@@ -172,13 +173,11 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
-                                <middleware template="jose_validator.html"
-                                    namespace="'auth/validator'" data="endpoint">
+                                <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint">
                                 </middleware>
                             </div>
                             <div class="col-md-6">
-                                <middleware template="jose_signer.html"
-                                    namespace="'auth/signer'" data="endpoint">
+                                <middleware template="jose_signer.html" namespace="'auth/signer'" data="endpoint">
                                 </middleware>
                             </div>
                         </div>
@@ -187,8 +186,7 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <h4>Backend API calls (where the data comes from)</h4>
-                        <input type="checkbox"
-                            ng-model="endpoint.extra_config['proxy'].sequential">
+                        <input type="checkbox" ng-model="endpoint.extra_config['proxy'].sequential">
                         <strong>Enable sequential proxy</strong>
                         <span class="help-block">
                             When the sequential proxy is enabled a backend call can use data from a previous call. The
@@ -227,6 +225,24 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-6">
+
+                                        <label>Select hosts</label>
+                                        <span class="help-block">All the backends that can be used to fulfill this
+                                            request, balanced using Round Robin.</span>
+                                        <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
+                                            value="{{ host.host }}">
+                                            <label>
+                                                <input type="checkbox" ng-model="checked"
+                                                    ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
+                                                    ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
+                                                {{ host.host }}
+                                            </label>
+                                        </div>
+                                        <p ng-show="!backend.host.length" class="badge label-danger"><i
+                                                class="fa fa-warning"></i> Select at least one host!</p>
+
+                                    </div>
                                     <div class="col-md-3">
                                         <label>Host resolution</label>
                                         <span class="help-block">Service Discovery options you have configured. <a
@@ -237,22 +253,6 @@
                                                     ng-change="deleteHostsInBackend(endpoint_index, backend_index)">
                                                 {{ sd }}
                                             </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Select hosts</label>
-                                            <span class="help-block">All the backends that can be used to fulfill this
-                                                request, balanced using Round Robin.</span>
-                                            <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
-                                                value="{{ host.host }}">
-                                                <label>
-                                                    <input type="checkbox" ng-model="checked"
-                                                        ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
-                                                        ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
-                                                    {{ host.host }}
-                                                </label>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -266,7 +266,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <hr/>
+                                <hr />
                                 <div class="row">
                                     <div class="col-md-6">
                                         <middleware data="backend" template="amqp_consumer.html"
@@ -284,20 +284,25 @@
                                     </div>
                                     <div class="col-md-6">
                                         <middleware data="backend" template="pubsub_publisher.html"
-                                        namespace="'backend/pubsub/publisher'"></middleware>
+                                            namespace="'backend/pubsub/publisher'"></middleware>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <middleware data="backend" template="lambda.html"
-                                            namespace="'backend/lambda'"></middleware>
+
+                                    <div class="col-md-6">
+                                        <middleware data="backend" template="graphql.html"
+                                            namespace="'backend/graphql'"></middleware>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <middleware data="backend" template="lambda.html" namespace="'backend/lambda'">
+                                        </middleware>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Backend endpoint</label>
                                         <input type="text" placeholder="/users/{username}" class="form-control"
-                                                required="" ng-model="backend.url_pattern">
+                                            required="" ng-model="backend.url_pattern">
 
                                         <span class="help-block">The endpoint of the backend server to query. Reuse here
                                             any <code>{parameters}</code> defined in the parent endpoint.</span>
@@ -521,7 +526,8 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h4>Array manipulation</h4>
-                                            <p>Responses using arrays need a special treatment. Add here your desired manipulations</p>
+                                            <p>Responses using arrays need a special treatment. Add here your desired
+                                                manipulations</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -529,8 +535,7 @@
                                         <div class="col-md-10">
                                             <div class="row">
                                                 <div class="col-xs-2">
-                                                    <select class="form-control"
-                                                        ng-model="flatmap_type">
+                                                    <select class="form-control" ng-model="flatmap_type">
                                                         <option value="move">Move</option>
                                                         <option value="del">Delete </option>
                                                         <option value="append">Append </option>
@@ -538,13 +543,13 @@
                                                     <label>Operation type</label>
                                                 </div>
                                                 <div class="col-xs-3">
-                                                    <input type="text" class="form-control" placeholder="object.*.uninteresting"
-                                                    ng-model="flatmap_origin">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="object.*.uninteresting" ng-model="flatmap_origin">
                                                     <label>Original object</label>
                                                 </div>
                                                 <div class="col-xs-3" ng-show="flatmap_type!='del'">
-                                                    <input type="text" class="form-control" placeholder="object.*.new_element"
-                                                    ng-model="flatmap_dest">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="object.*.new_element" ng-model="flatmap_dest">
                                                     <label>Target object</label>
                                                 </div>
                                                 <div class="col-xs-1">
@@ -555,18 +560,21 @@
                                                 </div>
                                                 <div class="col-xs-3">
                                                     <ul class="list-unstyled">
-                                                        <li ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['proxy'].flatmap_filter">
+                                                        <li
+                                                            ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['proxy'].flatmap_filter">
                                                             <a class="badge badge-remove"
                                                                 ng-click="deleteFlatmap(flatmap_index,endpoint_index, backend_index)"><i
                                                                     class="fa fa-times"></i>
-                                                                {{ flatmap_value.type }} <i class="fa fa-arrow-right"></i>
+                                                                {{ flatmap_value.type }} <i
+                                                                    class="fa fa-arrow-right"></i>
                                                                 {{ flatmap_value.args }}</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                             <span class="help-block">You can rename any attributes returned by the
-                                                backend and use a name more convenient for you. <a href="https://www.krakend.io/docs/backends/flatmap/">Documentation</a></span>
+                                                backend and use a name more convenient for you. <a
+                                                    href="https://www.krakend.io/docs/backends/flatmap/">Documentation</a></span>
                                         </div>
                                     </div>
 
@@ -594,7 +602,8 @@
                                             <p ng-show="syntax_validation_martian[backend_index].length"
                                                 class="badge label-danger">
                                                 <i class="fa fa-warning"></i> Syntax error -
-                                                {{syntax_validation_martian[backend_index]}}</p>
+                                                {{syntax_validation_martian[backend_index]}}
+                                            </p>
                                             <span class="help-block">Paste here your JSON configuration to be used
                                                 in the martian modifier. See <a
                                                     href="https://github.com/devopsfaith/krakend-martian/blob/master/example/krakend.json#L26">an
@@ -611,9 +620,11 @@
                                                         ng-click="toggleCaching($event, endpoint_index, backend_index)">
                                                     Store backend responses in-memory
                                                 </label>
-                                                <span class="help-block">Backend responses are stored in-memory for the time
+                                                <span class="help-block">Backend responses are stored in-memory for the
+                                                    time
                                                     specified in their <code>Cache-Control</code> header. This option
-                                                    increases the load and the memory consumption as KrakenD keeps in memory
+                                                    increases the load and the memory consumption as KrakenD keeps in
+                                                    memory
                                                     all the returned data for as long the backend specifies. Use
                                                     wisely.</span>
 
@@ -627,15 +638,13 @@
                                             <h4>Circuit breaker</h4>
                                             <middleware data="backend"
                                                 inherit="service.extra_config['github_com/devopsfaith/krakend-circuitbreaker/gobreaker']"
-                                                template="gobreaker.html"
-                                                namespace="'qos/circuit-breaker'">
+                                                template="gobreaker.html" namespace="'qos/circuit-breaker'">
                                             </middleware>
                                             <hr />
                                             <h4>Authorization</h4>
                                             <middleware data="backend"
                                                 inherit="service.extra_config['github_com/devopsfaith/krakend-oauth2-clientcredentials']"
-                                                template="oauth.html"
-                                                namespace="'auth/client-credentials'">
+                                                template="oauth.html" namespace="'auth/client-credentials'">
                                             </middleware>
                                             <hr />
                                         </div>
@@ -654,7 +663,8 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span></button>
                                         <h4 class="modal-title">Rate limit requests to
-                                            <code>{{backend.url_pattern}}</code></h4>
+                                            <code>{{backend.url_pattern}}</code>
+                                        </h4>
                                     </div>
                                     <div class="modal-body">
                                         <p>All the settings below are defined in the <strong>Service
@@ -738,7 +748,8 @@
                                     <p ng-show="syntax_validation_static[backend_index].length"
                                         class="badge label-danger">
                                         <i class="fa fa-warning"></i> Syntax error -
-                                        {{syntax_validation_static[backend_index]}}</p>
+                                        {{syntax_validation_static[backend_index]}}
+                                    </p>
                                     </p>
                                     <span class="help-block">Provide the JSON object you want to return (ensure to start
                                         and end with curly braces
@@ -783,8 +794,7 @@
                     <h4 class="modal-title">Rate limiting (throttling)</code></h4>
                 </div>
                 <div class="modal-body">
-                    <middleware data="endpoint" namespace="'qos/ratelimit/router'"
-                        template="ratelimit_router.html">
+                    <middleware data="endpoint" namespace="'qos/ratelimit/router'" template="ratelimit_router.html">
                     </middleware>
                 </div>
             </div>
@@ -806,8 +816,7 @@
 
                         <div class="col-md-12">
                             <label>Custom combiner</label>
-                            <input class="form-control" type="text"
-                                ng-model="endpoint.extra_config['proxy'].combiner"
+                            <input class="form-control" type="text" ng-model="endpoint.extra_config['proxy'].combiner"
                                 placeholder="combiner_name">
                             <div class="help-block">
                                 <p>Specify the combiner for merging the backend responses.</p>

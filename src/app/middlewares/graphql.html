@@ -1,0 +1,82 @@
+<div class="box box-default box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> REST to GraphQL
+		</h3>
+		<div class="box-tools pull-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+		</div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">Translates a REST call into a GraphQL operation.</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="row">
+				<div class="col-md-4">
+					<label>Operation Type</label>
+						<select ng-model="data.extra_config[config_namespace]['type']" class="form-control">
+							<option value="query">query</option>
+							<option value="mutation">mutation</option>
+						</select>
+						<span class="help-block">The type of query you are declaring.</span>
+				</div>
+				<div class="col-md-8">
+					<label>Operation name</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['operationName']"
+						class="form-control" placeholder="addMktPreferencesForUser" />
+					<span class="help-block">A meaningful and explicit name for your operation, required in multi-operation documents and for helpful debugging and server-side logging.</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label>Query path</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['query_path']"
+						class="form-control" placeholder="./graphql/mutations/marketing.graphql" />
+					<span class="help-block">Path to the file containing the query. This file is loaded during startup and never checked again, if it changes KrakenD will be unaware of it.</span>
+				</div>
+				<div class="col-md-6">
+					<label>... or Inline Query</label>
+					<input type="text" ng-model="data.extra_config[config_namespace]['query']"
+						class="form-control" placeholder="{ \n find_follower(func: uid(\'0x3\')) {\n name \n }\n }" />
+					<span class="help-block">An inline GraphQL query you want to send to the server. Use this attribute for simple and inline queries, use query_path instead for larger queries. Use escaping when needed.</span>
+				</div>
+
+
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table table-striped">
+						<tbody>
+						<tr>
+							<th>Variable</th>
+							<th>Value</th>
+							<th></th>
+						</tr>
+						<tr ng-repeat="(variable,value) in data.extra_config[config_namespace].variables">
+							<td>{{ variable }}</td>
+							<td>{{ value }}</td>
+							<td>
+								<button type="button" class="btn btn-danger" ng-click="deleteKey(variable,'variables')">
+									<i class="fa fa-trash"></i> Remove
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="text" class="form-control" ng-model="gql_variable" placeholder="username"></td>
+							<td><input type="text" class="form-control" ng-model="gql_variable_value" placeholder="{username}"></td>
+							<td>
+								<button type="button" class="btn btn-success" ng-click="addKeyPair(gql_variable,gql_variable_value,'variables')">
+									<i class="fa fa-plus"></i> Add variable
+								</button>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<span class="help-block">A dictionary defining all the variables sent to the GraphQL server. You can use {placeholders} to inject parameters from the endpoint URL. In the example above, the GraphQL server receives a variable user with the {user_id} declared in the endpoint. The dictionary can have any nesting level you need, but nested variables cannot contain {placeholders}.</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
