@@ -47,6 +47,11 @@ angular
     $rootScope.loadFile = function () {
         try {
             var loaded_json = JSON.parse($scope.service_configuration);
+            if ( "undefined" !== typeof loaded_json.version && 3 != loaded_json.version ) {
+                alert("This version of KrakenDesigner only supports configuration files with 'version: 3'. For syntax 'version: 2' please get a local copy of KrakenDesigner from https://github.com/devopsfaith/krakendesigner/commit/153bbedec8a0a90d3f0f95c303c71464ad9b40e9")
+                return false;
+            }
+
             DefaultConfig.service = loaded_json;
             $rootScope.service = DefaultConfig.service;
             $rootScope.dropzone_loaded = true;
@@ -338,7 +343,7 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
         }
 
         $rootScope.service.endpoints.push({
-            "endpoint": "/new-endpoint",
+            "endpoint": "/v1/new-endpoint",
             "method": "GET",
             "output_encoding": (typeof $rootScope.service.output_encoding === undefined ? "json" : $rootScope.service.output_encoding )
         });
@@ -551,7 +556,7 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
 });
 
 function downloadDocument(name, content) {
-    FileSaver.saveAs(new Blob([content], {type: "text/plain;charset=UTF-8"}), name, true);
+    FileSaver.saveAs(new Blob([content], {type: "text/plain;charset=UTF-8"}), name);
 }
 
 // Avoid losing the configuration:

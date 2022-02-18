@@ -1,7 +1,8 @@
 {
-    "version": 2,
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 3,
     "extra_config": {
-      "github_com/devopsfaith/krakend-gologging": {
+      "telemetry/logging": {
         "level":  "ERROR",
         "prefix": "[KRAKEND]",
         "syslog": false,

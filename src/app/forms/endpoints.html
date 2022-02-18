@@ -89,6 +89,45 @@
                             Write only the name of the
                             parameter, no question mark or equal symbols.</span>
                     </div>
+                    <div class="col-md-6">
+                        <label>Headers passing to backend</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="header_name" type="text" required=""
+                                ng-model="input_header">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-success"
+                                    ng-click="addHeaderPassing(endpoint_index,input_header)">
+                                    <i class="fa fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                        <span class="help-block">Allowed headers to pass from client to each of the backends. These
+                            headers are not an addition, but a replacement when they are set. Use only if you need
+                            custom headers to pass back but ensure to declare all needed headers (including
+                            <code>Content-Type</code>).</span>
+                        <div class="input-group">
+                            <ul class="list-unstyled">
+                                <li ng-repeat="(index,header) in endpoint.headers_to_pass">
+                                    <a class="badge badge-remove"
+                                        ng-click="deleteHeaderPassing(endpoint_index,index)"><i class="fa fa-times"></i>
+                                        {{ header }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3" ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
+                        <label>Concurrent Calls</label>
+                        <input type="number" class="form-control" ng-model="endpoint.concurrent_calls">
+                        <span class="help-block">
+                            <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
+                                <i class="fa fa-warning"></i> Use an integer</p>
+                            <p>Parallel requests you want to send to the backend <strong>for the same request</strong>.
+                                Fastest request is taken and the rest are discarded. This value should be between 1 and
+                                3 (or higher if your backend can support very high load)</p>
+                        </span>
+                    </div>
                     <div class="col-md-3">
                         <label>Rate limit</label>
                         <span class="label label-success"
@@ -115,45 +154,7 @@
                             Behaviour of the proxy pipe.
                         </span>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-3" ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
-                        <label>Concurrent Calls</label>
-                        <input type="number" class="form-control" ng-model="endpoint.concurrent_calls">
-                        <span class="help-block">
-                            <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
-                                <i class="fa fa-warning"></i> Use an integer</p>
-                            <p>Parallel requests you want to send to the backend <strong>for the same request</strong>.
-                                Fastest request is taken and the rest are discarded. This value should be between 1 and
-                                3 (or higher if your backend can support very high load)</p>
-                        </span>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Headers passing to backend</label>
-                        <div class="input-group">
-                            <input class="form-control" placeholder="header_name" type="text" required=""
-                                ng-model="input_header">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-success"
-                                    ng-click="addHeaderPassing(endpoint_index,input_header)">
-                                    <i class="fa fa-plus"></i> Add
-                                </button>
-                            </div>
-                        </div>
-                        <span class="help-block">Allowed headers to pass from client to each of the backends. These
-                            headers are not an addition, but a replacement when they are set. Use only if you need
-                            custom headers to pass back but ensure to declare all needed headers (including
-                            <code>Content-Type</code>).</span>
-                        <div class="input-group">
-                            <ul class="list-unstyled">
-                                <li ng-repeat="(index,header) in endpoint.headers_to_pass">
-                                    <a class="badge badge-remove"
-                                        ng-click="deleteHeaderPassing(endpoint_index,index)"><i class="fa fa-times"></i>
-                                        {{ header }}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+
                     <div class="col-md-3">
                         <label>Timeout and Cache TTL</label>
                         <br />
@@ -165,18 +166,7 @@
                             Override default settings for this endpoint.
                         </span>
                     </div>
-                    <div class="col-md-3">
-                        <label>Security headers</label>
-                        <br />
-                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                            data-target="#security-modal-{{ endpoint_index }}"
-                            ng-disabled="!hasMiddleware('security/http')">
-                            <i class="fa fa-wrench"></i> Override defaults
-                        </button>
-                        <span class="help-block">
-                            Override default settings for this endpoint.
-                        </span>
-                    </div>
+
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
@@ -795,25 +785,6 @@
                 <div class="modal-body">
                     <middleware data="endpoint" namespace="'qos/ratelimit/router'"
                         template="ratelimit_router.html">
-                    </middleware>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Window for security in this endpoint-->
-    <div id="security-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Override security headers for <code>{{ endpoint.endpoint }}</code></h4>
-                </div>
-                <div class="modal-body">
-
-                    <middleware template="httpsecure.html" namespace="'security/http'"
-                        ng-if="hasMiddleware('security/http')" data="endpoint"
-                        inherit="service.extra_config['security/http']">
                     </middleware>
                 </div>
             </div>
