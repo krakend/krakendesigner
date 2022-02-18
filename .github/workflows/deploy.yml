@@ -8,9 +8,11 @@ jobs:
         uses: actions/checkout@v2.3.1
 
       - name: Install and Build 🔧
-        run: |
-          npm install
-          npm run-script build
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - run: npm install
+      - run: npm run-script build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
