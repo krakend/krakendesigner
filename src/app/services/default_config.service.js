@@ -3,6 +3,7 @@ angular
     .service("DefaultConfig", function () {
         return {
             service: {
+                $schema: "https://www.krakend.io/schema/v3.json",
                 version: 3,
                 extra_config: {},
                 timeout: '3000ms',

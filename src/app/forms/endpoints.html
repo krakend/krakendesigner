@@ -4,8 +4,8 @@
         <h3 class="box-title">
             <a href="/#!/endpoints?target={{endpoint_index}}">
                 {{ endpoint.endpoint }}
-                <code class="small" ng-if="endpoint.querystring_params.length > 0">
-                    ?<span ng-repeat="qs in endpoint.querystring_params">{{ qs }}=X{{ $last ? '' : '&' }}</span>
+                <code class="small" ng-if="endpoint.input_query_strings.length > 0">
+                    ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
                 </code>
             </a>
         </h3>
@@ -75,11 +75,11 @@
                         </div>
                         <div class="help-block">
                             <ul class="list-inline">
-                                <li ng-repeat="(qs_index,qs) in endpoint.querystring_params">
+                                <li ng-repeat="(qs_index,qs) in endpoint.input_query_strings">
                                     <a class="badge badge-remove" ng-click="deleteQuerystring(qs_index,endpoint_index)"
                                         title="Click to delete parameter"><i class="fa fa-times"></i> {{ qs }} </a>
                                 </li>
-                                <li ng-if="!endpoint.querystring_params.length">No query parameters are active yet.
+                                <li ng-if="!endpoint.input_query_strings.length">No query parameters are active yet.
                                     Typical
                                     parameters are <code>page</code>, <code>limit</code>, <code>search</code>...
                                 </li>
@@ -107,7 +107,7 @@
                             <code>Content-Type</code>).</span>
                         <div class="input-group">
                             <ul class="list-unstyled">
-                                <li ng-repeat="(index,header) in endpoint.headers_to_pass">
+                                <li ng-repeat="(index,header) in endpoint.input_headers">
                                     <a class="badge badge-remove"
                                         ng-click="deleteHeaderPassing(endpoint_index,index)"><i class="fa fa-times"></i>
                                         {{ header }}</a>

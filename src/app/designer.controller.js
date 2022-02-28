@@ -509,32 +509,32 @@ $rootScope.addWhitelist = function (endpoint_index, backend_index) {
 
     $rootScope.addQuerystring = function (endpoint_index) {
 
-        if (typeof $rootScope.service.endpoints[endpoint_index].querystring_params === "undefined") {
-            $rootScope.service.endpoints[endpoint_index].querystring_params = [];
+        if (typeof $rootScope.service.endpoints[endpoint_index].input_query_strings === "undefined") {
+            $rootScope.service.endpoints[endpoint_index].input_query_strings = [];
         }
 
         var term = document.getElementById('addQuerystring_' + endpoint_index).value;
-        if (term.length > 0 && $rootScope.service.endpoints[endpoint_index].querystring_params.indexOf(term) === -1) {
-            $rootScope.service.endpoints[endpoint_index].querystring_params.push(term);
+        if (term.length > 0 && $rootScope.service.endpoints[endpoint_index].input_query_strings.indexOf(term) === -1) {
+            $rootScope.service.endpoints[endpoint_index].input_query_strings.push(term);
         }
     };
 
 
     $rootScope.deleteQuerystring = function (query_index, endpoint_index) {
-        $rootScope.service.endpoints[endpoint_index].querystring_params.splice(query_index, 1);
+        $rootScope.service.endpoints[endpoint_index].input_query_strings.splice(query_index, 1);
     };
 
 
     $rootScope.addHeaderPassing = function (endpoint_index, header) {
-        if (typeof $rootScope.service.endpoints[endpoint_index].headers_to_pass === "undefined") {
-            $rootScope.service.endpoints[endpoint_index].headers_to_pass = [];
+        if (typeof $rootScope.service.endpoints[endpoint_index].input_headers === "undefined") {
+            $rootScope.service.endpoints[endpoint_index].input_headers = [];
         }
 
-        $rootScope.addTermToArray( header, $rootScope.service.endpoints[endpoint_index].headers_to_pass );
+        $rootScope.addTermToArray( header, $rootScope.service.endpoints[endpoint_index].input_headers );
     };
 
     $rootScope.deleteHeaderPassing = function (endpoint_index, header_index) {
-        $rootScope.service.endpoints[endpoint_index].headers_to_pass.splice(header_index,1);
+        $rootScope.service.endpoints[endpoint_index].input_headers.splice(header_index,1);
     };
 
 });
