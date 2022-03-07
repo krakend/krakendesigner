@@ -12,7 +12,7 @@
 		<div class="col-md-6">
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" ng-model="data.extra_config[config_namespace].logStatusChange">
+					<input type="checkbox" ng-model="data.extra_config[config_namespace].log_status_change">
 					<strong>Log when the circuit breaker changes its state</strong>
 				</label>
 				<span class="help-block">Your logger reflects when the circuit changes (open/closed)</span>
@@ -45,10 +45,10 @@
 		<div class="col-md-4">
 			<label class="control-label">Maximum errors</label>
 			<div class="input-group"
-				ng-class="validator.isInteger(data.extra_config[config_namespace].maxErrors) ? '' : 'has-error'">
-				<input class="form-control" ng-model="data.extra_config[config_namespace].maxErrors"
-					id="data.extra_config[config_namespace].maxErrors"
-					name="data.extra_config[config_namespace].maxErrors" type="number">
+				ng-class="validator.isInteger(data.extra_config[config_namespace].max_errors) ? '' : 'has-error'">
+				<input class="form-control" ng-model="data.extra_config[config_namespace].max_errors"
+					id="data.extra_config[config_namespace].max_errors"
+					name="data.extra_config[config_namespace].max_errors" type="number">
 			</div>
 			<span class="help-block">Consecutive failures from the backend to stop sending traffic to it</span>
 		</div>

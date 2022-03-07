@@ -118,7 +118,7 @@ code {
 .btn-success.hover,
 .btn-primary:hover,
 .btn-primary:active,
-.btn-primary.hover 
+.btn-primary.hover
 .btn-primary:hover {
     background-color: #0e57c7;
     border-color: #006cff;
@@ -156,17 +156,11 @@ code {
     color: white;
 
     font-size: 14px;
-    padding-top: 85px;
-    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
-.footer .social {
-    font-size: 30px;
-    padding: 20px 0;
-}
-
-.footer .social a {
-    padding: 0 10px;
+.footer-logo {
+    max-height: 35px;margin-bottom: 5px;
 }
 
 /* KrakenDesigner */

@@ -3,7 +3,8 @@ angular
     .service("DefaultConfig", function () {
         return {
             service: {
-                version: 2,
+                $schema: "https://www.krakend.io/schema/v3.json",
+                version: 3,
                 extra_config: {},
                 timeout: '3000ms',
                 cache_ttl: '300s'
@@ -11,7 +12,7 @@ angular
             // Default middleware config
             extra_config: {
                 // Service level middleware (github_com)
-                'github_com/devopsfaith/krakend-metrics': {
+                'telemetry/metrics': {
                     "collection_time": "60s",
                     "proxy_disabled": false,
                     "router_disabled": false,
@@ -22,7 +23,7 @@ angular
                 'github_com/devopsfaith/krakend-oauth2-clientcredentials': {
                     "endpoint_params": {}
                 },
-                'github_com/devopsfaith/krakend-httpsecure': {
+                'security/http': {
                     "allowed_hosts": [],
                     "ssl_proxy_headers": {}
                 },
@@ -32,14 +33,14 @@ angular
                     "dial_keepalive": "30s",
                     "header_timeout": "1s"
                 },
-                'github_com/devopsfaith/krakend-gologging': {
+                'telemetry/logging': {
                     "level": "ERROR",
                     "prefix": "[KRAKEND]",
                     "syslog": false,
                     "stdout": true,
                     "format": "default"
                 },
-                'github_com/devopsfaith/krakend-cors': {
+                'security/cors': {
                     "allow_origins": [
                         "*"
                       ],
@@ -53,7 +54,7 @@ angular
                         "POST"
                     ]
                 },
-                "github.com/devopsfaith/krakend-amqp/produce": {
+                "backend/amqp/producer": {
                     "exchange":       "some-exchange",
                     "durable":        true,
                     "delete":         false,
@@ -62,7 +63,7 @@ angular
                     "mandatory": true,
                     "immediate": false
                 },
-                "github.com/devopsfaith/krakend-amqp/consume": {
+                "backend/amqp/consumer": {
                     "name":           "queue-1",
                     "exchange":       "some-exchange",
                     "durable":        true,
@@ -73,24 +74,29 @@ angular
                     "routing_key":    ["#"],
                     "prefetch_count": 10
                 },
+                "backend/graphql": {
+                    "type": "query",
+                    "operationName": "addMktPreferencesForUser",
+                    "variables":      {}
+                },
                 // // Endpoint level middleware (github.com)
-                'github.com/devopsfaith/krakend-ratelimit/juju/router': {
-                    "maxRate": 0,
-                    "clientMaxRate": 0,
+                'qos/ratelimit/router': {
+                    "max_rate": 0,
+                    "client_max_rate": 0,
                     "strategy": "ip"
                 },
-                'github.com/devopsfaith/krakend-jose/signer': {
+                'auth/signer': {
                     "alg": "HS256"
                 },
-                'github.com/devopsfaith/krakend-jose/validator': {
+                'auth/validator': {
                     "alg": "HS256"
                 },
-                'github.com/devopsfaith/krakend-circuitbreaker/gobreaker': {
+                'qos/circuit-breaker': {
                     "interval": 60,
                     "name": "circuit-breaker-1",
                     "timeout": 10,
-                    "maxErrors": 1,
-                    "logStatusChange": true
+                    "max_errors": 1,
+                    "log_status_change": true
                 }
             }
         };
