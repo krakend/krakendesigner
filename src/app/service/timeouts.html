@@ -12,7 +12,6 @@
       name="service.timeout"
       ng-model="service.timeout"
       placeholder="3000ms"
-      ng-init="service.timeout='3000ms'"
       type="text">
       <div class="help-block">
         <p ng-hide="isValidTimeUnit(service.timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
@@ -25,8 +24,7 @@
       <input
       class="form-control"
       ng-model="service.cache_ttl" type="text"
-      placeholder="300"
-      ng-init="service.cache_ttl='300s'">
+      placeholder="300">
       <div class="help-block">
         <p ng-hide="isValidTimeUnit(service.cache_ttl)" ng-include src="'/src/app/forms/time_units.html'"></p>
         <p ng-hide="isInteger(service.cache_ttl)">Value must be an integer expressing the number of seconds</p>

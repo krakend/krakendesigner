@@ -24,17 +24,29 @@
                 </div>
                 <div class="col-md-6">
                     <label>JWK URI</label>
-                    <input type="text" ng-model="data.extra_config[config_namespace]['jwk-url']" class="form-control" />
+                    <input type="text" ng-model="data.extra_config[config_namespace]['jwk_url']" class="form-control" />
                     <span class="help-block">The URL to your JWK endpoint with the set of public keys used to verify the
                         authenticity of JWT</span>
                 </div>
-                
             </div>
             <div class="form-group">
                 <div class="col-md-4">
                     <label>Scopes to validate</label>
-                    <input type="text" ng-model="data.extra_config[config_namespace]['scopes']" class="form-control" />
-                    <span class="help-block">List of all (or any) scopes that the user should have to access this endpoint. Space separated.</span>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="" type="text" required="" ng-model="input_key">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_key,'scopes')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="help-block">List of all (or any) scopes that the user should have to access this endpoint.</span>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(index,key) in data.extra_config[config_namespace]['scopes']">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'scopes')"><i class="fa fa-times"></i>
+                                {{ key }}</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-md-2">
                     <label>Matcher</label>
@@ -100,13 +112,26 @@
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Roles Key</label>
-                    <input type="text" ng-model="data.extra_config[config_namespace].roles_key" placeholder="roles" class="form-control" />
-                    <span class="help-block">Keyname where the roles are stored</span>
+                    <input type="text" ng-model="data.extra_config[config_namespace].roles_key" placeholder="roles"
+                        class="form-control" />
+                    <span class="help-block">Key name where the roles are stored</span>
                 </div>
                 <div class="col-md-6">
                     <label>Cookie name</label>
                     <input type="text" ng-model="data.extra_config[config_namespace].cookie_key" class="form-control" />
                     <span class="help-block">The key name of the cookie </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <div class="col-md-12">
+                        <label>
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].roles_key_is_nested">
+                            <strong>Roles key is nested</strong>
+                        </label>
+                        <span class="help-block">If the roles key is using a nested object using the <code>.</code> dot
+                            notation, must be checked in order to traverse the object.</span>
+                    </div>
                 </div>
             </div>
             <div class="form-group">

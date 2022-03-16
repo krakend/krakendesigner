@@ -10,17 +10,17 @@
                 <div class="form-group">
                     <label class="control-label">Whitelist</label>
                     <div class="input-group">
-                        <input class="form-control" placeholder="MyAndroidClient/1.0" type="text" required="" ng-model="input_whitelist">
+                        <input class="form-control" placeholder="MyAndroidClient/1.0" type="text" required="" ng-model="input_allow">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_whitelist,'whitelist')">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_allow,'allow')">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
                     <span class="help-block">An array with EXACT MATCHES of trusted user agents that can connect.</span>
                     <ul class="list-inline">
-                        <li ng-repeat="(index,val) in data.extra_config[config_namespace].whitelist">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'whitelist')"><i class="fa fa-times"></i>
+                        <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow')"><i class="fa fa-times"></i>
                                 {{ val }}</a>
                         </li>
                     </ul>
@@ -30,17 +30,17 @@
                     <div class="form-group">
                         <label class="control-label">Blacklist</label>
                         <div class="input-group">
-                            <input class="form-control" placeholder="axios/0.17.1" type="text" required="" ng-model="input_blacklist">
+                            <input class="form-control" placeholder="axios/0.17.1" type="text" required="" ng-model="input_deny">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-success" ng-click="addTermToList(input_blacklist,'blacklist')">
+                                <button type="button" class="btn btn-success" ng-click="addTermToList(input_deny,'deny')">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
                         <span class="help-block">An array of EXACT MATCHES of undesired bots, to reject immediately.</span>
                         <ul class="list-inline">
-                            <li ng-repeat="(index,val) in data.extra_config[config_namespace].blacklist">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'blacklist')"><i class="fa fa-times"></i>
+                            <li ng-repeat="(index,val) in data.extra_config[config_namespace].deny">
+                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'deny')"><i class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>
                         </ul>
@@ -72,9 +72,9 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group" ng-class="validator.isInteger(data.extra_config[config_namespace].cacheSize) ? '' : 'has-error'">
+                <div class="form-group" ng-class="validator.isInteger(data.extra_config[config_namespace].cache_size) ? '' : 'has-error'">
                     <label class="control-label">Cache size</label>
-                    <input type="number" class="form-control" ng-model="data.extra_config[config_namespace].cacheSize" placeholder="1000" ng-init="data.extra_config[config_namespace].cacheSize = 0">
+                    <input type="number" class="form-control" ng-model="data.extra_config[config_namespace].cache_size" placeholder="1000">
                     <div class="help-block">
                         Number of user agents cached to speed up repetitive bot detection. Use <code>0</code> for no cache.
                     </div>

@@ -51,7 +51,7 @@ angular
       }
 
       scope.isMiddlewareEnabled = function() {
-        return !( 'undefined' === typeof scope.data.extra_config[NAMESPACE] );
+        return !( 'undefined' === typeof scope.data.extra_config || 'undefined' === typeof scope.data.extra_config[NAMESPACE] );
       }
 
       scope.addKeyPair = function (key, value, in_object = false) {
