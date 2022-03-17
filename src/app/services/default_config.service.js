@@ -20,18 +20,12 @@ angular
                     "endpoint_disabled": false,
                     "listen_address": ":8090"
                 },
-                'github_com/devopsfaith/krakend-oauth2-clientcredentials': {
+                'auth/client-credentials': {
                     "endpoint_params": {}
                 },
                 'security/http': {
                     "allowed_hosts": [],
                     "ssl_proxy_headers": {}
-                },
-                'github_com/devopsfaith/krakend-etcd': {
-                    "machines": [],
-                    "dial_timeout": "5s",
-                    "dial_keepalive": "30s",
-                    "header_timeout": "1s"
                 },
                 'telemetry/logging': {
                     "level": "ERROR",
@@ -54,16 +48,12 @@ angular
                         "POST"
                     ]
                 },
-<<<<<<< HEAD
-                'github_com/devopsfaith/krakend-instana': {
+                'telemetry/instana': {
                     "AgentHost": "localhost",
                     "AgentPort": 46999,
                     "Service": "krakend"
                 },
-                "github.com/devopsfaith/krakend-amqp/produce": {
-=======
                 "backend/amqp/producer": {
->>>>>>> master
                     "exchange":       "some-exchange",
                     "durable":        true,
                     "delete":         false,

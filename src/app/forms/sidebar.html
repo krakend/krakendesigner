@@ -1,65 +1,55 @@
 <!-- Sidebar Menu -->
 <ul class="sidebar-menu" data-widget="tree" data-accordion="false" data-followLink="true">
     <li class="header">KrakenDesigner</li>
-    <li class="active">
-        <a href="/#!/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+    <li class="header">
+        <button id="download" name="download" class="btn btn-primary btn-lg pull-right" style="margin-bottom:10px" ng-click="save()">
+        <i class="fa fa-save"></i> Download config
+      </button>
     </li>
-    <li>
-        <a href="/#!/service"><i class="fa fa-wrench"></i> <span>Service configuration</span>
-            <span ng-if="sd_providers.hosts.length === 0 || !sd_providers.hosts" class="pull-right-container" data-toggle="tooltip"
-                  data-original-title="No backends configured yet!">
-                    <i class="fa fa-warning pull-right icon-warning"></i>
+    <li class="active">
+        <a href="/#!/"><i class="fa fa-dashboard"></i> <span>Dashboard</span>
+            <span ng-if="sd_providers.hosts.length === 0 || !sd_providers.hosts" class="pull-right-container"
+                data-toggle="tooltip" data-original-title="No backends configured yet!">
+                <i class="fa fa-warning pull-right icon-warning"></i>
             </span>
         </a>
     </li>
-    <li>
-        <a href="/#!/service-discovery"><i class="fa fa-connectdevelop"></i> <span>Service Discovery and hosts</span></a>
-    </li>
     <li class="treeview">
-        <a href="/#!/endpoints"><i class="fa fa-gear"></i> <span>Endpoints</span>
-        <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-        </span>
+        <a href="/#!/service"><i class="fa fa-wrench"></i> <span>Service configuration</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
         </a>
         <ul class="treeview-menu">
-            <li class="{{ selected_endpoint == endpoint_index ? 'active' : ''}}" ng-repeat="(endpoint_index,endpoint) in service.endpoints">
+            <li><a href="/#!/service"><i class="fa fa-gear"></i>Common settings</a></li>
+            <li><a href="/#!/security"><i class="fa fa-shield"></i>HTTP Security</a></li>
+            <li><a href="/#!/logging"><i class="fa fa-area-chart"></i> <span>Observability</span></a>
+            <li><a href="/#!/service-discovery"><i class="fa fa-connectdevelop"></i> <span>Service Discovery and hosts</span></a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="/#!/endpoints"><i class="fa fa-gear"></i> <span>Endpoints</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="/#!/endpoints" ng-click="addEndpoint()"><i class="fa fa-plus"></i> Add endpoint</a>
+            </li>
+            <li class="{{ selected_endpoint == endpoint_index ? 'active' : ''}}"
+                ng-repeat="(endpoint_index,endpoint) in service.endpoints">
                 <a href="/#!/endpoints?target={{endpoint_index}}" title="Edit {{endpoint.endpoint}}">
-                    <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{ endpoint.method.length ? endpoint.method : 'GET' }}</span><span class="method_path" title="{{ endpoint.endpoint }}">{{ endpoint.endpoint }}</span><span class="pull-right-container">
+                    <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{
+                        endpoint.method.length ? endpoint.method : 'GET' }}</span><span class="method_path"
+                        title="{{ endpoint.endpoint }}">{{ endpoint.endpoint }}</span><span
+                        class="pull-right-container">
                         <i class="fa fa-edit pull-right"></i>
                     </span>
                 </a>
             </li>
-            <li>
-                <a href="/#!/endpoints" ng-click="addEndpoint()"><i class="fa fa-plus"></i> Add endpoint</a>
-            </li>
-
         </ul>
-    </li>
-    <li class="treeview">
-        <a><i class="fa fa-shield"></i> <span>Security options</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="/#!/oauth"><i class="fa fa-user-secret"></i>OAuth</a></li>
-            <li><a href="/#!/security"><i class="fa fa-key"></i>Security headers</a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="/#!/logging"><i class="fa fa-area-chart"></i> <span>Observability</span></a>
-    </li>
-    <li><a href="https://www.krakend.io/docs/overview/introduction"><i class="fa fa-book"></i> <span>Documentation</span></a>
-    </li>
-</ul>
-
-<hr/>
-
-<ul class="sidebar-menu">
-    <li>
-        <a  ng-click="save()"
-            data-toggle="tooltip"
-            data-original-title="Save configuration!"><i class="fa fa-save"></i> <span>Save</span>
-        </a>
     </li>
 </ul>

@@ -1,6 +1,6 @@
 <div class="box box-success">
     <div class="box-header with-border">
-        <h3 class="box-title">Available hosts</h3>
+        <h3 class="box-title">Hosts (Upstream services or backends)</h3>
         <div class="pull-right">
             <span ng-if="sd_providers.hosts.length === 0 || !sd_providers.hosts" class="pull-right-container" data-toggle="tooltip" data-original-title="The service needs at least 1 host to work">
                 <i class="fa fa-warning pull-right icon-warning"></i>
@@ -8,8 +8,7 @@
         </div>
     </div>
     <div class="box-body">
-        <p>Add here all the addresses used by KrakenD to retrieve the data and if they are resolved by a <strong>service discovery</strong>:</p>
-
+        <p>Add here all the <strong>default hosts</strong> used by KrakenD to retrieve the data and if they are resolved by statically (95% cases) or using a <strong>service discovery</strong> integration:</p>
         <div class="col-sm-6 form-group">
             <div class="radio">
                 <label>
@@ -17,12 +16,14 @@
                     Static address resolution
                 </label>
             </div>
-            <div class="radio">
-                <label>
-                  <input type="radio" ng-model="sd_type" value="dns" ng-change="disable_host_sanitize=(sd_type!='static')">
-                  DNS SRV (e.g: k8s)
-              </label>
-            </div>
+      </div>
+      <div class="col-sm-6 form-group">
+        <div class="radio">
+            <label>
+              <input type="radio" ng-model="sd_type" value="dns" ng-change="disable_host_sanitize=(sd_type!='static')">
+              DNS SRV (e.g: k8s)
+          </label>
+        </div>
       </div>
 <div class="col-sm-12 form-group">
     <div class="input-group">

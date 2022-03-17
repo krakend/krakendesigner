@@ -5,33 +5,46 @@
   <!-- /.box-header -->
   <div class="box-body">
     <div class="form-group">
-      <label class="control-label">Output encoding</label>
+      <label class="control-label">Default output encoding</label>
       <div class="input-group">
-        <select class="form-control"
-          ng-model="service.output_encoding"
-          id="service.output_encoding"
-          name="service.output_encoding"
-          ng-init="service.output_encoding='json'">
+        <select class="form-control" ng-model="service.output_encoding" id="service.output_encoding"
+          name="service.output_encoding" ng-init="service.output_encoding='json'">
           <option value="json">JSON</option>
           <option value="negotiate">Negotiate content</option>
           <option value="string">String (text/plain)</option>
           <option value="no-op">No-op (just proxy)</option>
         </select>
         <div class="help-block">
-          <p>Render register used <strong>by default</strong> to encode the output of KrakenD endpoints. You can change this setting later per endpoint.</p>
+          <p>Encoding used <strong>by default</strong> in all KrakenD endpoints unless changed per endpoint.</p>
         </div>
       </div>
-      <div class="checkbox">
+      <div class="form-group">
+        <div class="checkbox">
           <label for="service.disable_rest">
-            <input type="checkbox"
-            id="service.disable_rest"
-            name="service.disable_rest"
-            ng-model="service.disable_rest">
+            <input type="checkbox" id="service.disable_rest" name="service.disable_rest"
+              ng-model="service.disable_rest">
             <strong>Allow non-RESTful resource naming</strong>
           </label>
           <div class="help-block">
-            <p>By default KrakenD only works with RESTful URL patterns against backends. Enable this option if backends aren't RESTful, e.g.: <code>/url.{some_variable}.json</code></p>
+            <p>By default KrakenD only works with RESTful URL patterns against backends. Enable this option if backends
+              aren't RESTful, e.g.: <code>/url.{some_variable}.json</code></p>
           </div>
+        </div>
       </div>
+      <div class="form-group">
+        <div class="checkbox">
+          <label for="service.sequential_start">
+            <input type="checkbox" id="service.sequential_start" name="service.sequential_start"
+              ng-model="service.sequential_start">
+            <strong>Start the server sequentially</strong>
+          </label>
+          <div class="help-block">
+            <p>A sequential start registers all endpoints and async agents in order when you run the server, allowing
+              you to read the starting logs chronologically. The startup speed depends on the number of endpoints and
+              agents to register and the number of CPUs. A non-sequential start (default) is much faster, but logs are
+              not in order. Avoid using sequential start with thousands of endpoints. Defaults to false.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>

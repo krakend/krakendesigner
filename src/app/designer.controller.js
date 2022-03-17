@@ -186,8 +186,16 @@ angular
     }
     $rootScope.addHost = function (host, sd_type, disable_host_sanitize) {
 
+        if ( 'undefined' === typeof host) {
+            return false;
+        }
+
         if ( 'undefined' === typeof disable_host_sanitize) {
             disable_host_sanitize = false;
+        }
+
+        if ( 'undefined' === typeof sd_type) {
+            sd_type = 'static';
         }
 
         if (typeof $rootScope.sd_providers === "undefined") {

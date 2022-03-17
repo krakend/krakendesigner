@@ -26,10 +26,6 @@
                 templateUrl: '/src/app/forms/endpoints.html',
                 controller: 'KrakenDesignerController'
             })
-            .when('/oauth', {
-                templateUrl: '/src/app/forms/oauth.html',
-                controller: 'KrakenDesignerController'
-            })
             .when('/security', {
                 templateUrl: '/src/app/forms/security.html',
                 controller: 'KrakenDesignerController'
