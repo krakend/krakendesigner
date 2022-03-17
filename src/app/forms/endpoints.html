@@ -7,6 +7,8 @@
                 <code class="small" ng-if="endpoint.input_query_strings.length > 0">
                     ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
                 </code>
+                <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-warning"><i class="fa fa-asterisk"></i>
+                    Wildcard</span>
             </a>
         </h3>
 
@@ -27,15 +29,23 @@
         <form class="form-horizontal" novalidate>
             <fieldset>
                 <div ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'has-error'" class="form-group form-group-lg">
-                    <div class="col-md-8 col-sm-6">
+                    <div class="col-md-6 col-sm-6">
                         <label>KrakenD Endpoint</label>
                         <input type="text" placeholder="/users/{username}" class="form-control input-md" required=""
-                            ng-model="endpoint.endpoint">
+                            ng-model="endpoint.endpoint" ng-disabled="hasWildcard(endpoint.endpoint)">
                         <span class="help-block">This is the URI your clients will connect to. Must start with slash.
                             Use curly braces to insert <code>{parameters}</code> that can be passed to the
                             backends.</span>
                     </div>
-                    <div class="col-md-2 col-sm-4">
+                    <div class="col-md-2 col-sm-2">
+                        <label>Wildcard <span class="badge">Enterprise</span></label>
+                        <div class="form-control">
+                            <input type="checkbox" ng-model="custom_cipher" ng-checked="hasWildcard(endpoint.endpoint)"
+                            ng-click="toggleWildcard(endpoint.endpoint, endpoint_index)"> Enable
+                        </div>
+                        <span class="help-block">Mark if your endpoint is a wildcard definition. Remove to edit the endpoint name</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
                         <label>Method</label>
                         <select id="endpoint.method" ng-model="endpoint.method" name="endpoint.method"
                             class="form-control"
@@ -97,7 +107,7 @@
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-success"
                                     ng-click="addHeaderPassing(endpoint_index,input_header)">
-                                    <i class="fa fa-plus"></i> Add
+                                    <i class="fa fa-plus"></i> Add header
                                 </button>
                             </div>
                         </div>

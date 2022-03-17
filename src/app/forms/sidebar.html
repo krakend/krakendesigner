@@ -1,6 +1,5 @@
 <!-- Sidebar Menu -->
 <ul class="sidebar-menu" data-widget="tree" data-accordion="false" data-followLink="true">
-    <li class="header">KrakenDesigner</li>
     <li class="header">
         <button id="download" name="download" class="btn btn-primary btn-lg pull-right" style="margin-bottom:10px" ng-click="save()">
         <i class="fa fa-save"></i> Download config
@@ -52,4 +51,5 @@
             </li>
         </ul>
     </li>
+    <li ng-if="service.plugin"><a><i class="fa fa-plug" style="color:green"></i> Uses plugins</a></li>
 </ul>

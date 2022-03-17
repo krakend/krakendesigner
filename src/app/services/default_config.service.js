@@ -5,9 +5,15 @@ angular
             service: {
                 $schema: "https://www.krakend.io/schema/v3.json",
                 version: 3,
+                name: 'My gateway',
                 extra_config: {},
                 timeout: '3000ms',
                 cache_ttl: '300s'
+            },
+            // Default plugin
+            plugin: {
+                "pattern":".so",
+                "folder": "/opt/krakend/plugins/"
             },
             // Default middleware config
             extra_config: {
