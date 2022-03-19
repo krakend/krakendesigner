@@ -103,6 +103,12 @@ angular
                     "max_errors": 1,
                     "log_status_change": true
                 }
+            },
+            "plugin/http-server": {
+                "krakend-static-live": {
+                    "prefix": "/media/assets",
+                    "path": "./../../"
+                }
             }
         };
     });

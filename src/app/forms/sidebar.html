@@ -20,7 +20,7 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="/#!/service"><i class="fa fa-gear"></i>Common settings</a></li>
+            <li><a href="/#!/service"><i class="fa fa-gear"></i>Service settings</a></li>
             <li><a href="/#!/security"><i class="fa fa-shield"></i>HTTP Security</a></li>
             <li><a href="/#!/logging"><i class="fa fa-area-chart"></i> <span>Observability</span></a>
             <li><a href="/#!/service-discovery"><i class="fa fa-connectdevelop"></i> <span>Service Discovery and hosts</span></a>
@@ -38,18 +38,18 @@
             <li>
                 <a href="/#!/endpoints" ng-click="addEndpoint()"><i class="fa fa-plus"></i> Add endpoint</a>
             </li>
+            <li>
+                <a href="/#!/endpoints" ng-click="addHttpServerPlugin('krakend-static-live')"><i class="fa fa-image"></i> Add static path</a>
+            </li>
             <li class="{{ selected_endpoint == endpoint_index ? 'active' : ''}}"
                 ng-repeat="(endpoint_index,endpoint) in service.endpoints">
                 <a href="/#!/endpoints?target={{endpoint_index}}" title="Edit {{endpoint.endpoint}}">
-                    <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{
+                    <span class="badge method_header method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{
                         endpoint.method.length ? endpoint.method : 'GET' }}</span><span class="method_path"
-                        title="{{ endpoint.endpoint }}">{{ endpoint.endpoint }}</span><span
-                        class="pull-right-container">
-                        <i class="fa fa-edit pull-right"></i>
+                        title="{{ endpoint.endpoint }}">{{ endpoint.endpoint }}</span>
                     </span>
                 </a>
             </li>
         </ul>
     </li>
-    <li ng-if="service.plugin"><a><i class="fa fa-plug" style="color:green"></i> Uses plugins</a></li>
 </ul>

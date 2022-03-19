@@ -168,7 +168,8 @@ code {
     padding:1rem;
 }
 .method_header {
-    width: 6rem;
+    width: 55px;
+    font-size: 12px;
 }
 .method_GET {
     background-color: #00a65a;

@@ -160,9 +160,16 @@ angular
 
             // Add the configuration key of the plugin (other values might exist)
             if ('undefined' === typeof $rootScope.service.extra_config['plugin/http-server'][name]) {
-                $rootScope.service.extra_config['plugin/http-server'][name] = {};
+                if ( 'undefined' === typeof DefaultConfig['plugin/http-server'][name] ) {
+                    // No defaults exist
+                    $rootScope.service.extra_config['plugin/http-server'][name] = {};
+                } else {
+                    // Default values for the plugin
+                    $rootScope.service.extra_config['plugin/http-server'][name] = DefaultConfig['plugin/http-server'][name];
+                }
             }
-        }
+        };
+
         // Unused yet
         // $rootScope.togglePluginServer = function (name) {
         //     if ($rootScope.hasHttpServerPlugin(name)) {
@@ -224,7 +231,6 @@ angular
 
             }
         }
-
 
         // Destroy middleware or create it with default data:
         $rootScope.toggleMiddleware = function (namespace) {
@@ -518,7 +524,7 @@ angular
                     }
                 }
             }
-        }
+        };
 
 
 
@@ -567,7 +573,7 @@ angular
                 'undefined' !== typeof $rootScope.service.endpoints[endpoint_index].backend[backend_index].host
                 && $rootScope.service.endpoints[endpoint_index].backend[backend_index].host.includes(host)
             );
-        }
+        };
 
         $rootScope.toggleCaching = function ($event, endpoint_index, backend_index) {
             if ($event.target.checked) {
@@ -576,7 +582,7 @@ angular
             } else {
                 delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['qos/http-cache'];
             }
-        }
+        };
 
         $rootScope.deleteBackendQuery = function (endpoint_index, backend_index, message) {
             if (confirm(message)) {

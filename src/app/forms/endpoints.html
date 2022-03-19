@@ -1,3 +1,29 @@
+<div class="box box-primary" ng-if="service.extra_config['plugin/http-server']['krakend-static-live']">
+    <div class="box-header with-border">
+        <h3 class="box-title">Static files <span class="badge ">Enterprise</span></h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" ng-click="deleteHttpServerPlugin('krakend-static-live')">
+                <i class="fa fa-trash"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="col-md-6">
+                <label>URL</label>
+                <input type="text" placeholder="" class="form-control"
+                    ng-model="service.extra_config['plugin/http-server']['krakend-static-live'].prefix" />
+                    <span class="help-block">This is the beginning of all URLs that are resolved using this plugin. All matching URLs won't be evaluated as endpoints. Make sure you are not overwriting valid endpoints.</span>
+            </div>
+            <div class="col-md-6">
+                <label>Filesystem path</label>
+                <input type="text" placeholder="" class="form-control"
+                    ng-model="service.extra_config['plugin/http-server']['krakend-static-live'].path" />
+                    <span class="help-block">The path in the filesystem containing the static files. Relative to the working dir or absolute.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="box box-primary" ng-repeat="(endpoint_index,endpoint) in service.endpoints"
     ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'" id="e{{ endpoint_index }}">
     <div class="box-header with-border">
@@ -7,7 +33,8 @@
                 <code class="small" ng-if="endpoint.input_query_strings.length > 0">
                     ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
                 </code>
-                <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-warning"><i class="fa fa-asterisk"></i>
+                <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-warning"><i
+                        class="fa fa-asterisk"></i>
                     Wildcard</span>
             </a>
         </h3>
@@ -41,9 +68,10 @@
                         <label>Wildcard <span class="badge">Enterprise</span></label>
                         <div class="form-control">
                             <input type="checkbox" ng-model="custom_cipher" ng-checked="hasWildcard(endpoint.endpoint)"
-                            ng-click="toggleWildcard(endpoint.endpoint, endpoint_index)"> Enable
+                                ng-click="toggleWildcard(endpoint.endpoint, endpoint_index)"> Enable
                         </div>
-                        <span class="help-block">Mark if your endpoint is a wildcard definition. Remove to edit the endpoint name</span>
+                        <span class="help-block">Mark if your endpoint is a wildcard definition. Remove to edit the
+                            endpoint name</span>
                     </div>
                     <div class="col-md-2 col-sm-2">
                         <label>Method</label>

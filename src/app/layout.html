@@ -75,7 +75,9 @@
 
       <div class="content-wrapper">
         <section class="content-header">
-          <h1 ng-bind="service.name"></h1>
+          <h1><a href="/#!/service">{{service.name}}</a>
+            <small ng-if="service.plugin">(<i class="fa fa-plug" style="color:green"></i> Uses Enterprise or custom plugins)</small>
+          </h1>
         </section>
         <section class="content">
           <div class="row">
