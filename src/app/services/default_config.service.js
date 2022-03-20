@@ -17,7 +17,6 @@ angular
             },
             // Default middleware config
             extra_config: {
-                // Service level middleware (github_com)
                 'telemetry/metrics': {
                     "collection_time": "60s",
                     "proxy_disabled": false,
@@ -107,7 +106,7 @@ angular
             "plugin/http-server": {
                 "krakend-static-live": {
                     "prefix": "/media/assets",
-                    "path": "./../../"
+                    "path": "/var/www/static"
                 }
             }
         };

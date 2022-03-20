@@ -13,6 +13,19 @@ angular
         $rootScope.constants = Constants;
         $rootScope.selected_endpoint = ('undefined' === typeof ($location.search()).target ? false : ($location.search()).target);
 
+        // Returns the object or null when unset.
+        // e.g.: firstEndpoint = $rootScope.getObject("service", "endpoints", 0);
+        $rootScope.getObject = function (args) {
+            obj = $rootScope;
+            for (var i = 0; obj && i < arguments.length; ++i) {
+                if ('undefined' === typeof obj[arguments[i]]) {
+                    return null;
+                }
+                obj = obj[arguments[i]]
+            }
+            return obj;
+        };
+
         $rootScope.save = function () {
             if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
                 alert("At least you need to define an endpoint");
@@ -129,12 +142,44 @@ angular
             }
         }
 
+        // Deletes the plugin entry if there are no other elements using it.
+        $rootScope.deletePluginEntryWhenSafe = function () {
+            // Has plugin entry
+            if ($rootScope.getObject("service", "plugin")) {
+                // Has server plugins
+                if ($rootScope.getObject("service", "extra_config", "plugin/http-server")) {
+                    return false;
+                }
+
+                // Has endpoints with plugins:
+                if (endpoints = $rootScope.getObject("service", "endpoints")) {
+                    for (var e = 0; e < endpoints.length; e++) {
+                        if ($rootScope.getObject(endpoints[e], "extra_config", 'plugin/request-modifier') ||
+                            $rootScope.getObject(endpoints[e], "extra_config", 'plugin/response-modifier')) {
+                            return false;
+                        }
+                        // Has backends with plugins
+                        if (backends = $rootScope.getObject(endpoints[e], "backend")) {
+                            for (var b = 0; b < backends.length; b++) {
+                                if ($rootScope.getObject(backends[b], "extra_config", 'plugin/http-client') ||
+                                    $rootScope.getObject(backends[b], "extra_config", 'plugin/request-modifier') ||
+                                    $rootScope.getObject(backends[b], "extra_config", 'plugin/response-modifier')) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+                // No plugins found elsewhere
+                delete $rootScope.service.plugin;
+            }
+
+            return true;
+        };
+
         $rootScope.hasHttpServerPlugin = function (name) {
-            return (
-                $rootScope.hasServiceExtraConfig('plugin/http-server') &&
-                'undefined' !== typeof $rootScope.service.extra_config['plugin/http-server'].name &&
-                -1 !== $rootScope.service.extra_config['plugin/http-server'].name.indexOf(name)
-            );
+            plugins = $rootScope.getObject("service", "extra_config", "plugin/http-server", "name");
+            return (plugins && -1 !== plugins.indexOf(name));
         }
 
         $rootScope.addHttpServerPlugin = function (name) {
@@ -160,7 +205,7 @@ angular
 
             // Add the configuration key of the plugin (other values might exist)
             if ('undefined' === typeof $rootScope.service.extra_config['plugin/http-server'][name]) {
-                if ( 'undefined' === typeof DefaultConfig['plugin/http-server'][name] ) {
+                if ('undefined' === typeof DefaultConfig['plugin/http-server'][name]) {
                     // No defaults exist
                     $rootScope.service.extra_config['plugin/http-server'][name] = {};
                 } else {
@@ -179,6 +224,8 @@ angular
         //     }
         // }
 
+
+
         $rootScope.deleteHttpServerPlugin = function (name) {
             // Delete plugin from "name" list:
             index = $rootScope.service.extra_config['plugin/http-server'].name.indexOf(name);
@@ -190,18 +237,16 @@ angular
             // Delete all http-server plugins if it's the last
             if (0 == $rootScope.service.extra_config['plugin/http-server'].name.length) {
                 delete $rootScope.service.extra_config['plugin/http-server'];
+                $rootScope.deletePluginEntryWhenSafe();
             }
 
             // TODO: Scan configuration for other types of plugin, and if none, remove the "plugins" entry
         }
 
-
-
         $rootScope.hasWildcard = function (endpoint) {
             return (
                 $rootScope.hasHttpServerPlugin('wildcard') &&
-                'undefined' !== typeof $rootScope.service.extra_config['plugin/http-server']['wildcard'] &&
-                'undefined' !== typeof $rootScope.service.extra_config['plugin/http-server']['wildcard'][endpoint]
+                null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "wildcard", endpoint)
             );
         }
 
@@ -212,7 +257,7 @@ angular
                 delete $rootScope.service.extra_config['plugin/http-server']['wildcard'][endpoint]
 
                 // Remove special header
-                if ("undefined" !== typeof $rootScope.service.endpoints[endpoint_index].input_headers) {
+                if ( $rootScope.getObject("service","endpoints",endpoint_index, "input_headers") ) {
                     header_idx = $rootScope.service.endpoints[endpoint_index].input_headers.indexOf(WILDCARD_HEADER);
                     if (-1 !== header_idx) {
                         $rootScope.deleteHeaderPassing(endpoint_index, header_idx);
@@ -449,9 +494,9 @@ angular
             });
         };
 
-        // Valid endpoints start with Slash and do not contain /__debug[/]
+        // Valid endpoints start with Slash and do not contain /__debug[/] or /__health
         $rootScope.isValidEndpoint = function (endpoint) {
-            return !(/^[^\/]|\/__debug(\/.*)?$|\/favicon\.ico/i.test(endpoint));
+            return !(/^[^\/]|\/__debug(\/.*)?$|\/__health$|\/favicon\.ico/i.test(endpoint));
         };
 
         $rootScope.isValidTimeUnit = function (time_with_unit) {
