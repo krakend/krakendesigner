@@ -27,16 +27,31 @@ angular
         };
 
         $rootScope.save = function () {
-            if ('undefined' === typeof $rootScope.service.endpoints || $rootScope.service.endpoints.length < 1) {
-                alert("At least you need to define an endpoint");
-                return false;
-            }
-
             $rootScope.fixCipherSuitesType('auth/signer', false);
             $rootScope.fixCipherSuitesType('auth/validator', false);
 
+            // Make a copy of the service and clean it, do not modify rootScope!
+            save = $rootScope.service
+
+            // Delete empty extra config:
+            extra_config = $rootScope.getObject("service", "extra_config");
+            if ( extra_config && 0 === Object.keys(extra_config).length) {
+                delete save.extra_config;
+            }
+
+            // Delete empty endpoint extra config:
+            endpoints = $rootScope.getObject("service", "endpoints");
+            if ( endpoints ) {
+                for ( i=0; i < endpoints.length; i++) {
+                    endpoint_extra_config = $rootScope.getObject("service", "endpoints", i, "extra_config" );
+                    if ( endpoint_extra_config && 0 === Object.keys(endpoint_extra_config).length ) {
+                        delete save.endpoints[i].extra_config;
+                    }
+                }
+            }
+
             var date = new Date().getTime();
-            downloadDocument(date + "-krakend.json", angular.toJson($rootScope.service, true)); // Beautify
+            downloadDocument(date + "-krakend.json", angular.toJson(save, true)); // Beautify
             $rootScope.saved_once = true;
         };
 
@@ -478,17 +493,17 @@ angular
 
         $rootScope.addEndpoint = function () {
 
-            if (typeof $rootScope.sd_providers === "undefined" || typeof $rootScope.sd_providers.hosts === "undefined" || 1 < $rootScope.service.length) {
-                alert("You need to add at least one host in the Service Configuration or Service Discovery panels.");
-                return false;
-            }
+            //if (typeof $rootScope.sd_providers === "undefined" || typeof $rootScope.sd_providers.hosts === "undefined" || 1 < $rootScope.service.length) {
+            //    alert("You need to add at least one host in the Service Configuration or Service Discovery panels.");
+            //    return false;
+            //}
 
             if (typeof $rootScope.service.endpoints === "undefined") {
                 $rootScope.service.endpoints = [];
             }
 
             $rootScope.service.endpoints.push({
-                "endpoint": "/v1/new-endpoint",
+                "endpoint": "/v1/new-endpoint/" + new Date().getTime(),
                 "method": "GET",
                 "output_encoding": (typeof $rootScope.service.output_encoding === undefined ? "json" : $rootScope.service.output_encoding)
             });
