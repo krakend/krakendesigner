@@ -76,7 +76,8 @@
       <div class="content-wrapper">
         <section class="content-header">
           <h1><a href="/#!/service">{{service.name}}</a>
-            <small ng-if="service.plugin">(<i class="fa fa-plug" style="color:green"></i> Uses Enterprise or custom plugins)</small>
+            <a ng-if="service.plugin" class="badge" data-toggle="modal"
+              data-target="#enterprise-needed-modal">Enterprise Edition ?</a>
           </h1>
         </section>
         <section class="content">
@@ -86,6 +87,32 @@
             </section>
           </div>
         </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="enterprise-needed-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">You have added KrakenD Enterprise features
+          </h4>
+        </div>
+        <div class="modal-body">
+
+          <p>KrakenD Designer allows you to edit KrakenD configuration files for the <strong>Community Edition</strong> and the <a
+              href="https://www.krakend.io/enterprise/"><strong>Enterprise Edition</strong></a>.</p>
+
+          <p>The interface shows some features with the label "<span class="badge">Enterprise</span>". If you have
+            enabled any of these features, you will need KrakenD Enterprise to make them work.</p>
+
+          <p>Nevertheless, <strong>KrakenD Enterprise and KrakenD Community are exchangeable</strong>, and you can load configurations
+            from one into the other. KrakenD open-source will ignore Enterprise Edition configuration blocks, making the
+            process of upgrading or downgrading transparent for you and without needing to change configurations.</p>
+
+        </div>
       </div>
     </div>
   </div>

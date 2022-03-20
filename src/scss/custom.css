@@ -167,6 +167,14 @@ code {
 .logo-mini {
     padding:1rem;
 }
+
+.label-wildcard {
+    background-color: #888;
+}
+.label-wildcard-asterisk {
+    color:#0a0;
+}
+
 .method_header {
     width: 55px;
     font-size: 12px;
@@ -234,6 +242,10 @@ a.badge-remove:hover {
 
 #drop_zone:hover {
     background-color: #bfc9d0;
+}
+
+.modal-dialog {
+    margin: 100px auto;
 }
 
 .modal-body pre {

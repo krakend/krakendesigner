@@ -29,13 +29,12 @@
     <div class="box-header with-border">
         <h3 class="box-title">
             <a href="/#!/endpoints?target={{endpoint_index}}">
-                {{ endpoint.endpoint }}
+                {{ endpoint.endpoint }}<span ng-hide="!hasWildcard(endpoint.endpoint)" class="label-wildcard-asterisk">/<i class="fa fa-asterisk"></i></span>
+                <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-wildcard">Wildcard</span>
                 <code class="small" ng-if="endpoint.input_query_strings.length > 0">
                     ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
                 </code>
-                <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-warning"><i
-                        class="fa fa-asterisk"></i>
-                    Wildcard</span>
+
             </a>
         </h3>
 

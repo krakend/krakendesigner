@@ -503,9 +503,9 @@ angular
             }
 
             $rootScope.service.endpoints.push({
-                "endpoint": "/v1/new-endpoint/" + new Date().getTime(),
+                "endpoint": "/v1/new-" + new Date().getTime(),
                 "method": "GET",
-                "output_encoding": (typeof $rootScope.service.output_encoding === undefined ? "json" : $rootScope.service.output_encoding)
+                "output_encoding": (typeof $rootScope.service.output_encoding === 'undefined' ? "json" : $rootScope.service.output_encoding)
             });
         };
 
