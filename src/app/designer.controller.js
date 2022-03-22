@@ -4,7 +4,6 @@ angular
     .module('KrakenDesigner')
     .controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig, Constants) {
 
-
         if ('undefined' === typeof $rootScope.service) {
             // Default initial values set in any configuration generation:
             $rootScope.service = DefaultConfig.service;

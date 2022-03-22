@@ -34,8 +34,12 @@
                 templateUrl: '/src/app/forms/service_discovery.html',
                 controller: 'KrakenDesignerController'
             })
-             .when('/logging', {
+            .when('/logging', {
                 templateUrl: '/src/app/forms/logging.html',
+                controller: 'KrakenDesignerController'
+            })
+            .when('/openapi', {
+                templateUrl: '/src/app/forms/openapi.html',
                 controller: 'KrakenDesignerController'
             })
             .otherwise({
