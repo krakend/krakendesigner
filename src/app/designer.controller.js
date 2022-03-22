@@ -10,6 +10,10 @@ angular
             $rootScope.service = DefaultConfig.service;
         }
 
+        if (typeof $rootScope.sd_providers === "undefined") {
+            $rootScope.sd_providers = {};
+        }
+
         $rootScope.constants = Constants;
         $rootScope.selected_endpoint = ('undefined' === typeof ($location.search()).target ? false : ($location.search()).target);
 
@@ -393,6 +397,20 @@ angular
             });
 
             $rootScope.addTermToArray(sd_type, $rootScope.sd_providers.providers);
+
+            // Add the freshly added Host to backends with no hosts yet
+            endpoints = $rootScope.getObject("service", "endpoints");
+            for (i=0; endpoints && i < endpoints.length; i++) {
+                backends = $rootScope.getObject("service", "endpoints", i, "backend");
+                for ( b=0; backends && b < backends.length; b++) {
+                    backend = $rootScope.getObject("service", "endpoints", i, "backend", b, "host");
+                    if ( null === backend ) {
+                        $rootScope.service.endpoints[i].backend[b].host = host;
+                        $rootScope.service.endpoints[i].backend[b].sd = sd_type;
+                    }
+                }
+            }
+
         };
 
         $rootScope.deleteWhitelist = function (white, backend_index, endpoint_index) {
@@ -597,7 +615,7 @@ angular
             $rootScope.service.endpoints[endpoint_index].backend.push({
                 "url_pattern": "/",
                 "encoding": $rootScope.service.endpoints[endpoint_index].output_encoding,
-                "sd": $rootScope.sd_providers.providers[0], // Select first provider defined
+                "sd": $rootScope.getObject("sd_providers","providers", 0), // Select first provider defined
                 "method": (typeof $rootScope.service.endpoints[endpoint_index].method === undefined ? "GET" : $rootScope.service.endpoints[endpoint_index].method)
             });
         };

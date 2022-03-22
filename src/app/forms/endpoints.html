@@ -12,13 +12,16 @@
                 <label>URL</label>
                 <input type="text" placeholder="" class="form-control"
                     ng-model="service.extra_config['plugin/http-server']['krakend-static-live'].prefix" />
-                    <span class="help-block">This is the beginning of all URLs that are resolved using this plugin. All matching URLs won't be evaluated as endpoints. Make sure you are not overwriting valid endpoints.</span>
+                <span class="help-block">This is the beginning of all URLs that are resolved using this plugin. All
+                    matching URLs won't be evaluated as endpoints. Make sure you are not overwriting valid
+                    endpoints.</span>
             </div>
             <div class="col-md-6">
                 <label>Filesystem path</label>
                 <input type="text" placeholder="" class="form-control"
                     ng-model="service.extra_config['plugin/http-server']['krakend-static-live'].path" />
-                    <span class="help-block">The path in the filesystem containing the static files. Relative to the working dir or absolute.</span>
+                <span class="help-block">The path in the filesystem containing the static files. Relative to the working
+                    dir or absolute.</span>
             </div>
         </div>
     </div>
@@ -29,7 +32,8 @@
     <div class="box-header with-border">
         <h3 class="box-title">
             <a href="/#!/endpoints?target={{endpoint_index}}">
-                {{ endpoint.endpoint }}<span ng-hide="!hasWildcard(endpoint.endpoint)" class="label-wildcard-asterisk">/<i class="fa fa-asterisk"></i></span>
+                {{ endpoint.endpoint }}<span ng-hide="!hasWildcard(endpoint.endpoint)"
+                    class="label-wildcard-asterisk">/<i class="fa fa-asterisk"></i></span>
                 <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-wildcard">Wildcard</span>
                 <code class="small" ng-if="endpoint.input_query_strings.length > 0">
                     ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
@@ -222,7 +226,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <h4>Backend API calls (where the data comes from)</h4>
+                        <h4>Backend API calls (Upstream services)</h4>
                         <input type="checkbox" ng-model="endpoint.extra_config['proxy'].sequential">
                         <strong>Enable sequential proxy</strong>
                         <span class="help-block">
@@ -264,7 +268,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
 
-                                        <label>Select hosts</label>
+                                        <label>Select hosts <span ng-show="!backend.host.length"
+                                                class="badge label-danger"><i class="fa fa-warning"></i> Select at least
+                                                one host!</span></label>
                                         <span class="help-block">All the backends that can be used to fulfill this
                                             request, balanced using Round Robin.</span>
                                         <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
@@ -276,9 +282,10 @@
                                                 {{ host.host }}
                                             </label>
                                         </div>
-                                        <p ng-show="!backend.host.length" class="badge label-danger"><i
-                                                class="fa fa-warning"></i> Select at least one host!</p>
-
+                                        <button class="btn btn-default btn-flat" data-toggle="modal"
+                                            data-target="#add-hosts-modal">
+                                            <i class="fa fa-wrench"></i> Add host
+                                        </button>
                                     </div>
                                     <div class="col-md-3">
                                         <label>Host resolution</label>
@@ -691,6 +698,22 @@
                             <!-- /.box-body -->
                         </div>
 
+                        <div id="add-hosts-modal" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Add hosts</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Define at least one host (upstream service) where KrakenD will take the data
+                                            from.</p>
+                                        <div ng-include src="'/src/app/forms/backends.html'"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Modal window backend -->
                         <div id="backend-modal-{{ endpoint_index}}{{ backend_index }}" class="modal fade" tabindex="-1"
                             role="dialog">
