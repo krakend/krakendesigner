@@ -30,6 +30,24 @@ angular
             return obj;
         };
 
+        $rootScope.setObject = function (args) {
+
+            obj = $rootScope;
+            for (var i = 0; obj && i < arguments.length; ++i) {
+                // Last two elements are the final key + value
+                if (i >= arguments.length - 2) {
+                    obj[arguments[i]] = arguments[i + 1];
+                    break;
+                }
+                else {
+                    if ('undefined' === typeof obj[arguments[i]]) {
+                        obj[arguments[i]] = {};
+                    }
+                    obj = obj[arguments[i]];
+                }
+            }
+        };
+
         $rootScope.save = function () {
             $rootScope.fixCipherSuitesType('auth/signer', false);
             $rootScope.fixCipherSuitesType('auth/validator', false);
@@ -39,17 +57,25 @@ angular
 
             // Delete empty extra config:
             extra_config = $rootScope.getObject("service", "extra_config");
-            if ( extra_config && 0 === Object.keys(extra_config).length) {
+            if (extra_config && 0 === Object.keys(extra_config).length) {
                 delete save.extra_config;
             }
 
             // Delete empty endpoint extra config:
             endpoints = $rootScope.getObject("service", "endpoints");
-            if ( endpoints ) {
-                for ( i=0; i < endpoints.length; i++) {
-                    endpoint_extra_config = $rootScope.getObject("service", "endpoints", i, "extra_config" );
-                    if ( endpoint_extra_config && 0 === Object.keys(endpoint_extra_config).length ) {
+            if (endpoints) {
+                for (i = 0; i < endpoints.length; i++) {
+                    endpoint_extra_config = $rootScope.getObject("service", "endpoints", i, "extra_config");
+                    if (endpoint_extra_config && 0 === Object.keys(endpoint_extra_config).length) {
                         delete save.endpoints[i].extra_config;
+                    }
+
+                    backends = $rootScope.getObject("service", "endpoints", i, "backend");
+                    for (b = 0; backends && b < backends.length; b++) {
+                        backend_extra_config = $rootScope.getObject("service", "endpoints", i, "backend", b, "extra_config");
+                        if (backend_extra_config && 0 === Object.keys(backend_extra_config).length) {
+                            delete save.endpoints[i].backend[b].extra_config;
+                        }
                     }
                 }
             }
@@ -148,6 +174,53 @@ angular
             }
         }
 
+        // Looks in the configuration for EE functionality:
+        $rootScope.isEnterprise = function () {
+            $rootScope.modules_in_use = [];
+            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/ganalytics'];
+            endpoint_components = ['documentation/openapi', 'websocket'];
+            http_server_plugins = ['krakend-jwk-aggregator', 'krakend-afero', 'krakend-basic-auth', 'krakend-geoip', 'krakend-static-live', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'krakend-wildcard'];
+            http_client_plugins = ['krakend-wildcard', 'krakend-afero', 'krakend-static-live', 'krakend-redirect'];
+
+            if ($rootScope.getObject("service", "extra_config")) {
+                for (i = 0; i < service_components.length; i++) {
+                    if ($rootScope.getObject("service", "extra_config", service_components[i])) {
+                        $rootScope.modules_in_use.push(service_components[i]);
+                    };
+                }
+
+
+                for (i = 0; i < http_server_plugins.length; i++) {
+                    if ($rootScope.getObject("service", "extra_config", "plugin/http-server", http_server_plugins[i])) {
+                        $rootScope.modules_in_use.push(http_server_plugins[i]);
+                    };
+                }
+            }
+
+            endpoints = $rootScope.getObject("service", "endpoints");
+            for (e = 0; endpoints && e < endpoints.length; e++) {
+                for (i = 0; i < endpoint_components.length; i++) {
+                    if ($rootScope.getObject("service", "endpoints", e, "extra_config", endpoint_components[i])) {
+                        $rootScope.modules_in_use.push(endpoint_components[i]);
+                    };
+
+                }
+
+                backends = $rootScope.getObject("service", "endpoints", e, "backend");
+                for (b = 0; b < backends && backends.length; b++) {
+                    client_plugin = $rootScope.getObject("service", "endpoints", e, "backend", b, "extra_config", "plugin/http-client", "name");
+                    for (i = 0; i < client_plugin && http_client_plugins.length; i++) {
+                        if (client_plugin == http_client_plugins[i]) {
+                            $rootScope.modules_in_use.push(http_client_plugins[i]);
+                        };
+                    }
+                }
+            }
+
+            return ($rootScope.modules_in_use.length > 0);
+
+        };
+
         $rootScope.hasServiceExtraConfig = function (namespace) {
             return !(
                 'undefined' === typeof $rootScope.service.extra_config ||
@@ -201,6 +274,26 @@ angular
             return (plugins && -1 !== plugins.indexOf(name));
         }
 
+        $rootScope.addHttpClientPlugin = function (name, endpoint_index, backend_index) {
+            $rootScope.addPluginEntry();
+            $rootScope.setObject(
+                "service", "endpoints", endpoint_index, "backend", backend_index, "extra_config", "plugin/http-client", "name", name
+            );
+
+            return;
+            extra_config = $rootScope.getObject("service", "endpoints", endpoint_index, "backend", backend_index, "extra_config");
+            if (null == extra_config) {
+                $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config = {};
+            }
+
+            plugin_config = $rootScope.getObject("service", "endpoints", endpoint_index, "backend", backend_index, "extra_config", "plugin/http-client");
+
+
+            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config
+
+
+        };
+
         $rootScope.addHttpServerPlugin = function (name) {
 
             $rootScope.addPluginEntry();
@@ -234,17 +327,6 @@ angular
             }
         };
 
-        // Unused yet
-        // $rootScope.togglePluginServer = function (name) {
-        //     if ($rootScope.hasHttpServerPlugin(name)) {
-        //         $rootScope.deleteHttpServerPlugin(name);
-        //     } else {
-        //         $rootScope.addHttpServerPlugin(name);
-        //     }
-        // }
-
-
-
         $rootScope.deleteHttpServerPlugin = function (name) {
             // Delete plugin from "name" list:
             index = $rootScope.service.extra_config['plugin/http-server'].name.indexOf(name);
@@ -260,12 +342,12 @@ angular
             }
 
             // TODO: Scan configuration for other types of plugin, and if none, remove the "plugins" entry
-        }
+        };
 
         $rootScope.hasWildcard = function (endpoint) {
             return (
-                $rootScope.hasHttpServerPlugin('wildcard') &&
-                null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "wildcard", endpoint)
+                $rootScope.hasHttpServerPlugin('krakend-wildcard') &&
+                null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "krakend-wildcard", "endpoints", endpoint)
             );
         }
 
@@ -273,24 +355,30 @@ angular
             WILDCARD_HEADER = 'X-Krakend-Wildcard';
 
             if ($rootScope.hasWildcard(endpoint)) {
-                delete $rootScope.service.extra_config['plugin/http-server']['wildcard'][endpoint]
+                delete $rootScope.service.extra_config['plugin/http-server']['krakend-wildcard'].endpoints[endpoint]
 
                 // Remove special header
-                if ( $rootScope.getObject("service","endpoints",endpoint_index, "input_headers") ) {
+                if ($rootScope.getObject("service", "endpoints", endpoint_index, "input_headers")) {
                     header_idx = $rootScope.service.endpoints[endpoint_index].input_headers.indexOf(WILDCARD_HEADER);
                     if (-1 !== header_idx) {
                         $rootScope.deleteHeaderPassing(endpoint_index, header_idx);
                     }
                 }
 
+                // Remove http client plugin
+                delete $rootScope.service.endpoints[endpoint_index].backend[0].extra_config['plugin/http-client'];
+
                 // Delete last wildcard
-                if (0 === Object.keys($rootScope.service.extra_config['plugin/http-server']['wildcard']).length) {
-                    $rootScope.deleteHttpServerPlugin('wildcard');
+                if (0 === Object.keys($rootScope.service.extra_config['plugin/http-server']['krakend-wildcard'].endpoints).length) {
+                    $rootScope.deleteHttpServerPlugin('krakend-wildcard');
                 }
 
             } else {
-                $rootScope.addHttpServerPlugin('wildcard');
-                $rootScope.service.extra_config['plugin/http-server']['wildcard'][endpoint] = [endpoint];
+                $rootScope.addHttpServerPlugin('krakend-wildcard');
+                $rootScope.addHttpClientPlugin('krakend-wildcard', endpoint_index, 0)
+                $rootScope.setObject("service", "extra_config", 'plugin/http-server', 'krakend-wildcard', "endpoints", endpoint, [endpoint]);
+                //$rootScope.service.extra_config['plugin/http-server']['krakend-wildcard'].endpoints = {};
+                //$rootScope.service.extra_config['plugin/http-server']['krakend-wildcard'].endpoints[endpoint] = [endpoint];
                 $rootScope.addHeaderPassing(endpoint_index, WILDCARD_HEADER);
 
             }
@@ -400,11 +488,11 @@ angular
 
             // Add the freshly added Host to backends with no hosts yet
             endpoints = $rootScope.getObject("service", "endpoints");
-            for (i=0; endpoints && i < endpoints.length; i++) {
+            for (i = 0; endpoints && i < endpoints.length; i++) {
                 backends = $rootScope.getObject("service", "endpoints", i, "backend");
-                for ( b=0; backends && b < backends.length; b++) {
+                for (b = 0; backends && b < backends.length; b++) {
                     backend = $rootScope.getObject("service", "endpoints", i, "backend", b, "host");
-                    if ( null === backend ) {
+                    if (null === backend) {
                         $rootScope.service.endpoints[i].backend[b].host = host;
                         $rootScope.service.endpoints[i].backend[b].sd = sd_type;
                     }
@@ -525,6 +613,9 @@ angular
                 "method": "GET",
                 "output_encoding": (typeof $rootScope.service.output_encoding === 'undefined' ? "json" : $rootScope.service.output_encoding)
             });
+
+
+            $rootScope.addBackendQuery($rootScope.service.endpoints.length - 1);
         };
 
         // Valid endpoints start with Slash and do not contain /__debug[/] or /__health
@@ -612,10 +703,11 @@ angular
                 $rootScope.service.endpoints[endpoint_index].backend = [];
             }
 
+            sd = $rootScope.getObject("sd_providers", "providers", 0);
             $rootScope.service.endpoints[endpoint_index].backend.push({
                 "url_pattern": "/",
                 "encoding": $rootScope.service.endpoints[endpoint_index].output_encoding,
-                "sd": $rootScope.getObject("sd_providers","providers", 0), // Select first provider defined
+                "sd": ( null == sd ? 'static' : sd ), // Select first provider defined or 'static'
                 "method": (typeof $rootScope.service.endpoints[endpoint_index].method === undefined ? "GET" : $rootScope.service.endpoints[endpoint_index].method)
             });
         };
@@ -663,6 +755,11 @@ angular
         };
 
         $rootScope.deleteBackendQuery = function (endpoint_index, backend_index, message) {
+            if ($rootScope.service.endpoints[endpoint_index].backend.length < 2) {
+                alert("You cannot delete the last backend. You must have at least one.");
+                return false;
+            }
+
             if (confirm(message)) {
                 $rootScope.service.endpoints[endpoint_index].backend.splice(backend_index, 1);
             }

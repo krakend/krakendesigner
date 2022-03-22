@@ -76,8 +76,8 @@
       <div class="content-wrapper">
         <section class="content-header">
           <h1><a href="/#!/service">{{service.name}}</a>
-            <a ng-if="service.plugin" class="badge" data-toggle="modal"
-              data-target="#enterprise-needed-modal">Enterprise Edition ?</a>
+            <a ng-if="isEnterprise()" class="badge" data-toggle="modal"
+              data-target="#enterprise-needed-modal">Enterprise Edition</a>
           </h1>
         </section>
         <section class="content">

@@ -11,6 +11,12 @@ code {
 .badge {
     background-color: #0071CE;
 }
+
+.badge.badge-inverse {
+    background-color: #FFF;
+    color: #0071CE;
+}
+
 .wrapper {
     background-color: white !important;
 }
