@@ -83,15 +83,18 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <label class="control-label">Tags</label>
-                    <input type="text" class="form-control" placeholder="foo" ng-model="tags"></textarea>
-                    <button type="button" class="btn btn-success pull-right" ng-click="addTermToList(tags,'tags')">
-                        <i class="fa fa-plus"></i> Add tag
-                    </button>
-                    <span class="help-block"> Tagged operations may be handled differently by tools and libraries. For
-                        example, Swagger UI uses tags to group the displayed operations.</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="foo" ng-model="tags">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(tags,'tags')">
+                                <i class="fa fa-plus"></i> Add tag
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6">
-                    <ul class="list-unstyled">
+                    <label ng-if="data.extra_config[config_namespace].tags.length">Added tags:</label>
+                    <ul class="list-inline">
                         <li ng-repeat="(index,tag) in data.extra_config[config_namespace].tags">
                             <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'tags')"><i
                                     class="fa fa-times"></i>

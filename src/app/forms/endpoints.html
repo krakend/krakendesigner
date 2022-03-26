@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label>Recognized query string parameters (?param=value)</label>
                         <div class="input-group">
                             <input class="form-control" placeholder="parameter_name" type="url"
@@ -130,7 +130,7 @@
                             Write only the name of the
                             parameter, no question mark or equal symbols.</span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label>Headers passing to backend</label>
                         <div class="input-group">
                             <input class="form-control" placeholder="header_name" type="text" required=""
@@ -156,9 +156,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-3" ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
+                    <div class="col-md-4" ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
                         <label>Concurrent Calls</label>
                         <input type="number" class="form-control" ng-model="endpoint.concurrent_calls">
                         <span class="help-block">
@@ -170,6 +168,8 @@
                                 3 (or higher if your backend can support very high load)</p>
                         </span>
                     </div>
+                </div>
+                <div class="form-group">
                     <div class="col-md-3">
                         <label>Rate limit</label>
                         <span class="label label-success"
@@ -186,15 +186,7 @@
                         </span>
                     </div>
                     <div class="col-md-3">
-                        <label>Pipe composition</label>
-                        <br />
-                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                            data-target="#advanced-pipe-{{ endpoint_index }}">
-                            <i class="fa fa-wrench"></i> Override
-                        </button>
-                        <span class="help-block">
-                            Behaviour of the proxy pipe.
-                        </span>
+
                     </div>
 
                     <div class="col-md-3">
@@ -209,6 +201,19 @@
                         </span>
                     </div>
 
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <middleware template="openapi_endpoint.html" namespace="'documentation/openapi'" data="endpoint">
+                                </middleware>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
@@ -856,33 +861,6 @@
                 <div class="modal-body">
                     <middleware data="endpoint" namespace="'qos/ratelimit/router'" template="ratelimit_router.html">
                     </middleware>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Window for advanced Pipe composition-->
-    <div id="advanced-pipe-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Advanced pipe composition for <code>{{ endpoint.endpoint }}</code></h4>
-                </div>
-                <div class="modal-body">
-                    <p>If you have a custom combiner configure it here to modify the proxy pipe with your custom
-                        configuration</p>
-                    <div class="row form-group">
-
-                        <div class="col-md-12">
-                            <label>Custom combiner</label>
-                            <input class="form-control" type="text" ng-model="endpoint.extra_config['proxy'].combiner"
-                                placeholder="combiner_name">
-                            <div class="help-block">
-                                <p>Specify the combiner for merging the backend responses.</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
