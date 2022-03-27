@@ -95,6 +95,9 @@ angular
                 'auth/validator': {
                     "alg": "HS256"
                 },
+                'auth/api-keys': {
+                    "keys": []
+                },
                 'qos/circuit-breaker': {
                     "interval": 60,
                     "name": "circuit-breaker-1",

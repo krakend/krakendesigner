@@ -42,6 +42,10 @@
                 templateUrl: '/src/app/forms/openapi.html',
                 controller: 'KrakenDesignerController'
             })
+            .when('/api-keys', {
+                templateUrl: '/src/app/forms/api-keys.html',
+                controller: 'KrakenDesignerController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

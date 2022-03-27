@@ -337,10 +337,9 @@ angular
             // Delete all http-server plugins if it's the last
             if (0 == $rootScope.service.extra_config['plugin/http-server'].name.length) {
                 delete $rootScope.service.extra_config['plugin/http-server'];
-                $rootScope.deletePluginEntryWhenSafe();
             }
 
-            // TODO: Scan configuration for other types of plugin, and if none, remove the "plugins" entry
+            $rootScope.deletePluginEntryWhenSafe();
         };
 
         $rootScope.hasWildcard = function (endpoint) {
@@ -825,7 +824,6 @@ angular
                 delete $rootScope.service.endpoints[endpoint_index].input_headers;
             }
         };
-
     });
 
 function downloadDocument (name, content) {
