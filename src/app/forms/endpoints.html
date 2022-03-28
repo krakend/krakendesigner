@@ -206,11 +206,65 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
-                                <middleware template="openapi_endpoint.html" namespace="'documentation/openapi'" data="endpoint">
+                                <middleware template="openapi_endpoint.html" namespace="'documentation/openapi'"
+                                    data="endpoint">
                                 </middleware>
                             </div>
                             <div class="col-md-6">
+                                <div class="box box-info box-solid">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">
+                                            API-Key Authentication
+                                            <span class="badge badge-inverse">Enterprise</span>
+                                        </h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">You have not configured any
+                                            API Keys yet.</p>
+                                        <div class="form-group" ng-if="hasServiceExtraConfig('auth/api-keys')">
+                                            <div class="col-md-12">
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th width="50%">Available Roles</th>
+                                                            <th width="50%">Granted Roles</th>
+                                                        </tr>
 
+                                                        <tr>
+                                                            <td>
+                                                                <ul class="list-inline">
+                                                                    <li ng-repeat="role in getAPIKeyRoles()">
+                                                                        <a class="badge badge-inverse"
+                                                                            ng-click="addAPIKeyRole(endpoint_index, role)">
+                                                                            {{ role }} <i
+                                                                                class="fa fa-arrow-right"></i></a>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <p
+                                                                    ng-if="!endpoint.extra_config['auth/api-keys'].roles">
+                                                                    <i class="fa fa-warning icon-warning"></i> This
+                                                                    endpoint does not use any API-Key role yet
+                                                                </p>
+                                                                <ul class="list-inline">
+                                                                    <li
+                                                                        ng-repeat="(role_index,role) in endpoint.extra_config['auth/api-keys'].roles">
+                                                                        <a class="badge badge-remove"
+                                                                            ng-click="deleteAPIKeyRole(endpoint_index, role_index)"><i
+                                                                                class="fa fa-times"></i>
+                                                                            {{ role }}</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <p><a href="/#!/api-keys">Go to API Key settings</a></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

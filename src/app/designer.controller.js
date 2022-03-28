@@ -824,6 +824,41 @@ angular
                 delete $rootScope.service.endpoints[endpoint_index].input_headers;
             }
         };
+
+        $rootScope.getAPIKeyRoles = function () {
+            keys = $rootScope.getObject("service","extra_config", "auth/api-keys", "keys");
+            if (keys && keys.length > 0) {
+                roles = [];
+                for (i = 0; i < keys.length; i++) {
+                    for (r = 0; r < keys[i].roles.length; r++) {
+                        if (-1 == roles.indexOf(keys[i].roles[r])) {
+                            roles.push(keys[i].roles[r]);
+                        }
+                    }
+                }
+                return (roles.length > 0 ? roles : false);
+            }
+            return false;
+        };
+
+        $rootScope.addAPIKeyRole = function(endpoint_index, role) {
+
+            api_keys = $rootScope.getObject("service","endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles");
+            if ( null == api_keys) {
+                 $rootScope.setObject("service","endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles",[]);
+                 api_keys = $rootScope.getObject("service","endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles");
+            }
+            if ( -1 == api_keys.indexOf(role)) {
+                api_keys.push(role);
+            }
+        };
+
+        $rootScope.deleteAPIKeyRole = function (endpoint_index, role_index) {
+            $rootScope.service.endpoints[endpoint_index].extra_config["auth/api-keys"].roles.splice(role_index - 1, 1);
+            if ( $rootScope.service.endpoints[endpoint_index].extra_config["auth/api-keys"].roles.length < 1 ) {
+                delete $rootScope.service.endpoints[endpoint_index].extra_config["auth/api-keys"];
+            }
+        };
     });
 
 function downloadDocument (name, content) {

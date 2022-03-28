@@ -58,22 +58,6 @@ angular
           return !('undefined' === typeof scope.data.extra_config || 'undefined' === typeof scope.data.extra_config[NAMESPACE]);
         }
 
-        scope.addKeyPair = function (key, value, in_object = false) {
-          if (in_object) {
-            scope.data.extra_config[NAMESPACE][in_object][key] = value;
-          } else {
-            scope.data.extra_config[NAMESPACE][key] = value;
-          }
-        }
-
-        scope.deleteKey = function (key, in_object = false) {
-          if (in_object) {
-            delete scope.data.extra_config[NAMESPACE][in_object][key];
-          } else {
-            delete scope.data.extra_config[NAMESPACE][key];
-          }
-        }
-
         scope.addTermToList = function (term, list) {
           if ('undefined' === typeof term || term.length < 1) {
             return;
@@ -98,6 +82,11 @@ angular
         }
 
         scope.addAPIKey = function (key, roles, description) {
+
+          if (!roles.length) {
+            alert("You must assign at least one role to every key");
+            return false;
+          }
 
           // Copy the values in the form without reference
           scope.data.extra_config[NAMESPACE].keys.push(
