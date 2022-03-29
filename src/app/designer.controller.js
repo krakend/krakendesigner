@@ -194,6 +194,10 @@ angular
                         $rootScope.modules_in_use.push(http_server_plugins[i]);
                     };
                 }
+
+                if ($rootScope.getObject("service", "extra_config", "telemetry/opencensus", "exporters", "newrelic")) {
+                    $rootScope.modules_in_use.push("newrelic");
+                }
             }
 
             endpoints = $rootScope.getObject("service", "endpoints");

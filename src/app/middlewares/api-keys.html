@@ -19,8 +19,8 @@
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            <th>Customer</th>
                             <th>API Key</th>
+                            <th>Description</th>
                             <th>Roles</th>
                             <th></th>
                         </tr>
@@ -28,8 +28,8 @@
                             <td colspan="4">You have not configured any API Keys so far.</td>
                         </tr>
                         <tr ng-repeat="(index,key) in data.extra_config[config_namespace].keys">
-                            <td>{{ key["@description"] }}</td>
                             <td>{{ key.key }}</td>
+                            <td>{{ key["@description"] }}</td>
                             <td>
                                 <ul class="list-inline">
                                     <li ng-repeat="(index,role) in key.roles">
