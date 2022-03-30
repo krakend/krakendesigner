@@ -10,9 +10,24 @@ angular
                 timeout: '3000ms',
                 cache_ttl: '300s'
             },
+            plugins: {
+                "plugin/http-server": {
+                    "krakend-ipfilter":
+                    {
+                        "allow": false,
+                        "client_ip_headers": [
+                            "X-Forwarded-For",
+                            "X-Real-IP",
+                            "X-Appengine-Remote-Addr"
+                        ],
+                    }
+                },
+                "plugin/http-client": {},
+                "plugin/req-resp-modifier": {}
+            },
             // Default plugin
             plugin: {
-                "pattern":".so",
+                "pattern": ".so",
                 "folder": "/opt/krakend/plugins/"
             },
             // Default middleware config
@@ -42,7 +57,7 @@ angular
                 'security/cors': {
                     "allow_origins": [
                         "*"
-                      ],
+                    ],
                     "expose_headers": [
                         "Content-Length"
                     ],
@@ -58,38 +73,38 @@ angular
                     "AgentPort": 46999,
                     "Service": "krakend"
                 },
-                'telemetry/ganalytics' : {
-                    "track_id":    "UA-12345678-9",
-                    "url":         "https://www.google-analytics.com/batch",
+                'telemetry/ganalytics': {
+                    "track_id": "UA-12345678-9",
+                    "url": "https://www.google-analytics.com/batch",
                     "buffer_size": 1000,
-                    "workers":     5,
+                    "workers": 5,
                     "timeout": "250ms",
                     "tags": {}
-                  },
+                },
                 "backend/amqp/producer": {
-                    "exchange":       "some-exchange",
-                    "durable":        true,
-                    "delete":         false,
-                    "exclusive":      false,
-                    "no_wait":        true,
+                    "exchange": "some-exchange",
+                    "durable": true,
+                    "delete": false,
+                    "exclusive": false,
+                    "no_wait": true,
                     "mandatory": true,
                     "immediate": false
                 },
                 "backend/amqp/consumer": {
-                    "name":           "queue-1",
-                    "exchange":       "some-exchange",
-                    "durable":        true,
-                    "delete":         false,
-                    "exclusive":      false,
-                    "no_wait":        true,
-                    "no_local":       false,
-                    "routing_key":    ["#"],
+                    "name": "queue-1",
+                    "exchange": "some-exchange",
+                    "durable": true,
+                    "delete": false,
+                    "exclusive": false,
+                    "no_wait": true,
+                    "no_local": false,
+                    "routing_key": ["#"],
                     "prefetch_count": 10
                 },
                 "backend/graphql": {
                     "type": "query",
                     "operationName": "addMktPreferencesForUser",
-                    "variables":      {}
+                    "variables": {}
                 },
                 // // Endpoint level middleware (github.com)
                 'qos/ratelimit/router': {

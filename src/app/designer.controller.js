@@ -178,7 +178,7 @@ angular
             $rootScope.modules_in_use = [];
             service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/ganalytics'];
             endpoint_components = ['documentation/openapi', 'websocket'];
-            http_server_plugins = ['krakend-jwk-aggregator', 'krakend-afero', 'krakend-basic-auth', 'krakend-geoip', 'krakend-static-live', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'krakend-wildcard'];
+            http_server_plugins = ['krakend-ipfilter','krakend-jwk-aggregator', 'krakend-afero', 'krakend-basic-auth', 'krakend-geoip', 'krakend-static-live', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'krakend-wildcard'];
             http_client_plugins = ['krakend-wildcard', 'krakend-afero', 'krakend-static-live', 'krakend-redirect'];
 
             if ($rootScope.getObject("service", "extra_config")) {
@@ -232,7 +232,7 @@ angular
         }
 
         $rootScope.addPluginEntry = function () {
-            if (undefined === $rootScope.service.plugin) {
+            if ('undefined' === typeof $rootScope.service.plugin) {
                 $rootScope.service.plugin = DefaultConfig.plugin;
             }
         }
@@ -249,16 +249,14 @@ angular
                 // Has endpoints with plugins:
                 if (endpoints = $rootScope.getObject("service", "endpoints")) {
                     for (var e = 0; e < endpoints.length; e++) {
-                        if ($rootScope.getObject(endpoints[e], "extra_config", 'plugin/request-modifier') ||
-                            $rootScope.getObject(endpoints[e], "extra_config", 'plugin/response-modifier')) {
+                        if ($rootScope.getObject(endpoints[e], "extra_config", 'plugin/req-resp-modifier')) {
                             return false;
                         }
                         // Has backends with plugins
                         if (backends = $rootScope.getObject(endpoints[e], "backend")) {
                             for (var b = 0; b < backends.length; b++) {
                                 if ($rootScope.getObject(backends[b], "extra_config", 'plugin/http-client') ||
-                                    $rootScope.getObject(backends[b], "extra_config", 'plugin/request-modifier') ||
-                                    $rootScope.getObject(backends[b], "extra_config", 'plugin/response-modifier')) {
+                                    $rootScope.getObject(backends[b], "extra_config", 'plugin/req-resp-modifier')) {
                                     return false;
                                 }
                             }
@@ -709,7 +707,7 @@ angular
             $rootScope.service.endpoints[endpoint_index].backend.push({
                 "url_pattern": "/",
                 "encoding": $rootScope.service.endpoints[endpoint_index].output_encoding,
-                "sd": ( null == sd ? 'static' : sd ), // Select first provider defined or 'static'
+                "sd": (null == sd ? 'static' : sd), // Select first provider defined or 'static'
                 "method": (typeof $rootScope.service.endpoints[endpoint_index].method === undefined ? "GET" : $rootScope.service.endpoints[endpoint_index].method)
             });
         };
