@@ -17,7 +17,7 @@
           <div class="input-group">
             <input class="form-control" placeholder="192.168.0.0/24" type="text" required="" ng-model="input_allow">
             <div class="input-group-btn">
-              <button type="button" class="btn btn-success" ng-click="addTermToList(input_allow,'CIDR')">
+              <button type="button" class="btn btn-success" ng-click="addTermToList(input_allow,data.extra_config[plugin_type][plugin_name],'CIDR')">
                 <i class="fa fa-plus"></i>
               </button>
             </div>
@@ -27,7 +27,7 @@
             <code>172.17.2.56/32</code>, <code>127.0.0.1</code></span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].CIDR">
-              <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'CIDR')"><i class="fa fa-times"></i>
+              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'CIDR')"><i class="fa fa-times"></i>
                 {{ val }}</a>
             </li>
           </ul>
@@ -38,7 +38,7 @@
           <div class="input-group">
             <input class="form-control" placeholder="10.0.0.0/16" type="text" required="" ng-model="input_tp">
             <div class="input-group-btn">
-              <button type="button" class="btn btn-success" ng-click="addTermToList(input_tp,'trusted_proxies')">
+              <button type="button" class="btn btn-success" ng-click="addTermToList(input_tp,data.extra_config[plugin_type][plugin_name],'trusted_proxies')">
                 <i class="fa fa-plus"></i>
               </button>
             </div>
@@ -47,7 +47,7 @@
             your application. This list is used to avoid spoofing when trying to get the real IP of the client.</span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].trusted_proxies">
-              <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'trusted_proxies')"><i
+              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'trusted_proxies')"><i
                   class="fa fa-times"></i>
                 {{ val }}</a>
             </li>
@@ -62,7 +62,7 @@
               ng-model="input_ipheaders">
             <div class="input-group-btn">
               <button type="button" class="btn btn-success"
-                ng-click="addTermToList(input_ipheaders,'client_ip_headers')">
+                ng-click="addTermToList(input_ipheaders,data.extra_config[plugin_type][plugin_name],'client_ip_headers')">
                 <i class="fa fa-plus"></i>
               </button>
             </div>
@@ -71,7 +71,7 @@
             The first matching IP in the list will be used</span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].client_ip_headers">
-              <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'client_ip_headers')"><i
+              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'client_ip_headers')"><i
                   class="fa fa-times"></i>
                 {{ val }}</a>
             </li>

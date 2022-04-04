@@ -38,7 +38,7 @@ angular
             if ('undefined' === typeof obj[arguments[i]]) {
               return null;
             }
-            obj = obj[arguments[i]]
+            obj = obj[arguments[i]];
           }
           return obj;
         };
@@ -61,34 +61,32 @@ angular
           }
         };
 
-        scope.addTermToList = function (term, list) {
+        scope.addTermToList = function (term, container, list) {
           if ('undefined' === typeof term || term.length < 1) {
             return;
           }
 
-          if ('undefined' === typeof scope.placement[list]) {
-            scope.placement[list] = [];
+          if ('undefined' === typeof container[list]) {
+            container[list] = [];
           }
 
-
-          if (scope.placement[list].indexOf(term) === -1) {
-            scope.placement[list].push(term);
+          if (container[list].indexOf(term) === -1) {
+            container[list].push(term);
           }
         }
 
-        scope.deleteTermFromList = function (term, list) {
-          if ('undefined' !== typeof scope.placement[list]) {
+        scope.deleteTermFromList = function (term, container, list) {
 
-            index = scope.placement[list].indexOf(term);
+          if ("undefined" !== typeof container[list]) {
+            index = container[list].indexOf(term);
             if (-1 !== index) {
-              scope.placement[list].splice(index, 1);
+              container[list].splice(index, 1);
             }
 
-            // Delete the list when empty
-            if ( 0 == scope.placement[list].length ) {
-              delete scope.placement[list];
+            // Delete the container[list] when empty
+            if (0 == container[list].length) {
+              delete container[list];
             }
-
           }
         };
 
@@ -120,26 +118,27 @@ angular
           );
         };
 
-        scope.addHttpServerPlugin = function () {
+        // Adds an HTTP server in endpoint or service context (placement)
+        scope.addHttpServerPlugin = function (where) {
           scope.addPluginEntry();
           // Has extra_config?:
-          if ('undefined' === typeof scope.root.extra_config) {
-            scope.root.extra_config = {};
+          if ('undefined' === typeof where.extra_config) {
+            where.extra_config = {};
           }
 
           // Has plugins of type server?:
-          if ('undefined' === typeof scope.root.extra_config[TYPE]) {
-            scope.root.extra_config[TYPE] = {
+          if ('undefined' === typeof where.extra_config[TYPE]) {
+            where.extra_config[TYPE] = {
               "name": [PLUGIN]
             }
           }
 
           // Has this plugin in the list
-          if (scope.root.extra_config[TYPE].name.indexOf(PLUGIN) === -1) {
-            scope.root.extra_config[TYPE].name.push(PLUGIN);
+          if (where.extra_config[TYPE].name.indexOf(PLUGIN) === -1) {
+            where.extra_config[TYPE].name.push(PLUGIN);
           }
 
-          scope.root.extra_config[TYPE][PLUGIN] = scope.getDefaultValues();
+          where.extra_config[TYPE][PLUGIN] = scope.getDefaultValues();
         };
 
         scope.deleteHttpServerPlugin = function () {
@@ -192,34 +191,48 @@ angular
           );
         }
 
+        scope.getEndpointIndex = function (endpoint_name) {
+          for (i = 0; scope.root.endpoints && i < scope.root.endpoints.length; i++) {
+            if (endpoint_name == scope.root.endpoints[i].endpoint) {
+              return i;
+            }
+          }
+
+          return false;
+        };
         scope.toggleWildcard = function () {
           WILDCARD_HEADER = 'X-Krakend-Wildcard';
 
           if (scope.hasWildcard()) {
-            delete scope.root.extra_config['plugin/http-server']['krakend-wildcard'].endpoints[scope.placement.endpoint]
-            scope.deleteTermFromList(WILDCARD_HEADER, "input_headers");
+            delete scope.root.extra_config['plugin/http-server']['krakend-wildcard'].endpoints[scope.placement.endpoint];
+            endpoint_index = scope.getEndpointIndex(scope.placement.endpoint);
+            if (false !== endpoint_index) {
+              scope.deleteTermFromList(WILDCARD_HEADER, scope.root.endpoints[endpoint_index], "input_headers");
+            }
 
-             // Remove http client plugin
-            if ( scope.getObject(scope.placement, "backend", 0, "extra_config", "plugin/http-client") ) {
+            // Remove http client plugin
+            if (scope.getObject(scope.placement, "backend", 0, "extra_config", "plugin/http-client")) {
               delete scope.placement.backend[0].extra_config['plugin/http-client'];
             }
 
-             // Delete last wildcard
+            // Delete last wildcard
             if (0 === Object.keys(scope.root.extra_config['plugin/http-server']['krakend-wildcard'].endpoints).length) {
               scope.deleteHttpServerPlugin();
             }
 
           } else {
-            scope.addHttpServerPlugin();
+            scope.addHttpServerPlugin(scope.root);
             scope.addHttpClientPlugin(0);
-
             scope.setObject(scope.root, "extra_config", 'plugin/http-server', 'krakend-wildcard', "endpoints", scope.placement.endpoint, [scope.placement.endpoint]);
-            scope.addTermToList(WILDCARD_HEADER, "input_headers");
+            endpoint_index = scope.getEndpointIndex(scope.placement.endpoint);
+            if (false !== endpoint_index) {
+              scope.addTermToList(WILDCARD_HEADER, scope.root.endpoints[endpoint_index], "input_headers");
+            }
           }
         };
 
 
-       }
+      }
 
     }
   }]);
