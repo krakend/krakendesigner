@@ -68,13 +68,7 @@
                             backends.</span>
                     </div>
                     <div class="col-md-2 col-sm-2">
-                        <label>Wildcard <span class="badge">Enterprise</span></label>
-                        <div class="form-control">
-                            <input type="checkbox" ng-model="custom_cipher" ng-checked="hasWildcard(endpoint.endpoint)"
-                                ng-click="toggleWildcard(endpoint.endpoint, endpoint_index)"> Enable
-                        </div>
-                        <span class="help-block">Mark if your endpoint is a wildcard definition. Remove to edit the
-                            endpoint name</span>
+                        <plugin root="service" placement="endpoint" template="wildcard.html" plugin="'krakend-wildcard'" type="'plugin/http-server'"></plugin>
                     </div>
                     <div class="col-md-2 col-sm-2">
                         <label>Method</label>
@@ -273,7 +267,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
-                                <plugin root="service" placement="endpoint" template="ipfilter.html" plugin="'krakend-ipfilter'" type="'plugin/http-server'"></plugin>
+                                <plugin root="service" placement="endpoint" template="ipfilter.html" plugin="'krakend-ipfilter'" type="'plugin/req-resp-modifier'"></plugin>
                                 <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint">
                                 </middleware>
                             </div>

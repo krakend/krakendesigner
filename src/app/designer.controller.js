@@ -280,19 +280,6 @@ angular
             $rootScope.setObject(
                 "service", "endpoints", endpoint_index, "backend", backend_index, "extra_config", "plugin/http-client", "name", name
             );
-
-            return;
-            extra_config = $rootScope.getObject("service", "endpoints", endpoint_index, "backend", backend_index, "extra_config");
-            if (null == extra_config) {
-                $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config = {};
-            }
-
-            plugin_config = $rootScope.getObject("service", "endpoints", endpoint_index, "backend", backend_index, "extra_config", "plugin/http-client");
-
-
-            $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config
-
-
         };
 
         $rootScope.addHttpServerPlugin = function (name) {
@@ -350,40 +337,6 @@ angular
                 null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "krakend-wildcard", "endpoints", endpoint)
             );
         }
-
-        $rootScope.toggleWildcard = function (endpoint, endpoint_index) {
-            WILDCARD_HEADER = 'X-Krakend-Wildcard';
-
-            if ($rootScope.hasWildcard(endpoint)) {
-                delete $rootScope.service.extra_config['plugin/http-server']['krakend-wildcard'].endpoints[endpoint]
-
-                // Remove special header
-                if ($rootScope.getObject("service", "endpoints", endpoint_index, "input_headers")) {
-                    header_idx = $rootScope.service.endpoints[endpoint_index].input_headers.indexOf(WILDCARD_HEADER);
-                    if (-1 !== header_idx) {
-                        $rootScope.deleteHeaderPassing(endpoint_index, header_idx);
-                    }
-                }
-
-                // Remove http client plugin
-                delete $rootScope.service.endpoints[endpoint_index].backend[0].extra_config['plugin/http-client'];
-
-                // Delete last wildcard
-                if (0 === Object.keys($rootScope.service.extra_config['plugin/http-server']['krakend-wildcard'].endpoints).length) {
-                    $rootScope.deleteHttpServerPlugin('krakend-wildcard');
-                }
-
-            } else {
-                $rootScope.addHttpServerPlugin('krakend-wildcard');
-                $rootScope.addHttpClientPlugin('krakend-wildcard', endpoint_index, 0)
-                $rootScope.setObject("service", "extra_config", 'plugin/http-server', 'krakend-wildcard', "endpoints", endpoint, [endpoint]);
-                //$rootScope.service.extra_config['plugin/http-server']['krakend-wildcard'].endpoints = {};
-                //$rootScope.service.extra_config['plugin/http-server']['krakend-wildcard'].endpoints[endpoint] = [endpoint];
-                $rootScope.addHeaderPassing(endpoint_index, WILDCARD_HEADER);
-
-            }
-        }
-
         // Destroy middleware or create it with default data:
         $rootScope.toggleMiddleware = function (namespace) {
             if ($rootScope.hasServiceExtraConfig(namespace)) {

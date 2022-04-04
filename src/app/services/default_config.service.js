@@ -20,10 +20,23 @@ angular
                             "X-Real-IP",
                             "X-Appengine-Remote-Addr"
                         ],
+                    },
+                    "krakend-wildcard": {
+                        endpoints: {}
                     }
                 },
                 "plugin/http-client": {},
-                "plugin/req-resp-modifier": {}
+                "plugin/req-resp-modifier": {
+                    "krakend-ipfilter":
+                    {
+                        "allow": false,
+                        "client_ip_headers": [
+                            "X-Forwarded-For",
+                            "X-Real-IP",
+                            "X-Appengine-Remote-Addr"
+                        ],
+                    }
+                }
             },
             // Default plugin
             plugin: {
