@@ -180,6 +180,8 @@ angular
             endpoint_components = ['documentation/openapi', 'websocket'];
             http_server_plugins = ['krakend-ipfilter','krakend-jwk-aggregator', 'krakend-afero', 'krakend-basic-auth', 'krakend-geoip', 'krakend-static-live', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'krakend-wildcard'];
             http_client_plugins = ['krakend-wildcard', 'krakend-afero', 'krakend-static-live', 'krakend-redirect'];
+            req_resp_plugins = ['krakend-ipfilter'];
+
 
             if ($rootScope.getObject("service", "extra_config")) {
                 for (i = 0; i < service_components.length; i++) {
@@ -206,7 +208,18 @@ angular
                     if ($rootScope.getObject("service", "endpoints", e, "extra_config", endpoint_components[i])) {
                         $rootScope.modules_in_use.push(endpoint_components[i]);
                     };
+                }
 
+                for (i = 0; i < http_server_plugins.length; i++) {
+                    if ($rootScope.getObject("service",  "endpoints", e, "extra_config", "plugin/http-server", http_server_plugins[i])) {
+                        $rootScope.modules_in_use.push(http_server_plugins[i]);
+                    };
+                }
+
+                for (i = 0; i < req_resp_plugins.length; i++) {
+                    if ($rootScope.getObject("service",  "endpoints", e, "extra_config", "plugin/req-resp-modifier", req_resp_plugins[i])) {
+                        $rootScope.modules_in_use.push(req_resp_plugins[i]);
+                    };
                 }
 
                 backends = $rootScope.getObject("service", "endpoints", e, "backend");
@@ -215,6 +228,12 @@ angular
                     for (i = 0; i < client_plugin && http_client_plugins.length; i++) {
                         if (client_plugin == http_client_plugins[i]) {
                             $rootScope.modules_in_use.push(http_client_plugins[i]);
+                        };
+                    }
+
+                    for (i = 0; i < req_resp_plugins.length; i++) {
+                        if ($rootScope.getObject("service", "endpoints", e, "backend", b, "extra_config", "plugin/req-resp-modifier", req_resp_plugins[i])) {
+                            $rootScope.modules_in_use.push(req_resp_plugins[i]);
                         };
                     }
                 }

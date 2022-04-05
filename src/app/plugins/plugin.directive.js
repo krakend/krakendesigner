@@ -106,7 +106,7 @@ angular
         };
 
         scope.toggleHttpServerPlugin = function () {
-          scope.hasHttpServerPlugin() ? scope.deleteHttpServerPlugin() : scope.addHttpServerPlugin();
+          scope.hasHttpServerPlugin() ? scope.deleteHttpServerPlugin(scope.placement) : scope.addHttpServerPlugin(scope.placement);
         };
 
 
@@ -141,19 +141,19 @@ angular
           where.extra_config[TYPE][PLUGIN] = scope.getDefaultValues();
         };
 
-        scope.deleteHttpServerPlugin = function () {
+        scope.deleteHttpServerPlugin = function (where) {
 
           // Delete plugin from "name" list:
-          index = scope.root.extra_config[TYPE].name.indexOf(PLUGIN);
+          index = where.extra_config[TYPE].name.indexOf(PLUGIN);
           if (index > -1) {
-            scope.root.extra_config[TYPE].name.splice(index);
+            where.extra_config[TYPE].name.splice(index);
           }
           // Delete plugin configuration:
-          delete scope.root.extra_config[TYPE][PLUGIN];
+          delete where.extra_config[TYPE][PLUGIN];
 
           // Delete all http-server plugins if it's the last
-          if (0 == scope.root.extra_config[TYPE].name.length) {
-            delete scope.root.extra_config[TYPE];
+          if (0 == where.extra_config[TYPE].name.length) {
+            delete where.extra_config[TYPE];
           }
 
           scope.deletePluginEntryWhenSafe();
@@ -217,7 +217,7 @@ angular
 
             // Delete last wildcard
             if (0 === Object.keys(scope.root.extra_config['plugin/http-server']['krakend-wildcard'].endpoints).length) {
-              scope.deleteHttpServerPlugin();
+              scope.deleteHttpServerPlugin(scope.root);
             }
 
           } else {
@@ -230,8 +230,6 @@ angular
             }
           }
         };
-
-
       }
 
     }
