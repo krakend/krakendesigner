@@ -75,6 +75,16 @@ angular
           }
         }
 
+        scope.deleteKey = function(key, container) {
+          if ( 'undefined' !== typeof container[key] ) {
+            delete container[key];
+          }
+        };
+
+        scope.deleteIndexFromList = function(index,container) {
+          container.splice(index, 1);
+        }
+
         scope.deleteTermFromList = function (term, container, list) {
 
           if ("undefined" !== typeof container[list]) {
@@ -200,6 +210,15 @@ angular
 
           return false;
         };
+
+        scope.addURLRewriteLiteral = function (match,replacement) {
+          scope.placement.extra_config[TYPE][PLUGIN].literal[match] = replacement;
+        };
+
+        scope.addURLRewriteRegexp = function (match,replacement) {
+          scope.placement.extra_config[TYPE][PLUGIN].regexp.push([match,replacement]);
+        };
+
         scope.toggleWildcard = function () {
           WILDCARD_HEADER = 'X-Krakend-Wildcard';
 

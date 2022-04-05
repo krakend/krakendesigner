@@ -23,6 +23,10 @@ angular
                     },
                     "krakend-wildcard": {
                         endpoints: {}
+                    },
+                    "url-rewrite": {
+                        "literal": {},
+                        "regexp": []
                     }
                 },
                 "plugin/http-client": {},

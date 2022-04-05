@@ -2,6 +2,7 @@
   <div class="col-md-6">
     <div ng-include src="'/src/app/forms/backends.html'"></div>
     <div ng-include src="'/src/app/service/timeouts.html'"></div>
+    <plugin root="service" placement="service" template="url-rewrite.html" plugin="'url-rewrite'" type="'plugin/http-server'"></plugin>
     <div ng-include src="'/src/app/service/http_client_settings.html'"></div>
   </div>
   <div class="col-md-6">

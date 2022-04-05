@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-6">
-        <middleware data="service" template="httpsecure.html" namespace="'security/http'"></middleware>
         <plugin root="service" placement="service" template="ipfilter.html" plugin="'krakend-ipfilter'" type="'plugin/http-server'"></plugin>
+        <middleware data="service" template="httpsecure.html" namespace="'security/http'"></middleware>
     </div>
     <div class="col-md-6">
         <middleware template="cors.html" namespace="'security/cors'" data="service"></middleware>
