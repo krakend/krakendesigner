@@ -91,14 +91,31 @@
                             </button>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <label ng-if="data.extra_config[config_namespace].tags.length">Added tags:</label>
+                    <span class="help-block"></span>
                     <ul class="list-inline">
                         <li ng-repeat="(index,tag) in data.extra_config[config_namespace].tags">
                             <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'tags')"><i
                                     class="fa fa-times"></i>
                                 {{ tag }}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <label class="control-label">Schemes</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="foo" ng-model="schemes">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(schemes,'schemes')">
+                                <i class="fa fa-plus"></i> Add schema
+                            </button>
+                        </div>
+                    </div>
+                    <span class="help-block">The list of schemes supported (<code>http</code> or <code>https</code>)</span>
+                    <ul class="list-inline">
+                        <li ng-repeat="(index,schema) in data.extra_config[config_namespace].schemes">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'schemes')"><i
+                                    class="fa fa-times"></i>
+                                {{ schema }}</a>
                         </li>
                     </ul>
                 </div>

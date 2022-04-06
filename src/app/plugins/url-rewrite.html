@@ -44,14 +44,6 @@
           <label class="control-label">Regexp match</label>
           <input class="form-control" placeholder="/hi-there/([\w\d\s]+)" type="text" required="" ng-model="regexp_match">
           <span class="help-block">The regexp expressions are checked in sequence when there are no literal matches.</span>
-          <ul class="list-inline">
-            <li ng-repeat="(idx,val) in data.extra_config[plugin_type][plugin_name].regexp">
-              <a class="badge badge-remove" ng-click="deleteIndexFromList(idx,data.extra_config[plugin_type][plugin_name].regexp)"><i
-                  class="fa fa-times"></i>
-                  {{ val[0] }}<i aria-hidden="true" class="fa fa-arrow-right"></i>{{ val[1] }}
-              </a>
-            </li>
-          </ul>
         </div>
         <div class="col-md-1">
           <label>&nbsp;</label>
@@ -61,6 +53,14 @@
           <label class="control-label">Endpoint Replacement</label>
           <input class="form-control" placeholder="/hello/${1}" type="text" required="" ng-model="regexp_replacement">
           <span class="help-block">You can use the capturing groups (e.g: <code>/hello/${1}</code>) here.</span>
+          <ul class="list-inline">
+            <li ng-repeat="(idx,val) in data.extra_config[plugin_type][plugin_name].regexp">
+              <a class="badge badge-remove" ng-click="deleteIndexFromList(idx,data.extra_config[plugin_type][plugin_name].regexp)"><i
+                  class="fa fa-times"></i>
+                  {{ val[0] }}<i aria-hidden="true" class="fa fa-arrow-right"></i>{{ val[1] }}
+              </a>
+            </li>
+          </ul>
         </div>
         <div class="col-md-2">
           <label>&nbsp;</label>
