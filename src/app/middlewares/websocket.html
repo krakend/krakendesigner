@@ -1,0 +1,141 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Websocket
+        </h3>
+        <div class="pull-right">
+            <span class="pull-right-container badge badge-inverse">Enterprise</span>
+        </div>
+    </div>
+    <div class="box-body">
+        <p ng-if="!isMiddlewareEnabled()">Communications using the WebSocket Protocol (RFC-6455) to enable two-way
+            communication between a client to a backend host through the API gateway.</p>
+        <div ng-if="isMiddlewareEnabled()">
+            <div class="form-group">
+                <div class="checkbox">
+                    <div class="col-md-6">
+                        <label>
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].connect_event">
+                            <strong>Notify the connection event</strong>
+                        </label>
+                        <span class="help-block">Notifies in the log when there is the client connect event</span>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].disconnect_event">
+                            <strong>Notify the disconnection event</strong>
+                        </label>
+                        <span class="help-block">Notifies in the log when there is a client disconnect event</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label class="control-label">Backoff Strategy</label>
+                    <select class="form-control" ng-model="data.extra_config[config_namespace].alg"
+                        id="data.extra_config[config_namespace].alg" name="data.extra_config[config_namespace].alg">
+                        <option ng-repeat="(strategy,desc) in constants.backoff_strategy" value="{{ strategy }}">{{ desc
+                            }}</option>
+                    </select>
+                    <span class="help-block">Digital signatures and MACs algorithm</span>
+                </div>
+                <div class="col-md-6">
+                    <label>Input headers</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="" type="text" required="" ng-model="input_key">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success"
+                                ng-click="addTermToList(input_key,'input_headers')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="help-block">Defines which input headers are allowed to pass to the backend. Notice that
+                        you need to declare the input_headers at the endpoint level too.</span>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(index,key) in data.extra_config[config_namespace]['input_headers']">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'input_headers')"><i
+                                    class="fa fa-times"></i>
+                                {{ key }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6"
+                    ng-class="validator.isInteger(data.extra_config[config_namespace].read_buffer_size) ? '' : 'has-error'">
+                    <label class="control-label">Read Buffer size</label>
+                    <input type="number" class="form-control"
+                        ng-model="data.extra_config[config_namespace].read_buffer_size" placeholder="1024">
+                    <span class="help-block">Connections buffer network input and output to reduce the number of system
+                        calls when reading messages. You can set the maximum buffer size for reading (in bytes).</span>
+                </div>
+                <div class="col-md-6"
+                    ng-class="validator.isInteger(data.extra_config[config_namespace].write_buffer_size) ? '' : 'has-error'">
+                    <label class="control-label">Write Buffer size</label>
+                    <input type="number" class="form-control"
+                        ng-model="data.extra_config[config_namespace].write_buffer_size" placeholder="1024">
+                    <span class="help-block">Connections buffer network input and output to reduce the number of system
+                        calls when writing messages. You can set the maximum buffer size for writing in bytes.</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6"
+                    ng-class="validator.isInteger(data.extra_config[config_namespace].message_buffer_size) ? '' : 'has-error'">
+                    <label class="control-label">Message Buffer size</label>
+                    <input type="number" class="form-control"
+                        ng-model="data.extra_config[config_namespace].message_buffer_size" placeholder="256">
+                    <span class="help-block">Sets the maximum buffer size for messages (in bytes).</span>
+                </div>
+                <div class="col-md-6"
+                    ng-class="validator.isInteger(data.extra_config[config_namespace].max_message_size) ? '' : 'has-error'">
+                    <label class="control-label">Write Buffer size</label>
+                    <input type="number" class="form-control"
+                        ng-model="data.extra_config[config_namespace].max_message_size" placeholder="512">
+                    <span class="help-block">Sets the maximum size of client messages (in bytes).</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6"
+                    ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].write_wait) ? '' : 'has-error'">
+                    <label class="control-label">Write wait</label>
+                    <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].write_wait"
+                        placeholder="10s">
+                    <span class="help-block">Sets the maximum time KrakenD will wait until the write times out.</span>
+                    <p ng-hide="isValidTimeUnit(data.extra_config[config_namespace].write_wait)" ng-include src="'/src/app/forms/time_units.html'">
+                    </p>
+                </div>
+                <div class="col-md-6"
+                    ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].pong_wait) ? '' : 'has-error'">
+                    <label class="control-label">Pong wait</label>
+                    <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].pong_wait"
+                        placeholder="60s">
+                    <span class="help-block">Sets the maximum time KrakenD will wait until the pong times out.</span>
+                    <p ng-hide="isValidTimeUnit(data.extra_config[config_namespace].pong_wait)" ng-include src="'/src/app/forms/time_units.html'"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6"
+                    ng-class="validator.isInteger(data.extra_config[config_namespace].max_retries) ? '' : 'has-error'">
+                    <label class="control-label">Max Retries</label>
+                    <input type="number" class="form-control" ng-model="data.extra_config[config_namespace].max_retries"
+                        placeholder="0">
+                    <span class="help-block">The maximum number of times you will allow KrakenD to retry reconnecting to
+                        a broken messaging system. Use a value <= 0 for unlimited retries.</span>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].return_error_details">
+                            <strong>Return error details</strong>
+                        </label>
+                        <span class="help-block">
+                            Provides an error <code>{"error":"reason here"}</code> to the client when KrakenD was unable to send the message to the backend.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

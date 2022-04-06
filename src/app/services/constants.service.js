@@ -50,6 +50,14 @@ angular
         49196: "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
         52392: "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305",
         52393: "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305"
+        },
+        "backoff_strategy":
+        {
+            "linear": "Linear - Delay time between attemps grows linearly",
+            "linear-jitter": "Linear Jitter - Linear plus r ± random",
+            "exponential": "Exponential - 2s, 4s, 8s, 16s...",
+            "exponential-jitter": "Exponential Jitter - Exponential ± random",
+            "fallback": "Fallback - Retry every 1 second"
         }
     };
 });

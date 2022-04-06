@@ -147,6 +147,19 @@ angular
                 },
                 "documentation/openapi": {
                     "version": "1.0"
+                },
+                "websocket": {
+                    "connect_event": true,
+                    "disconnect_event": true,
+                    "read_buffer_size": 1024,
+                    "write_buffer_size": 1024,
+                    "message_buffer_size": 256,
+                    "max_message_size": 512,
+                    "write_wait": "10s",
+                    "pong_wait": "60s",
+                    "ping_period": "54s",
+                    "max_retries": 0,
+                    "backoff_strategy": "exponential"
                 }
             },
             "plugin/http-server": {
