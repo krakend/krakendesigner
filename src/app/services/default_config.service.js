@@ -149,6 +149,7 @@ angular
                     "version": "1.0"
                 },
                 "websocket": {
+                    "input_headers": ["*"],
                     "connect_event": true,
                     "disconnect_event": true,
                     "read_buffer_size": 1024,
