@@ -27,6 +27,10 @@ angular
                     "url-rewrite": {
                         "literal": {},
                         "regexp": []
+                    },
+                    "krakend-basic-auth": {
+                        "htpasswd_path": "/etc/krakend/.htpasswd",
+                        "endpoints": ["*"]
                     }
                 },
                 "plugin/http-client": {},
