@@ -2,6 +2,7 @@
     <div class="col-md-6">
         <plugin root="service" placement="service" template="ipfilter.html" plugin="'krakend-ipfilter'" type="'plugin/http-server'"></plugin>
         <plugin root="service" placement="service" template="basic-authentication.html" plugin="'krakend-basic-auth'" type="'plugin/http-server'"></plugin>
+        <plugin root="service" placement="service" template="jwk-aggregator.html" plugin="'krakend-jwk-aggregator'" type="'plugin/http-server'"></plugin>
     </div>
     <div class="col-md-6">
         <middleware data="service" template="httpsecure.html" namespace="'security/http'"></middleware>

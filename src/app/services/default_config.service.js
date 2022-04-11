@@ -38,6 +38,13 @@ angular
                         "Burst": 10,
                         "Rate": 100,
                         "Period": "60s"
+                    },
+                    "krakend-jwk-aggregator": {
+                        "port": 9876,
+                        "origins": [
+                            "https://example-server/jwk.json",
+                            "http://example-server/public_keys"
+                        ]
                     }
                 },
                 "plugin/http-client": {},
