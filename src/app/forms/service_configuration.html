@@ -2,11 +2,20 @@
   <div class="col-md-6">
     <div ng-include src="'/src/app/forms/backends.html'"></div>
     <div ng-include src="'/src/app/service/timeouts.html'"></div>
-    <plugin root="service" placement="service" template="url-rewrite.html" plugin="'url-rewrite'" type="'plugin/http-server'"></plugin>
-    <div ng-include src="'/src/app/service/http_client_settings.html'"></div>
+    <div ng-include src="'/src/app/service/options.html'"></div>
+    <div ng-include src="'/src/app/service/http_server_settings.html'"></div>
   </div>
   <div class="col-md-6">
-    <div ng-include src="'/src/app/service/http_server_settings.html'"></div>
-    <div ng-include src="'/src/app/service/options.html'"></div>
+
+    <service data="service" template="tls.html"></service>
+    <plugin root="service" placement="service" template="url-rewrite.html" plugin="'url-rewrite'"
+      type="'plugin/http-server'"></plugin>
+    <plugin root="service" placement="service" template="virtualhost.html" plugin="'virtualhost'"
+      type="'plugin/http-server'"></plugin>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div ng-include src="'/src/app/service/http_client_settings.html'"></div>
   </div>
 </div>

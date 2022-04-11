@@ -171,14 +171,23 @@ a.badge.badge-inverse:hover {
     border-color: #2977f7;
   }
 
-
-
-
-
 .btn-circle {
     border-radius: 10em!important
 }
 .main-content {}
+
+.box.box-solid.box-default > .box-header {
+    color: #000;
+    background-color: #b9d9fa;
+}
+
+
+.box.box-solid.box-info .box-title small {
+    color: #FFF;
+}
+
+
+
 
 /* END Override  */
 
@@ -333,214 +342,3 @@ table.downloads a {
 table.downloads a.sha {
     color: #666;
 }
-
-/* DOCUMENTATION */
-
-section.docs p, section.docs li, section.blog p, section.blog li { font-size: 16px; line-height: 24px;}
-section.docs h1 { color: #3d5572; font-size: 25px; line-height: 35px; font-weight: 400; border-bottom: 1px solid #eee; }
-section.docs h2 { color: #3d5572; font-size: 20px; line-height: 30px; font-weight: 400; border-bottom: 1px solid #eee; }
-section.docs h3 { color: #3d5572; font-size: 18px; line-height: 25px; font-weight: 400; }
-section.docs h4 { color: #3d5572; font-size: 17px; line-height: 20px; font-weight: 300; }
-section.docs h5 { color: #3d5572; font-size: 16px; line-height: 18px; font-weight: 300; }
-section.docs a:hover { text-decoration: underline }
-
-section.docs .note {
-    background-color: #f7f3ca;
-    border-color: #e0d705;
-}
-
-section.docs .note h4 {
-    color: #af813a;
-    font-weight: bold;
-}
-
-section.docs table {
-    width: 100%;
-    max-width: 100%;
-}
-
-section.docs table>thead>tr>th,
-section.docs table>tbody>tr>th,
-section.docs table>tfoot>tr>th, section.docs table>thead>tr>td, section.docs table>tbody>tr>td, section.docs table>tfoot>tr>td {
-    border-top: 1px solid #f4f4f4;
-}
-section.docs table>tbody>tr>td, section.docs table>tbody>tr>th, section.docs table>tfoot>tr>td, section.docs table>tfoot>tr>th, section.docs table>thead>tr>td, section.docs table>thead>tr>th {
-    padding: 8px;
-    line-height: 1.42857143;
-    vertical-align: top;
-    border-top: 1px solid #ddd;
-}
-
-section.docs table>thead>tr {
-    background-color: #ecf0f5;
-}
-
-
-section.docs .TOC .box-header {
-    background-color: #ecf0f5;
-}
-
-section.docs .TOC .box-body {
-    background-color: rgba(236, 240, 245, 0.44);
-}
-
-section.docs .TOC .box-title {
-    color: #333;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-section.docs .TOC a {
-    font-weight: normal; cursor: hand
-}
-
-/* BLOG */
-.blog-wrapper {
-    padding: 50px 15px;
-}
-
-.blog p {
-    font-size: 14px;
-}
-
-.blog h1 { font-size: 25px; line-height: 35px;  }
-.blog h2 { font-size: 20px; line-height: 30px; font-weight: 600; }
-.blog h3 { font-size: 18px; line-height: 25px; font-weight: 400; }
-.blog h4 { font-size: 17px; line-height: 20px; font-weight: 300; }
-.blog h5 { font-size: 16px; line-height: 18px; font-weight: 300; }
-
-.blog-wrapper .navigation_container h3 {
-    font-size: 20px;
-    padding: 0px 5px;
-    border-bottom: 1px solid #ccdae4;
-}
-
-.blog-wrapper .nav li a {
-    font-size: 14px;
-    line-height: 19px;
-    padding: 0px 10px 0px 10px;
-    margin-bottom: 10px;
-    color: #010226;
-    border-left: 3px solid transparent;
-    text-transform: capitalize;
-}
-
-.blog-wrapper .nav li a.active,
-.blog-wrapper .nav li a:hover {
-    background: transparent;
-    border-left: 3px solid #4094cd;
-    color: #3c8dbc;
-}
- .blog-wrapper .nav h3 {
-    font-size: 20px;
- }
-
-.blog .image {
-    height: 16rem;
-    background-color: #eee;
-    background-position: center;
-    background-size: cover;
-    display: block;
-}
-
-.blog .image-credit {
-    text-align: right;
-    padding-right: 10px;
-    font-size: 14px;
-    font-style: italic;
-}
-
-.blog .post-image,
-.blog p img {
-    max-width: 100%;
-}
-.blog .post-metadata .author {
-    font-size: 13px;
-}
-
-.blog .post-metadata i {
-    padding:0 2px;
-}
-
-.blog .tags {
-    display: inline;
-    position: relative;
-
-}
-.blog .tags ul {
-
-}
-
-.blog .tags ul li {
-    font-size: 13px;
-    display: inline;
-    padding-left: 10px;
-}
-
-.blog-wrapper .paginator {
-    font-size: 20px;
-}
-
-.blog .share a {
-    font-size: 20px;
-    padding: 0 5px;
-    color: #0071CE;
-}
-
-.blog .share a:hover {
-    color: #3c8dbc;
-}
-
-/*
- Generated with: hugo gen chromastyles --style=monokai;
- Styles: https://help.farbox.com/pygments.html;
-*/
-/* Background */ .chroma { color: #333; background-color: #f1f1f1 }
-/* Error */ .chroma .err { color: #ff0000 }
-/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
-/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; width: auto; overflow: auto; display: block; }
-/* LineHighlight */ .chroma .hl { display: block; width: 100%;background-color: #f8fbe7 }
-/* LineNumbersTable */ .chroma .lnt { margin-right: 0.4em; padding: 0 0.4em 0 0.4em; }
-/* LineNumbers */ .chroma .ln { margin-right: 0.4em; padding: 0 0.4em 0 0.4em; }
-/* Keyword */ .chroma .k { color: #000080; font-weight: bold; }
-/* KeywordConstant */ .chroma .kc { color: #000080; font-weight: bold; }
-/* KeywordDeclaration */ .chroma .kd { color: #000080; font-weight: bold; }
-/* KeywordNamespace */ .chroma .kn { color: #000080; font-weight: bold; }
-/* KeywordPseudo */ .chroma .kp { color: #000080; font-weight: bold; }
-/* KeywordReserved */ .chroma .kr { color: #000080; font-weight: bold; }
-/* KeywordType */ .chroma .kt { color: #000080; font-weight: bold; }
-/* NameAttribute */ .chroma .na { color: #007f7f }
-/* NameBuiltin */ .chroma .nb { color: #000080; font-weight: bold; }
-/* NameTag */ .chroma .nt { }
-/* LiteralDate */ .chroma .ld { color: blue; }
-/* LiteralString */ .chroma .s { color: #2fb108; }
-/* LiteralStringAffix */ .chroma .sa { color: #2fb108; }
-/* LiteralStringBacktick */ .chroma .sb { color: #2fb108; }
-/* LiteralStringChar */ .chroma .sc { color: #2fb108; }
-/* LiteralStringDelimiter */ .chroma .dl { color: #2fb108; }
-/* LiteralStringDoc */ .chroma .sd { color: #2fb108; }
-/* LiteralStringDouble */ .chroma .s2 { color: #2fb108; }
-/* LiteralStringEscape */ .chroma .se { color: #2fb108; }
-/* LiteralStringHeredoc */ .chroma .sh { color: #2fb108; }
-/* LiteralStringInterpol */ .chroma .si { color: #2fb108; }
-/* LiteralStringOther */ .chroma .sx { color: #2fb108; }
-/* LiteralStringRegex */ .chroma .sr { color: #2fb108; }
-/* LiteralStringSingle */ .chroma .s1 { color: #2fb108; }
-/* LiteralStringSymbol */ .chroma .ss { color: #2fb108; }
-/* LiteralNumber */ .chroma .m { color: blue; }
-/* LiteralNumberBin */ .chroma .mb { color: blue; }
-/* LiteralNumberFloat */ .chroma .mf { color: blue; }
-/* LiteralNumberHex */ .chroma .mh { color: blue; }
-/* LiteralNumberInteger */ .chroma .mi { color: blue; }
-/* LiteralNumberIntegerLong */ .chroma .il { color: blue; }
-/* LiteralNumberOct */ .chroma .mo { color: blue; }
-/* Comment */ .chroma .c { color: #007f7f }
-/* CommentHashbang */ .chroma .ch { color: #007f7f }
-/* CommentMultiline */ .chroma .cm { color: #007f7f }
-/* CommentSingle */ .chroma .c1 { color: #007f7f }
-/* CommentSpecial */ .chroma .cs { color: #007f7f }
-/* CommentPreproc */ .chroma .cp { color: #00ff00; }
-/* CommentPreprocFile */ .chroma .cpf { color: #00ff00; }
-/* GenericHeading */ .chroma .gh { }
-/* GenericStrong */ .chroma .gs { }
-/* GenericSubheading */ .chroma .gu { }

@@ -37,19 +37,15 @@
         </div>
         <div class="box-body secondary-box">
             <div class="col-sm-6 form-group">
-                <div class="radio">
-                    <label>
-                        <input type="radio" ng-init="sd_type='static'" ng-model="sd_type" value="static"
-                            ng-change="disable_host_sanitize=(sd_type!='static')">
-                        Static address resolution (default)
-                    </label>
-                    <span class="help-block">99% of the times you will use static resolution.</span>
-                </div>
+                <label>
+                    <input type="radio" ng-init="sd_type='static'" ng-model="sd_type" value="static"
+                        ng-change="disable_host_sanitize=(sd_type!='static')">
+                    Static address resolution (default)
+                </label>
+                <span class="help-block">99% of the times you will use static resolution.</span>
 
                 <label><input type="checkbox" ng-model="disable_host_sanitize"> Disable sanitize</label>
                 <span class="help-block">Check only when the functionality must skip protocol checking.</span>
-
-
             </div>
 
             <div class="col-sm-6 form-group">

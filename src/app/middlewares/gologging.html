@@ -1,94 +1,80 @@
-<div class="box box-primary">
+<div class="box box-default box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox"
-          ng-checked="isMiddlewareEnabled()"
-          ng-click="toggleMiddleware()"> Logging</h3>
+    <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
+      Logging</h3>
   </div>
 
-  <div class="box-body"  ng-if="isMiddlewareEnabled()">
-    <p>Choose what is the reporting level you would like to see and where to log.</p>
-    <div class="row">
-      <div class="col-md-6">
-        <label class="control-label">Level</label>
-        <select class="form-control"
-        ng-model="data.extra_config[config_namespace].level"
-        id="data.extra_config[config_namespace].level"
-        name="data.extra_config[config_namespace].level">
-        <option value="DEBUG">DEBUG</option>
-        <option value="INFO">INFO</option>
-        <option value="WARNING">WARNING</option>
-        <option value="ERROR">ERROR</option>
-        <option value="CRITICAL">CRITICAL</option>
-      </select>
-      <span class="help-block">The reporting level, from more to less verbosity</span>
-    </div>
-    <div class="col-md-6">
-      <label class="control-label">Logging prefix</label>
-      <input class="form-control"
-      ng-model="data.extra_config[config_namespace].prefix"
-      id="data.extra_config[config_namespace].prefix"
-      name="data.extra_config[config_namespace].prefix"
-      type="text">
-      <span class="help-block">Prepend a string before the the log lines</span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="checkbox">
-        <label>
-          <input
-          type="checkbox"
-          ng-model="data.extra_config['telemetry/logstash'].enabled"
-          ng-click="data.extra_config['telemetry/logstash'].enabled ? null : data.extra_config[config_namespace].format='logstash'">
-          <strong>Enable Logstash</strong>
-        </label>
+  <div class="box-body">
+    <p ng-if=" !isMiddlewareEnabled()">Extend the default logging behaviour</p>
+
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="control-label">Level</label>
+          <select class="form-control" ng-model="data.extra_config[config_namespace].level"
+            id="data.extra_config[config_namespace].level" name="data.extra_config[config_namespace].level">
+            <option value="DEBUG">DEBUG</option>
+            <option value="INFO">INFO</option>
+            <option value="WARNING">WARNING</option>
+            <option value="ERROR">ERROR</option>
+            <option value="CRITICAL">CRITICAL</option>
+          </select>
+          <span class="help-block">The reporting level, from more to less verbosity</span>
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Logging prefix</label>
+          <input class="form-control" ng-model="data.extra_config[config_namespace].prefix"
+            id="data.extra_config[config_namespace].prefix" name="data.extra_config[config_namespace].prefix"
+            type="text">
+          <span class="help-block">Prepend a string before the the log lines</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="data.extra_config['telemetry/logstash'].enabled"
+                ng-click="data.extra_config['telemetry/logstash'].enabled ? null : data.extra_config[config_namespace].format='logstash'">
+              <strong>Enable Logstash</strong>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="control-label">Message format</label>
+          <select class="form-control" ng-model="data.extra_config[config_namespace].format"
+            id="data.extra_config[config_namespace].format" name="data.extra_config[config_namespace].format"
+            ng-change="data.extra_config[config_namespace].format == 'custom' ? true : deleteKey('custom_format')">
+            <option value="default">default</option>
+            <option value="logstash">logstash</option>
+            <option value="custom">custom</option>
+          </select>
+          <span class="help-block">The format of the log record</span>
+        </div>
+        <div class="col-md-6" ng-if="data.extra_config[config_namespace].format == 'custom'">
+          <label class="control-label">Custom format</label>
+          <input class="form-control" ng-model="data.extra_config[config_namespace].custom_format"
+            id="data.extra_config[config_namespace].custom_format"
+            name="data.extra_config[config_namespace].custom_format" type="text" placeholder="%{message}">
+          <span class="help-block">The pattern to use is the same as in the <a
+              href="https://github.com/op/go-logging/blob/master/format.go#L156">go-logging library</a></span>
+        </div>
+      </div>
+      <h4>Send logs to...</h4>
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="syslog" ng-model="data.extra_config[config_namespace].syslog">
+            <strong>Syslog</strong> - Send logs to syslog
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="stdout" ng-model="data.extra_config[config_namespace].stdout">
+            <strong>Stdout</strong> - Send logs to standard out
+          </label>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <label class="control-label">Message format</label>
-      <select class="form-control"
-      ng-model="data.extra_config[config_namespace].format"
-      id="data.extra_config[config_namespace].format"
-      name="data.extra_config[config_namespace].format"
-      ng-change="data.extra_config[config_namespace].format == 'custom' ? true : deleteKey('custom_format')">
-      <option value="default">default</option>
-      <option value="logstash">logstash</option>
-      <option value="custom">custom</option>
-    </select>
-    <span class="help-block">The format of the log record</span>
-  </div>
-  <div class="col-md-6" ng-if="data.extra_config[config_namespace].format == 'custom'">
-    <label class="control-label">Custom format</label>
-    <input class="form-control"
-    ng-model="data.extra_config[config_namespace].custom_format"
-    id="data.extra_config[config_namespace].custom_format"
-    name="data.extra_config[config_namespace].custom_format"
-    type="text"
-    placeholder="%{message}">
-    <span class="help-block">The pattern to use is the same as in the <a href="https://github.com/op/go-logging/blob/master/format.go#L156">go-logging library</a></span>
-  </div>
-</div>
-  <h4>Send logs to...</h4>
-  <div class="form-group">
-    <div class="checkbox">
-      <label>
-        <input
-        type="checkbox"
-        value="syslog"
-        ng-model="data.extra_config[config_namespace].syslog">
-        <strong>Syslog</strong> - Send logs to syslog
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input
-        type="checkbox"
-        value="stdout"
-        ng-model="data.extra_config[config_namespace].stdout">
-        <strong>Stdout</strong> - Send logs to standard out
-      </label>
-    </div>
-  </div>
-</div>

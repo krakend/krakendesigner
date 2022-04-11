@@ -1,11 +1,12 @@
-<div class="box box-primary">
+<div class="box box-default box-solid">
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox"
       ng-checked="isMiddlewareEnabled()"
       ng-click="toggleOpencensusMiddleware()"> Opencensus <small>(Newrelic, Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver, Datadog, and more)</small></h3>
     </div>
-    <div class="box-body" ng-if="isMiddlewareEnabled()">
-      <p>The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different backends. Select all the metric integrations you want to enable and configure below:</p>
+    <div class="box-body">
+      <p ng-if="!isMiddlewareEnabled()">The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different third party systems.</p>
+      <div ng-if="isMiddlewareEnabled()">
       <div class="form-group">
         <div class="checkbox">
           <label>
@@ -612,4 +613,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div></div>

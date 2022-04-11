@@ -1,92 +1,96 @@
-<div class="box box-primary">
+<div class="box box-info box-solid">
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
       API Analytics <small>(Google Analytics)</small></h3>
     <div class="pull-right">
-      <span class="pull-right-container badge">Enterprise</span>
+      <span class="pull-right-container badge badge-inverse">Enterprise</span>
     </div>
   </div>
-  <div class="box-body" ng-if="isMiddlewareEnabled()">
-    <p>Generate API Analytics from your API activity, using Google's Analytics platform as the storage backend</p>
-    <div class="form-group">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="control-label">Track ID</label>
-          <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].track_id"
-            placeholder="UA-12345678-9">
-          <span class="help-block">
-            The tracking ID as provided by Google. It is recommended to create a new property in Google Analytics to
-            track the activity.
-          </span>
-        </div>
-        <div class="col-md-6">
-          <label class="control-label">URL</label>
-          <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].url"
-            placeholder="https://www.google-analytics.com/batch">
-          <span class="help-block">
-            The reporting URL where KrakenD sends the batches. Unless you need a custom backend endpoint, use
-            <code>https://www.google-analytics.com/batch</code>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="control-label">Workers</label>
-          <input type="number" class="form-control" ng-model="data.extra_config[config_namespace].workers"
-            placeholder="2">
-          <span class="help-block">
-            The number of internal workers that send the reports in batch.
-          </span>
-        </div>
-        <div class="col-md-6">
-          <label class="control-label">Buffer Size</label>
-          <input type="number" class="form-control"
-            placeholder="100">
-          <span class="help-block">
-            The size of the buffer determines how much data can be stored in memory. The default value is twice the
-            number of workers. It must be at least twice the number of workers, otherwise it is automatically changed to
-            the double.
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="row">
-        <div class="col-md-4">
-          <label class="control-label" for="data.extra_config[config_namespace].timeout">Timeout</label>
-          <input class="form-control" id="data.extra_config[config_namespace].timeout"
-            ng-model="data.extra_config[config_namespace].timeout" placeholder="100ms" type="text">
-          <div class="help-block">
-            <p>The time you will wait for the internal buffer to be avaiable before discarding a report.</p>
+  <div class="box-body">
+    <p ng-if="!isMiddlewareEnabled()">Generate API Analytics from your API activity, using Google's Analytics platform
+      as the storage backend</p>
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="control-label">Track ID</label>
+            <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].track_id"
+              placeholder="UA-12345678-9">
+            <span class="help-block">
+              The tracking ID as provided by Google. It is recommended to create a new property in Google Analytics to
+              track the activity.
+            </span>
+          </div>
+          <div class="col-md-6">
+            <label class="control-label">URL</label>
+            <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].url"
+              placeholder="https://www.google-analytics.com/batch">
+            <span class="help-block">
+              The reporting URL where KrakenD sends the batches. Unless you need a custom backend endpoint, use
+              <code>https://www.google-analytics.com/batch</code>
+            </span>
           </div>
         </div>
-        <div class="col-md-8">
-          <label class="control-label" for="data.extra_config[config_namespace].tags">Tags</label>
-          <span class="help-block">The list of tags you want to include when sending reports.</span>
-          <table class="table table-striped">
-						<tbody>
-						<tr ng-repeat="(tag,value) in data.extra_config[config_namespace].tags">
-							<td>{{ tag }}</td>
-							<td>{{ value }}</td>
-							<td>
-								<button type="button" class="btn btn-danger" ng-click="deleteKey(tag,'tags')">
-									<i class="fa fa-trash"></i> Remove
-								</button>
-							</td>
-						</tr>
-						<tr>
-							<td><input type="text" class="form-control" ng-model="ga_tag" placeholder="cd1"></td>
-							<td><input type="text" class="form-control" ng-model="ga_tag_value" placeholder="custom dimension 1"></td>
-							<td>
-								<button type="button" class="btn btn-success" ng-click="addKeyPair(ga_tag,ga_tag_value,'tags')">
-									<i class="fa fa-plus"></i> Add tag
-								</button>
-							</td>
-						</tr>
-						</tbody>
-					</table>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="control-label">Workers</label>
+            <input type="number" class="form-control" ng-model="data.extra_config[config_namespace].workers"
+              placeholder="2">
+            <span class="help-block">
+              The number of internal workers that send the reports in batch.
+            </span>
+          </div>
+          <div class="col-md-6">
+            <label class="control-label">Buffer Size</label>
+            <input type="number" class="form-control" placeholder="100">
+            <span class="help-block">
+              The size of the buffer determines how much data can be stored in memory. The default value is twice the
+              number of workers. It must be at least twice the number of workers, otherwise it is automatically changed
+              to
+              the double.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-4">
+            <label class="control-label" for="data.extra_config[config_namespace].timeout">Timeout</label>
+            <input class="form-control" id="data.extra_config[config_namespace].timeout"
+              ng-model="data.extra_config[config_namespace].timeout" placeholder="100ms" type="text">
+            <div class="help-block">
+              <p>The time you will wait for the internal buffer to be avaiable before discarding a report.</p>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <label class="control-label" for="data.extra_config[config_namespace].tags">Tags</label>
+            <span class="help-block">The list of tags you want to include when sending reports.</span>
+            <table class="table table-striped">
+              <tbody>
+                <tr ng-repeat="(tag,value) in data.extra_config[config_namespace].tags">
+                  <td>{{ tag }}</td>
+                  <td>{{ value }}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" ng-click="deleteKey(tag,'tags')">
+                      <i class="fa fa-trash"></i> Remove
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="text" class="form-control" ng-model="ga_tag" placeholder="cd1"></td>
+                  <td><input type="text" class="form-control" ng-model="ga_tag_value" placeholder="custom dimension 1">
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-success" ng-click="addKeyPair(ga_tag,ga_tag_value,'tags')">
+                      <i class="fa fa-plus"></i> Add tag
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
