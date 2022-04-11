@@ -1,0 +1,21 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+      GeoIP</h3>
+    <div class="pull-right">
+      <span class="pull-right-container badge badge-inverse">Enterprise</span>
+    </div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!hasHttpServerPlugin()">Load Maxmind's GeoIP2 City database (commercial and free versions) and enrich all KrakenD calls to your backends with geographical data.</p>
+    <div ng-if="hasHttpServerPlugin()">
+      <div class="form-group">
+        <div class="col-md-12">
+          <label class="control-label">Database path</label>
+          <input class="form-control" placeholder="./GeoLite2-City.mmdb" type="text" required="" ng-model="data.extra_config[plugin_type][plugin_name].citydb_path">
+          <span class="help-block">The path in the filesystem containing the database in GeoIP2 Binary (<code>.mmdb</code>) format. Relative to the working dir or absolute path.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

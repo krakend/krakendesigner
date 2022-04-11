@@ -45,6 +45,9 @@ angular
                             "https://example-server/jwk.json",
                             "http://example-server/public_keys"
                         ]
+                    },
+                    "krakend-geoip": {
+                        "citydb_path": "./GeoLite2-City.mmdb"
                     }
                 },
                 "plugin/http-client": {},
