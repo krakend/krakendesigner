@@ -31,6 +31,13 @@ angular
                     "krakend-basic-auth": {
                         "htpasswd_path": "/etc/krakend/.htpasswd",
                         "endpoints": ["*"]
+                    },
+                    "redis-ratelimit": {
+                        "Host": "redis:6379",
+                        "Tokenizer": "ip",
+                        "Burst": 10,
+                        "Rate": 100,
+                        "Period": "60s"
                     }
                 },
                 "plugin/http-client": {},

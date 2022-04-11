@@ -99,7 +99,7 @@ angular
         }
 
         scope.addRole = function (role) {
-          if (scope.selected_roles.indexOf(role) === -1) {
+          if (role && scope.selected_roles.indexOf(role) === -1) {
             scope.selected_roles.push(role);
           }
         }

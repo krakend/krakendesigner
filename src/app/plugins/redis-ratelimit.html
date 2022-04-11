@@ -1,0 +1,75 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+      Redis Rate Limit</h3>
+    <div class="pull-right">
+      <span class="pull-right-container badge badge-inverse">Enterprise</span>
+    </div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!hasHttpServerPlugin()">The global rate limit functionality enables a Redis database store to centralize
+      all KrakenD node counters. Instead of having each KrakenD node count its hits, the counters are global and stored
+      in the database.</p>
+    <div ng-if="hasHttpServerPlugin()">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label class="control-label">Address</label>
+          <input class="form-control" placeholder="192.168.1.1:6379" type="text" required=""
+            ng-model="data.extra_config[plugin_type][plugin_name].Host">
+
+          <span class="help-block">The host and port where your redis is using the format <code>host:port</code>, e.g.:
+            <code>redis:6379</code></span>
+        </div>
+        <div class="col-md-6"
+          ng-class="validator.isInteger(data.extra_config[plugin_type][plugin_name].Rate) ? '' : 'has-error'">
+          <label class="control-label">Rate</label>
+
+          <input class="form-control" placeholder="100" type="number" required=""
+            ng-model="data.extra_config[plugin_type][plugin_name].Rate">
+
+          <span class="help-block">Number of allowed requests during the observed period.</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6"
+          ng-class="validator.isValidTimeUnit(data.extra_config[plugin_type][plugin_name].Period) ? '' : 'has-error'">
+          <label class="control-label">Period</label>
+          <input class="form-control" placeholder="1h" type="text" required=""
+            ng-model="data.extra_config[plugin_type][plugin_name].Period">
+
+          <span class="help-block">Time window on which the counters take effect.</span>
+          <p ng-hide="validator.isValidTimeUnit(data.extra_config[plugin_type][plugin_name].Period)" ng-include src="'/src/app/forms/time_units.html'"></p>
+        </div>
+        <div class="col-md-6"
+          ng-class="validator.isInteger(data.extra_config[plugin_type][plugin_name].Burst) ? '' : 'has-error'">
+          <label class="control-label">Burst</label>
+
+          <input class="form-control" placeholder="10" type="number" required=""
+            ng-model="data.extra_config[plugin_type][plugin_name].Burst">
+
+          <span class="help-block">How many requests a client can make above the rate specified during a peak.</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label class="control-label">Tokenizer</label>
+          <select class="form-control" type="text" required=""
+            ng-model="data.extra_config[plugin_type][plugin_name].Tokenizer">
+            <option ng-repeat="(tokenizer,desc) in constants.redis_tokenizers" value="{{ tokenizer }}">{{ desc }}
+            </option>
+          </select>
+          <span class="help-block">The strategy to define users. How do you identify a user?</span>
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Tokenizer Field</label>
+          <input class="form-control" placeholder="field" type="text" required=""
+            ng-model="data.extra_config[plugin_type][plugin_name].TokenizerField">
+
+          <span class="help-block">A custom field that contains the tokenizer (e.g., extracting the token from a custom header
+            other than <code>Authorization</code> or using a claim from a JWT other than <code>jti</code>)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

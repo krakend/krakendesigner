@@ -180,7 +180,18 @@
                         </span>
                     </div>
                     <div class="col-md-3">
-
+                        <label>Stateful Rate limit with Redis</label>
+                        <span class="label label-success"
+                            ng-if="endpoint.extra_config['plugin/http-server']['redis-ratelimit']">on</span>
+                        <span class="label label-default"
+                            ng-if="!endpoint.extra_config['plugin/http-server']['redis-ratelimit']">off</span>
+                        <button class="btn btn-default btn-flat" data-toggle="modal"
+                            data-target="#throttling-redis-modal-{{ endpoint_index }}">
+                            <i class="fa fa-wrench"></i> Centralized Throttling
+                        </button>
+                        <span class="help-block">
+                            Enable shared usage limits for this endpoint across all KrakenD nodes.
+                        </span>
                     </div>
 
                     <div class="col-md-3">
@@ -213,8 +224,7 @@
                                         </h3>
                                     </div>
                                     <div class="box-body">
-                                        <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">You have not configured any
-                                            API Keys yet.</p>
+                                        <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">API Keys are not enabled yet.</p>
                                         <div class="form-group" ng-if="hasServiceExtraConfig('auth/api-keys')">
                                             <div class="col-md-12">
                                                 <table class="table table-striped">
@@ -238,8 +248,7 @@
                                                             <td>
                                                                 <p
                                                                     ng-if="!endpoint.extra_config['auth/api-keys'].roles">
-                                                                    <i class="fa fa-warning icon-warning"></i> This
-                                                                    endpoint does not use any API-Key role yet
+                                                                    <i class="fa fa-warning icon-warning"></i> Click on a role on the left
                                                                 </p>
                                                                 <ul class="list-inline">
                                                                     <li
@@ -256,7 +265,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <p><a href="/#!/api-keys">Go to API Key settings</a></p>
+                                        <p><a href="/#!/api-keys">Enable and configure API Keys</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -912,6 +921,21 @@
                 <div class="modal-body">
                     <middleware data="endpoint" namespace="'qos/ratelimit/router'" template="ratelimit_router.html">
                     </middleware>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Window for global rate limiting-->
+    <div id="throttling-redis-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Distributed rate limiting (throttling)</code></h4>
+                </div>
+                <div class="modal-body">
+                    <plugin root="service" placement="endpoint" template="redis-ratelimit.html" plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
                 </div>
             </div>
         </div>
