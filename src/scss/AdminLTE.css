@@ -1561,7 +1561,7 @@ a:focus {
 .box.box-success {
   border-top-color: #0e57c7;
 }
-.box.box-default {
+.box.box-info {
   border-top-color: #d2d6de;
 }
 .box.collapsed-box .box-body,
@@ -1595,16 +1595,16 @@ a:focus {
 .box.box-solid > .box-header a:hover {
   background: rgba(0, 0, 0, 0.1);
 }
-.box.box-solid.box-default {
+.box.box-solid.box-info {
   border: 1px solid #d2d6de;
 }
-.box.box-solid.box-default > .box-header {
+.box.box-solid.box-info > .box-header {
   color: #444444;
   background: #d2d6de;
   background-color: #d2d6de;
 }
-.box.box-solid.box-default > .box-header a,
-.box.box-solid.box-default > .box-header .btn {
+.box.box-solid.box-info > .box-header a,
+.box.box-solid.box-info > .box-header .btn {
   color: #444444;
 }
 .box.box-solid.box-primary {

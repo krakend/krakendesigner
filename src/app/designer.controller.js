@@ -465,8 +465,7 @@ angular
                 for (b = 0; backends && b < backends.length; b++) {
                     backend = $rootScope.getObject("service", "endpoints", i, "backend", b, "host");
                     if (null === backend) {
-                        $rootScope.service.endpoints[i].backend[b].host = host;
-                        $rootScope.service.endpoints[i].backend[b].sd = sd_type;
+                        $rootScope.syncHostsInBackend(i, b, false, host, disable_host_sanitize);
                     }
                 }
             }
@@ -570,11 +569,6 @@ angular
         };
 
         $rootScope.addEndpoint = function () {
-
-            //if (typeof $rootScope.sd_providers === "undefined" || typeof $rootScope.sd_providers.hosts === "undefined" || 1 < $rootScope.service.length) {
-            //    alert("You need to add at least one host in the Service Configuration or Service Discovery panels.");
-            //    return false;
-            //}
 
             if (typeof $rootScope.service.endpoints === "undefined") {
                 $rootScope.service.endpoints = [];
@@ -789,7 +783,9 @@ angular
                 $rootScope.service.endpoints[endpoint_index].input_headers = [];
             }
 
-            $rootScope.addTermToArray(header, $rootScope.service.endpoints[endpoint_index].input_headers);
+            if (header) {
+                $rootScope.addTermToArray(header, $rootScope.service.endpoints[endpoint_index].input_headers);
+            }
         };
 
         $rootScope.deleteHeaderPassing = function (endpoint_index, header_index) {

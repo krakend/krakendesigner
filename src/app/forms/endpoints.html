@@ -1,4 +1,4 @@
-<div class="box box-primary" ng-if="service.extra_config['plugin/http-server']['krakend-static-live']">
+<div class="box box-info" ng-if="service.extra_config['plugin/http-server']['krakend-static-live']">
     <div class="box-header with-border">
         <h3 class="box-title">Static files <span class="badge ">Enterprise</span></h3>
         <div class="box-tools pull-right">
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<div class="box box-primary" ng-repeat="(endpoint_index,endpoint) in service.endpoints"
+<div class="box box-info" ng-repeat="(endpoint_index,endpoint) in service.endpoints"
     ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'" id="e{{ endpoint_index }}">
     <div class="box-header with-border">
         <h3 class="box-title">
@@ -81,7 +81,7 @@
                             <option value="PATCH">PATCH</option>
                             <option value="DELETE">DELETE</option>
                         </select>
-                        <span class="help-block">HTTP verb</span>
+                        <span class="help-block">Method</span>
                     </div>
                     <div class="col-md-2 col-sm-2">
                         <label>Output</label>
@@ -136,10 +136,8 @@
                                 </button>
                             </div>
                         </div>
-                        <span class="help-block">Allowed headers to pass from client to each of the backends. These
-                            headers are not an addition, but a replacement when they are set. Use only if you need
-                            custom headers to pass back but ensure to declare all needed headers (including
-                            <code>Content-Type</code>).</span>
+                        <span class="help-block">Unless added here, no headers from the client will reach the backends. Use only if you need
+                            custom headers to reach your backend (e.g.: <code>Content-Type</code>). Add a single <code>*</code> to pass all headers (security concerns)</span>
                         <div class="input-group">
                             <ul class="list-unstyled">
                                 <li ng-repeat="(index,header) in endpoint.input_headers">
@@ -166,31 +164,32 @@
                 <div class="form-group">
                     <div class="col-md-3">
                         <label>Rate limit</label>
+                        <br />
+                        <button class="btn btn-default btn-flat" data-toggle="modal"
+                            data-target="#throttling-modal-{{ endpoint_index }}">
+                            <i class="fa fa-wrench"></i> Stateless rate-limit
+                        </button>
                         <span class="label label-success"
                             ng-if="endpoint.extra_config['qos/ratelimit/router']">on</span>
                         <span class="label label-default"
                             ng-if="!endpoint.extra_config['qos/ratelimit/router']">off</span>
-                        <br />
-                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                            data-target="#throttling-modal-{{ endpoint_index }}">
-                            <i class="fa fa-wrench"></i> Throttling
-                        </button>
                         <span class="help-block">
                             Enable usage limits for this endpoint
                         </span>
                     </div>
                     <div class="col-md-3">
-                        <label>Stateful Rate limit with Redis</label>
+                        <label>Global Rate limit <span class="badge">Enterprise</span></label>
+                        <br/>
+                        <button class="btn btn-default btn-flat" data-toggle="modal"
+                            data-target="#throttling-redis-modal-{{ endpoint_index }}">
+                            <i class="fa fa-wrench"></i> Stateful rate-limit
+                        </button>
                         <span class="label label-success"
                             ng-if="endpoint.extra_config['plugin/http-server']['redis-ratelimit']">on</span>
                         <span class="label label-default"
                             ng-if="!endpoint.extra_config['plugin/http-server']['redis-ratelimit']">off</span>
-                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                            data-target="#throttling-redis-modal-{{ endpoint_index }}">
-                            <i class="fa fa-wrench"></i> Centralized Throttling
-                        </button>
                         <span class="help-block">
-                            Enable shared usage limits for this endpoint across all KrakenD nodes.
+                            Stateful/centralized rate-limiting backed on Redis.
                         </span>
                     </div>
 
@@ -220,13 +219,19 @@
                                     <div class="box-header with-border">
                                         <h3 class="box-title">
                                             API-Key Authentication
-                                            <span class="badge badge-inverse">Enterprise</span>
                                         </h3>
+                                        <div class="pull-right">
+                                            <span class="pull-right-container badge badge-inverse">Enterprise</span>
+                                          </div>
                                     </div>
                                     <div class="box-body">
                                         <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">API Keys are not enabled yet.</p>
                                         <div class="form-group" ng-if="hasServiceExtraConfig('auth/api-keys')">
                                             <div class="col-md-12">
+                                                <p
+                                                                    ng-if="!endpoint.extra_config['auth/api-keys'].roles">
+                                                                    <i class="fa fa-warning icon-warning"></i> This endpoint is not protected by API Keys unless you select at least an available role below
+                                                                </p>
                                                 <table class="table table-striped">
                                                     <tbody>
                                                         <tr>
@@ -248,7 +253,7 @@
                                                             <td>
                                                                 <p
                                                                     ng-if="!endpoint.extra_config['auth/api-keys'].roles">
-                                                                    <i class="fa fa-warning icon-warning"></i> Click on a role on the left
+                                                                    <i class="fa fa-warning icon-warning"></i> None selected
                                                                 </p>
                                                                 <ul class="list-inline">
                                                                     <li
@@ -307,11 +312,16 @@
 
                     </div>
                     <div class="col-md-12" ng-repeat="(backend_index,backend) in endpoint.backend">
-                        <div class="box box-primary box-solid">
+                        <div class="box box-info box-solid">
                             <div class="box-header with-border">
-                                <h3 class="box-title">{{ backend.url_pattern }}</h3>
-
+                                <h3 class="box-title">
+                                    <span class="method_header badge method_{{ backend.method.length ? backend.method : 'GET' }}">{{
+                                        backend.method.length ? backend.method : 'GET' }}</span>
+                                    {{ backend.url_pattern }}
+                                </h3>
                                 <div class="box-tools pull-right">
+                                    <span ng-show="!backend.host.length"
+                                                class="badge label-danger"><i class="fa fa-warning"></i> Select a host!</span>
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                         <i class="fa fa-minus"></i>
                                     </button>
@@ -331,47 +341,70 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-
-                                        <label>Select hosts <span ng-show="!backend.host.length"
-                                                class="badge label-danger"><i class="fa fa-warning"></i> Select at least
-                                                one host!</span></label>
-                                        <span class="help-block">All the backends that can be used to fulfill this
-                                            request, balanced using Round Robin.</span>
+                                    <div class="col-md-2">
+                                        <label>Hosts</label>
                                         <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
                                             value="{{ host.host }}">
-                                            <label>
+                                            <label class="form-control">
                                                 <input type="checkbox" ng-model="checked"
                                                     ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
                                                     ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
                                                 {{ host.host }}
                                             </label>
                                         </div>
-                                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                                            data-target="#add-hosts-modal">
-                                            <i class="fa fa-wrench"></i> Add host
-                                        </button>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label>Host resolution</label>
-                                        <span class="help-block">Service Discovery options you have configured. <a
-                                                href="/#!/service">(add more?)</a></span>
-                                        <div class="radio" ng-repeat="sd in sd_providers.providers">
+                                        <div class="radio-inline" ng-repeat="sd in sd_providers.providers">
                                             <label>
                                                 <input type="radio" ng-model="backend.sd" value="{{ sd }}"
                                                     ng-change="deleteHostsInBackend(endpoint_index, backend_index)">
                                                 {{ sd }}
                                             </label>
                                         </div>
+                                        <button class="btn btn-default btn-flat form-control"
+                                        ng-class="!backend.host.length ? 'label-danger' : ''"
+                                            data-toggle="modal"
+                                            data-target="#add-hosts-modal">
+                                            <i class="fa fa-wrench"></i> Add host
+                                        </button>
+                                        <span class="help-block">Receiving services, balanced using Round Robin.</span>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label>
+                                    <div class="col-md-2">
+                                        <label>Method</label>
+                                        <select id="backend.method" ng-model="backend.method" name="backend.method"
+                                            class="form-control">
+                                            <option value="GET">GET</option>
+                                            <option value="POST">POST</option>
+                                            <option value="PUT">PUT</option>
+                                            <option value="PATCH">PATCH</option>
+                                            <option value="DELETE">DELETE</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Backend endpoint</label>
+                                        <input type="text" placeholder="/users/{username}" class="form-control"
+                                            required="" ng-model="backend.url_pattern">
+
+                                        <span class="help-block">The endpoint of the backend server to query. Reuse here
+                                            any <code>{parameters}</code> defined in the parent endpoint.</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Rate Limit</label>
+                                        <br/>
+                                        <button class="btn btn-default btn-flat" data-toggle="modal"
+                                            data-target="#backend-modal-{{ endpoint_index}}{{ backend_index }}">
+                                            <i class="fa fa-wrench"></i> Rate-limit backend
+                                        </button>
+                                        <span class="label label-success" ng-if="backend.extra_config['qos/ratelimit/proxy']">on</span>
+                                        <span class="label label-default" ng-if="!backend.extra_config['qos/ratelimit/proxy']">off</span>
+                                        <span class="help-block">Limit requests to this backend regardless of its endpoint usage</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Resolution</label>
+                                        <div class="input-group">
                                             <input type="checkbox" ng-model="backend.disable_host_sanitize">
-                                            Disable host sanitization
-                                        </label>
+                                            Disable sanitization
+                                        </div>
                                         <span class="help-block">
-                                            Check when the address doesn't need to verify the
-                                            protocol. If unsure, leave the proposed value.
+                                            If unsure, leave the default.
                                         </span>
                                     </div>
                                 </div>
@@ -397,7 +430,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-
                                     <div class="col-md-6">
                                         <middleware data="backend" template="graphql.html"
                                             namespace="'backend/graphql'"></middleware>
@@ -405,37 +437,6 @@
                                     <div class="col-md-6">
                                         <middleware data="backend" template="lambda.html" namespace="'backend/lambda'">
                                         </middleware>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Backend endpoint</label>
-                                        <input type="text" placeholder="/users/{username}" class="form-control"
-                                            required="" ng-model="backend.url_pattern">
-
-                                        <span class="help-block">The endpoint of the backend server to query. Reuse here
-                                            any <code>{parameters}</code> defined in the parent endpoint.</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>HTTP Verb</label>
-                                        <select id="backend.method" ng-model="backend.method" name="backend.method"
-                                            class="form-control">
-                                            <option value="GET">GET</option>
-                                            <option value="POST">POST</option>
-                                            <option value="PUT">PUT</option>
-                                            <option value="PATCH">PATCH</option>
-                                            <option value="DELETE">DELETE</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Rate Limit</label>
-                                        <br />
-                                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                                            data-target="#backend-modal-{{ endpoint_index}}{{ backend_index }}">
-                                            <i class="fa fa-wrench"></i> Rate limit this backend
-                                        </button>
-                                        <span class="help-block">Limit the number of requests this backend will receive
-                                            regardless of its endpoint configuration</span>
                                     </div>
                                 </div>
                                 <div ng-if="endpoint.output_encoding != 'no-op'">
@@ -787,64 +788,14 @@
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Rate limit requests to
-                                            <code>{{backend.url_pattern}}</code>
+                                            <h4 class="modal-title">Rate limit requests to <code>{{backend.url_pattern}}</code>
                                         </h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p>All the settings below are defined in the <strong>Service
-                                                configuration</strong>,
-                                            setting one or several values here means overriding the settings for
-                                            this specific backend
-                                            only.</p>
-                                        <div class="form-group">
-                                            <div class="col-md-12"
-                                                ng-class="isInteger(backend.extra_config['qos/ratelimit/proxy'].max_rate) ? '' : 'has-error'">
-                                                <label>Max rate limit</label>
-                                                <div class="input-group">
-                                                    <input class="form-control" type="number"
-                                                        ng-model="backend.extra_config['qos/ratelimit/proxy'].max_rate"
-                                                        ng-change="backend.extra_config['qos/ratelimit/proxy'].capacity=backend.extra_config['qos/ratelimit/proxy'].max_rate">
-                                                    <div class="input-group-addon">reqs/sec</div>
-                                                </div>
-                                                <div class="help-block">
-                                                    <p ng-hide="isInteger(backend.extra_config['qos/ratelimit/proxy'].max_rate)"
-                                                        class="badge label-danger"><i class="fa fa-warning"></i>
-                                                        Invalid format</p>
-                                                    <p>Maximum requests per second you want to accept in this
-                                                        backend.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group"
-                                            ng-class="isInteger(backend.extra_config['qos/ratelimit/proxy'].capacity) ? '' : 'has-error'">
-                                            <div class="col-md-12">
-                                                <label class="control-label">Capacity (Burst size)</label>
-                                                <div class="input-group">
-                                                    <input class="form-control"
-                                                        ng-model="backend.extra_config['qos/ratelimit/proxy'].capacity"
-                                                        id="backend.extra_config['qos/ratelimit/proxy'].capacity"
-                                                        name="backend.extra_config['qos/ratelimit/proxy'].capacity"
-                                                        type="number">
-                                                    <div class="input-group-addon">reqs/sec</div>
-                                                </div>
-                                                <div class="help-block">
-                                                    <p ng-hide="isInteger(backend.extra_config['qos/ratelimit/proxy'].capacity)"
-                                                        class="badge label-danger"><i class="fa fa-warning"></i>
-                                                        Invalid format</p>
-                                                    <p>Recommended value <code>capacity=max_rate</code>. A <a
-                                                            href="https://en.wikipedia.org/wiki/Token_bucket">token
-                                                            bucket</a> algorithm is used with a bucket capacity ==
-                                                        tokens added per second. KrakenD is able to allow bursting
-                                                        on the request rates.</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <middleware data="backend" namespace="'qos/ratelimit/proxy'" template="ratelimit_backend.html"></middleware>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <!-- /Modal backend -->
                     <div class="col-md-12" ng-if="endpoint.extra_config['proxy'].static">
