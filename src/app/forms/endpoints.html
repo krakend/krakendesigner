@@ -68,7 +68,8 @@
                             backends.</span>
                     </div>
                     <div class="col-md-2 col-sm-2">
-                        <plugin root="service" placement="endpoint" template="wildcard.html" plugin="'krakend-wildcard'" type="'plugin/http-server'"></plugin>
+                        <plugin root="service" placement="endpoint" template="wildcard.html" plugin="'krakend-wildcard'"
+                            type="'plugin/http-server'"></plugin>
                     </div>
                     <div class="col-md-2 col-sm-2">
                         <label>Method</label>
@@ -136,8 +137,10 @@
                                 </button>
                             </div>
                         </div>
-                        <span class="help-block">Unless added here, no headers from the client will reach the backends. Use only if you need
-                            custom headers to reach your backend (e.g.: <code>Content-Type</code>). Add a single <code>*</code> to pass all headers (security concerns)</span>
+                        <span class="help-block">Unless added here, no headers from the client will reach the backends.
+                            Use only if you need
+                            custom headers to reach your backend (e.g.: <code>Content-Type</code>). Add a single
+                            <code>*</code> to pass all headers (security concerns)</span>
                         <div class="input-group">
                             <ul class="list-unstyled">
                                 <li ng-repeat="(index,header) in endpoint.input_headers">
@@ -179,7 +182,7 @@
                     </div>
                     <div class="col-md-3">
                         <label>Global Rate limit <span class="badge">Enterprise</span></label>
-                        <br/>
+                        <br />
                         <button class="btn btn-default btn-flat" data-toggle="modal"
                             data-target="#throttling-redis-modal-{{ endpoint_index }}">
                             <i class="fa fa-wrench"></i> Stateful rate-limit
@@ -222,16 +225,18 @@
                                         </h3>
                                         <div class="pull-right">
                                             <span class="pull-right-container badge badge-inverse">Enterprise</span>
-                                          </div>
+                                        </div>
                                     </div>
                                     <div class="box-body">
-                                        <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">API Keys are not enabled yet.</p>
+                                        <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">API Keys are not enabled
+                                            yet.</p>
                                         <div class="form-group" ng-if="hasServiceExtraConfig('auth/api-keys')">
                                             <div class="col-md-12">
-                                                <p
-                                                                    ng-if="!endpoint.extra_config['auth/api-keys'].roles">
-                                                                    <i class="fa fa-warning icon-warning"></i> This endpoint is not protected by API Keys unless you select at least an available role below
-                                                                </p>
+                                                <p ng-if="!endpoint.extra_config['auth/api-keys'].roles">
+                                                    <i class="fa fa-warning icon-warning"></i> This endpoint is not
+                                                    protected by API Keys unless you select at least an available role
+                                                    below
+                                                </p>
                                                 <table class="table table-striped">
                                                     <tbody>
                                                         <tr>
@@ -253,7 +258,8 @@
                                                             <td>
                                                                 <p
                                                                     ng-if="!endpoint.extra_config['auth/api-keys'].roles">
-                                                                    <i class="fa fa-warning icon-warning"></i> None selected
+                                                                    <i class="fa fa-warning icon-warning"></i> None
+                                                                    selected
                                                                 </p>
                                                                 <ul class="list-inline">
                                                                     <li
@@ -281,7 +287,8 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
-                                <plugin root="service" placement="endpoint" template="ipfilter.html" plugin="'krakend-ipfilter'" type="'plugin/req-resp-modifier'"></plugin>
+                                <plugin root="service" placement="endpoint" template="ipfilter.html"
+                                    plugin="'krakend-ipfilter'" type="'plugin/req-resp-modifier'"></plugin>
                                 <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint">
                                 </middleware>
                             </div>
@@ -296,7 +303,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <h4>Backend API calls (Upstream services)</h4>
+                        <h3>Backends (Upstream) for <code>{{ endpoint.endpoint }}</code></h3>
                         <input type="checkbox" ng-model="endpoint.extra_config['proxy'].sequential">
                         <strong>Enable sequential proxy</strong>
                         <span class="help-block">
@@ -315,13 +322,14 @@
                         <div class="box box-info box-solid">
                             <div class="box-header with-border">
                                 <h3 class="box-title">
-                                    <span class="method_header badge method_{{ backend.method.length ? backend.method : 'GET' }}">{{
+                                    <span
+                                        class="method_header badge method_{{ backend.method.length ? backend.method : 'GET' }}">{{
                                         backend.method.length ? backend.method : 'GET' }}</span>
                                     {{ backend.url_pattern }}
                                 </h3>
                                 <div class="box-tools pull-right">
-                                    <span ng-show="!backend.host.length"
-                                                class="badge label-danger"><i class="fa fa-warning"></i> Select a host!</span>
+                                    <span ng-show="!backend.host.length" class="badge label-danger"><i
+                                            class="fa fa-warning"></i> Select a host!</span>
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                         <i class="fa fa-minus"></i>
                                     </button>
@@ -336,7 +344,7 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h4>Request</h4>
+                                        <h3>Request</h3>
                                         <p>All the data needed to send the request to the servers.</p>
                                     </div>
                                 </div>
@@ -360,8 +368,7 @@
                                             </label>
                                         </div>
                                         <button class="btn btn-default btn-flat form-control"
-                                        ng-class="!backend.host.length ? 'label-danger' : ''"
-                                            data-toggle="modal"
+                                            ng-class="!backend.host.length ? 'label-danger' : ''" data-toggle="modal"
                                             data-target="#add-hosts-modal">
                                             <i class="fa fa-wrench"></i> Add host
                                         </button>
@@ -388,14 +395,17 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label>Rate Limit</label>
-                                        <br/>
+                                        <br />
                                         <button class="btn btn-default btn-flat" data-toggle="modal"
                                             data-target="#backend-modal-{{ endpoint_index}}{{ backend_index }}">
                                             <i class="fa fa-wrench"></i> Rate-limit backend
                                         </button>
-                                        <span class="label label-success" ng-if="backend.extra_config['qos/ratelimit/proxy']">on</span>
-                                        <span class="label label-default" ng-if="!backend.extra_config['qos/ratelimit/proxy']">off</span>
-                                        <span class="help-block">Limit requests to this backend regardless of its endpoint usage</span>
+                                        <span class="label label-success"
+                                            ng-if="backend.extra_config['qos/ratelimit/proxy']">on</span>
+                                        <span class="label label-default"
+                                            ng-if="!backend.extra_config['qos/ratelimit/proxy']">off</span>
+                                        <span class="help-block">Limit requests to this backend regardless of its
+                                            endpoint usage</span>
                                     </div>
                                     <div class="col-md-2">
                                         <label>Resolution</label>
@@ -408,13 +418,20 @@
                                         </span>
                                     </div>
                                 </div>
-                                <hr />
                                 <div class="row">
                                     <div class="col-md-6">
+                                        <middleware data="backend"
+                                            inherit="service.extra_config['github_com/devopsfaith/krakend-circuitbreaker/gobreaker']"
+                                            template="gobreaker.html" namespace="'qos/circuit-breaker'">
+                                        </middleware>
                                         <middleware data="backend" template="amqp_consumer.html"
                                             namespace="'backend/amqp/consumer'"></middleware>
                                     </div>
                                     <div class="col-md-6">
+                                        <middleware data="backend"
+                                        inherit="service.extra_config['auth/client-credentials']"
+                                        template="oauth.html" namespace="'auth/client-credentials'">
+                                    </middleware>
                                         <middleware data="backend" template="amqp_producer.html"
                                             namespace="'backend/amqp/producer'"></middleware>
                                     </div>
@@ -442,7 +459,7 @@
                                 <div ng-if="endpoint.output_encoding != 'no-op'">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h4>Response Parsing</h4>
+                                            <h3>Response</h3>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -454,11 +471,11 @@
                                                 <option value="xml">XML</option>
                                                 <option value="rss">RSS</option>
                                                 <option value="string">String</option>
-                                                <option value="no-op">No-Op</option>
+                                                <option value="no-op">No-Op (Leave as is)</option>
                                             </select>
                                             <span class="help-block">How to decode the response of the backend.</span>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-4">
                                             <label>Root object:</label>
                                             <input type="text" class="form-control" ng-model="backend.target"
                                                 ng-disabled="backend.is_collection == true"
@@ -472,15 +489,13 @@
                                                 in the first level. When manipulating the data only its children are
                                                 visible.</span>
                                         </div>
-                                        <div class="col-md-12">
-                                            <label>Non-object response</label>
+                                        <div class="col-md-4">
+                                            <label>Is a collection?</label>
                                             <div class="input-group">
                                                 <input type="checkbox" ng-model="backend.is_collection"
-                                                    ng-change="backend.target = ''"> Treat the response as a
-                                                collection, not an object.
-                                                <span class="help-block">KrakenD expects the returned content
-                                                    encapsulated in
-                                                    an object (in json inside brackets, e.g:
+                                                    ng-change="backend.target = ''"> Response is an array.
+                                                <span class="help-block">KrakenD expects an object as a response (in
+                                                    json inside brackets, e.g:
                                                     <code>{ "status":"OK" }</code> but if
                                                     the backend returns a collection instead (e.g:
                                                     <code>[ "a", "b" ]</code>) check
@@ -491,272 +506,18 @@
 
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <h4>Response manipulation (objects)</h4>
 
-                                            <p>Transform here the response with a lighter version, include only the
-                                                attributes that
-                                                your
-                                                application needs.</p>
-                                        </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-md-2 control-label">Filtering mode</label>
-                                        <div class="col-md-10">
-                                            <div class="nav-tabs-custom">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active">
-                                                        <a data-target="#tab_black-{{ endpoint_index }}-{{ backend_index }}"
-                                                            data-toggle="tab" aria-expanded="false">Blacklist
-                                                            (fastest)</a>
-                                                    </li>
-                                                    <li>
-                                                        <a data-target="#tab_white-{{ endpoint_index }}-{{ backend_index }}"
-                                                            data-toggle="tab" aria-expanded="true">Whitelist</a>
-                                                    </li>
-                                                </ul>
-                                                <div class="tab-content">
-
-
-                                                    <div class="tab-pane active"
-                                                        id="tab_black-{{ endpoint_index }}-{{ backend_index }}">
-                                                        <p>Attributes that you will NOT pick from the response:</p>
-                                                        <ul class="list-inline">
-                                                            <li ng-repeat="black in backend.deny">
-                                                                <a class="badge badge-remove"
-                                                                    ng-click="deleteBlacklist(black,backend_index,endpoint_index)"><i
-                                                                        class="fa fa-times"></i>
-                                                                    {{ black }}</a>
-                                                            </li>
-                                                        </ul>
-
-                                                        <div class="input-group">
-                                                            <input class="form-control" placeholder="attribute_name"
-                                                                type="url"
-                                                                id="bl{{ endpoint_index }}{{ backend_index }}">
-                                                            <div class="input-group-btn">
-                                                                <button type="button" class="btn btn-success"
-                                                                    ng-click="addBlacklist(endpoint_index,backend_index)">
-                                                                    <i class="fa fa-plus"></i> Add
-                                                                    attribute
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="tab-pane"
-                                                        id="tab_white-{{ endpoint_index }}-{{ backend_index }}">
-                                                        <p>Attributes that you will pick from the response</p>
-                                                        <ul class="list-inline">
-                                                            <li ng-repeat="white in backend.allow">
-                                                                <a class="badge badge-remove"
-                                                                    ng-click="deleteWhitelist(white,backend_index,endpoint_index)"><i
-                                                                        class="fa fa-times"></i>
-                                                                    {{ white }}</a>
-                                                            </li>
-                                                        </ul>
-
-                                                        <div class="input-group">
-                                                            <input class="form-control" placeholder="attribute_name"
-                                                                type="url"
-                                                                id="wl{{ endpoint_index }}{{ backend_index }}">
-                                                            <div class="input-group-btn">
-                                                                <button type="button" class="btn btn-success"
-                                                                    ng-click="addWhitelist(endpoint_index,backend_index)">
-                                                                    <i class="fa fa-plus"></i> Add
-                                                                    attribute
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <span class="help-block">If you want to filter the response, choose
-                                                between allowing or denying attributes. If both are set,
-                                                allowing will be used. If it's the same for you, denying
-                                                performs much better.</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-md-2 control-label">Capturing group</label>
-                                        <div class="col-md-10">
-                                            <input ng-model="backend.group" type="text" class="form-control"
-                                                placeholder="my-group">
-                                            <span class="help-block">
-                                                Fill only if you want to capture all the response and encapsulate
-                                                inside an attribute name.</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <label class="col-md-2 control-label">Renaming</label>
-                                        <div class="col-md-10">
-
-                                            <div class="row">
-                                                <div class="col-xs-3">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="id_imported_user"
-                                                        id="tr_origin{{ endpoint_index }}{{ backend_index }}">
-                                                    <label>Original object</label>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <input type="text" class="form-control" placeholder="id"
-                                                        id="tr_target{{ endpoint_index }}{{ backend_index }}">
-                                                    <label>Renamed object</label>
-
-                                                </div>
-                                                <div class="col-xs-2">
-                                                    <button type="button" class="btn btn-success"
-                                                        ng-click="addTransformation(endpoint_index,backend_index)">
-                                                        Add rule
-                                                    </button>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <ul class="list-unstyled">
-                                                        <li ng-repeat="(origin,target) in backend.mapping">
-                                                            <a class="badge badge-remove"
-                                                                ng-click="deleteTransformation(origin,endpoint_index, backend_index)"><i
-                                                                    class="fa fa-times"></i>
-                                                                {{ origin }} <i class="fa fa-arrow-right"></i>
-                                                                {{ target }}</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <span class="help-block">You can rename any attributes returned by the
-                                                backend and use a name more convenient for you.</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <h4>Array manipulation</h4>
-                                            <p>Responses using arrays need a special treatment. Add here your desired
-                                                manipulations</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-md-2 control-label">Change array</label>
-                                        <div class="col-md-10">
-                                            <div class="row">
-                                                <div class="col-xs-2">
-                                                    <select class="form-control" ng-model="flatmap_type">
-                                                        <option value="move">Move</option>
-                                                        <option value="del">Delete </option>
-                                                        <option value="append">Append </option>
-                                                    </select>
-                                                    <label>Operation type</label>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="object.*.uninteresting" ng-model="flatmap_origin">
-                                                    <label>Original object</label>
-                                                </div>
-                                                <div class="col-xs-3" ng-show="flatmap_type!='del'">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="object.*.new_element" ng-model="flatmap_dest">
-                                                    <label>Target object</label>
-                                                </div>
-                                                <div class="col-xs-1">
-                                                    <button type="button" class="btn btn-success"
-                                                        ng-click="addFlatmap(endpoint_index,backend_index,flatmap_type,flatmap_origin,flatmap_dest)">
-                                                        Add operation
-                                                    </button>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <ul class="list-unstyled">
-                                                        <li
-                                                            ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['proxy'].flatmap_filter">
-                                                            <a class="badge badge-remove"
-                                                                ng-click="deleteFlatmap(flatmap_index,endpoint_index, backend_index)"><i
-                                                                    class="fa fa-times"></i>
-                                                                {{ flatmap_value.type }} <i
-                                                                    class="fa fa-arrow-right"></i>
-                                                                {{ flatmap_value.args }}</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <span class="help-block">You can rename any attributes returned by the
-                                                backend and use a name more convenient for you. <a
-                                                    href="https://www.krakend.io/docs/backends/flatmap/">Documentation</a></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <hr />
-                                            <h4>Advanced - Martian DSL</h4>
-                                            <p>Paste here any additional configuration you want to add to <a
-                                                    href="https://github.com/google/martian#modifiers-all-the-way-down">Martian</a>.
-                                                The input must be a JSON object (ensure to start and end with curly
-                                                braces <code>{}</code>)</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-md-2 control-label">Martian DSL</label>
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <div class="col-xs-12">
-                                                    <textarea json-formatter
-                                                        syntax="syntax_validation_martian[backend_index]"
-                                                        class="form-control"
-                                                        ng-model="backend.extra_config['modifier/martian']"></textarea>
-                                                </div>
-                                            </div>
-                                            <p ng-show="syntax_validation_martian[backend_index].length"
-                                                class="badge label-danger">
-                                                <i class="fa fa-warning"></i> Syntax error -
-                                                {{syntax_validation_martian[backend_index]}}
-                                            </p>
-                                            <span class="help-block">Paste here your JSON configuration to be used
-                                                in the martian modifier. See <a
-                                                    href="https://github.com/devopsfaith/krakend-martian/blob/master/example/krakend.json#L26">an
-                                                    example</a></span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <hr />
-                                            <h4>Backend caching</h4>
-                                            <div class="input-group">
-                                                <label>
-                                                    <input type="checkbox"
-                                                        ng-click="toggleCaching($event, endpoint_index, backend_index)">
-                                                    Store backend responses in-memory
-                                                </label>
-                                                <span class="help-block">Backend responses are stored in-memory for the
-                                                    time
-                                                    specified in their <code>Cache-Control</code> header. This option
-                                                    increases the load and the memory consumption as KrakenD keeps in
-                                                    memory
-                                                    all the returned data for as long the backend specifies. Use
-                                                    wisely.</span>
-
-                                                <span class="help-block badge label-warning"
-                                                    ng-show="backend.extra_config['qos/http-cache']">
-                                                    <i class="fa fa-warning"></i> Warning! Load will be increased
-                                                </span>
-
-                                            </div>
-                                            <hr />
-                                            <h4>Circuit breaker</h4>
-                                            <middleware data="backend"
-                                                inherit="service.extra_config['github_com/devopsfaith/krakend-circuitbreaker/gobreaker']"
-                                                template="gobreaker.html" namespace="'qos/circuit-breaker'">
+                                        <div class="col-md-6">
+                                            <div ng-include src="'/src/app/forms/manipulation.html'"></div>
+                                            <middleware data="backend" template="http_cache.html"
+                                                namespace="'qos/http-cache'">
                                             </middleware>
-                                            <hr />
-                                            <h4>Authorization</h4>
-                                            <middleware data="backend"
-                                                inherit="service.extra_config['auth/client-credentials']"
-                                                template="oauth.html" namespace="'auth/client-credentials'">
-                                            </middleware>
-                                            <hr />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div ng-include src="'/src/app/forms/flatmap.html'"></div>
+                                            <div ng-include src="'/src/app/forms/martian.html'"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -788,74 +549,84 @@
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">Rate limit requests to <code>{{backend.url_pattern}}</code>
+                                        <h4 class="modal-title">Rate limit requests to
+                                            <code>{{backend.url_pattern}}</code>
                                         </h4>
                                     </div>
                                     <div class="modal-body">
-                                        <middleware data="backend" namespace="'qos/ratelimit/proxy'" template="ratelimit_backend.html"></middleware>
+                                        <middleware data="backend" namespace="'qos/ratelimit/proxy'"
+                                            template="ratelimit_backend.html"></middleware>
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                    <!-- /Modal backend -->
-                    <div class="col-md-12" ng-if="endpoint.extra_config['proxy'].static">
-                        <div class="box box-info box-solid">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Static Response (stub data)</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool"
-                                        ng-click="deleteStaticResponse(endpoint_index)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                        </div>
+                        <!-- /Modal backend -->
+                        <div class="col-md-12" ng-if="endpoint.extra_config['proxy'].static">
+                            <div class="box box-info box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Static Response (stub data)</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool"
+                                            ng-click="deleteStaticResponse(endpoint_index)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="box-body">
-                                <p>When the backend fails you can still return the static data provided below to the
-                                    user. The data is merged
-                                    with any existing partial responses. If you still don't have a backend and want to
-                                    have this data, add a fake one that cannot be resolved.
-                                </p>
-                                <div class="col-md-8">
-                                    <label class="control-label">Response</label>
-                                    <textarea json-formatter class="form-control"
-                                        syntax="syntax_validation_static[backend_index]"
-                                        ng-model="endpoint.extra_config['proxy'].static.data"></textarea>
-                                    <p ng-show="syntax_validation_static[backend_index].length"
-                                        class="badge label-danger">
-                                        <i class="fa fa-warning"></i> Syntax error -
-                                        {{syntax_validation_static[backend_index]}}
+                                <div class="box-body">
+                                    <p>When the backend fails you can still return the static data provided below to the
+                                        user. The data is merged
+                                        with any existing partial responses. If you still don't have a backend and want
+                                        to
+                                        have this data, add a fake one that cannot be resolved.
                                     </p>
-                                    </p>
-                                    <span class="help-block">Provide the JSON object you want to return (ensure to start
-                                        and end with curly braces
-                                        <code>{}</code>)</span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="control-label">Strategy</label>
-                                    <select class="form-control"
-                                        ng-model="endpoint.extra_config['proxy'].static.strategy">
-                                        <option value="always">Always - Present in every response</option>
-                                        <option value="success">Success - Present in every non-failed response </option>
-                                        <option value="errored">Errored - Present in every failed response (error not
-                                            nil)</option>
-                                        <option value="incomplete">Incomplete - Present in incomplete responses</option>
-                                    </select>
+                                    <div class="col-md-8">
+                                        <label class="control-label">Response</label>
+                                        <textarea json-formatter class="form-control"
+                                            syntax="syntax_validation_static[backend_index]"
+                                            ng-model="endpoint.extra_config['proxy'].static.data"></textarea>
+                                        <p ng-show="syntax_validation_static[backend_index].length"
+                                            class="badge label-danger">
+                                            <i class="fa fa-warning"></i> Syntax error -
+                                            {{syntax_validation_static[backend_index]}}
+                                        </p>
+                                        </p>
+                                        <span class="help-block">Provide the JSON object you want to return (ensure to
+                                            start
+                                            and end with curly braces
+                                            <code>{}</code>)</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">Strategy</label>
+                                        <select class="form-control"
+                                            ng-model="endpoint.extra_config['proxy'].static.strategy">
+                                            <option value="always">Always - Present in every response</option>
+                                            <option value="success">Success - Present in every non-failed response
+                                            </option>
+                                            <option value="errored">Errored - Present in every failed response (error
+                                                not
+                                                nil)</option>
+                                            <option value="incomplete">Incomplete - Present in incomplete responses
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <button class="btn btn-primary" ng-click="addBackendQuery(endpoint_index)"
-                    ng-if="! endpoint.backend || endpoint.backend.length < 1 || ( endpoint.method =='GET' && !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0))">
-                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Add backend query
-                </button>
-                <button class="btn btn-primary" ng-click="addDefaultStaticResponse(endpoint_index)"
-                    ng-disabled="endpoint.extra_config['proxy'].static || endpoint.output_encoding == 'no-op' || endpoint.backend.length == 0">
-                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Add static response (stub)
-                </button>
+
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" ng-click="addBackendQuery(endpoint_index)"
+                            ng-if="! endpoint.backend || endpoint.backend.length < 1 || ( endpoint.method =='GET' && !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0))">
+                            <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Add backend query
+                        </button>
+                        <button class="btn btn-primary" ng-click="addDefaultStaticResponse(endpoint_index)"
+                            ng-disabled="endpoint.extra_config['proxy'].static || endpoint.output_encoding == 'no-op' || endpoint.backend.length == 0">
+                            <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Add static response (stub)
+                        </button>
+                    </div>
             </fieldset>
         </form>
     </div><!-- /.box-body -->
@@ -886,7 +657,8 @@
                     <h4 class="modal-title">Distributed rate limiting (throttling)</code></h4>
                 </div>
                 <div class="modal-body">
-                    <plugin root="service" placement="endpoint" template="redis-ratelimit.html" plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
+                    <plugin root="service" placement="endpoint" template="redis-ratelimit.html"
+                        plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
                 </div>
             </div>
         </div>

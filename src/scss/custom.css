@@ -181,6 +181,10 @@ a.badge.badge-inverse:hover {
     color: #FFF;
 }
 
+.box.box-info {
+    border-top-color: #0071CE;
+}
+
 .bg-green, .callout.callout-success, .alert-success, .label-success, .modal-success .modal-body {
   background-color: #0071CE !important;
 }

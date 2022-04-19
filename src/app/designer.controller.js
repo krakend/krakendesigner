@@ -711,15 +711,6 @@ angular
             );
         };
 
-        $rootScope.toggleCaching = function ($event, endpoint_index, backend_index) {
-            if ($event.target.checked) {
-                // Create the key that enables caching:
-                $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['qos/http-cache'] = {};
-            } else {
-                delete $rootScope.service.endpoints[endpoint_index].backend[backend_index].extra_config['qos/http-cache'];
-            }
-        };
-
         $rootScope.deleteBackendQuery = function (endpoint_index, backend_index, message) {
             if ($rootScope.service.endpoints[endpoint_index].backend.length < 2) {
                 alert("You cannot delete the last backend. You must have at least one.");

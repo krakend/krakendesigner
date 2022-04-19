@@ -166,6 +166,9 @@ angular
                     "max_errors": 1,
                     "log_status_change": true
                 },
+                'qos/http-cache': {
+                    "shared": true
+                },
                 "documentation/openapi": {
                     "version": "1.0"
                 },

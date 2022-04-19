@@ -1,0 +1,133 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            Object Manipulation
+        </h3>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <label class="col-md-2 control-label">Filtering mode</label>
+            <div class="col-md-10">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-target="#tab_black-{{ endpoint_index }}-{{ backend_index }}" data-toggle="tab"
+                                aria-expanded="false">Blacklist
+                                (fastest)</a>
+                        </li>
+                        <li>
+                            <a data-target="#tab_white-{{ endpoint_index }}-{{ backend_index }}" data-toggle="tab"
+                                aria-expanded="true">Whitelist</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+
+
+                        <div class="tab-pane active" id="tab_black-{{ endpoint_index }}-{{ backend_index }}">
+                            <p>Attributes that you will NOT pick from the response:</p>
+                            <ul class="list-inline">
+                                <li ng-repeat="black in backend.deny">
+                                    <a class="badge badge-remove"
+                                        ng-click="deleteBlacklist(black,backend_index,endpoint_index)"><i
+                                            class="fa fa-times"></i>
+                                        {{ black }}</a>
+                                </li>
+                            </ul>
+
+                            <div class="input-group">
+                                <input class="form-control" placeholder="attribute_name" type="url"
+                                    id="bl{{ endpoint_index }}{{ backend_index }}">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-success"
+                                        ng-click="addBlacklist(endpoint_index,backend_index)">
+                                        <i class="fa fa-plus"></i> Add
+                                        attribute
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab_white-{{ endpoint_index }}-{{ backend_index }}">
+                            <p>Attributes that you will pick from the response</p>
+                            <ul class="list-inline">
+                                <li ng-repeat="white in backend.allow">
+                                    <a class="badge badge-remove"
+                                        ng-click="deleteWhitelist(white,backend_index,endpoint_index)"><i
+                                            class="fa fa-times"></i>
+                                        {{ white }}</a>
+                                </li>
+                            </ul>
+
+                            <div class="input-group">
+                                <input class="form-control" placeholder="attribute_name" type="url"
+                                    id="wl{{ endpoint_index }}{{ backend_index }}">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-success"
+                                        ng-click="addWhitelist(endpoint_index,backend_index)">
+                                        <i class="fa fa-plus"></i> Add
+                                        attribute
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <span class="help-block">If you want to filter the response, choose
+                    between allowing or denying attributes. If both are set,
+                    allowing will be used. If it's the same for you, denying
+                    performs much better.</span>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-2 control-label">Capturing group</label>
+            <div class="col-md-10">
+                <input ng-model="backend.group" type="text" class="form-control" placeholder="my-group">
+                <span class="help-block">
+                    Fill only if you want to capture all the response and encapsulate
+                    inside an attribute name.</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2 control-label">Renaming</label>
+            <div class="col-md-10">
+
+                <div class="row">
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" placeholder="id_imported_user"
+                            id="tr_origin{{ endpoint_index }}{{ backend_index }}">
+                        <label>Original object</label>
+                    </div>
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" placeholder="id"
+                            id="tr_target{{ endpoint_index }}{{ backend_index }}">
+                        <label>Renamed object</label>
+
+                    </div>
+                    <div class="col-xs-2">
+                        <button type="button" class="btn btn-success"
+                            ng-click="addTransformation(endpoint_index,backend_index)">
+                            Add rule
+                        </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <ul class="list-unstyled">
+                            <li ng-repeat="(origin,target) in backend.mapping">
+                                <a class="badge badge-remove"
+                                    ng-click="deleteTransformation(origin,endpoint_index, backend_index)"><i
+                                        class="fa fa-times"></i>
+                                    {{ origin }} <i class="fa fa-arrow-right"></i>
+                                    {{ target }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="help-block">You can rename any attributes returned by the
+                    backend and use a name more convenient for you.</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,56 +1,62 @@
-<label>
-	<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Override <strong>circuit
-		breaker</strong> behavior (<a href="https://www.krakend.io/docs/backends/circuit-breaker/">see docs</a>)
-</label>
-<div id="oauth-options-wrapper" ng-hide="!isMiddlewareEnabled()">
-	<div class="form-group">
-		<div class="col-md-6">
-			<label>Name</label>
-			<input type="text" ng-model="data.extra_config[config_namespace].name" class="form-control" />
-			<span class="help-block">How this circuit breaker is shown in the logging.</span>
-		</div>
-		<div class="col-md-6">
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" ng-model="data.extra_config[config_namespace].log_status_change">
-					<strong>Log when the circuit breaker changes its state</strong>
-				</label>
-				<span class="help-block">Your logger reflects when the circuit changes (open/closed)</span>
-			</div>
-		</div>
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
+			Circuit Breaker</h3>
 	</div>
-	<div class="form-group">
-		<div class="col-md-4">
-			<label class="control-label">Interval</label>
-			<div class="input-group"
-				ng-class="validator.isInteger(data.extra_config[config_namespace].interval) ? '' : 'has-error'">
-				<input class="form-control" ng-model="data.extra_config[config_namespace].interval"
-					id="data.extra_config[config_namespace].interval"
-					name="data.extra_config[config_namespace].interval" type="number">
-				<div class="input-group-addon">seconds</div>
+	<div class="box-body">
+		<p ng-hide="isMiddlewareEnabled()">Watches the state of the connections to your backend and when it sees more than the configured number of consecutive failures within an interval it stops temporarily all the interaction with the backend</p>
+
+		<div id="oauth-options-wrapper" ng-hide="!isMiddlewareEnabled()">
+			<div class="form-group">
+				<div class="col-md-6">
+					<label>Name</label>
+					<input type="text" ng-model="data.extra_config[config_namespace].name" class="form-control" />
+					<span class="help-block">How this circuit breaker is shown in the logging.</span>
+				</div>
+				<div class="col-md-6">
+					<label class="control-label">Maximum errors</label>
+					<div class="input-group"
+						ng-class="validator.isInteger(data.extra_config[config_namespace].max_errors) ? '' : 'has-error'">
+						<input class="form-control" ng-model="data.extra_config[config_namespace].max_errors"
+							id="data.extra_config[config_namespace].max_errors"
+							name="data.extra_config[config_namespace].max_errors" type="number">
+					</div>
+					<span class="help-block">Consecutive failures from the backend to stop sending traffic to it</span>
+				</div>
 			</div>
-			<span class="help-block">Time window where this circuit breaker counts errors</span>
-		</div>
-		<div class="col-md-4">
-			<label class="control-label">Timeout</label>
-			<div class="input-group"
-				ng-class="validator.isInteger(data.extra_config[config_namespace].timeout) ? '' : 'has-error'">
-				<input class="form-control" ng-model="data.extra_config[config_namespace].timeout"
-					id="data.extra_config[config_namespace].timeout" name="data.extra_config[config_namespace].timeout"
-					type="number">
-				<div class="input-group-addon">seconds</div>
+			<div class="form-group">
+				<div class="col-md-4">
+					<label class="control-label">Interval</label>
+					<div class="input-group"
+						ng-class="validator.isInteger(data.extra_config[config_namespace].interval) ? '' : 'has-error'">
+						<input class="form-control" ng-model="data.extra_config[config_namespace].interval"
+							id="data.extra_config[config_namespace].interval"
+							name="data.extra_config[config_namespace].interval" type="number">
+						<div class="input-group-addon">seconds</div>
+					</div>
+					<span class="help-block">Time window where this circuit breaker counts errors</span>
+				</div>
+				<div class="col-md-4">
+					<label class="control-label">Timeout</label>
+					<div class="input-group"
+						ng-class="validator.isInteger(data.extra_config[config_namespace].timeout) ? '' : 'has-error'">
+						<input class="form-control" ng-model="data.extra_config[config_namespace].timeout"
+							id="data.extra_config[config_namespace].timeout"
+							name="data.extra_config[config_namespace].timeout" type="number">
+						<div class="input-group-addon">seconds</div>
+					</div>
+					<span class="help-block">Time to wait before stressing again a failing backend</span>
+				</div>
+				<div class="col-md-4">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].log_status_change">
+							<strong>Log state changes</strong>
+						</label>
+						<span class="help-block">Write in the logs when the circuit changes its state (open/closed)</span>
+					</div>
+				</div>
 			</div>
-			<span class="help-block">Time to wait before stressing again a failing backend</span>
-		</div>
-		<div class="col-md-4">
-			<label class="control-label">Maximum errors</label>
-			<div class="input-group"
-				ng-class="validator.isInteger(data.extra_config[config_namespace].max_errors) ? '' : 'has-error'">
-				<input class="form-control" ng-model="data.extra_config[config_namespace].max_errors"
-					id="data.extra_config[config_namespace].max_errors"
-					name="data.extra_config[config_namespace].max_errors" type="number">
-			</div>
-			<span class="help-block">Consecutive failures from the backend to stop sending traffic to it</span>
 		</div>
 	</div>
 </div>
