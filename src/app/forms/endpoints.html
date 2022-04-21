@@ -275,7 +275,21 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <div class="col-md-12">
+                                                <label class="control-label">Rate limit by API Key</label>
+                                                <div class="input-group">
+                                                    <input class="form-control"
+                                                    ng-model="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                    id="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                    name="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                    type="number">
+                                                    <div class="input-group-addon">reqs/sec</div>
+                                                </div>
+                                                <span class="help-block">Maximum requests per second you want to let each API-keys do. Leave <code>0</code> for no limit.
+                                                </span>
+                                            </div>
                                         </div>
+
                                         <p><a href="/#!/api-keys">Enable and configure API Keys</a></p>
                                     </div>
                                 </div>

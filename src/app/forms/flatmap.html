@@ -33,15 +33,17 @@
             </div>
         </div>
         <div class="form-group row">
-            <ul class="list-unstyled">
-                <li ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['proxy'].flatmap_filter">
-                    <a class="badge badge-remove"
-                        ng-click="deleteFlatmap(flatmap_index,endpoint_index, backend_index)"><i
-                            class="fa fa-times"></i>
-                        {{ flatmap_value.type }} <i class="fa fa-arrow-right"></i>
-                        {{ flatmap_value.args }}</a>
-                </li>
-            </ul>
+            <div class="col-md-12">
+                <ul class="list-unstyled">
+                    <li ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['proxy'].flatmap_filter">
+                        <a class="badge badge-remove"
+                            ng-click="deleteFlatmap(flatmap_index,endpoint_index, backend_index)"><i
+                                class="fa fa-times"></i>
+                            {{ flatmap_value.type }} <i class="fa fa-arrow-right"></i>
+                            {{ flatmap_value.args }}</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <span class="help-block">You can rename any attributes returned by the
             backend and use a name more convenient for you. <a
