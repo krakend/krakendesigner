@@ -275,7 +275,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-12" ng-if="endpoint.extra_config['auth/api-keys'].roles">
                                                 <label class="control-label">Rate limit by API Key</label>
                                                 <div class="input-group">
                                                     <input class="form-control"
@@ -285,7 +285,7 @@
                                                     type="number">
                                                     <div class="input-group-addon">reqs/sec</div>
                                                 </div>
-                                                <span class="help-block">Maximum requests per second you want to let each API-keys do. Leave <code>0</code> for no limit.
+                                                <span class="help-block">Maximum requests per second you want to let each API-keys do. Leave <code>0</code> or empty for no limit.
                                                 </span>
                                             </div>
                                         </div>
