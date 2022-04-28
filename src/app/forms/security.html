@@ -2,11 +2,11 @@
     <div class="col-md-6">
         <middleware template="cors.html" namespace="'security/cors'" data="service"></middleware>
         <middleware data="service" template="bot_detector.html" namespace="'security/bot-detector'"></middleware>
-        <plugin root="service" placement="service" template="jwk-aggregator.html" plugin="'krakend-jwk-aggregator'" type="'plugin/http-server'"></plugin>
+        <plugin root="service" placement="service" template="jwk-aggregator.html" plugin="'jwk-aggregator'" type="'plugin/http-server'"></plugin>
     </div>
     <div class="col-md-6">
-        <plugin root="service" placement="service" template="ipfilter.html" plugin="'krakend-ipfilter'" type="'plugin/http-server'"></plugin>
+        <plugin root="service" placement="service" template="ipfilter.html" plugin="'ip-filter'" type="'plugin/http-server'"></plugin>
         <middleware data="service" template="httpsecure.html" namespace="'security/http'"></middleware>
-        <plugin root="service" placement="service" template="basic-authentication.html" plugin="'krakend-basic-auth'" type="'plugin/http-server'"></plugin>
+        <plugin root="service" placement="service" template="basic-authentication.html" plugin="'basic-auth'" type="'plugin/http-server'"></plugin>
     </div>
 </div>

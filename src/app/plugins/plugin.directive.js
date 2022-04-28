@@ -7,7 +7,7 @@ angular
       scope: {
         root: '=',  // The configuration root object, MUST pass "service" at all times.
         placement: '=', // The object where the plugin is injected (endpoint, backend or service).
-        plugin: '=', // e.g: krakend-ipfilter
+        plugin: '=', // e.g: ip-filter
         type: '=' // e.g: plugin/http-server
       },
       link: function (scope, element, attrs) {
@@ -197,7 +197,7 @@ angular
 
         scope.hasWildcard = function () {
           return (
-            null !== scope.getObject(scope.root, "extra_config", "plugin/http-server", "krakend-wildcard", "endpoints", scope.placement.endpoint)
+            null !== scope.getObject(scope.root, "extra_config", "plugin/http-server", "wildcard", "endpoints", scope.placement.endpoint)
           );
         }
 
@@ -223,7 +223,7 @@ angular
           WILDCARD_HEADER = 'X-Krakend-Wildcard';
 
           if (scope.hasWildcard()) {
-            delete scope.root.extra_config['plugin/http-server']['krakend-wildcard'].endpoints[scope.placement.endpoint];
+            delete scope.root.extra_config['plugin/http-server']['wildcard'].endpoints[scope.placement.endpoint];
             endpoint_index = scope.getEndpointIndex(scope.placement.endpoint);
             if (false !== endpoint_index) {
               scope.deleteTermFromList(WILDCARD_HEADER, scope.root.endpoints[endpoint_index], "input_headers");
@@ -235,14 +235,14 @@ angular
             }
 
             // Delete last wildcard
-            if (0 === Object.keys(scope.root.extra_config['plugin/http-server']['krakend-wildcard'].endpoints).length) {
+            if (0 === Object.keys(scope.root.extra_config['plugin/http-server']['wildcard'].endpoints).length) {
               scope.deleteHttpServerPlugin(scope.root);
             }
 
           } else {
             scope.addHttpServerPlugin(scope.root);
             scope.addHttpClientPlugin(0);
-            scope.setObject(scope.root, "extra_config", 'plugin/http-server', 'krakend-wildcard', "endpoints", scope.placement.endpoint, [scope.placement.endpoint]);
+            scope.setObject(scope.root, "extra_config", 'plugin/http-server', 'wildcard', "endpoints", scope.placement.endpoint, [scope.placement.endpoint]);
             endpoint_index = scope.getEndpointIndex(scope.placement.endpoint);
             if (false !== endpoint_index) {
               scope.addTermToList(WILDCARD_HEADER, scope.root.endpoints[endpoint_index], "input_headers");

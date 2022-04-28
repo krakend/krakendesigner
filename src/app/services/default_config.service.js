@@ -12,7 +12,7 @@ angular
             },
             plugins: {
                 "plugin/http-server": {
-                    "krakend-ipfilter":
+                    "ip-filter":
                     {
                         "allow": false,
                         "client_ip_headers": [
@@ -21,14 +21,14 @@ angular
                             "X-Appengine-Remote-Addr"
                         ],
                     },
-                    "krakend-wildcard": {
+                    "wildcard": {
                         endpoints: {}
                     },
                     "url-rewrite": {
                         "literal": {},
                         "regexp": []
                     },
-                    "krakend-basic-auth": {
+                    "basic-auth": {
                         "htpasswd_path": "/etc/krakend/.htpasswd",
                         "endpoints": ["*"]
                     },
@@ -39,20 +39,20 @@ angular
                         "Rate": 100,
                         "Period": "60s"
                     },
-                    "krakend-jwk-aggregator": {
+                    "jwk-aggregator": {
                         "port": 9876,
                         "origins": [
                             "https://example-server/jwk.json",
                             "http://example-server/public_keys"
                         ]
                     },
-                    "krakend-geoip": {
+                    "geoip": {
                         "citydb_path": "./GeoLite2-City.mmdb"
                     }
                 },
                 "plugin/http-client": {},
                 "plugin/req-resp-modifier": {
-                    "krakend-ipfilter":
+                    "ip-filter":
                     {
                         "allow": false,
                         "client_ip_headers": [
@@ -188,7 +188,7 @@ angular
                 }
             },
             "plugin/http-server": {
-                "krakend-static-live": {
+                "static-filesystem": {
                     "prefix": "/media/assets",
                     "path": "/var/www/static"
                 }

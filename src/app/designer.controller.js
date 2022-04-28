@@ -178,9 +178,9 @@ angular
             $rootScope.modules_in_use = [];
             service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/ganalytics'];
             endpoint_components = ['documentation/openapi', 'websocket'];
-            http_server_plugins = ['krakend-ipfilter','krakend-jwk-aggregator', 'krakend-afero', 'krakend-basic-auth', 'krakend-geoip', 'krakend-static-live', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'krakend-wildcard'];
-            http_client_plugins = ['krakend-wildcard', 'krakend-afero', 'krakend-static-live', 'krakend-redirect'];
-            req_resp_plugins = ['krakend-ipfilter'];
+            http_server_plugins = ['ip-filter','jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
+            http_client_plugins = ['wildcard', 'krakend-afero', 'static-filesystem', 'no-redirect'];
+            req_resp_plugins = ['ip-filter'];
 
 
             if ($rootScope.getObject("service", "extra_config")) {
@@ -352,8 +352,8 @@ angular
 
         $rootScope.hasWildcard = function (endpoint) {
             return (
-                $rootScope.hasHttpServerPlugin('krakend-wildcard') &&
-                null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "krakend-wildcard", "endpoints", endpoint)
+                $rootScope.hasHttpServerPlugin('wildcard') &&
+                null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "wildcard", "endpoints", endpoint)
             );
         }
         // Destroy middleware or create it with default data:

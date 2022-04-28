@@ -1,8 +1,8 @@
-<div class="box box-info" ng-if="service.extra_config['plugin/http-server']['krakend-static-live']">
+<div class="box box-info" ng-if="service.extra_config['plugin/http-server']['static-filesystem']">
     <div class="box-header with-border">
         <h3 class="box-title">Static files <span class="badge ">Enterprise</span></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" ng-click="deleteHttpServerPlugin('krakend-static-live')">
+            <button type="button" class="btn btn-box-tool" ng-click="deleteHttpServerPlugin('static-filesystem')">
                 <i class="fa fa-trash"></i></button>
         </div>
     </div>
@@ -11,7 +11,7 @@
             <div class="col-md-6">
                 <label>URL</label>
                 <input type="text" placeholder="" class="form-control"
-                    ng-model="service.extra_config['plugin/http-server']['krakend-static-live'].prefix" />
+                    ng-model="service.extra_config['plugin/http-server']['static-filesystem'].prefix" />
                 <span class="help-block">This is the beginning of all URLs that are resolved using this plugin. All
                     matching URLs won't be evaluated as endpoints. Make sure you are not overwriting valid
                     endpoints.</span>
@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <label>Filesystem path</label>
                 <input type="text" placeholder="" class="form-control"
-                    ng-model="service.extra_config['plugin/http-server']['krakend-static-live'].path" />
+                    ng-model="service.extra_config['plugin/http-server']['static-filesystem'].path" />
                 <span class="help-block">The path in the filesystem containing the static files. Relative to the working
                     dir or absolute.</span>
             </div>
@@ -68,7 +68,7 @@
                             backends.</span>
                     </div>
                     <div class="col-md-2 col-sm-2">
-                        <plugin root="service" placement="endpoint" template="wildcard.html" plugin="'krakend-wildcard'"
+                        <plugin root="service" placement="endpoint" template="wildcard.html" plugin="'wildcard'"
                             type="'plugin/http-server'"></plugin>
                     </div>
                     <div class="col-md-2 col-sm-2">
@@ -302,7 +302,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <plugin root="service" placement="endpoint" template="ipfilter.html"
-                                    plugin="'krakend-ipfilter'" type="'plugin/req-resp-modifier'"></plugin>
+                                    plugin="'ip-filter'" type="'plugin/req-resp-modifier'"></plugin>
                                 <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint">
                                 </middleware>
                             </div>
