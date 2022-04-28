@@ -1,0 +1,56 @@
+<div class="form-group row">
+	<div class="col-md-12">
+		<label>
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
+			<strong>Enable rate limiting for <code>{{ data.url_pattern }}</code></strong>
+		</label>
+		<span class="help-block">No matter what is the amount of activity the users are generating at the router level, you might want to restrict the connections KrakenD makes to your backend.</span>
+	</div>
+</div>
+<div ng-if="isMiddlewareEnabled()">
+    <div class="form-group row">
+        <div class="col-md-12"
+            ng-class="validator.isInteger(data.extra_config[config_namespace].max_rate) ? '' : 'has-error'">
+            <label>Max rate limit</label>
+            <div class="input-group">
+                <input class="form-control" type="number"
+                    ng-model="data.extra_config[config_namespace].max_rate"
+                    ng-change="data.extra_config[config_namespace].capacity=data.extra_config[config_namespace].max_rate">
+                <div class="input-group-addon">reqs/sec</div>
+            </div>
+            <div class="help-block">
+                <p ng-hide="validator.isInteger(data.extra_config[config_namespace].max_rate)"
+                    class="badge label-danger"><i class="fa fa-warning"></i>
+                    Write a number</p>
+                <p>Maximum requests per second you want to accept in this
+                    backend.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group"
+        ng-class="validator.isInteger(data.extra_config[config_namespace].capacity) ? '' : 'has-error'">
+        <div class="col-md-12">
+            <label class="control-label">Capacity (Burst size)</label>
+            <div class="input-group">
+                <input class="form-control"
+                    ng-model="data.extra_config[config_namespace].capacity"
+                    id="data.extra_config[config_namespace].capacity"
+                    name="data.extra_config[config_namespace].capacity"
+                    type="number">
+                <div class="input-group-addon">reqs/sec</div>
+            </div>
+            <div class="help-block">
+                <p ng-hide="validator.isInteger(data.extra_config[config_namespace].capacity)"
+                    class="badge label-danger"><i class="fa fa-warning"></i>
+                    Write a number</p>
+                <p>Recommended value <code>capacity=max_rate</code>. A <a
+                        href="https://www.krakend.io/docs/throttling/token-bucket/">token
+                        bucket</a> algorithm is used with a bucket capacity ==
+                    tokens added per second. KrakenD is able to allow bursting
+                    on the request rates.</p>
+            </div>
+        </div>
+    </div>
+
+</div>

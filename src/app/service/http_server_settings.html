@@ -4,78 +4,27 @@
   </div>
   <!-- /.box-header -->
   <div class="box-body">
-    <div class="form-group form-group-lg" ng-class="isInteger(service.port) ? '' : 'has-error'">
-        <label class="control-label" for="service.port">Port</label>
-        <input class="form-control"
-        id="service.port"
-        name="service.port"
-        ng-model="service.port"
-        placeholder="8080"
-        type="number">
-        <div class="help-block">
-          <p ng-hide="isInteger(service.port)">Write a valid port number</p>
-          <p>Port where KrakenD listens to connections, defaults to <code>8080</code>. The port can also be specified at startup time with the flag <code>-p</code></code></p>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group form-group-lg">
+          <label class="control-label" for="service.name">Name</label>
+          <input class="form-control" id="service.name" name="service.name" placeholder="My Service" ng-model="service.name"
+            type="text">
+          <span class="help-block">
+            A friendly name, title, date, version or any other short description that helps you recognize this configuration
+            when reporting to your metrics and traces systems.
+          </span>
         </div>
       </div>
-    <service data="service" template="tls.html"></service>
-    
-    <div class="col-md-6" ng-class="isValidTimeUnit(service.read_timeout) ? '' : 'has-error'">
-      <div class="form-group">
-        <label class="control-label" for="service.read_timeout">HTTP Read Timeout</label>
-        <input class="form-control"
-        id="service.read_timeout"
-        name="service.read_timeout"
-        ng-model="service.read_timeout"
-        placeholder="0s"
-        type="text">
-        <div class="help-block">
-          <p ng-hide="isValidTimeUnit(service.read_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
-          <p>Maximum duration for reading the entire HTTP request, including the body.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6" ng-class="isValidTimeUnit(service.write_timeout) ? '' : 'has-error'">
-      <div class="form-group">
-        <label class="control-label" for="service.write_timeout">HTTP Write Timeout</label>
-        <input class="form-control"
-        id="service.write_timeout"
-        name="service.write_timeout"
-        ng-model="service.write_timeout"
-        placeholder="0s"
-        type="text">
-        <div class="help-block">
-          <p ng-hide="isValidTimeUnit(service.write_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
-          <p>Maximum duration before timing-out writes of the response</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6" ng-class="isValidTimeUnit(service.idle_timeout) ? '' : 'has-error'">
-      <div class="form-group">
-        <label class="control-label" for="service.idle_timeout">HTTP Idle Timeout</label>
-        <input class="form-control"
-        id="service.idle_timeout"
-        name="service.idle_timeout"
-        ng-model="service.idle_timeout"
-        placeholder="0s"
-        type="text">
-        <div class="help-block">
-          <p ng-hide="isValidTimeUnit(service.idle_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
-          <p>Maximum amount of time to wait for the next request when keepalives are enabled</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6" ng-class="isValidTimeUnit(service.read_header_timeout) ? '' : 'has-error'">
-      <div class="form-group">
-        <label class="control-label" for="service.read_header_timeout">HTTP Read Header Timeout</label>
-        <input class="form-control"
-        id="service.read_header_timeout"
-        name="service.read_header_timeout"
-        ng-model="service.read_header_timeout"
-        placeholder="0s"
-        type="text">
-        <div class="help-block">
-          <p ng-hide="isValidTimeUnit(service.read_header_timeout)"ng-include src="'/src/app/forms/time_units.html'"></p>
-          <p>Maximum time spent to read headers</p>
+      <div class="col-md-4">
+        <div class="form-group form-group-lg" ng-class="isInteger(service.port) ? '' : 'has-error'">
+          <label class="control-label" for="service.port">Port</label>
+          <input class="form-control" id="service.port" name="service.port" ng-model="service.port" placeholder="8080"
+            type="number">
+          <div class="help-block">
+            <p ng-hide="isInteger(service.port)">Write a valid port number</p>
+            <p>Port where KrakenD listens to connections, defaults to <code>8080</code>.</p>
+          </div>
         </div>
       </div>
     </div>

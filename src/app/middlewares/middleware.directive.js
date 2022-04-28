@@ -28,7 +28,6 @@ angular
 
       // Inherited configuration passed, use when empty:
       if( 'object' == typeof scope.inherit ) {
-        NAMESPACE = NAMESPACE.replace('github_com', 'github.com');
         scope.data.extra_config[NAMESPACE] = angular.copy( Object.assign(default_middleware_data, scope.inherit, scope.data.extra_config[NAMESPACE] ) );
       }
 
@@ -46,6 +45,9 @@ angular
         if ( scope.isMiddlewareEnabled() ) {
           delete scope.data.extra_config[NAMESPACE];
         } else {
+          if ( 'undefined' === typeof scope.data.extra_config ) {
+            scope.data.extra_config = {};
+          }
           scope.data.extra_config[NAMESPACE] = default_middleware_data;
         }
       }

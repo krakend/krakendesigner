@@ -1,193 +1,214 @@
-<div class="form-group">
-    <div class="checkbox">
-        <label>
-            <input type="checkbox"
-                ng-checked="isMiddlewareEnabled()"
-                ng-click="toggleMiddleware()">
-            <strong>Enable HTTP secure middleware</strong> (<a href="https://github.com/devopsfaith/krakend-httpsecure" title="View middleware source code">source code</a>)
-        </label>
-        <span class="help-block">Add AllowedHosts, SSL, HSTS options and other security policies.</span>
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> HTTP Security
+        </h3>
     </div>
-</div>
-<div ng-if="isMiddlewareEnabled()">
-    <div class="form-group">
-        <h4>Allowed hosts</h4>
-        <div class="input-group">
-            <ul class="list-unstyled">
-                <li ng-repeat="(index,host) in data.extra_config[config_namespace].allowed_hosts">
-                    <a class="badge badge-remove"
-                       ng-click="deleteIndexFromList(index,'allowed_hosts')"><i class="fa fa-times"></i>
-                        {{ host }}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="input-group">
-            <input class="form-control"
-                   placeholder="hostname:port"
-                   type="text"
-                   id="allowedHosts"
-                   required=""
-                   ng-model="input_hostname">
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-success" ng-click="addTermToList(input_hostname,'allowed_hosts')">
-                    <i class="fa fa-plus"></i> Add host
-                </button>
+    <div class="box-body" ">
+        <p ng-if=" !isMiddlewareEnabled()">Enforces HTTP security policies such as AllowedHosts, SSL Options, HSTS,
+        XSS, HPKP</p>
+        <div ng-if="isMiddlewareEnabled()">
+
+            <div class="form-group">
+                <h4>Allowed hosts</h4>
+                <div class="input-group">
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(index,host) in data.extra_config[config_namespace].allowed_hosts">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allowed_hosts')"><i
+                                    class="fa fa-times"></i>
+                                {{ host }}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <span class="help-block">List of fully qualified domain names that are allowed, along with the origin port. Format: <code>hostname:port</code>. When the list is empty accepts any host name to connect.</span>
-    </div>
-
-    <div class="form-group">
-        <h4>SSL Options</h4>
-        <div class="col-md-8">
-            <div class="input-group">
-                <span class="input-group-addon">
-                  <input type="checkbox" ng-model="data.extra_config[config_namespace].ssl_redirect"> Force SSL
-                </span>
-                <input type="text"
-                       class="form-control"
-                       ng-model="data.extra_config[config_namespace].ssl_host"
-                       placeholder="ssl.host.domain">
-
-
-
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" placeholder="hostname:port" type="text" id="allowedHosts" required=""
+                        ng-model="input_hostname">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-success"
+                            ng-click="addTermToList(input_hostname,'allowed_hosts')">
+                            <i class="fa fa-plus"></i> Add host
+                        </button>
+                    </div>
+                </div>
+                <span class="help-block">List of fully qualified domain names that are allowed, along with the
+                    origin port. Format: <code>hostname:port</code>. When the list is empty accepts any host name to
+                    connect.</span>
             </div>
-        </div>
-        <div class="col-md-4">
-            <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].ssl_port" placeholder="port">
-        </div>
-        <span class="help-block">If set to true all HTTP requests are redirected to HTTPS. If the hostname used to redirect to https differs from the current host, specify it in the box, otherwise leave it blank.</span>
-    </div>
-    <div class="form-group">
-        <table class="table table-striped">
-            <tbody>
-            <tr>
-                <th>SSL Proxy header</th>
-                <th>Header value</th>
-                <th></th>
-            </tr>
-            <tr ng-repeat="(header,value) in data.extra_config[config_namespace].ssl_proxy_headers">
-                <td>{{ header }}</td>
-                <td>{{ value }}</td>
-                <td>
-                    <button type="button" class="btn btn-danger" ng-click="deleteKey(header,'ssl_proxy_headers')">
-                        <i class="fa fa-trash"></i> Remove
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="text" class="form-control" ng-model="ssl_header" placeholder="X-Forwarded-Proto"></td>
-                <td><input type="text" class="form-control" ng-model="ssl_header_value" placeholder="https"></td>
-                <td>
-                    <button type="button" class="btn btn-success" ng-click="addKeyPair(ssl_header,ssl_header_value,'ssl_proxy_headers')">
-                        <i class="fa fa-plus"></i> Add header
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <span class="help-block">SSLProxyHeaders is set of header keys with associated values that would indicate a valid https request. Useful when using Nginx, e.g: "X-Forwarded-Proto": "https"</span>
-    </div>
 
-    <div class="form-group">
-        <h4>HTTP Strict Transport Security (HSTS)</h4>
-        <p>HSTS is a web security policy mechanism which helps to protect websites against protocol downgrade
-            attacks
-            and cookie hijacking. It allows web servers to declare that web browsers (or other complying user
-            agents)
-            should only interact with it using secure HTTPS connections, and never via the insecure HTTP
-            protocol.
-            When used the incoming links with http will be converted to https before accessing the server.</p>
-
-        <div class="input-group">
-            <div class="input-group-addon">max-age</div>
-            <input class="form-control" ng-model="data.extra_config[config_namespace].sts_seconds" type="text">
-            <div class="input-group-addon">seconds</div>
-        </div>
-
-        <span class="help-block">The <code>max-age</code> of the Strict-Transport-Security header. Setting to <code>0</code> disables HSTS!</span>
-
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="data.extra_config[config_namespace].sts_include_subdomains">
-                <strong>Include also subdomains</strong>
-            </label>
-            <span class="help-block">If this value is set to true, the <code>includeSubdomains</code> directive will be appended to the Strict-Transport-Security header.</span>
-        </div>
-    </div>
+            <div class="form-group">
+                <h4>SSL Options</h4>
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].ssl_redirect">
+                            Force SSL
+                        </span>
+                        <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].ssl_host"
+                            placeholder="ssl.host.domain">
 
 
-    <div class="form-group">
-        <h4>Clickjacking</h4>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="data.extra_config[config_namespace].frame_deny">
-                <strong>Enable clickjacking protection</strong>
-            </label>
-        <span class="help-block">Offers server-side partial protection against clickjacking when set to true, by adding the header <code>X-Frame-Options:
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].ssl_port"
+                        placeholder="port">
+                </div>
+                <span class="help-block">If set to true all HTTP requests are redirected to HTTPS. If the hostname
+                    used to redirect to https differs from the current host, specify it in the box, otherwise leave
+                    it blank.</span>
+            </div>
+            <div class="form-group">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th>SSL Proxy header</th>
+                            <th>Header value</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="(header,value) in data.extra_config[config_namespace].ssl_proxy_headers">
+                            <td>{{ header }}</td>
+                            <td>{{ value }}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger"
+                                    ng-click="deleteKey(header,'ssl_proxy_headers')">
+                                    <i class="fa fa-trash"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control" ng-model="ssl_header"
+                                    placeholder="X-Forwarded-Proto"></td>
+                            <td><input type="text" class="form-control" ng-model="ssl_header_value" placeholder="https">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success"
+                                    ng-click="addKeyPair(ssl_header,ssl_header_value,'ssl_proxy_headers')">
+                                    <i class="fa fa-plus"></i> Add header
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="help-block">SSLProxyHeaders is set of header keys with associated values that would
+                    indicate a valid https request. Useful when using Nginx, e.g: "X-Forwarded-Proto":
+                    "https"</span>
+            </div>
+
+            <div class="form-group">
+                <h4>HTTP Strict Transport Security (HSTS)</h4>
+                <p>HSTS is a web security policy mechanism which helps to protect websites against protocol
+                    downgrade
+                    attacks
+                    and cookie hijacking. It allows web servers to declare that web browsers (or other complying
+                    user
+                    agents)
+                    should only interact with it using secure HTTPS connections, and never via the insecure HTTP
+                    protocol.
+                    When used the incoming links with http will be converted to https before accessing the server.
+                </p>
+
+                <div class="input-group">
+                    <div class="input-group-addon">max-age</div>
+                    <input class="form-control" ng-model="data.extra_config[config_namespace].sts_seconds" type="text">
+                    <div class="input-group-addon">seconds</div>
+                </div>
+
+                <span class="help-block">The <code>max-age</code> of the Strict-Transport-Security header. Setting
+                    to <code>0</code> disables HSTS!</span>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="data.extra_config[config_namespace].sts_include_subdomains">
+                        <strong>Include also subdomains</strong>
+                    </label>
+                    <span class="help-block">If this value is set to true, the <code>includeSubdomains</code>
+                        directive will be appended to the Strict-Transport-Security header.</span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <h4>Clickjacking</h4>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="data.extra_config[config_namespace].frame_deny">
+                        <strong>Enable clickjacking protection</strong>
+                    </label>
+                    <span class="help-block">Offers server-side partial protection against clickjacking when set to
+                        true, by adding the header <code>X-Frame-Options:
             DENY</code>.</span>
-        </div>
-    </div>
-    <div class="form-group" ng-show="data.extra_config[config_namespace].frame_deny">
-        <div class="input-group">
-            <div class="input-group-addon">X-Frame-Options:</div>
-            <input type="text"
-                   ng-model="data.extra_config[config_namespace].custom_frame_options_value"
-                   class="form-control">
-        </div>
-        <span class="help-block">
-            Or use custom values:
-            <a href="" class="badge" ng-click="data.extra_config[config_namespace].custom_frame_options_value='DENY'"><i class="fa fa-plus"></i> DENY</a>,
-            <a href="" class="badge" ng-click="data.extra_config[config_namespace].custom_frame_options_value='SAMEORIGIN'"><i class="fa fa-plus"></i> SAMEORIGIN</a> or
-            <a href="" class="badge" ng-click="data.extra_config[config_namespace].custom_frame_options_value='ALLOW-FROM https://example.com'"><i class="fa fa-plus"></i> ALLOW-FROM</a>
-        </span>
+                </div>
+            </div>
+            <div class="form-group" ng-show="data.extra_config[config_namespace].frame_deny">
+                <div class="input-group">
+                    <div class="input-group-addon">X-Frame-Options:</div>
+                    <input type="text" ng-model="data.extra_config[config_namespace].custom_frame_options_value"
+                        class="form-control">
+                </div>
+                <span class="help-block">
+                    Or use custom values:
+                    <a href="" class="badge"
+                        ng-click="data.extra_config[config_namespace].custom_frame_options_value='DENY'"><i
+                            class="fa fa-plus"></i> DENY</a>,
+                    <a href="" class="badge"
+                        ng-click="data.extra_config[config_namespace].custom_frame_options_value='SAMEORIGIN'"><i
+                            class="fa fa-plus"></i> SAMEORIGIN</a> or
+                    <a href="" class="badge"
+                        ng-click="data.extra_config[config_namespace].custom_frame_options_value='ALLOW-FROM https://example.com'"><i
+                            class="fa fa-plus"></i> ALLOW-FROM</a>
+                </span>
 
-    </div>
+            </div>
 
-    <div class="form-group">
-        <h4>HTTP Public Key Pinning (HPKP) </h4>
-        <div class="input-group">
-            <div class="input-group-addon">Public-Key-Pins:</div>
-            <input type="text"
-                   ng-model="data.extra_config[config_namespace].hpkp_public_key"
-                   class="form-control"
-                   placeholder='pin-sha256="base64=="; max-age=expireTime [; includeSubDomains][; report-uri="reportURI"]'>
-        </div>
-        <span class="help-block">Allows HTTPS websites to resist impersonation by attackers using mis-issued or otherwise fraudulent certificates.</span>
-    </div>
+            <div class="form-group">
+                <h4>HTTP Public Key Pinning (HPKP) </h4>
+                <div class="input-group">
+                    <div class="input-group-addon">Public-Key-Pins:</div>
+                    <input type="text" ng-model="data.extra_config[config_namespace].hpkp_public_key"
+                        class="form-control"
+                        placeholder='pin-sha256="base64=="; max-age=expireTime [; includeSubDomains][; report-uri="reportURI"]'>
+                </div>
+                <span class="help-block">Allows HTTPS websites to resist impersonation by attackers using mis-issued
+                    or otherwise fraudulent certificates.</span>
+            </div>
 
-    <div class="form-group">
-        <h4>Sniffing</h4>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="data.extra_config[config_namespace].content_type_nosniff">
-                <strong> MIME-sniffing prevention</strong>
-            </label>
-        <span class="help-block">When set prevents Internet Explorer from MIME-sniffing a response away from the declared content-type. This also applies to Google Chrome, when downloading extensions. Sets <code>X-Content-Type-Options:
+            <div class="form-group">
+                <h4>Sniffing</h4>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="data.extra_config[config_namespace].content_type_nosniff">
+                        <strong> MIME-sniffing prevention</strong>
+                    </label>
+                    <span class="help-block">When set prevents Internet Explorer from MIME-sniffing a response away
+                        from the declared content-type. This also applies to Google Chrome, when downloading
+                        extensions. Sets <code>X-Content-Type-Options:
             nosniff</code></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <h4>Cross-site scripting (XSS) protection</h4>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="data.extra_config[config_namespace].browser_xss_filter">
-                <strong>Browser cross-site scripting (XSS) filter</strong>
-            </label>
-            <span class="help-block">When set adds the header <code>X-XSS-Protection: 1;
+                </div>
+            </div>
+            <div class="form-group">
+                <h4>Cross-site scripting (XSS) protection</h4>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="data.extra_config[config_namespace].browser_xss_filter">
+                        <strong>Browser cross-site scripting (XSS) filter</strong>
+                    </label>
+                    <span class="help-block">When set adds the header <code>X-XSS-Protection: 1;
                 mode=block</code></span>
+                </div>
+                <div class="input-group">
+                    <div class="input-group-addon">Content-Security-Policy:</div>
+                    <input type="text" ng-model="data.extra_config[config_namespace].content_security_policy"
+                        class="form-control" placeholder="default-src 'self';">
+                </div>
+                <span class="help-block">
+                    Enable Content Security Policy (CSP) by writing your policies in the header (see <a
+                        href="https://content-security-policy.com/">reference</a>).
+                </span>
+            </div>
         </div>
-        <div class="input-group">
-            <div class="input-group-addon">Content-Security-Policy:</div>
-            <input type="text"
-                   ng-model="data.extra_config[config_namespace].content_security_policy"
-                   class="form-control"
-                   placeholder="default-src 'self';">
-        </div>
-    <span class="help-block">
-        Enable Content Security Policy (CSP) by writing your policies in the header (see <a href="https://content-security-policy.com/">reference</a>).
-    </span>
     </div>
+
 </div>

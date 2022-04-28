@@ -1,19 +1,12 @@
-
-
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title">Security headers</h3>
-
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-        </div>
+<div class="row">
+    <div class="col-md-6">
+        <middleware template="cors.html" namespace="'security/cors'" data="service"></middleware>
+        <middleware data="service" template="bot_detector.html" namespace="'security/bot-detector'"></middleware>
+        <plugin root="service" placement="service" template="jwk-aggregator.html" plugin="'jwk-aggregator'" type="'plugin/http-server'"></plugin>
     </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-       <p>The following options enhance the security in your API and are optional. All values set here will be copied
-       to new created endpoints. These can override specific configurations later.</p>
-
-       <middleware data="service" template="httpsecure.html" namespace="'security/http'"></middleware>
-
+    <div class="col-md-6">
+        <plugin root="service" placement="service" template="ipfilter.html" plugin="'ip-filter'" type="'plugin/http-server'"></plugin>
+        <middleware data="service" template="httpsecure.html" namespace="'security/http'"></middleware>
+        <plugin root="service" placement="service" template="basic-authentication.html" plugin="'basic-auth'" type="'plugin/http-server'"></plugin>
     </div>
 </div>

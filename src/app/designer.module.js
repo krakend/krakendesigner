@@ -26,20 +26,20 @@
                 templateUrl: '/src/app/forms/endpoints.html',
                 controller: 'KrakenDesignerController'
             })
-            .when('/oauth', {
-                templateUrl: '/src/app/forms/oauth.html',
-                controller: 'KrakenDesignerController'
-            })
             .when('/security', {
                 templateUrl: '/src/app/forms/security.html',
                 controller: 'KrakenDesignerController'
             })
-            .when('/service-discovery', {
-                templateUrl: '/src/app/forms/service_discovery.html',
+            .when('/logging', {
+                templateUrl: '/src/app/forms/logging.html',
                 controller: 'KrakenDesignerController'
             })
-             .when('/logging', {
-                templateUrl: '/src/app/forms/logging.html',
+            .when('/openapi', {
+                templateUrl: '/src/app/forms/openapi.html',
+                controller: 'KrakenDesignerController'
+            })
+            .when('/api-keys', {
+                templateUrl: '/src/app/forms/api-keys.html',
                 controller: 'KrakenDesignerController'
             })
             .otherwise({

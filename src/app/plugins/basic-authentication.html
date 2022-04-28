@@ -1,0 +1,47 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+      Basic Authentication</h3>
+    <div class="pull-right">
+      <span class="pull-right-container badge badge-inverse">Enterprise</span>
+    </div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!hasHttpServerPlugin()">The Basic Authentication plugin protects the access to selected endpoints using
+      basic username and password credentials via <strong>htpasswd</strong>.</p>
+    <div ng-if="hasHttpServerPlugin()">
+      <div class="form-group">
+        <div class="col-md-6">
+          <label class="control-label">Htpasswd path</label>
+          <input class="form-control" placeholder="/etc/krakend/.htpasswd" type="text" required=""
+            ng-model="data.extra_config[plugin_type][plugin_name].htpasswd_path">
+          <span class="help-block">Absolute Path to the <code>htpasswd</code> filename (recommended) or relative
+            <code>./</code> to the workdir.</span>
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Protected Endpoints</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="/endpoint/{name}" type="text" required="" ng-model="ep">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-success"
+                ng-click="addTermToList(ep,data.extra_config[plugin_type][plugin_name],'endpoints')">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <span class="help-block">All the endpoints protected with basic authentication. Leave <code>*</code> for all endpoints. They must
+            match with the declaration of endpoints in your configuration, including any <code>{placeholders}</code> in
+            the path.</span>
+          <ul class="list-inline">
+            <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].endpoints">
+              <a class="badge badge-remove"
+                ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'endpoints')"><i
+                  class="fa fa-times"></i>
+                {{ val }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

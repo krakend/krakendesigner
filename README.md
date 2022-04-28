@@ -33,7 +33,7 @@ Start the web server pointing to `designer/` and mounting the volume:
 
     docker run --rm -d -p 8080:80 -v "$PWD/designer:/usr/share/nginx/html" devopsfaith/krakendesigner
 
-Remember to `make build` if you change HTML, CSS or JS. Or `node_modules/.bin/grunt ngtemplates && node_modules/.bin/webpack-cli --mode production`
+Remember to `make build` or `make watch` if you change HTML, CSS or JS.
 
 
 ## Get involved! - Please!

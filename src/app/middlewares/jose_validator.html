@@ -1,16 +1,11 @@
-<div class="box box-default box-solid">
+<div class="box box-info box-solid">
     <div class="box-header with-border">
         <h3 class="box-title">
-            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Enable JWT validation
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Auth: Token validation
         </h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
-            </button>
-        </div>
     </div>
     <div class="box-body">
-        <p ng-if="!isMiddlewareEnabled()">Enable to validate JWT tokens</p>
+        <p ng-if="!isMiddlewareEnabled()">Enables validation of JWT tokens (OAuth) that have been issued by a third party identity provider (e.g.: OpenID Connect)</p>
         <div ng-if="isMiddlewareEnabled()">
             <p>Only the <strong>algorithm</strong> and the location of your <strong>jwk</strong> are mandatory fields.</p>
             <div class="form-group">
@@ -60,7 +55,7 @@
                     <input type="text" ng-model="data.extra_config[config_namespace].scopes_key" class="form-control" />
                     <span class="help-block">The key name where the scopes can be found. The key can be a nested object using the . dot notation, e.g.: data.data2.scopes</span>
                 </div>
-                
+
             </div>
             <div class="form-group">
                 <div class="col-md-12">

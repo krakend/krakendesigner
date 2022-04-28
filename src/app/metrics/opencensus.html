@@ -1,11 +1,12 @@
-<div class="box box-primary">
+<div class="box box-info box-solid">
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox"
       ng-checked="isMiddlewareEnabled()"
-      ng-click="toggleOpencensusMiddleware()"> Opencensus <small>(Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver, Datadog, and more)</small></h3>
+      ng-click="toggleOpencensusMiddleware()"> Opencensus <small>(Newrelic, Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver, Datadog, and more)</small></h3>
     </div>
-    <div class="box-body" ng-if="isMiddlewareEnabled()">
-      <p>The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different backends. Select all the metric integrations you want to enable and configure below:</p>
+    <div class="box-body">
+      <p ng-if="!isMiddlewareEnabled()">The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different third party systems.</p>
+      <div ng-if="isMiddlewareEnabled()">
       <div class="form-group">
         <div class="checkbox">
           <label>
@@ -70,6 +71,15 @@
             ng-click="toggleOpencensusBackend('datadog')">
             <strong>Datadog</strong> - Stats and Tracing
           </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+            ng-checked="backendIsEnabled('newrelic')"
+            ng-click="toggleOpencensusBackend('newrelic')">
+            <strong>New Relic</strong> - Metrics and Traces
+          </label>
+          <span class="badge">Enterprise</span>
         </div>
         <div class="checkbox">
           <label>
@@ -419,7 +429,6 @@
                             <i class="fa fa-plus"></i> Add Global Tag
                           </button>
                       </span>
-                      
                 </div>
             <ul class="list-inline help-block">
               <li ng-repeat="(index,tag) in data.extra_config[config_namespace].exporters.datadog.global_tags">
@@ -443,12 +452,75 @@
                   Specifies whether to emit count_per_bucket metrics
                 </span>
               </div>
-              
             </div>
           </div>
         </div>
     </div>
-  </div> 
+  </div>
+  <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.newrelic">
+    <div class="box-header with-border">
+      <h3 class="box-title">New Relic configuration</h3>
+      <div class="pull-right">
+        <span class="pull-right-container badge">Enterprise</span>
+      </div>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="control-label">Service Name</label>
+                <input type="text"
+                class="form-control"
+                ng-model="data.extra_config[config_namespace].exporters.newrelic.service_name"
+                placeholder="krakend-api-gateway">
+                <span class="help-block">The service name as shown in the New Relic dashboard</span>
+              </div>
+              <div class="col-md-6">
+                <label class="control-label"></label>
+                <input type="text"
+                class="form-control"
+                ng-model="data.extra_config[config_namespace].exporters.newrelic.api_key"
+                placeholder="e.g: NRAK-CIH1YVYWKA9ZP5E48WP5XYJH1G9">
+                <span class="help-block">The API key provided by New Relic to push data into your account</span>
+              </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="control-label">Spans URL</label>
+              <select
+              class="form-control"
+              ng-model="data.extra_config[config_namespace].exporters.newrelic.spans_url">
+                <option value="https://trace-api.newrelic.com/trace/v1">US (trace-api.newrelic.com)</option>
+                <option value="https://trace-api.eu.newrelic.com/trace/v1">EU (trace-api.eu.newrelic.com)</option>
+              </select>
+              <span class="help-block">New Relic might use different endpoints to report traces from its customers depending on the location of their accounts</span>
+            </div>
+            <div class="col-md-6">
+              <label class="control-label">Metrics URL</label>
+              <select
+              class="form-control"
+              ng-model="data.extra_config[config_namespace].exporters.newrelic.metrics_url">
+                <option value="https://metric-api.newrelic.com/metric/v1">US (metric-api.newrelic.com/)</option>
+                <option value="https://metric-api.eu.newrelic.com/metric/v1">EU (metric-api.eu.newrelic.com/)</option>
+              </select>
+              <span class="help-block">New Relic might use different endpoints to report metrics from its customers depending on the location of their accounts</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"
+              ng-model="data.extra_config[config_namespace].exporters.newrelic.debug">
+              <strong>Debug</strong>
+            </label>
+            <span class="help-block">Set to true when setting New Relic for the first time, and you want to see the logs of the exporter activity. Remove in production.</span>
+          </div>
+          </div>
+    </div>
+  </div>
   <div class="box box-secondary" ng-if="data.extra_config[config_namespace].exporters.ocagent">
     <div class="box-header with-border">
       <h3 class="box-title">Ocagent configuration</h3>
@@ -459,7 +531,7 @@
         <input type="text"
           class="form-control"
           ng-model="data.extra_config[config_namespace].exporters.ocagent.address"
-          placeholder="localhost:55678">        
+          placeholder="localhost:55678">
       </div>
       <div class="form-group">
         <div class="row">
@@ -480,7 +552,7 @@
                   <p ng-hide="isValidTimeUnit(data.extra_config[config_namespace].exporters.ocagent.reconnection)" ng-include src="'/src/app/forms/time_units.html'"></p>
                 </div>
             </div>
-            
+
       </div>
       <div class="form-group">
           <div class="row">
@@ -541,4 +613,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div></div>

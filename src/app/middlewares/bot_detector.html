@@ -1,82 +1,101 @@
-<div class="box box-info">
+<div class="box box-info box-solid">
     <div class="box-header with-border">
         <h3 class="box-title">
             <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Bot detector
         </h3>
     </div>
-    <div class="box-body" ng-if="isMiddlewareEnabled()">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label">Whitelist</label>
-                    <div class="input-group">
-                        <input class="form-control" placeholder="MyAndroidClient/1.0" type="text" required="" ng-model="input_allow">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_allow,'allow')">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <span class="help-block">An array with EXACT MATCHES of trusted user agents that can connect.</span>
-                    <ul class="list-inline">
-                        <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow')"><i class="fa fa-times"></i>
-                                {{ val }}</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-6">
+    <div class="box-body">
+        <p ng-if="!isMiddlewareEnabled()">Detect and reject bots carrying out scraping, content theft, and form spam.
+        </p>
+        <div ng-if="isMiddlewareEnabled()">
+            <div class="row">
+                <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label">Blacklist</label>
+                        <label class="control-label">Whitelist</label>
                         <div class="input-group">
-                            <input class="form-control" placeholder="axios/0.17.1" type="text" required="" ng-model="input_deny">
+                            <input class="form-control" placeholder="MyAndroidClient/1.0" type="text" required=""
+                                ng-model="input_allow">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-success" ng-click="addTermToList(input_deny,'deny')">
+                                <button type="button" class="btn btn-success"
+                                    ng-click="addTermToList(input_allow,'allow')">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <span class="help-block">An array of EXACT MATCHES of undesired bots, to reject immediately.</span>
+                        <span class="help-block">An array with EXACT MATCHES of trusted user agents that can
+                            connect.</span>
                         <ul class="list-inline">
-                            <li ng-repeat="(index,val) in data.extra_config[config_namespace].deny">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'deny')"><i class="fa fa-times"></i>
+                            <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow">
+                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow')"><i
+                                        class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-        </div>
-        <div class="row">
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label">Patterns</label>
-                    <div class="input-group">
-                        <input class="form-control" placeholder="(facebookexternalhit)/.*" type="text" required="" ng-model="input_patterns">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-success" ng-click="addTermToList(input_patterns,'patterns')">
-                                <i class="fa fa-plus"></i>
-                            </button>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Blacklist</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="axios/0.17.1" type="text" required=""
+                                ng-model="input_deny">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-success"
+                                    ng-click="addTermToList(input_deny,'deny')">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
+                        <span class="help-block">An array of EXACT MATCHES of undesired bots, to reject
+                            immediately.</span>
+                        <ul class="list-inline">
+                            <li ng-repeat="(index,val) in data.extra_config[config_namespace].deny">
+                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'deny')"><i
+                                        class="fa fa-times"></i>
+                                    {{ val }}</a>
+                            </li>
+                        </ul>
                     </div>
-                    <span class="help-block">An array with all the <strong>regular expressions</strong> that define bots. Matching bots are rejected.</span>
-                    <ul class="list-inline">
-                        <li ng-repeat="(index,val) in data.extra_config[config_namespace].patterns">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'patterns')"><i class="fa fa-times"></i>
-                                {{ val }}</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group" ng-class="validator.isInteger(data.extra_config[config_namespace].cache_size) ? '' : 'has-error'">
-                    <label class="control-label">Cache size</label>
-                    <input type="number" class="form-control" ng-model="data.extra_config[config_namespace].cache_size" placeholder="1000">
-                    <div class="help-block">
-                        Number of user agents cached to speed up repetitive bot detection. Use <code>0</code> for no cache.
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Patterns</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="(facebookexternalhit)/.*" type="text" required=""
+                                ng-model="input_patterns">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-success"
+                                    ng-click="addTermToList(input_patterns,'patterns')">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span class="help-block">An array with all the <strong>regular expressions</strong> that define
+                            bots. Matching bots are rejected.</span>
+                        <ul class="list-inline">
+                            <li ng-repeat="(index,val) in data.extra_config[config_namespace].patterns">
+                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'patterns')"><i
+                                        class="fa fa-times"></i>
+                                    {{ val }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group"
+                        ng-class="validator.isInteger(data.extra_config[config_namespace].cache_size) ? '' : 'has-error'">
+                        <label class="control-label">Cache size</label>
+                        <input type="number" class="form-control"
+                            ng-model="data.extra_config[config_namespace].cache_size" placeholder="1000">
+                        <div class="help-block">
+                            Number of user agents cached to speed up repetitive bot detection. Use <code>0</code> for no
+                            cache.
+                        </div>
                     </div>
                 </div>
             </div>

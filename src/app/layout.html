@@ -36,7 +36,7 @@
 <body class="hold-transition sidebar-mini skin-black-light">
   <div class="wrapper">
     <header class="main-header">
-      <a href="https://www.krakend.io/" class="logo">
+      <a href="#" class="logo">
         <span class="logo-mini">
           <img src="https://www.krakend.io/images/logo-mini.png" alt="" />
         </span>
@@ -51,14 +51,8 @@
 
         <div class="navbar-collapse pull-left collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="https://www.krakend.io/features">Features</a></li>
-            <li><a href="https://www.krakend.io/download/">Download</a></li>
-            <li>
-              <a href="https://www.krakend.io/docs/overview/introduction">Documentation</a>
-            </li>
-
-            <li><a href="https://www.krakend.io/blog">Blog</a></li>
-            <li><a href="https://www.krakend.io/support">Support</a></li>
+            <li><a href="#" style="font-size:30px; font-weight: bold; text-decoration: none;">Designer</a></li>
+            <li><a href="https://www.krakend.io/">Back to website</a></li>
           </ul>
         </div>
 
@@ -81,7 +75,10 @@
 
       <div class="content-wrapper">
         <section class="content-header">
-          <h1>KrakenDesigner <small ng-bind="service.name"></small></h1>
+          <h1><a href="/#!/service">{{service.name}}</a>
+            <a ng-if="isEnterprise()" class="badge" data-toggle="modal"
+              data-target="#enterprise-needed-modal">Enterprise Edition</a>
+          </h1>
         </section>
         <section class="content">
           <div class="row">
@@ -90,6 +87,37 @@
             </section>
           </div>
         </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="enterprise-needed-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">You have added KrakenD Enterprise features
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p>KrakenD Designer allows you to edit simultaneously KrakenD configuration files for the <strong>Community
+              Edition</strong> and the <a href="https://www.krakend.io/enterprise/"><strong>Enterprise
+                Edition</strong></a>.</p>
+
+          <p>The Designer marks some features with the label "<span class="badge">Enterprise</span>". If you have
+            enabled any of these features, you will need a KrakenD Enterprise license file to make them work.</p>
+
+          <p><strong>Enterprise and Open-Source are exchangeable</strong></p>
+          <p>You can load configurations from one version into the other and viceversa:</p>
+          <ul>
+            <li>KrakenD Enterprise can run any open-source feature.</li>
+            <li>KrakenD Community accepts but ignores Enterprise Edition configuration blocks</li>
+          </ul>
+          <p>The process of upgrading or downgrading between versions is transparent for you and without needing to change configurations.</p>
+
+          <p><a class="btn btn-success" href="https://www.krakend.io/enterprise/#contact-sales">Request a trial LICENSE</a></p>
+        </div>
       </div>
     </div>
   </div>

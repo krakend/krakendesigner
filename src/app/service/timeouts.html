@@ -1,6 +1,6 @@
 <div class="box box-primary">
   <div class="box-header with-border">
-    <h3 class="box-title">Timeouts and TTL</h3>
+    <h3 class="box-title">Default Timeouts and TTL</h3>
   </div>
   <!-- /.box-header -->
   <div class="box-body">
@@ -15,7 +15,7 @@
       type="text">
       <div class="help-block">
         <p ng-hide="isValidTimeUnit(service.timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
-        <p><strong>Default timeout</strong> for all connections against your backends, 
+        <p><strong>Default timeout</strong> for all connections against your backends,
           including the time spent in the whole pipe. This value can be overridden later on specific endpoints.</p>
       </div>
     </div>
@@ -30,7 +30,56 @@
         <p ng-hide="isInteger(service.cache_ttl)">Value must be an integer expressing the number of seconds</p>
         <p>The time the service considers the origin is still valid. Applies
           to GET requests only. The service does not cache anything but expedites
-        the headers for proxies to do the caching (e.g., a Varnish server).</p>
+        the headers for proxies to do the caching (e.g., a Varnish server, CDN, etc.).</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6" ng-class="isValidTimeUnit(service.read_timeout) ? '' : 'has-error'">
+        <div class="form-group">
+          <label class="control-label" for="service.read_timeout">HTTP Read Timeout</label>
+          <input class="form-control" id="service.read_timeout" name="service.read_timeout"
+            ng-model="service.read_timeout" placeholder="0s" type="text">
+          <div class="help-block">
+            <p ng-hide="isValidTimeUnit(service.read_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+            <p>Maximum duration for reading the entire HTTP request, including the body.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" ng-class="isValidTimeUnit(service.write_timeout) ? '' : 'has-error'">
+        <div class="form-group">
+          <label class="control-label" for="service.write_timeout">HTTP Write Timeout</label>
+          <input class="form-control" id="service.write_timeout" name="service.write_timeout"
+            ng-model="service.write_timeout" placeholder="0s" type="text">
+          <div class="help-block">
+            <p ng-hide="isValidTimeUnit(service.write_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+            <p>Maximum duration before timing-out writes of the response</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6" ng-class="isValidTimeUnit(service.idle_timeout) ? '' : 'has-error'">
+        <div class="form-group">
+          <label class="control-label" for="service.idle_timeout">HTTP Idle Timeout</label>
+          <input class="form-control" id="service.idle_timeout" name="service.idle_timeout"
+            ng-model="service.idle_timeout" placeholder="0s" type="text">
+          <div class="help-block">
+            <p ng-hide="isValidTimeUnit(service.idle_timeout)" ng-include src="'/src/app/forms/time_units.html'"></p>
+            <p>Maximum amount of time to wait for the next request when keepalives are enabled</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" ng-class="isValidTimeUnit(service.read_header_timeout) ? '' : 'has-error'">
+        <div class="form-group">
+          <label class="control-label" for="service.read_header_timeout">HTTP Read Header Timeout</label>
+          <input class="form-control" id="service.read_header_timeout" name="service.read_header_timeout"
+            ng-model="service.read_header_timeout" placeholder="0s" type="text">
+          <div class="help-block">
+            <p ng-hide="isValidTimeUnit(service.read_header_timeout)" ng-include src="'/src/app/forms/time_units.html'">
+            </p>
+            <p>Maximum time spent to read headers</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@ install:
 
 # Watches SCSS and JS for changes
 watch:
-	docker run --rm -it -v $PWD:/app -w /app node:12 npm run-script watch
+	docker run --rm -it -v "${PWD}:/app" -w /app node:12 npm run-script watch
 
 build:
 	docker run --rm -it -v "${PWD}:/app" -w /app node:12 npm run-script build

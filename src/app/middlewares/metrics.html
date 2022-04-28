@@ -1,72 +1,68 @@
-<div class="box box-primary">
+<div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox"
-          ng-checked="isMiddlewareEnabled()"
-          ng-click="toggleMiddleware()"> Metrics</h3>
+    <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
+      Metrics</h3>
   </div>
 
-  <div class="box-body" ng-if="isMiddlewareEnabled()">
-    <p>The metrics <em>middleware</em> listens in a new address and exposes a <code>/__stats/</code> endpoint with all the KrakenD metrics.</p>
-    <div class="form-group">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"
-          ng-model="data.extra_config[config_namespace].endpoint_disabled">
-          <strong>Disable /__stats/ endpoint</strong> - Metrics won't be published but still collected.
-        </label>
-      </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"
-          ng-model="data.extra_config[config_namespace].proxy_disabled">
-          <strong>Disable proxy</strong> - Skip any metrics happening in the proxy layer
-        </label>
-      </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"
-          ng-model="data.extra_config[config_namespace].router_disabled">
-          <strong>Disable router</strong> - Skip any metrics happening in the router layer
-        </label>
-      </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"
-          ng-model="data.extra_config[config_namespace].backend_disabled">
-          <strong>Disable backend layer metrics</strong> - Skip any metrics when interacting with backends
-        </label>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <label class="control-label">Listen Address</label>
-
-        <input type="text"
-        class="form-control"
-        ng-model="data.extra_config[config_namespace].listen_address"
-        placeholder="0.0.0.0:8090">
-
-        <div class="help-block">
-          Change the listen address where the metrics endpoint will be exposed. Defaults to <code>:8090</code>.
+  <div class="box-body">
+    <p ng-if="!isMiddlewareEnabled()">The metrics <em>middleware</em> listens in a new address and exposes a
+      <code>/__stats/</code> endpoint with all the KrakenD metrics.</p>
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="data.extra_config[config_namespace].endpoint_disabled">
+            <strong>Disable /__stats/ endpoint</strong> - Metrics won't be published but still collected.
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="data.extra_config[config_namespace].proxy_disabled">
+            <strong>Disable proxy</strong> - Skip any metrics happening in the proxy layer
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="data.extra_config[config_namespace].router_disabled">
+            <strong>Disable router</strong> - Skip any metrics happening in the router layer
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="data.extra_config[config_namespace].backend_disabled">
+            <strong>Disable backend layer metrics</strong> - Skip any metrics when interacting with backends
+          </label>
         </div>
       </div>
-      <div class="col-md-6">
-       <div class="form-group" ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].collection_time) ? '' : 'has-error'">
-        <label class="control-label">Collection time</label>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label class="control-label">Listen Address</label>
+
+          <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].listen_address"
+            placeholder="0.0.0.0:8090">
+
+          <div class="help-block">
+            Change the listen address where the metrics endpoint will be exposed. Defaults to <code>:8090</code>.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group"
+            ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].collection_time) ? '' : 'has-error'">
+            <label class="control-label">Collection time</label>
 
 
-        <input type="text"
-        class="form-control"
-        ng-model="data.extra_config[config_namespace].collection_time"
-        placeholder="60s">
-      </div>
+            <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].collection_time"
+              placeholder="60s">
+          </div>
 
-      <div class="help-block">
-        <p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].collection_time)" ng-include src="'/src/app/forms/time_units.html'"></p>
-        Time window. Defaults to 60 seconds.
+          <div class="help-block">
+            <p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].collection_time)" ng-include
+              src="'/src/app/forms/time_units.html'"></p>
+            Time window. Defaults to 60 seconds.
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
