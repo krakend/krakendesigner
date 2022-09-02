@@ -177,7 +177,7 @@ angular
         $rootScope.isEnterprise = function () {
             $rootScope.modules_in_use = [];
             service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/ganalytics'];
-            endpoint_components = ['documentation/openapi', 'websocket'];
+            endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath'];
             http_server_plugins = ['ip-filter','jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
             http_client_plugins = ['wildcard', 'krakend-afero', 'static-filesystem', 'no-redirect'];
             req_resp_plugins = ['ip-filter'];

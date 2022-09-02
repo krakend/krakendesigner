@@ -1,0 +1,46 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Advanced response
+            manipulation (JMESpath)
+        </h3>
+        <div class="pull-right">
+            <span class="pull-right-container badge badge-inverse">Enterprise</span>
+        </div>
+    </div>
+    <div class="box-body">
+        <p>Manipulate the response dataset after the aggregation layer using a JSON Query language.</p>
+        <div ng-if="isMiddlewareEnabled()">
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label class="control-label">Expression for {{ data.endpoint }}</label>
+                    <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].expr"
+                        placeholder="students[?age > `18` ].name">
+                    <span class="help-block">JMESpath query</span>
+                </div>
+            </div>
+            <h4>Example of how JMESpath works</h4>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>Aggregated backend responses</label>
+                    <pre>{
+  "students": [
+    {"name": "Bill", "age": 23 },
+    {"name": "Mary", "age": 16 },
+    {"name": "Jessica", "age": 19 }
+  ]
+}</pre>
+                </div>
+                <div class="col-md-6">
+                    <label>Expression</label>
+                    <pre>students[?age > `18` ].name</pre>
+
+                    <label>Final response</label>
+                    <pre>["Bill", "Jessica"]</pre>
+                    <p><a href="https://www.krakend.io/docs/enterprise/endpoints/jmespath/"><i class="fa fa-book"></i> JMESpath documentation</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

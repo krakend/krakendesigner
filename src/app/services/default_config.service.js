@@ -186,6 +186,9 @@ angular
                     "ping_period": "54s",
                     "max_retries": 0,
                     "backoff_strategy": "exponential"
+                },
+                "modifier/jmespath": {
+                    "expr": "people[?age > `20`].[name, age]"
                 }
             },
             "plugin/http-server": {
