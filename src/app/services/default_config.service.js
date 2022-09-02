@@ -90,7 +90,8 @@ angular
                     "prefix": "[KRAKEND]",
                     "syslog": false,
                     "stdout": true,
-                    "format": "default"
+                    "format": "default",
+                    "syslog_facility": "local3"
                 },
                 'security/cors': {
                     "allow_origins": [
