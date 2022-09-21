@@ -145,11 +145,13 @@ angular
                     "operationName": "addMktPreferencesForUser",
                     "variables": {}
                 },
-                // // Endpoint level middleware (github.com)
+                // // Endpoint level middleware
                 'qos/ratelimit/router': {
                     "max_rate": 0,
                     "client_max_rate": 0,
-                    "strategy": "ip"
+                    "strategy": "ip",
+                    "capacity": 0,
+                    "client_capacity": 0
                 },
                 'auth/signer': {
                     "alg": "HS256"
