@@ -90,7 +90,8 @@ angular
                     "prefix": "[KRAKEND]",
                     "syslog": false,
                     "stdout": true,
-                    "format": "default"
+                    "format": "default",
+                    "syslog_facility": "local3"
                 },
                 'security/cors': {
                     "allow_origins": [
@@ -144,11 +145,13 @@ angular
                     "operationName": "addMktPreferencesForUser",
                     "variables": {}
                 },
-                // // Endpoint level middleware (github.com)
+                // // Endpoint level middleware
                 'qos/ratelimit/router': {
                     "max_rate": 0,
                     "client_max_rate": 0,
-                    "strategy": "ip"
+                    "strategy": "ip",
+                    "capacity": 0,
+                    "client_capacity": 0
                 },
                 'auth/signer': {
                     "alg": "HS256"
@@ -185,6 +188,9 @@ angular
                     "ping_period": "54s",
                     "max_retries": 0,
                     "backoff_strategy": "exponential"
+                },
+                "modifier/jmespath": {
+                    "expr": "people[?age > `20`].[name, age]"
                 }
             },
             "plugin/http-server": {

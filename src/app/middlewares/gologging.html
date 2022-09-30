@@ -62,19 +62,40 @@
         </div>
       </div>
       <h4>Send logs to...</h4>
-      <div class="form-group">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="syslog" ng-model="data.extra_config[config_namespace].syslog">
-            <strong>Syslog</strong> - Send logs to syslog
-          </label>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="syslog" ng-model="data.extra_config[config_namespace].syslog">
+                <strong>Syslog</strong> - Remote or local server
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="stdout" ng-model="data.extra_config[config_namespace].stdout">
+                <strong>Stdout</strong> - Console
+              </label>
+            </div>
+          </div>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="stdout" ng-model="data.extra_config[config_namespace].stdout">
-            <strong>Stdout</strong> - Send logs to standard out
-          </label>
+        <div class="col-md-6" ng-if="data.extra_config[config_namespace].syslog">
+          <label class="control-label">Syslog Facility</label>
+          <select class="form-control" ng-model="data.extra_config[config_namespace].syslog_facility"
+            id="data.extra_config[config_namespace].syslog_facility"
+            name="data.extra_config[config_namespace].syslog_facility">
+            <option value="local0">local 0</option>
+            <option value="local1">local 1</option>
+            <option value="local2">local 2</option>
+            <option value="local3">local 3</option>
+            <option value="local4">local 4</option>
+            <option value="local5">local 5</option>
+            <option value="local6">local 6</option>
+            <option value="local7">local 7</option>
+          </select>
+          <span class="help-block">Facility to send the messages as set in the rsyslog standard</span>
         </div>
       </div>
     </div>
   </div>
+</div>

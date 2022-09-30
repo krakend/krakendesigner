@@ -279,13 +279,14 @@
                                                 <label class="control-label">Rate limit by API Key</label>
                                                 <div class="input-group">
                                                     <input class="form-control"
-                                                    ng-model="endpoint.extra_config['auth/api-keys'].client_max_rate"
-                                                    id="endpoint.extra_config['auth/api-keys'].client_max_rate"
-                                                    name="endpoint.extra_config['auth/api-keys'].client_max_rate"
-                                                    type="number">
+                                                        ng-model="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                        id="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                        name="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                        type="number">
                                                     <div class="input-group-addon">reqs/sec</div>
                                                 </div>
-                                                <span class="help-block">Maximum requests per second you want to let each API-keys do. Leave <code>0</code> or empty for no limit.
+                                                <span class="help-block">Maximum requests per second you want to let
+                                                    each API-keys do. Leave <code>0</code> or empty for no limit.
                                                 </span>
                                             </div>
                                         </div>
@@ -305,6 +306,7 @@
                                     plugin="'ip-filter'" type="'plugin/req-resp-modifier'"></plugin>
                                 <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint">
                                 </middleware>
+                                <middleware template="jmespath.html" namespace="'modifier/jmespath'" data="endpoint"></middleware>
                             </div>
                             <div class="col-md-6">
                                 <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
@@ -373,6 +375,8 @@
                                                     ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
                                                 {{ host.host }}
                                             </label>
+                                            <span class="help-block">All the hosts (round-robin) that can be used to
+                                                request the URL</span>
                                         </div>
                                         <div class="radio-inline" ng-repeat="sd in sd_providers.providers">
                                             <label>
@@ -400,7 +404,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Backend endpoint</label>
+                                        <label>URL</label>
                                         <input type="text" placeholder="/users/{username}" class="form-control"
                                             required="" ng-model="backend.url_pattern">
 
@@ -443,9 +447,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <middleware data="backend"
-                                        inherit="service.extra_config['auth/client-credentials']"
-                                        template="oauth.html" namespace="'auth/client-credentials'">
-                                    </middleware>
+                                            inherit="service.extra_config['auth/client-credentials']"
+                                            template="oauth.html" namespace="'auth/client-credentials'">
+                                        </middleware>
                                         <middleware data="backend" template="amqp_producer.html"
                                             namespace="'backend/amqp/producer'"></middleware>
                                     </div>
@@ -641,6 +645,7 @@
                             Add static response (stub)
                         </button>
                     </div>
+                </div>
             </fieldset>
         </form>
     </div><!-- /.box-body -->

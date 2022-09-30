@@ -58,7 +58,7 @@
       <h4>Connections</h4>
     </div>
     <div class="form-group">
-      <div class="col-md-3" ng-class="isInteger(service.max_idle_connections) ? '' : 'has-error'">
+      <div class="col-md-2" ng-class="isInteger(service.max_idle_connections) ? '' : 'has-error'">
         <label class="control-label">Maximum IDLE connections</label>
         <input class="form-control"
         ng-model="service.max_idle_connections"
@@ -66,7 +66,7 @@
         <span class="help-block">Maximum number of idle (keep-alive) connections across all hosts. <code>0</code> means no limit.
         </span>
       </div>
-      <div class="col-md-3" ng-class="isInteger(service.max_idle_connections_per_host) ? '' : 'has-error'">
+      <div class="col-md-2" ng-class="isInteger(service.max_idle_connections_per_host) ? '' : 'has-error'">
         <label class="control-label">Maximum IDLE connections per host</label>
         <input class="form-control"
         ng-model="service.max_idle_connections_per_host"
@@ -74,6 +74,22 @@
         <span class="help-block">Maximum number of IDLE connections that you allow per-host.
           Defaults to <code>250</code>.
         </span>
+      </div>
+      <div class="col-md-2">
+        <div class="checkbox">
+          <label for="service.allow_insecure_connections">
+            <input type="checkbox"
+            id="service.allow_insecure_connections"
+            name="service.allow_insecure_connections"
+            ng-model="service.allow_insecure_connections"
+            placeholder="0s"
+            type="text">
+            <strong>Allow insecure connections</strong>
+          </label>
+          <div class="help-block">
+            <p>E.g.: when using self-signed certificates</p>
+          </div>
+        </div>
       </div>
       <div class="col-md-3">
         <div class="checkbox">
