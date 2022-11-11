@@ -313,6 +313,7 @@
                                 </middleware>
                                 <middleware template="jose_signer.html" namespace="'auth/signer'" data="endpoint">
                                 </middleware>
+                                <plugin root="service" placement="endpoint" template="response-schema-validator.html" plugin="'response-schema-validator'" type="'plugin/req-resp-modifier'"></plugin>
                             </div>
                         </div>
                     </div>
@@ -529,13 +530,12 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div ng-include src="'/src/app/forms/manipulation.html'"></div>
-                                            <middleware data="backend" template="http_cache.html"
-                                                namespace="'qos/http-cache'">
-                                            </middleware>
+                                            <plugin root="service" placement="backend" template="response-schema-validator.html" plugin="'response-schema-validator'" type="'plugin/req-resp-modifier'"></plugin>
                                         </div>
                                         <div class="col-md-6">
                                             <div ng-include src="'/src/app/forms/flatmap.html'"></div>
                                             <div ng-include src="'/src/app/forms/martian.html'"></div>
+                                            <middleware data="backend" template="http_cache.html" namespace="'qos/http-cache'"></middleware>
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,36 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+      Response Schema Validator</h3>
+    <div class="pull-right">
+      <span class="pull-right-container badge badge-inverse">Enterprise</span>
+    </div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!hasHttpServerPlugin()">The response schema validator plugin adds a schema validation before the gateway returns the response to the end-user or before it's merged in the endpoint with the rest of the backends.</p>
+    <div ng-if="hasHttpServerPlugin()">
+      <div class="form-group row">
+        <div class="col-md-12">
+          <label class="control-label">JSON schema</label>
+          <textarea json-formatter syntax="syntax_validation_jsonschema" class="form-control"
+            ng-model="data.extra_config[plugin_type][plugin_name].schema"></textarea>
+          <span class="help-block">Write your JSON schema directly in this field, with any number of fields or validations you need.</span>
+          <p ng-show="syntax_validation_jsonschema" class="badge label-danger">{{syntax_validation_jsonschema}}</p>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label class="control-label">Error message</label>
+          <input class="form-control" placeholder="" type="text" ng-model="data.extra_config[plugin_type][plugin_name].error.body">
+          <span class="help-block">The error message you want to show when the validation fails. Leave it empty to show the JSON-schema validation error.</span>
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Error status code</label>
+          <input class="form-control" placeholder="" type="number" ng-model="data.extra_config[plugin_type][plugin_name].error.status">
+          <span class="help-block">The HTTP status code you want to set back in the response.</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
