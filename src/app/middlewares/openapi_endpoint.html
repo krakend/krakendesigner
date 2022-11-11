@@ -37,9 +37,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <label ng-if="data.extra_config[config_namespace].tags.length">Added tags:</label>
+                    <span class="help-block">OpenAPI segments the endpoints in different tags</span>
                     <ul class="list-inline">
                         <li ng-repeat="(index,tag) in data.extra_config[config_namespace].tags">
                             <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'tags')"><i
@@ -49,9 +47,41 @@
                     </ul>
                 </div>
                 <div class="col-md-4">
+                    <label class="control-label">Audience</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="foo" ng-model="audience">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success" ng-click="addTermToList(audience,'audience')">
+                                <i class="fa fa-plus"></i> Add audience
+                            </button>
+                        </div>
+                    </div>
+                    <span class="help-block">To which audiences you will document this endpoint (e.g.: <code>silver</code> if you have plans like gold, silver, bronze.</span>
+                    <ul class="list-inline">
+                        <li ng-repeat="(index,aud) in data.extra_config[config_namespace].audience">
+                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'audience')"><i
+                                    class="fa fa-times"></i>
+                                {{ aud }}</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-md-4">
                     <label>Global settings</label>
                     <p class="checkbox"><a href="/#!/openapi">Go to OpenAPI settings</a></p>
                 </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label class="control-label">Example</label>
+                    <textarea json-formatter class="form-control" syntax="json_syntax" ng-model="data.extra_config[config_namespace].example"></textarea>
+                    <span class="help-block">Write an example response in JSON format to show as an example in the documentation</span>
+                    <p ng-show="json_syntax.length" class="badge label-danger">
+                        <i class="fa fa-warning"></i> Syntax error -
+                        {{json_syntax}}
+                    </p>
+                </div>
+
             </div>
         </div>
     </div>
