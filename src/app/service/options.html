@@ -44,5 +44,17 @@
           </div>
         </div>
       </div>
+      <div class="form-group">
+        <div class="checkbox">
+          <label for="service.debug_endpoint">
+            <input type="checkbox" id="service.debug_endpoint" name="service.debug_endpoint"
+              ng-model="service.debug_endpoint">
+            <strong>Enable the <code>/__debug/</code> endpoint</strong>
+          </label>
+          <div class="help-block">
+            <p>Enable the /__debug/ endpoint where you can send requests of all sorts and see them echoed in the logs.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
