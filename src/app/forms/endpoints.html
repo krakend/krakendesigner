@@ -307,6 +307,8 @@
                                 <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint">
                                 </middleware>
                                 <middleware template="jmespath.html" namespace="'modifier/jmespath'" data="endpoint"></middleware>
+                                <plugin root="service" placement="endpoint" template="content-replacer.html"
+                                    plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
                             </div>
                             <div class="col-md-6">
                                 <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
@@ -469,6 +471,8 @@
                                     <div class="col-md-6">
                                         <middleware data="backend" template="graphql.html"
                                             namespace="'backend/graphql'"></middleware>
+                                        <plugin root="service" placement="backend" template="content-replacer.html"
+                                    plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
                                     </div>
                                     <div class="col-md-6">
                                         <middleware data="backend" template="lambda.html" namespace="'backend/lambda'">

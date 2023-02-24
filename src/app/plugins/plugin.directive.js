@@ -75,6 +75,19 @@ angular
           }
         }
 
+        scope.addEmptyKey = function(key, container) {
+          if ( 'undefined' !== typeof container ) {
+            // Do not override existing keys
+            if ( 'undefined' === typeof container[key] ) {
+              container[key] = {};
+            }
+          }
+        }
+
+        scope.keys = function(container) {
+          return Object.keys(container);
+        }
+
         scope.deleteKey = function(key, container) {
           if ( 'undefined' !== typeof container[key] ) {
             delete container[key];
