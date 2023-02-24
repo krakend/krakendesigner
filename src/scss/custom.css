@@ -12,7 +12,8 @@ code {
     background-color: #0071CE;
 }
 
-.badge.badge-inverse {
+.badge.badge-inverse,
+.box.box-solid.box-info > .box-header a.badge.badge-inverse {
     background-color: #FFF;
     color: #0071CE;
 }

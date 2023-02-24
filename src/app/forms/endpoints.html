@@ -1,6 +1,6 @@
 <div class="box box-info" ng-if="service.extra_config['plugin/http-server']['static-filesystem']">
     <div class="box-header with-border">
-        <h3 class="box-title">Static files <span class="badge ">Enterprise</span></h3>
+        <h3 class="box-title">Static files <a class="badge" data-toggle="modal" data-target="#enterprise-needed-modal">Enterprise</a></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" ng-click="deleteHttpServerPlugin('static-filesystem')">
                 <i class="fa fa-trash"></i></button>
@@ -181,7 +181,7 @@
                         </span>
                     </div>
                     <div class="col-md-3">
-                        <label>Global Rate limit <span class="badge">Enterprise</span></label>
+                        <label>Global Rate limit <a class="badge" data-toggle="modal" data-target="#enterprise-needed-modal">Enterprise</a></label>
                         <br />
                         <button class="btn btn-default btn-flat" data-toggle="modal"
                             data-target="#throttling-redis-modal-{{ endpoint_index }}">
@@ -224,7 +224,7 @@
                                             API-Key Authentication
                                         </h3>
                                         <div class="pull-right">
-                                            <span class="pull-right-container badge badge-inverse">Enterprise</span>
+                                            <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
                                         </div>
                                     </div>
                                     <div class="box-body">
