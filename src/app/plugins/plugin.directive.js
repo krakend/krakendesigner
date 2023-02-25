@@ -146,7 +146,7 @@ angular
 
         scope.toggleHttpClientPlugin = function () {
           // There's only one possible client plugin
-          scope.hasHttpClientPlugin() ? delete where.extra_config[TYPE] : scope.addHttpClient();
+          scope.hasHttpClientPlugin() ? delete scope.placement.extra_config[TYPE] : scope.addHttpClient();
         };
 
 
