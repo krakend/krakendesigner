@@ -476,11 +476,13 @@
                                             namespace="'backend/graphql'"></middleware>
                                         <plugin root="service" placement="backend" template="content-replacer.html"
                                     plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
+                                    <middleware data="backend" template="body-generator.html"
+                                    namespace="'modifier/body-generator'"></middleware>
                                     </div>
                                     <div class="col-md-6">
                                         <middleware data="backend" template="lambda.html" namespace="'backend/lambda'">
                                         </middleware>
-                                        <middleware data="backend" template="soap.html"
+                                        <middleware data="backend" template="soap.html" ng-click="backend.encoding = 'xml'; backend.method='POST'"
                                             namespace="'backend/soap'"></middleware>
                                     </div>
                                 </div>
