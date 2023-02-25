@@ -278,8 +278,9 @@
                             <div class="col-md-6">
                                 <plugin root="service" placement="endpoint" template="ipfilter.html"
                                     plugin="'ip-filter'" type="'plugin/req-resp-modifier'"></plugin>
-                                <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint">
-                                </middleware>
+
+                                <middleware template="security-policies.html" namespace="'security/policies'" data="endpoint"></middleware>
+                                <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint"></middleware>
                                 <middleware template="jmespath.html" namespace="'modifier/jmespath'" data="endpoint"></middleware>
                                 <plugin root="service" placement="endpoint" template="content-replacer.html"
                                     plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
@@ -451,6 +452,7 @@
                                     plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
                                     <middleware data="backend" template="body-generator.html"
                                     namespace="'modifier/body-generator'"></middleware>
+                                    <middleware template="security-policies.html" namespace="'security/policies'" data="backend"></middleware>
                                     </div>
                                     <div class="col-md-6">
                                         <middleware data="backend" template="lambda.html" namespace="'backend/lambda'">

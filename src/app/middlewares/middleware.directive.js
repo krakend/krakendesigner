@@ -73,24 +73,42 @@ angular
       }
     }
 
-    scope.addTermToList = function(term, list) {
+    scope.addTermToList = function(term, list, in_object = false) {
       if ( 'undefined' === typeof term || term.length < 1 ) {
         return;
       }
 
-      if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE][list] )
-      {
-        scope.data.extra_config[NAMESPACE][list] = [];
-      }
+      if ( in_object ) {
+        if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE][in_object] )
+        {
+          scope.data.extra_config[NAMESPACE][in_object] = {};
+        }
+        if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE][in_object][list] )
+        {
+          scope.data.extra_config[NAMESPACE][in_object][list] = [];
+        }
 
+        scope.data.extra_config[NAMESPACE][in_object][list].push(term);
+        console.log(scope.data.extra_config[NAMESPACE]);
+      } else {
+        if ( 'undefined' === typeof scope.data.extra_config[NAMESPACE][list] )
+        {
+          scope.data.extra_config[NAMESPACE][list] = [];
+        }
 
-      if ( scope.data.extra_config[NAMESPACE][list].indexOf(term) === -1 ) {
-        scope.data.extra_config[NAMESPACE][list].push(term);
+        if ( scope.data.extra_config[NAMESPACE][list].indexOf(term) === -1 ) {
+          scope.data.extra_config[NAMESPACE][list].push(term);
+        }
       }
     }
 
-    scope.deleteIndexFromList = function(index,list) {
-      scope.data.extra_config[NAMESPACE][list].splice(index, 1);
+    scope.deleteIndexFromList = function(index,list, in_object = false) {
+      if ( in_object )
+      {
+        scope.data.extra_config[NAMESPACE][in_object][list].splice(index, 1);
+      } else {
+        scope.data.extra_config[NAMESPACE][list].splice(index, 1);
+      }
     }
 
     scope.base64dec = function(data) {

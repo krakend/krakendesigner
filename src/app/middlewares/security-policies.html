@@ -1,0 +1,165 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Security Policies
+		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+			ng-repeat="doc in [{'ee': true, 'url':'/security-policies/'}]"></div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">The policies engine lets you write custom rules validated on runtime during
+			requests, responses, and token validation. The policies allow you to implement all sorts of validations and
+			user access control, from parameter compliance, to RBAC (Role-Based Access Control) and ABAC
+			(Attribute-Based Access Control) strategies.</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<h4>Request policies</h4>
+			<div class="form-group row">
+				<div class="col-md-8">
+					<label class="control-label">Request policies</label>
+					<div class="input-group">
+						<input class="form-control" placeholder="req_params.DocId.startsWith('EU')" type="text"
+							required="" ng-model="req_rule">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-success"
+								ng-click="addTermToList(req_rule,'policies', 'req')">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+					</div>
+					<span class="help-block">Policy. Example: <code>hasQuerystring('q')</code></span>
+					<ul class="list-unstyled">
+						<li ng-repeat="(index,val) in data.extra_config[config_namespace].req.policies track by $index">
+							<a class="badge badge-remove" ng-click="deleteIndexFromList(index,'policies','req')">
+								<i class="fa fa-times"></i> <code>{{ val }}</code></a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<label class="control-label">Error Status code</label>
+					<input class="form-control" type="number"
+						ng-model="data.extra_config[config_namespace].req.error.status" placeholder="400">
+					<span class="help-block">Returned status on <strong>violated policy</strong></span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-8">
+					<label class="control-label">Error body</label>
+					<input class="form-control" placeholder="Policy violated" type="text"
+						ng-model="data.extra_config[config_namespace].req.error.body">
+					<span class="help-block">Empty string to return the validation error, or write a string with the
+						error response body. You can add escaped JSON, XML, etc in the string and add a
+						Content-Type.</span>
+				</div>
+				<div class="col-md-4">
+					<label class="control-label">Error content-type</label>
+					<input class="form-control" type="text"
+						ng-model="data.extra_config[config_namespace].req.error.content_type" placeholder="text/plain">
+					<span class="help-block">The Content-Type header you'd like to send with the error response. When
+						unset, uses text/plain by default.</span>
+				</div>
+			</div>
+			<h4>Response policies</h4>
+			<div class="form-group row">
+				<div class="col-md-8">
+					<label class="control-label">Response policies</label>
+					<div class="input-group">
+						<input class="form-control" placeholder="!isEmpty(resp_data.message)" type="text"
+							required="" ng-model="resp_rule">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-success"
+								ng-click="addTermToList(resp_rule,'policies', 'resp')">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+					</div>
+					<span class="help-block">Policy. Example: <code>!isEmpty(resp_data.message)</code></span>
+					<ul class="list-unstyled">
+						<li ng-repeat="(index,val) in data.extra_config[config_namespace].resp.policies track by $index">
+							<a class="badge badge-remove" ng-click="deleteIndexFromList(index,'policies','resp')">
+								<i class="fa fa-times"></i> <code>{{ val }}</code></a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<label class="control-label">Error Status code</label>
+					<input class="form-control" type="number"
+						ng-model="data.extra_config[config_namespace].resp.error.status" placeholder="500">
+					<span class="help-block">Returned status on <strong>violated policy</strong></span>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-8">
+					<label class="control-label">Error body</label>
+					<input class="form-control" placeholder="Policy violated" type="text"
+						ng-model="data.extra_config[config_namespace].resp.error.body">
+					<span class="help-block">Empty string to return the validation error, or write a string with the
+						error response body. You can add escaped JSON, XML, etc in the string and add a
+						Content-Type.</span>
+				</div>
+				<div class="col-md-4">
+					<label class="control-label">Error content-type</label>
+					<input class="form-control" type="text"
+						ng-model="data.extra_config[config_namespace].resp.error.content_type" placeholder="text/plain">
+					<span class="help-block">The Content-Type header you'd like to send with the error response. When
+						unset, uses text/plain by default.</span>
+				</div>
+			</div>
+			<h4>JWT validation policies</h4>
+			<div class="form-group row">
+				<div class="col-md-8">
+					<label class="control-label">JWT policies</label>
+					<div class="input-group">
+						<input class="form-control" placeholder="has(JWT.user_id) && 'legal' == JWT.department" type="text"
+							required="" ng-model="jwt_rule">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-success"
+								ng-click="addTermToList(jwt_rule,'policies', 'jwt')">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+					</div>
+					<span class="help-block">Policy. Example: <code>has(JWT.user_id) && 'legal' == JWT.department</code></span>
+				</div>
+				<div class="col-md-4">
+					<ul class="list-unstyled">
+						<li ng-repeat="(index,val) in data.extra_config[config_namespace].jwt.policies track by $index">
+							<a class="badge badge-remove" ng-click="deleteIndexFromList(index,'policies','jwt')">
+								<i class="fa fa-times"></i> <code>{{ val }}</code></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<h4>Debug and performance</h4>
+			<div class="form-group row">
+				<div class="col-md-4">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].debug" class="ng-pristine ng-untouched ng-valid ng-empty">
+							<strong>Enable debug</strong>
+						</label>
+						<span class="help-block">Evaluation results are printed in the console. </span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].auto_join_policies" class="ng-pristine ng-untouched ng-valid ng-empty">
+							<strong>Auto-join policies</strong>
+						</label>
+						<span class="help-block">All policies concatenate with an AND operation to evaluate a single expression. Faster, but harder to debug.</span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].disable_macros" class="ng-pristine ng-untouched ng-valid ng-empty">
+							<strong>Disable macros</strong>
+						</label>
+						<span class="help-block">Advanced macros can be disabled when not used for a faster evaluation.</span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
