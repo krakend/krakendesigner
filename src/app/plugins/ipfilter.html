@@ -1,16 +1,16 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
       IP Filter</h3>
     <div class="pull-right">
       <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
     </div>
   </div>
   <div class="box-body">
-    <p ng-if="!hasHttpServerPlugin()">The IP filtering plugin allows you to restrict the traffic to your API gateway
+    <p ng-if="!hasPluginOfThisType()">The IP filtering plugin allows you to restrict the traffic to your API gateway
       based on the IP address. It works in two different modes (allow or deny) where you define the list of IPs (CIDR
       blocks) that are authorized to use the API, or that are denied from using the API.</p>
-    <div ng-if="hasHttpServerPlugin()">
+    <div ng-if="hasPluginOfThisType()">
       <div class="form-group row">
         <div class="col-md-6">
           <label class="control-label">CIDR</label>

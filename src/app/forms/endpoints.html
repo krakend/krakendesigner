@@ -484,6 +484,7 @@
                                         </middleware>
                                         <middleware data="backend" template="soap.html" ng-click="backend.encoding = 'xml'; backend.method='POST'"
                                             namespace="'backend/soap'"></middleware>
+                                        <plugin root="service" placement="backend" template="http-proxy.html" plugin="'http-proxy'" type="'plugin/http-client'"></plugin>
                                     </div>
                                 </div>
                                 <div ng-if="endpoint.output_encoding != 'no-op'">

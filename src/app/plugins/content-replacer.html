@@ -1,14 +1,14 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
       Regexp Content Replacer</h3>
     <div class="pull-right">
       <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
     </div>
   </div>
   <div class="box-body">
-    <p ng-if="!hasHttpServerPlugin()">The content replacer plugin allows you to modify the response of your services by doing literal replacements or more sophisticated replacements with regular expressions.</p>
-    <div ng-if="hasHttpServerPlugin()">
+    <p ng-if="!hasPluginOfThisType()">The content replacer plugin allows you to modify the response of your services by doing literal replacements or more sophisticated replacements with regular expressions.</p>
+    <div ng-if="hasPluginOfThisType()">
     <div ng-repeat="(i,key_name) in keys(data.extra_config[plugin_type][plugin_name])" class="form-group row">
         <div class="col-md-6">
           <label class="control-label">Find (in <code>{{key_name}}</code>)</label>

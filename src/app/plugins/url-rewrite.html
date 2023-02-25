@@ -1,15 +1,15 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
       URL Rewrite</h3>
     <div class="pull-right">
       <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
     </div>
   </div>
   <div class="box-body">
-    <p ng-if="!hasHttpServerPlugin()">The url-rewrite plugin allows you to define a set of URLs or <strong>regular
+    <p ng-if="!hasPluginOfThisType()">The url-rewrite plugin allows you to define a set of URLs or <strong>regular
         expressions</strong> that are handled by an endpoint of your choice.</p>
-    <div ng-if="hasHttpServerPlugin()">
+    <div ng-if="hasPluginOfThisType()">
       <div class="form-group row">
         <div class="col-md-4">
           <label class="control-label">Literal match</label>

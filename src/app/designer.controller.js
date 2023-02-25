@@ -306,7 +306,7 @@ angular
             return true;
         };
 
-        $rootScope.hasHttpServerPlugin = function (name) {
+        $rootScope.hasPluginOfThisType = function (name) {
             plugins = $rootScope.getObject("service", "extra_config", "plugin/http-server", "name");
             return (plugins && -1 !== plugins.indexOf(name));
         }
@@ -369,7 +369,7 @@ angular
 
         $rootScope.hasWildcard = function (endpoint) {
             return (
-                $rootScope.hasHttpServerPlugin('wildcard') &&
+                $rootScope.hasPluginOfThisType('wildcard') &&
                 null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "wildcard", "endpoints", endpoint)
             );
         }

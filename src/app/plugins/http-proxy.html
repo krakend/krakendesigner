@@ -1,0 +1,22 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input ng-disabled="getConflictingPlugin()" type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpClientPlugin()">
+      Connect via web proxy</h3>
+    <div class="pull-right">
+      <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
+    </div>
+  </div>
+  <div class="box-body">
+    <p ng-if="getConflictingPlugin()"><strong>To use this plugin you must disable <span class="badge">{{ getConflictingPlugin() }}</span></strong></p>
+    <p ng-if="!hasPluginOfThisType()">The HTTP proxy plugin adds an intermediate layer where the connection to the backend goes through an external corporate web proxy.</p>
+    <div ng-if="hasPluginOfThisType()">
+      <div class="form-group">
+        <div class="col-md-12">
+          <label class="control-label">Web proxy address</label>
+          <input class="form-control" placeholder="http://myproxy:8080" type="text" required="" ng-model="data.extra_config[plugin_type][plugin_name].proxy_address">
+          <span class="help-block">The proxy address used to forward the traffic. The address must contain the protocol and the port.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

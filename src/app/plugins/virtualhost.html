@@ -1,14 +1,14 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
       Virtualhost</h3>
     <div class="pull-right">
       <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
     </div>
   </div>
   <div class="box-body">
-    <p ng-if="!hasHttpServerPlugin()">Run different configurations of KrakenD endpoints based on the host accessing the server.</p>
-    <div ng-if="hasHttpServerPlugin()">
+    <p ng-if="!hasPluginOfThisType()">Run different configurations of KrakenD endpoints based on the host accessing the server.</p>
+    <div ng-if="hasPluginOfThisType()">
       <div class="form-group">
         <div class="col-md-12">
           <label class="control-label">Hosts</label>
