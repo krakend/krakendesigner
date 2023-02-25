@@ -740,6 +740,15 @@ angular
         };
 
 
+
+        $rootScope.toggleStaticResponse = function(endpoint_index) {
+            if ($rootScope.getObject("service","endpoints", endpoint_index, "extra_config", "proxy", "static")) {
+                $rootScope.deleteStaticResponse(endpoint_index);
+            } else {
+                $rootScope.addDefaultStaticResponse(endpoint_index);
+            }
+        }
+
         $rootScope.addDefaultStaticResponse = function (endpoint_index) {
             if ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].extra_config) {
                 $rootScope.service.endpoints[endpoint_index].extra_config = {};

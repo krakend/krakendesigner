@@ -1,10 +1,7 @@
 <div class="box box-info box-solid">
 	<div class="box-header with-border">
 		<h3 class="box-title">Gzip compression</h3>
-		  <div class="pull-right">
-			<a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
-		  </div>
-		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/service-settings/gzip/'}]"></div>
 	</div>
 	<div class="box-body">
 		<p>Gzip compression is <strong>enabled by default</strong>. Only on Enterprise edition.</p>

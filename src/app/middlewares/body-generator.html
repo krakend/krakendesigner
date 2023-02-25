@@ -3,11 +3,7 @@
 		<h3 class="box-title">
 			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">  Body manipulation and generation
 		</h3>
-
-		<div class="pull-right">
-			<a class="pull-right-container" href="https://www.krakend.io/docs/enterprise/backends/body-generator/" target="_blank" title="Go to documentation"><i class="fa fa-book"></i></a>
-			<a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
-		</div>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/backends/body-generator/'}]"></div>
 	</div>
 	<div class="box-body">
 		<p ng-if="!isMiddlewareEnabled()">The body generator modifier allows you to craft the body you send to a backend through templates, and enables injecting other values from the user request such as the original body, headers, querystrings or URL parameters.</p>

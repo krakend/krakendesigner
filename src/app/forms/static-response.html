@@ -1,0 +1,49 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-checked="endpoint.extra_config['proxy'].static"
+                ng-click="toggleStaticResponse(endpoint_index)"
+                ng-disabled="endpoint.output_encoding == 'no-op' || endpoint.backend.length == 0">
+            Static Response (stub data)
+        </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/endpoints/static-proxy/'}]"></div>
+    </div>
+
+    <div class="box-body">
+        <p ng-if="!endpoint.extra_config['proxy'].static">When the backend fails you can still return the static data
+            provided below to the
+            user. The data is merged
+            with any existing partial responses. If you still don't have a backend and want
+            to
+            have this data, add a fake one that cannot be resolved.</p>
+        <div ng-if="endpoint.extra_config['proxy'].static">
+            <div class="col-md-8">
+                <label class="control-label">Response</label>
+                <textarea json-formatter class="form-control" syntax="syntax_validation_static[backend_index]"
+                    ng-model="endpoint.extra_config['proxy'].static.data"></textarea>
+                <p ng-show="syntax_validation_static[backend_index].length" class="badge label-danger">
+                    <i class="fa fa-warning"></i> Syntax error -
+                    {{syntax_validation_static[backend_index]}}
+                </p>
+                </p>
+                <span class="help-block">Provide the JSON object you want to return (ensure to
+                    start
+                    and end with curly braces
+                    <code>{}</code>)</span>
+            </div>
+            <div class="col-md-4">
+                <label class="control-label">Strategy</label>
+                <select class="form-control" ng-model="endpoint.extra_config['proxy'].static.strategy">
+                    <option value="always">Always - Present in every response</option>
+                    <option value="success">Success - Present in every non-failed response
+                    </option>
+                    <option value="errored">Errored - Present in every failed response (error
+                        not
+                        nil)</option>
+                    <option value="incomplete">Incomplete - Present in incomplete responses
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

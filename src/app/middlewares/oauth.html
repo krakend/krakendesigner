@@ -2,6 +2,7 @@
 	<div class="box-header with-border">
 		<h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
 			Auth: Client Credentials</h3>
+			<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/authorization/client-credentials/'}]"></div>
 	</div>
 	<div class="box-body">
 		<p ng-hide="isMiddlewareEnabled()">Enable a 2-legged OAuth2 flow, making the gateway request a token to an

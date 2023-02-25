@@ -2,9 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
       Instana <small>(Integration with Instana APM)</small></h3>
-    <div class="pull-right">
-      <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
-    </div>
+      <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/telemetry/instana/'}]"></div>
   </div>
   <div class="box-body">
     <p ng-if="!isMiddlewareEnabled()">The Instana integration <em>middleware</em> allows you to export tracing and

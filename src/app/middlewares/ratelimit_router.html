@@ -1,83 +1,86 @@
-<div class="form-group">
-	<div class="checkbox">
-		<label>
-			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
-			<strong>Enable rate limiting for <code>{{ data.endpoint }}</code></strong>
-		</label>
-		<span class="help-block">Limit the number of requests this endpoint can receive. Read more on <a href="/docs/throttling/rate-limit">rate limiting</a></span>
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Endpoint Rate
+			limit</code>
+		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+			ng-repeat="doc in [{'ee': false, 'url':'/docs/throttling/rate-limit/'}]"></div>
 	</div>
-</div>
-<div ng-if="isMiddlewareEnabled()">
-	<div class="form-group" ng-class="validator.isInteger(data.extra_config[config_namespace].max_rate) ? '' : 'has-error'">
-		<label class="control-label">Rate limit</label>
-		<div class="input-group">
-			<input class="form-control"
-			ng-model="data.extra_config[config_namespace].max_rate"
-			id="data.extra_config[config_namespace].max_rate"
-			name="data.extra_config[config_namespace].max_rate"
-			type="number">
-			<div class="input-group-addon">reqs/sec</div>
-		</div>
-		<span class="help-block">Maximum requests per second you want to let this endpoint handle. Leave <code>0</code> for no default limit.
-		</span>
-	</div>
-	<div class="form-group" ng-class="validator.isInteger(data.extra_config[config_namespace].capacity) ? '' : 'has-error'">
-		<label class="control-label">Capacity</label>
-		<div class="input-group">
-			<input class="form-control"
-			ng-model="data.extra_config[config_namespace].capacity"
-			id="data.extra_config[config_namespace].capacity"
-			name="data.extra_config[config_namespace].capacity"
-			type="number">
-			<div class="input-group-addon">tokens</div>
-		</div>
-		<span class="help-block">Number of tokens you can store in the Token Bucket. Traduces into maximum concurrent requests this endpoint will accept for all users.
-		</span>
-	</div>
-	<div class="form-group" ng-class="validator.isInteger(data.extra_config[config_namespace].client_max_rate) ? '' : 'has-error'">
-		<label class="control-label">Default user quota</label>
-		<div class="input-group">
-			<input class="form-control"
-			ng-model="data.extra_config[config_namespace].client_max_rate"
-			id="data.extra_config[config_namespace].client_max_rate"
-			name="data.extra_config[config_namespace].client_max_rate"
-			type="number">
-			<div class="input-group-addon">reqs/sec</div>
-		</div>
-		<span class="help-block">Maximum requests per second you want to allow to each different API user. This
-			value will be used as default for all the endpoints unless overridden in each of them. Use <code>0</code>
-			for no limitation.
-		</span>
-		<div ng-show="0 != data.extra_config[config_namespace].client_max_rate">
-			<p><strong>A unique user is identified by...</strong></p>
-			<div class="input-group" class="form-control">
-				<input type="radio" name="strategy_ip" value="ip"
-				ng-checked="data.extra_config[config_namespace].strategy=='ip'"
-				ng-click="data.extra_config[config_namespace].key=''"
-				ng-model="data.extra_config[config_namespace].strategy">
-				Its originating IP
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">Limits the number of requests this endpoint can receive</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="form-group"
+				ng-class="validator.isInteger(data.extra_config[config_namespace].max_rate) ? '' : 'has-error'">
+				<label class="control-label">Rate limit</label>
+				<div class="input-group">
+					<input class="form-control" ng-model="data.extra_config[config_namespace].max_rate"
+						id="data.extra_config[config_namespace].max_rate"
+						name="data.extra_config[config_namespace].max_rate" type="number">
+					<div class="input-group-addon">reqs/sec</div>
+				</div>
+				<span class="help-block">Maximum requests per second you want to let this endpoint handle. Leave
+					<code>0</code> for no default limit.
+				</span>
 			</div>
-			<div class="input-group" class="form-control">
-				<input type="radio" name="strategy_header" value="header"
-				ng-checked="data.extra_config[config_namespace].key!=''"
-				ng-model="data.extra_config[config_namespace].strategy">
-				A custom header:
-				<input type="text" ng-model="data.extra_config[config_namespace].key"
-				placeholder="X-TOKEN">
+			<div class="form-group"
+				ng-class="validator.isInteger(data.extra_config[config_namespace].capacity) ? '' : 'has-error'">
+				<label class="control-label">Capacity</label>
+				<div class="input-group">
+					<input class="form-control" ng-model="data.extra_config[config_namespace].capacity"
+						id="data.extra_config[config_namespace].capacity"
+						name="data.extra_config[config_namespace].capacity" type="number">
+					<div class="input-group-addon">tokens</div>
+				</div>
+				<span class="help-block">Number of tokens you can store in the Token Bucket. Traduces into maximum
+					concurrent requests this endpoint will accept for all users.
+				</span>
+			</div>
+			<div class="form-group"
+				ng-class="validator.isInteger(data.extra_config[config_namespace].client_max_rate) ? '' : 'has-error'">
+				<label class="control-label">Default user quota</label>
+				<div class="input-group">
+					<input class="form-control" ng-model="data.extra_config[config_namespace].client_max_rate"
+						id="data.extra_config[config_namespace].client_max_rate"
+						name="data.extra_config[config_namespace].client_max_rate" type="number">
+					<div class="input-group-addon">reqs/sec</div>
+				</div>
+				<span class="help-block">Maximum requests per second you want to allow to each different API user. This
+					value will be used as default for all the endpoints unless overridden in each of them. Use
+					<code>0</code>
+					for no limitation.
+				</span>
+				<div ng-show="0 != data.extra_config[config_namespace].client_max_rate">
+					<p><strong>A unique user is identified by...</strong></p>
+					<div class="input-group" class="form-control">
+						<input type="radio" name="strategy_ip" value="ip"
+							ng-checked="data.extra_config[config_namespace].strategy=='ip'"
+							ng-click="data.extra_config[config_namespace].key=''"
+							ng-model="data.extra_config[config_namespace].strategy">
+						Its originating IP
+					</div>
+					<div class="input-group" class="form-control">
+						<input type="radio" name="strategy_header" value="header"
+							ng-checked="data.extra_config[config_namespace].key!=''"
+							ng-model="data.extra_config[config_namespace].strategy">
+						A custom header:
+						<input type="text" ng-model="data.extra_config[config_namespace].key" placeholder="X-TOKEN">
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="validator.isInteger(data.extra_config[config_namespace].client_capacity) ? '' : 'has-error'">
+				<label class="control-label">Client capacity</label>
+				<div class="input-group">
+					<input class="form-control" ng-model="data.extra_config[config_namespace].client_capacity"
+						id="data.extra_config[config_namespace].client_capacity"
+						name="data.extra_config[config_namespace].client_capacity" type="number">
+					<div class="input-group-addon">tokens</div>
+				</div>
+				<span class="help-block">Number of tokens you can store in the Token Bucket for each individual user.
+					Traduces into maximum concurrent requests this endpoint will accept for the connected user.
+				</span>
 			</div>
 		</div>
-	</div>
-	<div class="form-group" ng-class="validator.isInteger(data.extra_config[config_namespace].client_capacity) ? '' : 'has-error'">
-		<label class="control-label">Client capacity</label>
-		<div class="input-group">
-			<input class="form-control"
-			ng-model="data.extra_config[config_namespace].client_capacity"
-			id="data.extra_config[config_namespace].client_capacity"
-			name="data.extra_config[config_namespace].client_capacity"
-			type="number">
-			<div class="input-group-addon">tokens</div>
-		</div>
-		<span class="help-block">Number of tokens you can store in the Token Bucket for each individual user. Traduces into maximum concurrent requests this endpoint will accept for the connected user.
-		</span>
 	</div>
 </div>

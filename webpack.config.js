@@ -7,7 +7,7 @@ module.exports = {
 	entry: './src/index.js',
 	plugins: [
 	new HtmlWebpackPlugin({
-		template: './src/app/layout.html'
+		template: './src/app/layout/layout.html'
 	}),
 	new webpack.ProvidePlugin({
 		$: "jquery",

@@ -3,6 +3,7 @@
         <h3 class="box-title">
             <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> HTTP Security
         </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/service-settings/security/'}]"></div>
     </div>
     <div class="box-body" ">
         <p ng-if=" !isMiddlewareEnabled()">Enforces HTTP security policies such as AllowedHosts, SSL Options, HSTS,

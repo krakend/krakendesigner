@@ -3,12 +3,7 @@
         <h3 class="box-title">
             <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Websocket
         </h3>
-        <div class="pull-right">
-            <a class="pull-right-container" href="https://www.krakend.io/docs/enterprise/endpoints/websockets/" target="_blank"
-              title="Go to documentation"><i class="fa fa-book"></i></a>
-            <a data-toggle="modal" data-target="#enterprise-needed-modal"
-              class="pull-right-container badge badge-inverse">Enterprise</a>
-          </div>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/endpoints/websockets/'}]"></div>
     </div>
     <div class="box-body">
         <p ng-if="!isMiddlewareEnabled()">Communications using the WebSocket Protocol (RFC-6455) to enable two-way

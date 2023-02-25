@@ -4,12 +4,7 @@
             <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> API-Key
             Authentication
         </h3>
-        <div class="pull-right">
-            <a class="pull-right-container" href="https://www.krakend.io/docs/enterprise/authentication/api-keys/" target="_blank"
-              title="Go to documentation"><i class="fa fa-book"></i></a>
-            <a data-toggle="modal" data-target="#enterprise-needed-modal"
-              class="pull-right-container badge badge-inverse">Enterprise</a>
-          </div>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/authentication/api-keys/'}]"></div>
     </div>
     <div class="box-body">
         <p ng-if=" !isMiddlewareEnabled()">The API key authentication enables a Role-Based Access Control (RBAC)
