@@ -1,0 +1,25 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">Gzip compression</h3>
+		  <div class="pull-right">
+			<a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
+		  </div>
+		</h3>
+	</div>
+	<div class="box-body">
+		<p>Gzip compression is <strong>enabled by default</strong>. Only on Enterprise edition.</p>
+		<div class="form-group">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="checkbox">
+						<label for="data.extra_config.router.disable_gzip">
+							<input type="checkbox" id="data.extra_config.router.disable_gzip" name="data.extra_config.router.disable_gzip"
+								ng-model="data.extra_config.router.disable_gzip">
+							<strong>Disable Gzip compression even when clients requests it</strong>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
