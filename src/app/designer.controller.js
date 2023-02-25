@@ -177,11 +177,22 @@ angular
         $rootScope.isEnterprise = function () {
             $rootScope.modules_in_use = [];
             service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/ganalytics'];
-            endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath'];
+            endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath','security/policies'];
+            backend_components = ['backend/soap', 'modifier/jmespath','security/policies'];
             http_server_plugins = ['ip-filter','jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
-            http_client_plugins = ['wildcard', 'krakend-afero', 'static-filesystem', 'no-redirect'];
+            http_client_plugins = ['wildcard', 'krakend-afero', 'static-filesystem', 'no-redirect', 'http-proxy'];
             req_resp_plugins = ['ip-filter', 'response-schema-validator', 'content-replacer'];
+            individual_flags = [
+                [ 'extra_config', 'router', 'disable_gzip' ]
+            ]
 
+            for (i = 0; i < individual_flags.length; i++) {
+                if ( $rootScope.getObject("service", ...individual_flags[i]) ) {
+                    // Save as module path1.path2.path3
+                    $rootScope.modules_in_use.push(individual_flags[i].join('.'))
+                }
+
+            }
 
             if ($rootScope.getObject("service", "extra_config")) {
                 for (i = 0; i < service_components.length; i++) {
@@ -223,11 +234,17 @@ angular
                 }
 
                 backends = $rootScope.getObject("service", "endpoints", e, "backend");
-                for (b = 0; b < backends && backends.length; b++) {
+                for (b = 0; backends && b < backends.length; b++) {
                     client_plugin = $rootScope.getObject("service", "endpoints", e, "backend", b, "extra_config", "plugin/http-client", "name");
                     for (i = 0; i < client_plugin && http_client_plugins.length; i++) {
                         if (client_plugin == http_client_plugins[i]) {
                             $rootScope.modules_in_use.push(http_client_plugins[i]);
+                        };
+                    }
+
+                    for (i = 0; i < backend_components.length; i++) {
+                        if ($rootScope.getObject("service", "endpoints", e, "backend", b, "extra_config", backend_components[i])) {
+                            $rootScope.modules_in_use.push(backend_components[i]);
                         };
                     }
 

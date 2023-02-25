@@ -6,6 +6,7 @@
   </div>
   <div class="col-md-6">
     <div ng-include src="'/src/app/forms/backends.html'"></div>
+    <service data="service" template="gzip.html"></service>
     <service data="service" template="tls.html"></service>
     <plugin root="service" placement="service" template="url-rewrite.html" plugin="'url-rewrite'"
       type="'plugin/http-server'"></plugin>
