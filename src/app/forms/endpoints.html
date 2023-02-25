@@ -412,7 +412,8 @@
                                             required="" ng-model="backend.url_pattern">
 
                                         <span class="help-block">The endpoint of the backend server to query. Reuse here
-                                            any <code>{parameters}</code> defined in the parent endpoint.</span>
+                                            any <code>{parameters}</code> defined in the parent endpoint. Also see <a href="https://www.krakend.io/docs/enterprise/endpoints/dynamic-routing/">Header routing</a>
+                                        </span>
                                     </div>
                                     <div class="col-md-2">
                                         <label>Rate Limit</label>
@@ -477,6 +478,9 @@
                                     <div class="col-md-6">
                                         <middleware data="backend" template="lambda.html" namespace="'backend/lambda'">
                                         </middleware>
+                                        <middleware data="backend" template="soap.html"
+                                            namespace="'backend/soap'"></middleware>
+                                        <middleware template="jmespath.html" namespace="'modifier/jmespath'" data="backend"></middleware>
                                     </div>
                                 </div>
                                 <div ng-if="endpoint.output_encoding != 'no-op'">
