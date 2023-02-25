@@ -1,5 +1,5 @@
 <plugin root="service" placement="service" template="static-filesystem.html" plugin="'static-filesystem'"
-      type="'plugin/http-server'"></plugin>
+    type="'plugin/http-server'"></plugin>
 
 <div class="box box-info" ng-repeat="(endpoint_index,endpoint) in service.endpoints"
     ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'" id="e{{ endpoint_index }}">
@@ -19,7 +19,8 @@
         <div class="box-tools pull-right">
             <span ng-hide="isValidEndpoint(endpoint.endpoint)" class="badge label-danger"><i class="fa fa-warning"></i>
                 Error(s)</span>
-            <span class="badge" ng-class="endpoint.output_encoding =='no-op' ? 'label-danger' : ''">{{ endpoint.output_encoding }}</span>
+            <span class="badge" ng-class="endpoint.output_encoding =='no-op' ? 'label-danger' : ''">{{
+                endpoint.output_encoding }}</span>
             <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{
                 endpoint.method.length ? endpoint.method : 'GET' }}</span>
             <button type="button" class="btn btn-box-tool"
@@ -73,229 +74,277 @@
                         <span class="help-block">Encode response as...</span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <label>Recognized query string parameters (?param=value)</label>
-                        <div class="input-group">
-                            <input class="form-control" placeholder="parameter_name" type="url"
-                                id="addQuerystring_{{ endpoint_index }}">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-success" ng-click="addQuerystring(endpoint_index)">
-                                    <i class="fa fa-plus"></i> Add parameter
-                                </button>
-                            </div>
-                        </div>
-                        <div class="help-block">
-                            <ul class="list-inline">
-                                <li ng-repeat="(qs_index,qs) in endpoint.input_query_strings">
-                                    <a class="badge badge-remove" ng-click="deleteQuerystring(qs_index,endpoint_index)"
-                                        title="Click to delete parameter"><i class="fa fa-times"></i> {{ qs }} </a>
-                                </li>
-                                <li ng-if="!endpoint.input_query_strings.length">No query parameters are active yet.
-                                    Typical
-                                    parameters are <code>page</code>, <code>limit</code>, <code>search</code>...
-                                </li>
-                            </ul>
-                        </div>
-                        <span class="help-block">Query string parameters to be passed to the backends when present.
-                            Write only the name of the
-                            parameter, no question mark or equal symbols.</span>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Headers passing to backend</label>
-                        <div class="input-group">
-                            <input class="form-control" placeholder="header_name" type="text" required=""
-                                ng-model="input_header">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-success"
-                                    ng-click="addHeaderPassing(endpoint_index,input_header)">
-                                    <i class="fa fa-plus"></i> Add header
-                                </button>
-                            </div>
-                        </div>
-                        <span class="help-block">Unless added here, no headers from the client will reach the backends.
-                            Use only if you need
-                            custom headers to reach your backend (e.g.: <code>Content-Type</code>). Add a single
-                            <code>*</code> to pass all headers (security concerns)</span>
-                        <div class="input-group">
-                            <ul class="list-unstyled">
-                                <li ng-repeat="(index,header) in endpoint.input_headers">
-                                    <a class="badge badge-remove"
-                                        ng-click="deleteHeaderPassing(endpoint_index,index)"><i class="fa fa-times"></i>
-                                        {{ header }}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4" ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
-                        <label>Concurrent Calls</label>
-                        <input type="number" class="form-control" ng-model="endpoint.concurrent_calls">
-                        <span class="help-block">
-                            <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
-                                <i class="fa fa-warning"></i> Use an integer
-                            </p>
-                            <p>Parallel requests you want to send to the backend <strong>for the same request</strong>.
-                                Fastest request is taken and the rest are discarded. This value should be between 1 and
-                                3 (or higher if your backend can support very high load)</p>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-3">
-                        <label>Rate limit</label>
-                        <br />
-                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                            data-target="#throttling-modal-{{ endpoint_index }}">
-                            <i class="fa fa-wrench"></i> Stateless rate-limit
-                        </button>
-                        <span class="label label-success"
-                            ng-if="endpoint.extra_config['qos/ratelimit/router']">on</span>
-                        <span class="label label-default"
-                            ng-if="!endpoint.extra_config['qos/ratelimit/router']">off</span>
-                        <span class="help-block">
-                            Enable usage limits for this endpoint
-                        </span>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Global Rate limit <a class="badge" data-toggle="modal" data-target="#enterprise-needed-modal">Enterprise</a></label>
-                        <br />
-                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                            data-target="#throttling-redis-modal-{{ endpoint_index }}">
-                            <i class="fa fa-wrench"></i> Stateful rate-limit
-                        </button>
-                        <span class="label label-success"
-                            ng-if="endpoint.extra_config['plugin/http-server']['redis-ratelimit']">on</span>
-                        <span class="label label-default"
-                            ng-if="!endpoint.extra_config['plugin/http-server']['redis-ratelimit']">off</span>
-                        <span class="help-block">
-                            Stateful/centralized rate-limiting backed on Redis.
-                        </span>
-                    </div>
 
-                    <div class="col-md-3">
-                        <label>Timeout and Cache TTL</label>
-                        <br />
-                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                            data-target="#endpoint-modal-{{ endpoint_index }}">
-                            <i class="fa fa-wrench"></i> Override defaults
-                        </button>
-                        <span class="help-block">
-                            Override default settings for this endpoint.
-                        </span>
-                    </div>
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-target="#tab-parameter-forwarding" data-toggle="tab" aria-expanded="false">Parameter
+                                forwarding</a>
+                        </li>
+                        <li>
+                            <a data-target="#tab-auth" data-toggle="tab" aria-expanded="true">Auth</a>
+                        </li>
+                        <li>
+                            <a data-target="#tab-security-validation" data-toggle="tab" aria-expanded="true">Security and validation</a>
+                        </li>
+                        <li>
+                            <a data-target="#tab-throttling" data-toggle="tab" aria-expanded="true">Throttling</a>
+                        </li>
+                        <li>
+                            <a data-target="#tab-manipulation" data-toggle="tab" aria-expanded="true">Data and
+                                Manipulation</a>
+                        </li>
+                        <li>
+                            <a data-target="#tab-documentation" data-toggle="tab" aria-expanded="true">Documentation</a>
+                        </li>
 
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <middleware template="openapi_endpoint.html" namespace="'documentation/openapi'"
-                                    data="endpoint">
-                                </middleware>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="box box-info box-solid">
-                                    <div class="box-header with-border">
-                                        <h3 class="box-title">
-                                            API-Key Authentication
-                                        </h3>
-                                        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/authentication/api-keys/'}]"></div>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-parameter-forwarding">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label>Recognized query string parameters (?param=value)</label>
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="parameter_name" type="url"
+                                            id="addQuerystring_{{ endpoint_index }}">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-success"
+                                                ng-click="addQuerystring(endpoint_index)">
+                                                <i class="fa fa-plus"></i> Add parameter
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="box-body">
-                                        <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">API Keys are not enabled
-                                            yet.</p>
-                                        <div class="form-group" ng-if="hasServiceExtraConfig('auth/api-keys')">
-                                            <div class="col-md-12">
-                                                <p ng-if="!endpoint.extra_config['auth/api-keys'].roles">
-                                                    <i class="fa fa-warning icon-warning"></i> This endpoint is not
-                                                    protected by API Keys unless you select at least an available role
-                                                    below
-                                                </p>
-                                                <table class="table table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th width="50%">Available Roles</th>
-                                                            <th width="50%">Granted Roles</th>
-                                                        </tr>
+                                    <div class="help-block">
+                                        <ul class="list-inline">
+                                            <li ng-repeat="(qs_index,qs) in endpoint.input_query_strings">
+                                                <a class="badge badge-remove"
+                                                    ng-click="deleteQuerystring(qs_index,endpoint_index)"
+                                                    title="Click to delettab-security-validatione parameter"><i class="fa fa-times"></i> {{ qs
+                                                    }} </a>
+                                            </li>
+                                            <li ng-if="!endpoint.input_query_strings.length">No query parameters are
+                                                active yet.
+                                                Typical
+                                                parameters are <code>page</code>, <code>limit</code>,
+                                                <code>search</code>...
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <span class="help-block">Query string parameters to be passed to the backends when
+                                        present.
+                                        Write only the name of the
+                                        parameter, no question mark or equal symbols.</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Headers passing to backend</label>
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="header_name" type="text" required=""
+                                            ng-model="input_header">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-success"
+                                                ng-click="addHeaderPassing(endpoint_index,input_header)">
+                                                <i class="fa fa-plus"></i> Add header
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <span class="help-block">Unless added here, no headers from the client will reach
+                                        the backends.
+                                        Use only if you need
+                                        custom headers to reach your backend (e.g.: <code>Content-Type</code>). Add a
+                                        single
+                                        <code>*</code> to pass all headers (security concerns)</span>
+                                    <div class="input-group">
+                                        <ul class="list-unstyled">
+                                            <li ng-repeat="(index,header) in endpoint.input_headers">
+                                                <a class="badge badge-remove"
+                                                    ng-click="deleteHeaderPassing(endpoint_index,index)"><i
+                                                        class="fa fa-times"></i>
+                                                    {{ header }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"
+                                    ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
+                                    <label>Concurrent Calls</label>
+                                    <input type="number" class="form-control" ng-model="endpoint.concurrent_calls">
+                                    <span class="help-block">
+                                        <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
+                                            <i class="fa fa-warning"></i> Use an integer
+                                        </p>
+                                        <p>Parallel requests you want to send to the backend <strong>for the same
+                                                request</strong>.
+                                            Fastest request is taken and the rest are discarded. This value should be
+                                            between 1 and
+                                            3 (or higher if your backend can support very high load)</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-                                                        <tr>
-                                                            <td>
-                                                                <ul class="list-inline">
-                                                                    <li ng-repeat="role in getAPIKeyRoles()">
-                                                                        <a class="badge badge-inverse"
-                                                                            ng-click="addAPIKeyRole(endpoint_index, role)">
-                                                                            {{ role }} <i
-                                                                                class="fa fa-arrow-right"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </td>
-                                                            <td>
-                                                                <p
-                                                                    ng-if="!endpoint.extra_config['auth/api-keys'].roles">
-                                                                    <i class="fa fa-warning icon-warning"></i> None
-                                                                    selected
-                                                                </p>
-                                                                <ul class="list-inline">
-                                                                    <li
-                                                                        ng-repeat="(role_index,role) in endpoint.extra_config['auth/api-keys'].roles">
-                                                                        <a class="badge badge-remove"
-                                                                            ng-click="deleteAPIKeyRole(endpoint_index, role_index)"><i
-                                                                                class="fa fa-times"></i>
-                                                                            {{ role }}</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-md-12" ng-if="endpoint.extra_config['auth/api-keys'].roles">
-                                                <label class="control-label">Rate limit by API Key</label>
-                                                <div class="input-group">
-                                                    <input class="form-control"
-                                                        ng-model="endpoint.extra_config['auth/api-keys'].client_max_rate"
-                                                        id="endpoint.extra_config['auth/api-keys'].client_max_rate"
-                                                        name="endpoint.extra_config['auth/api-keys'].client_max_rate"
-                                                        type="number">
-                                                    <div class="input-group-addon">reqs/sec</div>
+                        <div class="tab-pane" id="tab-auth">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <middleware template="jose_validator.html" namespace="'auth/validator'"
+                                                data="endpoint"></middleware>
+                                            <middleware template="jose_signer.html" namespace="'auth/signer'"
+                                                data="endpoint">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="box box-info box-solid">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">
+                                                        API-Key Authentication
+                                                    </h3>
+                                                    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+                                                        ng-repeat="doc in [{'ee': true, 'url':'/authentication/api-keys/'}]">
+                                                    </div>
                                                 </div>
-                                                <span class="help-block">Maximum requests per second you want to let
-                                                    each API-keys do. Leave <code>0</code> or empty for no limit.
-                                                </span>
+                                                <div class="box-body">
+                                                    <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">API Keys are not
+                                                        enabled
+                                                        yet.</p>
+                                                    <div class="form-group"
+                                                        ng-if="hasServiceExtraConfig('auth/api-keys')">
+                                                        <div class="col-md-12">
+                                                            <p ng-if="!endpoint.extra_config['auth/api-keys'].roles">
+                                                                <i class="fa fa-warning icon-warning"></i> This endpoint
+                                                                is not
+                                                                protected by API Keys unless you select at least an
+                                                                available role
+                                                                below
+                                                            </p>
+                                                            <table class="table table-striped">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th width="50%">Available Roles</th>
+                                                                        <th width="50%">Granted Roles</th>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <ul class="list-inline">
+                                                                                <li
+                                                                                    ng-repeat="role in getAPIKeyRoles()">
+                                                                                    <a class="badge badge-inverse"
+                                                                                        ng-click="addAPIKeyRole(endpoint_index, role)">
+                                                                                        {{ role }} <i
+                                                                                            class="fa fa-arrow-right"></i></a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p
+                                                                                ng-if="!endpoint.extra_config['auth/api-keys'].roles">
+                                                                                <i
+                                                                                    class="fa fa-warning icon-warning"></i>
+                                                                                None
+                                                                                selected
+                                                                            </p>
+                                                                            <ul class="list-inline">
+                                                                                <li
+                                                                                    ng-repeat="(role_index,role) in endpoint.extra_config['auth/api-keys'].roles">
+                                                                                    <a class="badge badge-remove"
+                                                                                        ng-click="deleteAPIKeyRole(endpoint_index, role_index)"><i
+                                                                                            class="fa fa-times"></i>
+                                                                                        {{ role }}</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-md-12"
+                                                            ng-if="endpoint.extra_config['auth/api-keys'].roles">
+                                                            <label class="control-label">Rate limit by API Key</label>
+                                                            <div class="input-group">
+                                                                <input class="form-control"
+                                                                    ng-model="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                                    id="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                                    name="endpoint.extra_config['auth/api-keys'].client_max_rate"
+                                                                    type="number">
+                                                                <div class="input-group-addon">reqs/sec</div>
+                                                            </div>
+                                                            <span class="help-block">Maximum requests per second you
+                                                                want to let
+                                                                each API-keys do. Leave <code>0</code> or empty for no
+                                                                limit.
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <p><a href="/#!/api-keys">Enable and configure API Keys</a></p>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <p><a href="/#!/api-keys">Enable and configure API Keys</a></p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab-throttling">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <p ng-include src="'/src/app/forms/endpoint_timeout.html'"></p>
+                                    <middleware data="endpoint" namespace="'qos/ratelimit/router'" template="ratelimit_router.html"></middleware>
+                                </div>
+                                <div class="col-md-6">
+                                    <plugin root="service" placement="endpoint" template="redis-ratelimit.html"
+                                    plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
+                                    <plugin root="service" placement="endpoint" template="ipfilter.html"
+                                                plugin="'ip-filter'" type="'plugin/req-resp-modifier'"></plugin>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab-security-validation">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <middleware template="security-policies.html"
+                                                namespace="'security/policies'" data="endpoint"></middleware>
+                                </div>
+                                <div class="col-md-6">
+                                    <plugin root="service" placement="endpoint"
+                                        template="response-schema-validator.html" plugin="'response-schema-validator'"
+                                        type="'plugin/req-resp-modifier'">
+                                    </plugin>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-manipulation">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <div ng-include src="'/src/app/forms/static-response.html'"></div>
+                                    <middleware template="jmespath.html" namespace="'modifier/jmespath'"
+                                        data="endpoint"></middleware>
+                                    <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
+                                    </middleware>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <plugin root="service" placement="endpoint" template="content-replacer.html"
+                                        plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-documentation">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <middleware template="openapi_endpoint.html" namespace="'documentation/openapi'"
+                                        data="endpoint">
+                                    </middleware>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <plugin root="service" placement="endpoint" template="ipfilter.html"
-                                    plugin="'ip-filter'" type="'plugin/req-resp-modifier'"></plugin>
 
-                                <middleware template="security-policies.html" namespace="'security/policies'" data="endpoint"></middleware>
-                                <middleware template="jose_validator.html" namespace="'auth/validator'" data="endpoint"></middleware>
-                                <middleware template="jmespath.html" namespace="'modifier/jmespath'" data="endpoint"></middleware>
-                                <plugin root="service" placement="endpoint" template="content-replacer.html"
-                                    plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
-                            </div>
-                            <div class="col-md-6">
-                                <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
-                                </middleware>
-                                <middleware template="jose_signer.html" namespace="'auth/signer'" data="endpoint">
-                                </middleware>
-                                <plugin root="service" placement="endpoint" template="response-schema-validator.html" plugin="'response-schema-validator'" type="'plugin/req-resp-modifier'"></plugin>
-                                <div ng-include src="'/src/app/forms/static-response.html'"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+
+
                 <div class="form-group">
                     <div class="col-md-12">
                         <h3>Backends (Upstream) for <code>{{ endpoint.endpoint }}</code></h3>
@@ -388,7 +437,9 @@
                                             required="" ng-model="backend.url_pattern">
 
                                         <span class="help-block">The endpoint of the backend server to query. Reuse here
-                                            any <code>{parameters}</code> defined in the parent endpoint. Also see <a href="https://www.krakend.io/docs/enterprise/endpoints/dynamic-routing/">Header routing</a>
+                                            any <code>{parameters}</code> defined in the parent endpoint. Also see <a
+                                                href="https://www.krakend.io/docs/enterprise/endpoints/dynamic-routing/">Header
+                                                routing</a>
                                         </span>
                                     </div>
                                     <div class="col-md-2">
@@ -449,18 +500,22 @@
                                         <middleware data="backend" template="graphql.html"
                                             namespace="'backend/graphql'"></middleware>
                                         <plugin root="service" placement="backend" template="content-replacer.html"
-                                    plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
-                                    <middleware data="backend" template="body-generator.html"
-                                    namespace="'modifier/body-generator'"></middleware>
-                                    <middleware template="security-policies.html" namespace="'security/policies'" data="backend"></middleware>
+                                            plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
+                                        <middleware data="backend" template="body-generator.html"
+                                            namespace="'modifier/body-generator'"></middleware>
+                                        <middleware template="security-policies.html" namespace="'security/policies'"
+                                            data="backend"></middleware>
                                     </div>
                                     <div class="col-md-6">
                                         <middleware data="backend" template="lambda.html" namespace="'backend/lambda'">
                                         </middleware>
-                                        <middleware data="backend" template="soap.html" ng-click="backend.encoding = 'xml'; backend.method='POST'"
+                                        <middleware data="backend" template="soap.html"
+                                            ng-click="backend.encoding = 'xml'; backend.method='POST'"
                                             namespace="'backend/soap'"></middleware>
-                                        <plugin root="service" placement="backend" template="http-proxy.html" plugin="'http-proxy'" type="'plugin/http-client'"></plugin>
-                                        <plugin root="service" placement="backend" template="no-redirect.html" plugin="'no-redirect'" type="'plugin/http-client'"></plugin>
+                                        <plugin root="service" placement="backend" template="http-proxy.html"
+                                            plugin="'http-proxy'" type="'plugin/http-client'"></plugin>
+                                        <plugin root="service" placement="backend" template="no-redirect.html"
+                                            plugin="'no-redirect'" type="'plugin/http-client'"></plugin>
                                     </div>
                                 </div>
                                 <div ng-if="endpoint.output_encoding != 'no-op'">
@@ -518,13 +573,18 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div ng-include src="'/src/app/forms/manipulation.html'"></div>
-                                            <plugin root="service" placement="backend" template="response-schema-validator.html" plugin="'response-schema-validator'" type="'plugin/req-resp-modifier'"></plugin>
+                                            <plugin root="service" placement="backend"
+                                                template="response-schema-validator.html"
+                                                plugin="'response-schema-validator'" type="'plugin/req-resp-modifier'">
+                                            </plugin>
                                         </div>
                                         <div class="col-md-6">
-                                            <middleware template="jmespath.html" namespace="'modifier/jmespath'" data="backend"></middleware>
+                                            <middleware template="jmespath.html" namespace="'modifier/jmespath'"
+                                                data="backend"></middleware>
                                             <div ng-include src="'/src/app/forms/flatmap.html'"></div>
                                             <div ng-include src="'/src/app/forms/martian.html'"></div>
-                                            <middleware data="backend" template="http_cache.html" namespace="'qos/http-cache'"></middleware>
+                                            <middleware data="backend" template="http_cache.html"
+                                                namespace="'qos/http-cache'"></middleware>
                                         </div>
                                     </div>
                                 </div>
@@ -581,84 +641,5 @@
             </fieldset>
         </form>
     </div><!-- /.box-body -->
-
-    <!-- Modal Window for rate limiting-->
-    <div id="throttling-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Endpoint rate limit</code></h4>
-                </div>
-                <div class="modal-body">
-                    <middleware data="endpoint" namespace="'qos/ratelimit/router'" template="ratelimit_router.html">
-                    </middleware>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Window for global rate limiting-->
-    <div id="throttling-redis-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Distributed rate limiting (throttling)</code></h4>
-                </div>
-                <div class="modal-body">
-                    <plugin root="service" placement="endpoint" template="redis-ratelimit.html"
-                        plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Window for endpoint-->
-    <div id="endpoint-modal-{{ endpoint_index }}" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Override global configuration for <code>{{ endpoint.endpoint }}</code></h4>
-                </div>
-                <div class="modal-body">
-                    <p>All the settings below are defined in the <strong>Service configuration</strong>,
-                        setting one or several values here means overriding the settings for this specific endpoint
-                        only.</p>
-
-                    <p ng-include src="'/src/app/forms/time_units.html'"></p>
-
-                    <div class="row">
-                        <div class="form-group">
-
-                            <div class="col-md-4" ng-class="isValidTimeUnit(endpoint.timeout) ? '' : 'has-error'">
-                                <label>Timeout</label>
-                                <input class="form-control" type="text" ng-model="endpoint.timeout">
-                                <div class="help-block">
-                                    <p ng-hide="isValidTimeUnit(endpoint.timeout)" class="badge label-danger"><i
-                                            class="fa fa-warning"></i> Invalid format</p>
-                                    <p>Maximum time you'll wait for the slowest response. Usually in milliseconds
-                                        (ms)</p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6" ng-class="isValidTimeUnit(endpoint.cache_ttl) ? '' : 'has-error'">
-                                <label>Cache TTL</label>
-                                <input class="form-control" type="text" ng-model="endpoint.cache_ttl">
-                                <div class="help-block">
-                                    <p ng-hide="isValidTimeUnit(endpoint.cache_ttl)" class="badge label-danger"><i
-                                            class="fa fa-warning"></i> Invalid format</p>
-                                    <p>For how long a proxy can cache a request to this endpoint.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
 </div><!-- endpoint index -->
 <button class="btn btn-lg btn-success" ng-click="addEndpoint()">Add endpoint</button>

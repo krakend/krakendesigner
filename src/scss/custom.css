@@ -23,6 +23,12 @@ a.badge.badge-inverse:hover {
     background-color: #0071CE;
 }
 
+.nav-tabs-custom .nav-tabs li a {
+    font-weight: bold;
+    font-size: 15px;
+    color: #0071CE;
+}
+
 .wrapper {
     background-color: white !important;
 }

@@ -1,0 +1,41 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            Timeout and Cache TTL
+        </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+            ng-repeat="doc in [{'ee': false, 'url':'/enterprise/endpoints/'}]"></div>
+    </div>
+    <div class="box-body">
+        <p>All the settings below are defined in the <strong>Service configuration</strong>,
+            setting one or several values here means overriding the settings for this specific endpoint
+            only.</p>
+
+        <p ng-include src="'/src/app/forms/time_units.html'"></p>
+
+
+        <div class="form-group">
+
+            <div class="col-md-6" ng-class="isValidTimeUnit(endpoint.timeout) ? '' : 'has-error'">
+                <label>Timeout</label>
+                <input class="form-control" type="text" ng-model="endpoint.timeout">
+                <div class="help-block">
+                    <p ng-hide="isValidTimeUnit(endpoint.timeout)" class="badge label-danger"><i
+                            class="fa fa-warning"></i> Invalid format</p>
+                    <p>Maximum time you'll wait for the slowest response.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6" ng-class="isValidTimeUnit(endpoint.cache_ttl) ? '' : 'has-error'">
+                <label>Cache TTL</label>
+                <input class="form-control" type="text" ng-model="endpoint.cache_ttl">
+                <div class="help-block">
+                    <p ng-hide="isValidTimeUnit(endpoint.cache_ttl)" class="badge label-danger"><i
+                            class="fa fa-warning"></i> Invalid format</p>
+                    <p>For how long a proxy can cache a request to this endpoint.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
