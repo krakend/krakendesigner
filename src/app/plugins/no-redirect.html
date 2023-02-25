@@ -1,14 +1,20 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input ng-disabled="getConflictingPlugin()" type="checkbox" ng-checked="hasHttpClientPlugin()" ng-click="toggleHttpClientPlugin()">
+    <h3 class="box-title"><input ng-disabled="getConflictingPlugin()" type="checkbox" ng-checked="hasHttpClientPlugin()"
+        ng-click="toggleHttpClientPlugin()">
       Don't follow redirects</h3>
     <div class="pull-right">
-      <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
+      <a class="pull-right-container" href="https://www.krakend.io/docs/enterprise/backends/client-redirect/" target="_blank"
+        title="Go to documentation"><i class="fa fa-book"></i></a>
+      <a data-toggle="modal" data-target="#enterprise-needed-modal"
+        class="pull-right-container badge badge-inverse">Enterprise</a>
     </div>
   </div>
   <div class="box-body">
-    <p ng-if="getConflictingPlugin()"><strong>To use this plugin you must disable <span class="badge">{{ getConflictingPlugin() }}</span></strong></p>
-    <p ng-if="!hasHttpClientPlugin()">Do not allow KrakenD to follow redirections like 301 or 302 and forward them to the client as they are.</p>
+    <p ng-if="getConflictingPlugin()"><strong>To use this plugin you must disable <span class="badge">{{
+          getConflictingPlugin() }}</span></strong></p>
+    <p ng-if="!hasHttpClientPlugin()">Do not allow KrakenD to follow redirections like 301 or 302 and forward them to
+      the client as they are.</p>
     <div ng-if="hasHttpClientPlugin()">
       <div class="form-group">
         <div class="col-md-12">

@@ -2,9 +2,12 @@
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
       IP Filter</h3>
-    <div class="pull-right">
-      <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
-    </div>
+      <div class="pull-right">
+        <a class="pull-right-container" href="https://www.krakend.io/docs/enterprise/endpoints/ipfilter/" target="_blank"
+          title="Go to documentation"><i class="fa fa-book"></i></a>
+        <a data-toggle="modal" data-target="#enterprise-needed-modal"
+          class="pull-right-container badge badge-inverse">Enterprise</a>
+      </div>
   </div>
   <div class="box-body">
     <p ng-if="!hasPluginOfThisType()">The IP filtering plugin allows you to restrict the traffic to your API gateway
