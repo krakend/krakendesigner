@@ -16,6 +16,8 @@
       type="'plugin/http-server'"></plugin>
       <plugin root="service" placement="service" template="static-filesystem.html" plugin="'static-filesystem'"
       type="'plugin/http-server'"></plugin>
+      <middleware data="service" namespace="'qos/ratelimit/service'" template="ratelimit_service.html">
+      </middleware>
   </div>
 </div>
 <div class="row">

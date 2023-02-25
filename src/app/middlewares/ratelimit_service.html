@@ -1,14 +1,13 @@
 <div class="box box-info box-solid">
 	<div class="box-header with-border">
 		<h3 class="box-title">
-			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Endpoint Rate
-			limit</code>
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Rate limiting</code>
 		</h3>
 		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
-			ng-repeat="doc in [{'ee': false, 'url':'/throttling/rate-limit/'}]"></div>
+			ng-repeat="doc in [{'ee': true, 'url':'/service-settings/service-rate-limit/'}]"></div>
 	</div>
 	<div class="box-body">
-		<p ng-if="!isMiddlewareEnabled()">Limits the number of requests this endpoint can receive</p>
+		<p ng-if="!isMiddlewareEnabled()">Puts a limit on the maximum number of requests users can do globally to the service</p>
 		<div ng-if="isMiddlewareEnabled()">
 			<div class="form-group"
 				ng-class="validator.isInteger(data.extra_config[config_namespace].max_rate) ? '' : 'has-error'">
@@ -19,7 +18,7 @@
 						name="data.extra_config[config_namespace].max_rate" type="number">
 					<div class="input-group-addon">reqs/sec</div>
 				</div>
-				<span class="help-block">Maximum requests per second you want to let this endpoint handle. Leave
+				<span class="help-block">Maximum requests per second you want to allow. Leave
 					<code>0</code> for no default limit.
 				</span>
 			</div>
@@ -33,7 +32,7 @@
 					<div class="input-group-addon">tokens</div>
 				</div>
 				<span class="help-block">Number of tokens you can store in the Token Bucket. Traduces into maximum
-					concurrent requests this endpoint will accept for all users.
+					concurrent requests all users can do.
 				</span>
 			</div>
 			<div class="form-group"
@@ -45,8 +44,7 @@
 						name="data.extra_config[config_namespace].client_max_rate" type="number">
 					<div class="input-group-addon">reqs/sec</div>
 				</div>
-				<span class="help-block">Maximum requests per second you want to allow to each different API user. This
-					value will be used as default for all the endpoints unless overridden in each of them. Use
+				<span class="help-block">Maximum requests per second you want to allow to each different API user. Use
 					<code>0</code>
 					for no limitation.
 				</span>
@@ -78,7 +76,7 @@
 					<div class="input-group-addon">tokens</div>
 				</div>
 				<span class="help-block">Number of tokens you can store in the Token Bucket for each individual user.
-					Traduces into maximum concurrent requests this endpoint will accept for the connected user.
+					Traduces into maximum concurrent requests KrakenD will accept for the connected user.
 				</span>
 			</div>
 		</div>
