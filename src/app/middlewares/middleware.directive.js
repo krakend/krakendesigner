@@ -92,6 +92,14 @@ angular
     scope.deleteIndexFromList = function(index,list) {
       scope.data.extra_config[NAMESPACE][list].splice(index, 1);
     }
+
+    scope.base64dec = function(data) {
+      return Buffer.from(data, 'base64').toString('utf8')
+    }
+
+    scope.base64enc = function(data) {
+      return Buffer.from(data).toString('base64');
+    }
   }
 }
 }]);

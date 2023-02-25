@@ -45,7 +45,7 @@
         <div class="box-tools pull-right">
             <span ng-hide="isValidEndpoint(endpoint.endpoint)" class="badge label-danger"><i class="fa fa-warning"></i>
                 Error(s)</span>
-            <span class="badge">{{ endpoint.output_encoding }}</span>
+            <span class="badge" ng-class="endpoint.output_encoding =='no-op' ? 'label-danger' : ''">{{ endpoint.output_encoding }}</span>
             <span class="method_header badge method_{{ endpoint.method.length ? endpoint.method : 'GET' }}">{{
                 endpoint.method.length ? endpoint.method : 'GET' }}</span>
             <button type="button" class="btn btn-box-tool"
@@ -89,12 +89,14 @@
                         <select class="form-control" ng-model="endpoint.output_encoding" id="endpoint.output_encoding"
                             name="endpoint.output_encoding"
                             ng-change="setNoOpEncoding(endpoint_index, endpoint.output_encoding, '{{ endpoint.output_encoding }}', null)">
-                            <option value="json">JSON</option>
+                            <option value="json">JSON object</option>
+                            <option value="json-collection">JSON array</option>
+                            <option value="fast-json">Fast JSON (EE)</option>
                             <option value="negotiate">Negotiate content</option>
                             <option value="string">String (text/plain)</option>
                             <option value="no-op">No-op (just proxy)</option>
                         </select>
-                        <span class="help-block">Encoding used</span>
+                        <span class="help-block">Encode response as...</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -480,7 +482,6 @@
                                         </middleware>
                                         <middleware data="backend" template="soap.html"
                                             namespace="'backend/soap'"></middleware>
-                                        <middleware template="jmespath.html" namespace="'modifier/jmespath'" data="backend"></middleware>
                                     </div>
                                 </div>
                                 <div ng-if="endpoint.output_encoding != 'no-op'">
@@ -541,6 +542,7 @@
                                             <plugin root="service" placement="backend" template="response-schema-validator.html" plugin="'response-schema-validator'" type="'plugin/req-resp-modifier'"></plugin>
                                         </div>
                                         <div class="col-md-6">
+                                            <middleware template="jmespath.html" namespace="'modifier/jmespath'" data="backend"></middleware>
                                             <div ng-include src="'/src/app/forms/flatmap.html'"></div>
                                             <div ng-include src="'/src/app/forms/martian.html'"></div>
                                             <middleware data="backend" template="http_cache.html" namespace="'qos/http-cache'"></middleware>

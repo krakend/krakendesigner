@@ -1,0 +1,41 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> SOAP
+		</h3>
+
+		<div class="pull-right">
+			<a class="pull-right-container" href="https://www.krakend.io/docs/enterprise/backends/soap/" title="Documentation"><i class="fa fa-book"></i></a>
+			<a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
+		</div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">The SOAP integration crafts the body and XML content you will send to a SOAP service, injecting dynamic variables from places like the body sent by the user, headers, query strings, or parameters of the URL.</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="row">
+				<div class="col-md-12">
+					<label class="control-label">Body editor</label>
+					<textarea class="form-control" rows="10"
+					ng-change="data.extra_config[config_namespace].template=base64enc(template_editor)"
+					ng-model="template_editor"
+					ng-init="template_editor=base64dec(data.extra_config[config_namespace].template)"></textarea>
+					<span class="help-block">The request body you will send to the SOAP server. You can introduce the variables <code>.req_body.xxx</code>, <code>.req_params.Xxx</code>, <code>.req_headers.xxx</code>, <code>.req_querystring.xxx</code>, <code>.req_path</code></span>
+				  </div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label>Content Type</label>
+					<input type="text" ng-model="data.extra_config[config_namespace].content_type"
+						class="form-control" placeholder="text/xml" />
+					<span class="help-block">The Content-Type belonging to the request to the SOAP server. Defaults to <code>text/xml</code></span>
+				</div>
+				<div class="col-md-6">
+					<label>Resulting template</label>
+						<input type="text" ng-model="data.extra_config[config_namespace].template"
+						class="form-control" placeholder="base64 calculation" ng-disabled="true" />
+						<span class="help-block">The request template is saved in the config automatically as a base64 string.</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

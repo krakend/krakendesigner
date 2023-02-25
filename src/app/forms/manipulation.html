@@ -1,23 +1,23 @@
 <div class="box box-info box-solid">
     <div class="box-header with-border">
         <h3 class="box-title">
-            Object Manipulation
+            Basic Manipulation
         </h3>
     </div>
     <div class="box-body">
-        <div class="row">
+        <div class="row" ng-show="backend.is_collection != true">
             <label class="col-md-2 control-label">Filtering mode</label>
             <div class="col-md-10">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active">
                             <a data-target="#tab_black-{{ endpoint_index }}-{{ backend_index }}" data-toggle="tab"
-                                aria-expanded="false">Blacklist
+                                aria-expanded="false">Deny
                                 (fastest)</a>
                         </li>
                         <li>
                             <a data-target="#tab_white-{{ endpoint_index }}-{{ backend_index }}" data-toggle="tab"
-                                aria-expanded="true">Whitelist</a>
+                                aria-expanded="true">Allow</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="row">
-            <label class="col-md-2 control-label">Capturing group</label>
+            <label class="col-md-2 control-label">Wrapping group</label>
             <div class="col-md-10">
                 <input ng-model="backend.group" type="text" class="form-control" placeholder="my-group">
                 <span class="help-block">
