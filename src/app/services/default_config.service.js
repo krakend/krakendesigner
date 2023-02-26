@@ -97,6 +97,10 @@ angular
                     "allowed_hosts": [],
                     "ssl_proxy_headers": {}
                 },
+                "security/bot-detector": {
+                    "empty_user_agent_is_bot": true,
+                    "cache_size": 10000
+                },
                 'telemetry/logging': {
                     "level": "ERROR",
                     "prefix": "[KRAKEND]",

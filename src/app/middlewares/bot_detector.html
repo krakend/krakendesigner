@@ -3,7 +3,8 @@
         <h3 class="box-title">
             <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Bot detector
         </h3>
-        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/throttling/botdetector/'}]"></div>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+            ng-repeat="doc in [{'ee': false, 'url':'/throttling/botdetector/'}]"></div>
     </div>
     <div class="box-body">
         <p ng-if="!isMiddlewareEnabled()">Detect and reject bots carrying out scraping, content theft, and form spam.
@@ -12,7 +13,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label">Whitelist</label>
+                        <label class="control-label">Allow</label>
                         <div class="input-group">
                             <input class="form-control" placeholder="MyAndroidClient/1.0" type="text" required=""
                                 ng-model="input_allow">
@@ -36,7 +37,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="control-label">Blacklist</label>
+                        <label class="control-label">Deny</label>
                         <div class="input-group">
                             <input class="form-control" placeholder="axios/0.17.1" type="text" required=""
                                 ng-model="input_deny">
@@ -87,7 +88,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group"
                         ng-class="validator.isInteger(data.extra_config[config_namespace].cache_size) ? '' : 'has-error'">
                         <label class="control-label">Cache size</label>
@@ -99,7 +100,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                    ng-model="data.extra_config[config_namespace].empty_user_agent_is_bot">
+                                <strong>Empty user agents are bots</strong>
+                            </label>
+                            <div class="help-block">
+                                Whether to consider an empty user-agent a bot (and reject it) or not.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
