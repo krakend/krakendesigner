@@ -1,0 +1,26 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            Concurrent calls
+        </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+            ng-repeat="doc in [{'ee': false, 'url':'/endpoints/concurrent-requests/'}]"></div>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="col-md-12" ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
+                <p>The concurrent requests are an excellent technique to improve the response times and decrease error rates by requesting in parallel the same information multiple times.</p>
+                <label>Concurrent Calls</label>
+                <input type="text" class="form-control" ng-disabled="endpoint.output_encoding == 'no-op'"
+                    ng-model="endpoint.concurrent_calls">
+                <span class="help-block">
+                    <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
+                        <i class="fa fa-warning"></i> Use an integer
+                    </p>
+                    <p>Number of parallel requests you want to send to the backend <strong>for the same
+                            request</strong>. Fastest request is taken and the rest are discarded. Recommended values 1-3</p>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

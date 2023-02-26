@@ -4,7 +4,7 @@
 <div class="box box-info" ng-repeat="(endpoint_index,endpoint) in service.endpoints"
     ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'" id="e{{ endpoint_index }}">
     <div class="box-header with-border">
-        <h3 class="box-title large">
+        <h3 class="box-title text-xl">
             <a href="/#!/endpoints?target={{endpoint_index}}">
                 {{ endpoint.endpoint }}<span ng-hide="!hasWildcard(endpoint.endpoint)"
                     class="label-wildcard-asterisk">/<i class="fa fa-asterisk"></i></span>
@@ -34,6 +34,14 @@
         <form class="form-horizontal" novalidate>
             <fieldset>
                 <div ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'has-error'" class="form-group form-group-lg">
+                    <div class="col-md-12">
+                        <p class="text-lg">
+                            Endpoints are the paths of the <strong>API contract</strong> you are about to create for
+                            someone else to rely on.
+                            <a href="https://www.krakend.io/docs/enterprise/endpoints/" target="_blank">Introduction to
+                                endpoints</a>.
+                        </p>
+                    </div>
                     <div class="col-md-6 col-sm-6">
                         <label>KrakenD Endpoint</label>
                         <input type="text" placeholder="/users/{username}" class="form-control input-md" required=""
@@ -109,12 +117,12 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-endpoint{{endpoint_index}}-parameter-forwarding">
-                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span> KrakenD
+                            <p class="box text-lg"><span class="badge"><i class="fa fa-info"></i></span> KrakenD
                                 applies <strong>zero-trust</strong> criteria to incoming requests. Unless explicitly
                                 added below, no query strings, headers, or cookies are forwarded to the backend service.
                             </p>
                             <div class="form-group">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label>Recognized query string parameters (?param=value)</label>
                                     <div class="input-group">
                                         <input class="form-control" placeholder="parameter_name" type="url"
@@ -148,7 +156,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label>Headers passing to backend</label>
                                     <div class="input-group">
                                         <input class="form-control" placeholder="header_name" type="text" required=""
@@ -175,27 +183,10 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-4"
-                                    ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
-                                    <label>Concurrent Calls</label>
-                                    <input type="number" class="form-control"
-                                        ng-disabled="endpoint.output_encoding == 'no-op'"
-                                        ng-model="endpoint.concurrent_calls">
-                                    <span class="help-block">
-                                        <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
-                                            <i class="fa fa-warning"></i> Use an integer
-                                        </p>
-                                        <p>Parallel requests you want to send to the backend <strong>for the same
-                                                request</strong>.
-                                            Fastest request is taken and the rest are discarded. This value should be
-                                            between 1 and
-                                            3 (or higher if your backend can support very high load)</p>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-auth">
-                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                            <p class="box text-lg"><span class="badge"><i class="fa fa-info"></i></span>
                                 Authorization and Authentication requirements for the end-user.</p>
                             <div class="form-group">
                                 <div class="col-md-12">
@@ -299,7 +290,7 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-throttling">
-                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                            <p class="box text-lg"><span class="badge"><i class="fa fa-info"></i></span>
                                 The endpoint-level throttling options stablish a quota of usage of each endpoint and
                                 sets the
                                 foundations for the Quality of Service.</p>
@@ -320,7 +311,7 @@
                         </div>
 
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-security-validation">
-                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                            <p class="box text-lg"><span class="badge"><i class="fa fa-info"></i></span>
                                 The policies engine lets you write custom rules validated on runtime during requests,
                                 responses, and token validation.</p>
                             <div class="form-group">
@@ -339,7 +330,7 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-manipulation">
-                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                            <p class="box text-lg"><span class="badge"><i class="fa fa-info"></i></span>
                                 When you manipulate data at the endpoint level, you have the last chance to work with
                                 the aggregated data coming from all endpoints</p>
                             <div class="form-group">
@@ -355,11 +346,13 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-connection">
-                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                            <p class="box text-lg"><span class="badge"><i class="fa fa-info"></i></span>
                                 KrakenD connects to all backends in parallel. Here you can set special behaviors of this
-                                endpoint when connecting to multiple backends.</p>
+                                endpoint when connecting to backends, like increasing the pressure to a backend to get
+                                better response times, connect one by one, or use WebSockets.</p>
                             <div class="form-group">
                                 <div class="col-md-6">
+                                    <div ng-include src="'/src/app/forms/concurrent_calls.html'"></div>
                                     <div ng-include src="'/src/app/forms/sequential.html'"></div>
                                 </div>
                                 <div class="col-md-6">
@@ -369,7 +362,7 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-documentation">
-                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span> The
+                            <p class="box text-lg"><span class="badge"><i class="fa fa-info"></i></span> The
                                 OpenAPI generator is a command-line utility embedded in the KrakenD binary, offering
                                 OpenAPI import and export capabilities (for both Swagger v2 and OAS3).
                             </p>
@@ -444,6 +437,9 @@
                                             id="tab-backend{{endpoint_index}}-{{backend_index}}-request">
                                             <div class="form-group">
                                                 <div class="col-md-12">
+                                                    <p class="box text-lg"><span class="badge"><i
+                                                                class="fa fa-info"></i></span> The request options
+                                                        define how KrakenD interacts with the upstream service. </p>
                                                     <div ng-include src="'/src/app/forms/backend_request.html'"></div>
                                                 </div>
                                             </div>
@@ -453,7 +449,9 @@
                                                         namespace="'modifier/body-generator'"></middleware>
                                                 </div>
                                                 <div class="col-md-6">
-
+                                                    <middleware data="backend" template="martian.html"
+                                                        namespace="'modifier/martian'"
+                                                        ng-if="endpoint.output_encoding != 'no-op'"></middleware>
                                                 </div>
                                             </div>
                                         </div>
@@ -481,8 +479,11 @@
                                                         ng-if="endpoint.output_encoding != 'no-op'"></plugin>
                                                     <div ng-include src="'/src/app/forms/flatmap.html'"
                                                         ng-if="endpoint.output_encoding != 'no-op'"></div>
-                                                    <div ng-include src="'/src/app/forms/martian.html'"
-                                                        ng-if="endpoint.output_encoding != 'no-op'"></div>
+                                                    <middleware data="backend" template="martian.html"
+                                                        namespace="'modifier/martian'"
+                                                        ng-if="endpoint.output_encoding != 'no-op'"></middleware>
+
+
                                                 </div>
                                             </div>
                                         </div>

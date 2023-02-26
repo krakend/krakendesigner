@@ -8,6 +8,11 @@ code {
     color: #2752a3;
 }
 
+textarea.form-control {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #252525;
+    color: gold;
+}
 .badge {
     background-color: #0071CE;
 }
@@ -35,11 +40,6 @@ a.badge.badge-inverse:hover {
     color: #0071CE;
 }
 
-.tab-description {
-    font-size: 16px;
-    background-color: aliceblue;
-    padding: 10px;
-}
 .wrapper {
     background-color: white !important;
 }
@@ -199,8 +199,17 @@ a.badge.badge-inverse:hover {
     color: #FFF;
 }
 
-.box-title.large {
+.text-lg {
+    font-size: 16px;
+}
+
+.box-title.text-xl {
     font-size: 22px;
+}
+
+.box.text-lg {
+    background-color: aliceblue;
+    padding: 10px;
 }
 
 .box.box-info {

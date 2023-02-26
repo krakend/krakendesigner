@@ -163,6 +163,13 @@ angular
                 "modifier/body-generator": {
                     "template": "ewogICJ1cGRhdGUiOnsKICAgICJ1c2VyX2lkIjogInt7IC5yZXFfcGFyYW1zLlVzZXIgfX0iLAogICAgImVtYWlsIjogInt7IC5yZXFfYm9keS5lbWFpbCB9fSIKICB9Cn0="
                 },
+                "modifier/martian": {
+                    "header.Modifier": {
+                      "scope": ["request", "response"],
+                      "name": "X-Martian",
+                      "value": "true"
+                    }
+                },
                 // // Endpoint level middleware
                 'qos/ratelimit/router': {
                     "max_rate": 0,

@@ -25,7 +25,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<label class="control-label">Body editor</label>
-					<textarea class="form-control" ng-disabled="mode == 'path'" rows="10"
+					<textarea spellcheck="false" class="form-control" ng-disabled="mode == 'path'" rows="10"
 						ng-change="data.extra_config[config_namespace].template=base64enc(template_editor)"
 						ng-model="template_editor"
 						ng-init="template_editor=base64dec(data.extra_config[config_namespace].template)"></textarea>
