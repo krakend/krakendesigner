@@ -1,0 +1,28 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Request Schema Validator
+		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+			ng-repeat="doc in [{'ee': false, 'url':'/endpoints/json-schema/'}]"></div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">The policies engine lets you write custom rules validated on runtime during
+			requests, responses, and token validation. The policies allow you to implement all sorts of validations and
+			user access control, from parameter compliance, to RBAC (Role-Based Access Control) and ABAC
+			(Attribute-Based Access Control) strategies.</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="form-group row">
+				<div class="col-md-12">
+					<label class="control-label">JSON schema</label>
+					<textarea json-formatter syntax="syntax_validation_jsonschema" class="form-control"
+						ng-model="data.extra_config[config_namespace]"></textarea>
+					<span class="help-block">Write your JSON schema directly in this field, with any number of fields or
+						validations you need.</span>
+					<p ng-show="syntax_validation_jsonschema" class="badge label-danger">
+						{{syntax_validation_jsonschema}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
