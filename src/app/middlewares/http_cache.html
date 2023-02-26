@@ -1,14 +1,16 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
-      Cache
+      Caching
     </h3>
     <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/backends/caching/'}]"></div>
   </div>
   <div class="box-body">
     <p ng-hide="isMiddlewareEnabled()">Enable in-memory caching for the desired backend responses</p>
     <div ng-if="isMiddlewareEnabled()">
-      <p><span class="badge label-warning"><i class="fa fa-warning"></i> Warning</span> Now caching is enabled, load will be increased and memory usage increased.</p>
+      <p><span class="badge">Caching enabled</span></p>
+      <p>All responses from the backend are stored in-memory honoring the time specified in the <code>Cache-Control</code> header sent by the server</p>
+      <p><span class="badge label-warning"><i class="fa fa-warning"></i></span> Memory consumption and CPU usage will increase proportionally to the amount and size of cached entries.</p>
       <div class="row">
         <div class="col-md-12">
           <label class="control-label">

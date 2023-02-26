@@ -78,29 +78,34 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a data-target="#tab-parameter-forwarding" data-toggle="tab" aria-expanded="false">Parameter
+                            <a data-target="#tab-endpoint{{endpoint_index}}-parameter-forwarding" data-toggle="tab"
+                                aria-expanded="true">Parameter
                                 forwarding</a>
                         </li>
                         <li>
-                            <a data-target="#tab-auth" data-toggle="tab" aria-expanded="true">Auth</a>
+                            <a data-target="#tab-endpoint{{endpoint_index}}-auth" data-toggle="tab"
+                                aria-expanded="false">Auth</a>
                         </li>
                         <li>
-                            <a data-target="#tab-security-validation" data-toggle="tab" aria-expanded="true">Security and validation</a>
+                            <a data-target="#tab-endpoint{{endpoint_index}}-security-validation" data-toggle="tab"
+                                aria-expanded="false">Security and validation</a>
                         </li>
                         <li>
-                            <a data-target="#tab-throttling" data-toggle="tab" aria-expanded="true">Throttling</a>
+                            <a data-target="#tab-endpoint{{endpoint_index}}-throttling" data-toggle="tab"
+                                aria-expanded="false">Throttling</a>
                         </li>
                         <li>
-                            <a data-target="#tab-manipulation" data-toggle="tab" aria-expanded="true">Data and
+                            <a data-target="#tab-endpoint{{endpoint_index}}-manipulation" data-toggle="tab"
+                                aria-expanded="false">Data and
                                 Manipulation</a>
                         </li>
                         <li>
-                            <a data-target="#tab-documentation" data-toggle="tab" aria-expanded="true">Documentation</a>
+                            <a data-target="#tab-endpoint{{endpoint_index}}-documentation" data-toggle="tab"
+                                aria-expanded="false">Documentation</a>
                         </li>
-
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab-parameter-forwarding">
+                        <div class="tab-pane active" id="tab-endpoint{{endpoint_index}}-parameter-forwarding">
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label>Recognized query string parameters (?param=value)</label>
@@ -119,7 +124,8 @@
                                             <li ng-repeat="(qs_index,qs) in endpoint.input_query_strings">
                                                 <a class="badge badge-remove"
                                                     ng-click="deleteQuerystring(qs_index,endpoint_index)"
-                                                    title="Click to delettab-security-validatione parameter"><i class="fa fa-times"></i> {{ qs
+                                                    title="Click to delettab-security-validatione parameter"><i
+                                                        class="fa fa-times"></i> {{ qs
                                                     }} </a>
                                             </li>
                                             <li ng-if="!endpoint.input_query_strings.length">No query parameters are
@@ -181,8 +187,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane" id="tab-auth">
+                        <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-auth">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="row">
@@ -284,29 +289,31 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane" id="tab-throttling">
+                        <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-throttling">
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <p ng-include src="'/src/app/forms/endpoint_timeout.html'"></p>
-                                    <middleware data="endpoint" namespace="'qos/ratelimit/router'" template="ratelimit_router.html"></middleware>
+                                    <middleware data="endpoint" namespace="'qos/ratelimit/router'"
+                                        template="ratelimit_router.html"></middleware>
                                 </div>
                                 <div class="col-md-6">
                                     <plugin root="service" placement="endpoint" template="redis-ratelimit.html"
-                                    plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
+                                        plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
                                     <plugin root="service" placement="endpoint" template="ipfilter.html"
-                                                plugin="'ip-filter'" type="'plugin/req-resp-modifier'"></plugin>
+                                        plugin="'ip-filter'" type="'plugin/req-resp-modifier'"></plugin>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="tab-security-validation">
+                        <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-security-validation">
                             <div class="form-group">
                                 <div class="col-md-6">
-                                    <middleware template="security-policies.html"
-                                                namespace="'security/policies'" data="endpoint"></middleware>
+                                    <middleware template="security-policies.html" namespace="'security/policies'"
+                                        data="endpoint"></middleware>
                                 </div>
                                 <div class="col-md-6">
+                                    <middleware template="schema-validation.html" namespace="'validation/json-schema'"
+                                        data="endpoint"></middleware>
                                     <plugin root="service" placement="endpoint"
                                         template="response-schema-validator.html" plugin="'response-schema-validator'"
                                         type="'plugin/req-resp-modifier'">
@@ -314,7 +321,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-manipulation">
+                        <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-manipulation">
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <div ng-include src="'/src/app/forms/static-response.html'"></div>
@@ -330,7 +337,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab-documentation">
+                        <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-documentation">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <middleware template="openapi_endpoint.html" namespace="'documentation/openapi'"
@@ -386,208 +393,227 @@
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3>Request</h3>
-                                        <p>All the data needed to send the request to the servers.</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Hosts</label>
-                                        <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
-                                            value="{{ host.host }}">
-                                            <label class="form-control">
-                                                <input type="checkbox" ng-model="checked"
-                                                    ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
-                                                    ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
-                                                {{ host.host }}
-                                            </label>
-                                            <span class="help-block">All the hosts (round-robin) that can be used to
-                                                request the URL</span>
-                                        </div>
-                                        <div class="radio-inline" ng-repeat="sd in sd_providers.providers">
-                                            <label>
-                                                <input type="radio" ng-model="backend.sd" value="{{ sd }}"
-                                                    ng-change="deleteHostsInBackend(endpoint_index, backend_index)">
-                                                {{ sd }}
-                                            </label>
-                                        </div>
-                                        <button class="btn btn-default btn-flat form-control"
-                                            ng-class="!backend.host.length ? 'label-danger' : ''" data-toggle="modal"
-                                            data-target="#add-hosts-modal">
-                                            <i class="fa fa-wrench"></i> Add host
-                                        </button>
-                                        <span class="help-block">Receiving services, balanced using Round Robin.</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>Method</label>
-                                        <select id="backend.method" ng-model="backend.method" name="backend.method"
-                                            class="form-control">
-                                            <option value="GET">GET</option>
-                                            <option value="POST">POST</option>
-                                            <option value="PUT">PUT</option>
-                                            <option value="PATCH">PATCH</option>
-                                            <option value="DELETE">DELETE</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>URL</label>
-                                        <input type="text" placeholder="/users/{username}" class="form-control"
-                                            required="" ng-model="backend.url_pattern">
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-request"
+                                                data-toggle="tab" aria-expanded="true">Request</a>
+                                        </li>
+                                        <li>
+                                            <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-response"
+                                                data-toggle="tab" aria-expanded="false">Response manipulation</a>
+                                        </li>
+                                        <li>
+                                            <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-throttling"
+                                                data-toggle="tab" aria-expanded="false">Throttling</a>
+                                        </li>
+                                        <li>
+                                            <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-connectivity"
+                                                data-toggle="tab" aria-expanded="false">Connectivity</a>
+                                        </li>
+                                        <li>
+                                            <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-auth"
+                                                data-toggle="tab" aria-expanded="false">Auth</a>
+                                        </li>
+                                        <li>
+                                            <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-security-validation"
+                                                data-toggle="tab" aria-expanded="false">Security and validation</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active"
+                                            id="tab-backend{{endpoint_index}}-{{backend_index}}-request">
+                                            <div class="form-group">
+                                                <div class="col-md-2">
+                                                    <label>Connect to host(s)</label>
+                                                    <button class="btn btn-default btn-flat form-control"
+                                                        ng-class="!backend.host.length ? 'label-danger' : ''"
+                                                        data-toggle="modal" data-target="#add-hosts-modal">
+                                                        <i class="fa fa-wrench"></i> Add host
+                                                    </button>
+                                                    <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
+                                                        value="{{ host.host }}" class="form-control">
 
-                                        <span class="help-block">The endpoint of the backend server to query. Reuse here
-                                            any <code>{parameters}</code> defined in the parent endpoint. Also see <a
-                                                href="https://www.krakend.io/docs/enterprise/endpoints/dynamic-routing/">Header
-                                                routing</a>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>Rate Limit</label>
-                                        <br />
-                                        <button class="btn btn-default btn-flat" data-toggle="modal"
-                                            data-target="#backend-modal-{{ endpoint_index}}{{ backend_index }}">
-                                            <i class="fa fa-wrench"></i> Rate-limit backend
-                                        </button>
-                                        <span class="label label-success"
-                                            ng-if="backend.extra_config['qos/ratelimit/proxy']">on</span>
-                                        <span class="label label-default"
-                                            ng-if="!backend.extra_config['qos/ratelimit/proxy']">off</span>
-                                        <span class="help-block">Limit requests to this backend regardless of its
-                                            endpoint usage</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>Resolution</label>
-                                        <div class="input-group">
-                                            <input type="checkbox" ng-model="backend.disable_host_sanitize">
-                                            Disable sanitization
-                                        </div>
-                                        <span class="help-block">
-                                            If unsure, leave the default.
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <middleware data="backend"
-                                            inherit="service.extra_config['github_com/devopsfaith/krakend-circuitbreaker/gobreaker']"
-                                            template="gobreaker.html" namespace="'qos/circuit-breaker'">
-                                        </middleware>
-                                        <middleware data="backend" template="amqp_consumer.html"
-                                            namespace="'backend/amqp/consumer'"></middleware>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <middleware data="backend"
-                                            inherit="service.extra_config['auth/client-credentials']"
-                                            template="oauth.html" namespace="'auth/client-credentials'">
-                                        </middleware>
-                                        <middleware data="backend" template="amqp_producer.html"
-                                            namespace="'backend/amqp/producer'"></middleware>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <middleware data="backend" template="pubsub_subscriber.html"
-                                            namespace="'backend/pubsub/susbcriber'"></middleware>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <middleware data="backend" template="pubsub_publisher.html"
-                                            namespace="'backend/pubsub/publisher'"></middleware>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <middleware data="backend" template="graphql.html"
-                                            namespace="'backend/graphql'"></middleware>
-                                        <plugin root="service" placement="backend" template="content-replacer.html"
-                                            plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
-                                        <middleware data="backend" template="body-generator.html"
-                                            namespace="'modifier/body-generator'"></middleware>
-                                        <middleware template="security-policies.html" namespace="'security/policies'"
-                                            data="backend"></middleware>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <middleware data="backend" template="lambda.html" namespace="'backend/lambda'">
-                                        </middleware>
-                                        <middleware data="backend" template="soap.html"
-                                            ng-click="backend.encoding = 'xml'; backend.method='POST'"
-                                            namespace="'backend/soap'"></middleware>
-                                        <plugin root="service" placement="backend" template="http-proxy.html"
-                                            plugin="'http-proxy'" type="'plugin/http-client'"></plugin>
-                                        <plugin root="service" placement="backend" template="no-redirect.html"
-                                            plugin="'no-redirect'" type="'plugin/http-client'"></plugin>
-                                    </div>
-                                </div>
-                                <div ng-if="endpoint.output_encoding != 'no-op'">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <h3>Response</h3>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label>Decode as:</label>
-                                            <select class="form-control" ng-model="backend.encoding"
-                                                ng-change="setNoOpEncoding(endpoint_index, backend.encoding, '{{ backend.encoding }}', backend_index)">
-                                                <option selected value="json">JSON</option>
-                                                <option value="xml">XML</option>
-                                                <option value="rss">RSS</option>
-                                                <option value="string">String</option>
-                                                <option value="no-op">No-Op (Leave as is)</option>
-                                            </select>
-                                            <span class="help-block">How to decode the response of the backend.</span>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label>Root object:</label>
-                                            <input type="text" class="form-control" ng-model="backend.target"
-                                                ng-disabled="backend.is_collection == true"
-                                                placeholder="Leave blank to use all the reponse">
-                                            <span class="help-block">Some APIs return all the content encapsulated
-                                                inside
-                                                a root object (usually named like <code>data</code>,
-                                                <code>response</code>,
-                                                <code>items</code>). Specifying here a root object will put all its
-                                                children
-                                                in the first level. When manipulating the data only its children are
-                                                visible.</span>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label>Is a collection?</label>
-                                            <div class="input-group">
-                                                <input type="checkbox" ng-model="backend.is_collection"
-                                                    ng-change="backend.target = ''"> Response is an array.
-                                                <span class="help-block">KrakenD expects an object as a response (in
-                                                    json inside brackets, e.g:
-                                                    <code>{ "status":"OK" }</code> but if
-                                                    the backend returns a collection instead (e.g:
-                                                    <code>[ "a", "b" ]</code>) check
-                                                    this option. The collection will be returned inside the
-                                                    <code>collection</code>
-                                                    attribute. Use the renaming below to rename it to anything
-                                                    else.</span>
+                                                        <input type="checkbox" ng-model="checked"
+                                                            ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
+                                                            ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
+                                                        {{ host.host }}
 
+                                                    </div>
+                                                    <div class="radio-inline" ng-repeat="sd in sd_providers.providers">
+                                                        <label>
+                                                            <input type="radio" ng-model="backend.sd" value="{{ sd }}"
+                                                                ng-change="deleteHostsInBackend(endpoint_index, backend_index)">
+                                                            {{ sd }}
+                                                        </label>
+                                                    </div>
+                                                    <span class="help-block">When several, apply round-robin
+                                                        (balancing)</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label>Method</label>
+                                                    <select id="backend.method" ng-model="backend.method"
+                                                        name="backend.method" class="form-control">
+                                                        <option value="GET">GET</option>
+                                                        <option value="POST">POST</option>
+                                                        <option value="PUT">PUT</option>
+                                                        <option value="PATCH">PATCH</option>
+                                                        <option value="DELETE">DELETE</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label>URL</label>
+                                                    <input type="text" placeholder="/users/{username}"
+                                                        class="form-control" required="" ng-model="backend.url_pattern">
+
+                                                    <span class="help-block">The endpoint of the backend server to
+                                                        query. Reuse here
+                                                        any <code>{parameters}</code> defined in the parent endpoint.
+                                                        Also see <a
+                                                            href="https://www.krakend.io/docs/enterprise/endpoints/dynamic-routing/">Header
+                                                            routing</a>
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label>Decode as:</label>
+                                                    <select class="form-control" ng-model="backend.encoding"
+                                                        ng-disabled="endpoint.output_encoding == 'no-op'"
+                                                        ng-change="setNoOpEncoding(endpoint_index, backend.encoding, '{{ backend.encoding }}', backend_index)">
+                                                        <option selected value="json">JSON</option>
+                                                        <option value="xml">XML</option>
+                                                        <option value="rss">RSS</option>
+                                                        <option value="string">String</option>
+                                                        <option value="no-op">No-Op (Leave as is)</option>
+                                                    </select>
+                                                    <span class="help-block">How to decode the response of the
+                                                        backend.</span>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <label>Resolution</label>
+                                                    <div class="input-group">
+                                                        <input type="checkbox" ng-model="backend.disable_host_sanitize">
+                                                        Disable sanitization
+                                                    </div>
+                                                    <span class="help-block">
+                                                        For non-HTTP hosts. If unsure, leave the proposed value.
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div ng-include src="'/src/app/forms/manipulation.html'"></div>
-                                            <plugin root="service" placement="backend"
-                                                template="response-schema-validator.html"
-                                                plugin="'response-schema-validator'" type="'plugin/req-resp-modifier'">
-                                            </plugin>
+                                        <div class="tab-pane"
+                                            id="tab-backend{{endpoint_index}}-{{backend_index}}-response">
+                                            <p ng-if="endpoint.output_encoding == 'no-op'">
+                                                When using <code>no-op</code> (no operation) you are telling KrakenD to
+                                                not perform any manipulation option, and several modules requiring
+                                                parsing the content are now hidden.
+                                            </p>
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <div ng-include src="'/src/app/forms/manipulation.html'"
+                                                        ng-if="endpoint.output_encoding != 'no-op'"></div>
+                                                    <middleware data="backend" template="http_cache.html"
+                                                        namespace="'qos/http-cache'"></middleware>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <middleware template="jmespath.html" namespace="'modifier/jmespath'"
+                                                        data="backend" ng-if="endpoint.output_encoding != 'no-op'">
+                                                    </middleware>
+                                                    <plugin root="service" placement="backend"
+                                                        template="content-replacer.html" plugin="'content-replacer'"
+                                                        type="'plugin/req-resp-modifier'"
+                                                        ng-if="endpoint.output_encoding != 'no-op'"></plugin>
+                                                    <div ng-include src="'/src/app/forms/flatmap.html'"
+                                                        ng-if="endpoint.output_encoding != 'no-op'"></div>
+                                                    <div ng-include src="'/src/app/forms/martian.html'"
+                                                        ng-if="endpoint.output_encoding != 'no-op'"></div>
+                                                    <middleware data="backend" template="body-generator.html"
+                                                        namespace="'modifier/body-generator'"></middleware>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <middleware template="jmespath.html" namespace="'modifier/jmespath'"
-                                                data="backend"></middleware>
-                                            <div ng-include src="'/src/app/forms/flatmap.html'"></div>
-                                            <div ng-include src="'/src/app/forms/martian.html'"></div>
-                                            <middleware data="backend" template="http_cache.html"
-                                                namespace="'qos/http-cache'"></middleware>
+                                        <div class="tab-pane"
+                                            id="tab-backend{{endpoint_index}}-{{backend_index}}-throttling">
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <middleware data="backend"
+                                                        inherit="service.extra_config['github_com/devopsfaith/krakend-circuitbreaker/gobreaker']"
+                                                        template="gobreaker.html" namespace="'qos/circuit-breaker'">
+                                                    </middleware>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <middleware data="backend" namespace="'qos/ratelimit/proxy'"
+                                                        template="ratelimit_backend.html"></middleware>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane"
+                                            id="tab-backend{{endpoint_index}}-{{backend_index}}-connectivity">
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <middleware data="backend" template="soap.html"
+                                                        ng-click="backend.encoding = 'xml'; backend.method='POST'"
+                                                        namespace="'backend/soap'"></middleware>
+                                                    <middleware data="backend" template="graphql.html"
+                                                        namespace="'backend/graphql'"></middleware>
+                                                    <middleware data="backend" template="amqp_consumer.html"
+                                                        namespace="'backend/amqp/consumer'"></middleware>
+                                                    <middleware data="backend" template="lambda.html"
+                                                        namespace="'backend/lambda'">
+                                                    </middleware>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <middleware data="backend" template="pubsub_subscriber.html"
+                                                        namespace="'backend/pubsub/susbcriber'"></middleware>
+                                                    <middleware data="backend" template="pubsub_publisher.html"
+                                                        namespace="'backend/pubsub/publisher'"></middleware>
+                                                    <middleware data="backend" template="amqp_producer.html"
+                                                        namespace="'backend/amqp/producer'"></middleware>
+                                                    <plugin root="service" placement="backend"
+                                                        template="no-redirect.html" plugin="'no-redirect'"
+                                                        type="'plugin/http-client'"></plugin>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab-backend{{endpoint_index}}-{{backend_index}}-auth">
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <middleware data="backend"
+                                                        inherit="service.extra_config['auth/client-credentials']"
+                                                        template="oauth.html" namespace="'auth/client-credentials'">
+                                                    </middleware>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <plugin root="service" placement="backend"
+                                                        template="http-proxy.html" plugin="'http-proxy'"
+                                                        type="'plugin/http-client'"></plugin>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane"
+                                            id="tab-backend{{endpoint_index}}-{{backend_index}}-security-validation">
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <middleware template="security-policies.html"
+                                                        namespace="'security/policies'" data="backend"></middleware>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <plugin root="service" placement="backend"
+                                                        template="response-schema-validator.html"
+                                                        plugin="'response-schema-validator'"
+                                                        type="'plugin/req-resp-modifier'">
+                                                    </plugin>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
                             </div><!-- ngif output_encoding != no-op -->
                             <!-- /.box-body -->
                         </div>
@@ -604,25 +630,6 @@
                                         <p>Define at least one host (upstream service) where KrakenD will take the data
                                             from.</p>
                                         <div ng-include src="'/src/app/forms/backends.html'"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal window backend -->
-                        <div id="backend-modal-{{ endpoint_index}}{{ backend_index }}" class="modal fade" tabindex="-1"
-                            role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Rate limit requests to
-                                            <code>{{backend.url_pattern}}</code>
-                                        </h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <middleware data="backend" namespace="'qos/ratelimit/proxy'"
-                                            template="ratelimit_backend.html"></middleware>
                                     </div>
                                 </div>
                             </div>

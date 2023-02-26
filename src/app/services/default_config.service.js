@@ -60,6 +60,18 @@ angular
                             "X-Real-IP",
                             "X-Appengine-Remote-Addr"
                         ],
+                    },
+                    "response-schema-validator": {
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "required_field_1",
+                                "required_field_2"
+                            ]
+                        },
+                        "error": {
+                            "status": 500
+                        }
                     }
                 }
             },
@@ -197,6 +209,18 @@ angular
                 },
                 "modifier/jmespath": {
                     "expr": "people[?age > `20`].[name, age]"
+                },
+                "validation/json-schema": {
+                    "type": "object",
+                    "required": ["number", "street_name", "street_type"],
+                    "properties": {
+                        "number": { "type": "number" },
+                        "street_name": { "type": "string" },
+                        "street_type": {
+                            "type": "string",
+                            "enum": ["Street", "Avenue", "Boulevard"]
+                        }
+                    }
                 }
             },
             "plugin/http-server": {

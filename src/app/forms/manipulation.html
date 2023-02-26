@@ -6,6 +6,43 @@
         <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/backends/data-manipulation/'}]"></div>
     </div>
     <div class="box-body">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Root object:</label>
+                <input type="text" class="form-control" ng-model="backend.target"
+                    ng-disabled="backend.is_collection == true"
+                    placeholder="Leave blank to use all the reponse">
+                <span class="help-block">Some APIs return all the content
+                    encapsulated
+                    inside
+                    a root object (usually named like <code>data</code>,
+                    <code>response</code>,
+                    <code>items</code>). Specifying here a root object will put all
+                    its
+                    children
+                    in the first level. When manipulating the data only its children
+                    are
+                    visible.</span>
+            </div>
+            <div class="col-md-6">
+                <label>Is a collection?</label>
+                <div class="input-group">
+                    <input type="checkbox" ng-model="backend.is_collection"
+                        ng-change="backend.target = ''"> Response is an array.
+                    <span class="help-block">KrakenD expects an object as a response
+                        (in
+                        json inside brackets, e.g:
+                        <code>{ "status":"OK" }</code> but if
+                        the backend returns a collection instead (e.g:
+                        <code>[ "a", "b" ]</code>) check
+                        this option. The collection will be returned inside the
+                        <code>collection</code>
+                        attribute. Use the renaming below to rename it to anything
+                        else.</span>
+
+                </div>
+            </div>
+        </div>
         <div class="row" ng-show="backend.is_collection != true">
             <label class="col-md-2 control-label">Filtering mode</label>
             <div class="col-md-10">
