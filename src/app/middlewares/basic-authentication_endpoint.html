@@ -1,0 +1,22 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title">
+      <input type="checkbox" ng-checked="isMiddlewareEnabled()"
+        ng-click="toggleMiddleware()">
+      Basic Authentication
+    </h3>
+    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+      ng-repeat="doc in [{'ee': true, 'url':'/authentication/basic-authentication/'}]"></div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!isMiddlewareEnabled()">The Basic Authentication plugin protects the access to selected endpoints using
+      basic username and password credentials via <strong>htpasswd</strong>.</p>
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="form-group">
+        <div class="col-md-12">
+          <p>Basic authentication is now required by this endpoint. You can change the path of the .htpasswd file under <a href="/#!/security">HTTP Security</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

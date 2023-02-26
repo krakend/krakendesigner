@@ -1,0 +1,24 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
+      Basic Authentication
+    </h3>
+      <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/authentication/basic-authentication/'}]"></div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!isMiddlewareEnabled()">The Basic Authentication plugin protects the access to selected endpoints using
+      basic username and password credentials via <strong>htpasswd</strong>.</p>
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="form-group">
+        <p><strong>Remember to mark which endpoints need basic auth in their configuration</strong></p>
+        <div class="col-md-12">
+          <label class="control-label">Htpasswd path</label>
+          <input class="form-control" placeholder="/etc/krakend/.htpasswd" type="text" required=""
+            ng-model="data.extra_config[config_namespace].htpasswd_path">
+          <span class="help-block">Absolute Path to the <code>htpasswd</code> filename (recommended) or relative
+            <code>./</code> to the workdir.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

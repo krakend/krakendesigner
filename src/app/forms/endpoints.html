@@ -195,9 +195,11 @@
                                             <middleware template="jose_validator.html" namespace="'auth/validator'"
                                                 data="endpoint"></middleware>
                                             <middleware template="jose_signer.html" namespace="'auth/signer'"
-                                                data="endpoint">
+                                                data="endpoint"></middleware>
                                         </div>
                                         <div class="col-md-6">
+                                            <middleware template="basic-authentication_endpoint.html"
+                                                namespace="'auth/basic'" data="endpoint"></middleware>
                                             <div class="box box-info box-solid">
                                                 <div class="box-header with-border">
                                                     <h3 class="box-title">
@@ -208,14 +210,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="box-body">
-                                                    <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">API Keys are not
+                                                    <p ng-if=" !hasServiceExtraConfig('auth/api-keys')">API Keys are
+                                                        not
                                                         enabled
                                                         yet.</p>
                                                     <div class="form-group"
                                                         ng-if="hasServiceExtraConfig('auth/api-keys')">
                                                         <div class="col-md-12">
                                                             <p ng-if="!endpoint.extra_config['auth/api-keys'].roles">
-                                                                <i class="fa fa-warning icon-warning"></i> This endpoint
+                                                                <i class="fa fa-warning icon-warning"></i> This
+                                                                endpoint
                                                                 is not
                                                                 protected by API Keys unless you select at least an
                                                                 available role
@@ -264,7 +268,8 @@
                                                         </div>
                                                         <div class="col-md-12"
                                                             ng-if="endpoint.extra_config['auth/api-keys'].roles">
-                                                            <label class="control-label">Rate limit by API Key</label>
+                                                            <label class="control-label">Rate limit by API
+                                                                Key</label>
                                                             <div class="input-group">
                                                                 <input class="form-control"
                                                                     ng-model="endpoint.extra_config['auth/api-keys'].client_max_rate"
@@ -275,7 +280,8 @@
                                                             </div>
                                                             <span class="help-block">Maximum requests per second you
                                                                 want to let
-                                                                each API-keys do. Leave <code>0</code> or empty for no
+                                                                each API-keys do. Leave <code>0</code> or empty for
+                                                                no
                                                                 limit.
                                                             </span>
                                                         </div>
@@ -324,8 +330,7 @@
                                         data="endpoint"></middleware>
                                     <plugin root="service" placement="endpoint"
                                         template="response-schema-validator.html" plugin="'response-schema-validator'"
-                                        type="'plugin/req-resp-modifier'"
-                                        ng-if="endpoint.output_encoding != 'no-op'">
+                                        type="'plugin/req-resp-modifier'" ng-if="endpoint.output_encoding != 'no-op'">
                                     </plugin>
                                 </div>
                             </div>
@@ -493,7 +498,6 @@
                                             <div class="form-group">
                                                 <div class="col-md-6">
                                                     <middleware data="backend"
-                                                        inherit="service.extra_config['github_com/devopsfaith/krakend-circuitbreaker/gobreaker']"
                                                         template="gobreaker.html" namespace="'qos/circuit-breaker'">
                                                     </middleware>
                                                 </div>
