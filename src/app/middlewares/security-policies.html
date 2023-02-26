@@ -7,8 +7,7 @@
 			ng-repeat="doc in [{'ee': true, 'url':'/security-policies/'}]"></div>
 	</div>
 	<div class="box-body">
-		<p ng-if="!isMiddlewareEnabled()">The policies engine lets you write custom rules validated on runtime during
-			requests, responses, and token validation. The policies allow you to implement all sorts of validations and
+		<p ng-if="!isMiddlewareEnabled()">Implement all sorts of validations and
 			user access control, from parameter compliance, to RBAC (Role-Based Access Control) and ABAC
 			(Attribute-Based Access Control) strategies.</p>
 		<div ng-if="isMiddlewareEnabled()">

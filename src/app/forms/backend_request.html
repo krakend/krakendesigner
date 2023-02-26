@@ -1,7 +1,7 @@
 <div class="box box-info box-solid">
     <div class="box-header with-border">
         <h3 class="box-title">
-            REST call <span ng-if="endpoint.extra_config['proxy'].sequential">(Sequential #{{backend_index}}, output in <code>{resp{{backend_index}}_xxx}</code>)</span>
+            Connection <span ng-if="endpoint.extra_config['proxy'].sequential">(Sequence #{{backend_index}}, output in <code>{resp{{backend_index}}_xxx}</code>)</span>
         </h3>
         <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
             ng-repeat="doc in [{'ee': false, 'url':'/backends/'}]"></div>

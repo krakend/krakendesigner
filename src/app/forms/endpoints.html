@@ -87,26 +87,32 @@
                                 aria-expanded="false">Auth</a>
                         </li>
                         <li>
-                            <a data-target="#tab-endpoint{{endpoint_index}}-security-validation" data-toggle="tab"
-                                aria-expanded="false">Security and validation</a>
-                        </li>
-                        <li>
                             <a data-target="#tab-endpoint{{endpoint_index}}-throttling" data-toggle="tab"
                                 aria-expanded="false">Throttling</a>
                         </li>
                         <li>
+                            <a data-target="#tab-endpoint{{endpoint_index}}-security-validation" data-toggle="tab"
+                                aria-expanded="false">Policies</a>
+                        </li>
+                        <li>
                             <a data-target="#tab-endpoint{{endpoint_index}}-manipulation" data-toggle="tab"
-                                aria-expanded="false">Data and
-                                Manipulation</a>
+                                aria-expanded="false">Response manipulation</a>
+                        </li>
+                        <li>
+                            <a data-target="#tab-endpoint{{endpoint_index}}-connection" data-toggle="tab"
+                                aria-expanded="false">Connectivity options</a>
                         </li>
                         <li>
                             <a data-target="#tab-endpoint{{endpoint_index}}-documentation" data-toggle="tab"
-                                aria-expanded="false">Documentation</a>
+                                aria-expanded="false">OpenAPI</a>
                         </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-endpoint{{endpoint_index}}-parameter-forwarding">
-                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span> KrakenD applies <strong>zero-trust</strong> criteria to incoming requests. Unless explicitly added below, no query strings, headers, or cookies are forwarded to the backend service.</p>
+                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span> KrakenD
+                                applies <strong>zero-trust</strong> criteria to incoming requests. Unless explicitly
+                                added below, no query strings, headers, or cookies are forwarded to the backend service.
+                            </p>
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label>Recognized query string parameters (?param=value)</label>
@@ -124,23 +130,23 @@
                                         present.
                                         Write only the name of the
                                         parameter, no question mark or equal symbols.</span>
-                                        <div class="help-block">
-                                            <ul class="list-inline">
-                                                <li ng-repeat="(qs_index,qs) in endpoint.input_query_strings">
-                                                    <a class="badge code badge-remove"
-                                                        ng-click="deleteQuerystring(qs_index,endpoint_index)"
-                                                        title="Click to delettab-security-validatione parameter"><i
-                                                            class="fa fa-times"></i> {{ qs
-                                                        }} </a>
-                                                </li>
-                                                <li ng-if="!endpoint.input_query_strings.length">No query parameters are
-                                                    active yet.
-                                                    Typical
-                                                    parameters are <code>page</code>, <code>limit</code>,
-                                                    <code>search</code>...
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <div class="help-block">
+                                        <ul class="list-inline">
+                                            <li ng-repeat="(qs_index,qs) in endpoint.input_query_strings">
+                                                <a class="badge code badge-remove"
+                                                    ng-click="deleteQuerystring(qs_index,endpoint_index)"
+                                                    title="Click to delettab-security-validatione parameter"><i
+                                                        class="fa fa-times"></i> {{ qs
+                                                    }} </a>
+                                            </li>
+                                            <li ng-if="!endpoint.input_query_strings.length">No query parameters are
+                                                active yet.
+                                                Typical
+                                                parameters are <code>page</code>, <code>limit</code>,
+                                                <code>search</code>...
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label>Headers passing to backend</label>
@@ -154,8 +160,10 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <span class="help-block">Headers sent by the user that will reach your backend (e.g.: <code>Content-Type</code>). Add a
-                                        single <code>*</code> to <strong>forward all headers</strong> (not recommended, security concerns)</span>
+                                    <span class="help-block">Headers sent by the user that will reach your backend
+                                        (e.g.: <code>Content-Type</code>). Add a
+                                        single <code>*</code> to <strong>forward all headers</strong> (not recommended,
+                                        security concerns)</span>
                                     <div class="input-group">
                                         <ul class="list-inline">
                                             <li ng-repeat="(index,header) in endpoint.input_headers">
@@ -187,6 +195,8 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-auth">
+                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                                Authorization and Authentication requirements for the end-user.</p>
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="row">
@@ -289,22 +299,30 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-throttling">
+                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                                The endpoint-level throttling options stablish a quota of usage of each endpoint and
+                                sets the
+                                foundations for the Quality of Service.</p>
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <p ng-include src="'/src/app/forms/endpoint_timeout.html'"></p>
-                                    <middleware data="endpoint" namespace="'qos/ratelimit/router'"
-                                        template="ratelimit_router.html"></middleware>
-                                </div>
-                                <div class="col-md-6">
-                                    <plugin root="service" placement="endpoint" template="redis-ratelimit.html"
-                                        plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
                                     <plugin root="service" placement="endpoint" template="ipfilter.html"
                                         plugin="'ip-filter'" type="'plugin/req-resp-modifier'"></plugin>
+                                </div>
+                                <div class="col-md-6">
+                                    <middleware data="endpoint" namespace="'qos/ratelimit/router'"
+                                        template="ratelimit_router.html"></middleware>
+                                    <plugin root="service" placement="endpoint" template="redis-ratelimit.html"
+                                        plugin="'redis-ratelimit'" type="'plugin/http-server'"></plugin>
+
                                 </div>
                             </div>
                         </div>
 
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-security-validation">
+                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                                The policies engine lets you write custom rules validated on runtime during requests,
+                                responses, and token validation.</p>
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <middleware template="security-policies.html" namespace="'security/policies'"
@@ -321,22 +339,40 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-manipulation">
+                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                                When you manipulate data at the endpoint level, you have the last chance to work with
+                                the aggregated data coming from all endpoints</p>
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <div ng-include src="'/src/app/forms/static-response.html'"></div>
-                                    <div ng-include src="'/src/app/forms/sequential.html'"></div>
                                     <middleware template="jmespath.html" namespace="'modifier/jmespath'"
                                         data="endpoint"></middleware>
                                 </div>
                                 <div class="col-md-6">
                                     <plugin root="service" placement="endpoint" template="content-replacer.html"
                                         plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-connection">
+                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span>
+                                KrakenD connects to all backends in parallel. Here you can set special behaviors of this
+                                endpoint when connecting to multiple backends.</p>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <div ng-include src="'/src/app/forms/sequential.html'"></div>
+                                </div>
+                                <div class="col-md-6">
                                     <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
                                     </middleware>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-endpoint{{endpoint_index}}-documentation">
+                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span> The
+                                OpenAPI generator is a command-line utility embedded in the KrakenD binary, offering
+                                OpenAPI import and export capabilities (for both Swagger v2 and OAS3).
+                            </p>
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <middleware template="openapi_endpoint.html" namespace="'documentation/openapi'"
@@ -347,9 +383,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
 
                 <div class="form-group">
                     <div class="col-md-12">
@@ -399,11 +432,11 @@
                                         </li>
                                         <li>
                                             <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-auth"
-                                                data-toggle="tab" aria-expanded="false">Auth</a>
+                                                data-toggle="tab" aria-expanded="false">User Auth</a>
                                         </li>
                                         <li>
                                             <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-security-validation"
-                                                data-toggle="tab" aria-expanded="false">Security and validation</a>
+                                                data-toggle="tab" aria-expanded="false">Policies</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
