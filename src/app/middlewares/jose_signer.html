@@ -37,7 +37,7 @@
                     <span class="help-block">List of specific keys needing signing</span>
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,key) in data.extra_config[config_namespace]['keys_to_sign']">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'keys_to_sign')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'keys_to_sign')"><i class="fa fa-times"></i>
                                 {{ key }}</a>
                         </li>
                     </ul>
@@ -73,7 +73,7 @@
                 <div class="col-md-12">
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,fingerprint) in data.extra_config[config_namespace].jwk_fingerprints">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'jwk_fingerprints')">
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'jwk_fingerprints')">
                                 <i class="fa fa-times"></i>
                                 {{ fingerprint }}</a>
                         </li>

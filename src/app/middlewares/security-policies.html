@@ -29,8 +29,8 @@
 					<span class="help-block">Policy. Example: <code>hasQuerystring('q')</code></span>
 					<ul class="list-unstyled">
 						<li ng-repeat="(index,val) in data.extra_config[config_namespace].req.policies track by $index">
-							<a class="badge badge-remove" ng-click="deleteIndexFromList(index,'policies','req')">
-								<i class="fa fa-times"></i> <code>{{ val }}</code></a>
+							<a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'policies','req')">
+								<i class="fa fa-times"></i> {{ val }}</a>
 						</li>
 					</ul>
 				</div>
@@ -75,8 +75,8 @@
 					<span class="help-block">Policy. Example: <code>!isEmpty(resp_data.message)</code></span>
 					<ul class="list-unstyled">
 						<li ng-repeat="(index,val) in data.extra_config[config_namespace].resp.policies track by $index">
-							<a class="badge badge-remove" ng-click="deleteIndexFromList(index,'policies','resp')">
-								<i class="fa fa-times"></i> <code>{{ val }}</code></a>
+							<a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'policies','resp')">
+								<i class="fa fa-times"></i> {{ val }}</a>
 						</li>
 					</ul>
 				</div>
@@ -106,7 +106,7 @@
 			</div>
 			<h4>JWT validation policies</h4>
 			<div class="form-group row">
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<label class="control-label">JWT policies</label>
 					<div class="input-group">
 						<input class="form-control" placeholder="has(JWT.user_id) && 'legal' == JWT.department" type="text"
@@ -119,12 +119,10 @@
 						</div>
 					</div>
 					<span class="help-block">Policy. Example: <code>has(JWT.user_id) && 'legal' == JWT.department</code></span>
-				</div>
-				<div class="col-md-4">
 					<ul class="list-unstyled">
 						<li ng-repeat="(index,val) in data.extra_config[config_namespace].jwt.policies track by $index">
-							<a class="badge badge-remove" ng-click="deleteIndexFromList(index,'policies','jwt')">
-								<i class="fa fa-times"></i> <code>{{ val }}</code></a>
+							<a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'policies','jwt')">
+								<i class="fa fa-times"></i> {{ val }}</a>
 						</li>
 					</ul>
 				</div>

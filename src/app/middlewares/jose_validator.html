@@ -39,7 +39,7 @@
                     <span class="help-block">List of all (or any) scopes that the user should have to access this endpoint.</span>
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,key) in data.extra_config[config_namespace]['scopes']">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'scopes')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'scopes')"><i class="fa fa-times"></i>
                                 {{ key }}</a>
                         </li>
                     </ul>
@@ -80,7 +80,7 @@
                     <span class="help-block">List of all the audiences supported by this endpoint</span>
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,aud) in data.extra_config[config_namespace].audience">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'audience')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'audience')"><i class="fa fa-times"></i>
                                 {{ aud }}</a>
                         </li>
                     </ul>
@@ -99,7 +99,7 @@
                     <span class="help-block">List of all the roles allowed to access this endpoint</span>
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,aud) in data.extra_config[config_namespace].roles">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'roles')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'roles')"><i class="fa fa-times"></i>
                                 {{ aud }}</a>
                         </li>
                     </ul>
@@ -142,7 +142,7 @@
                 <div class="col-md-12">
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,fingerprint) in data.extra_config[config_namespace].jwk_fingerprints">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'jwk_fingerprints')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'jwk_fingerprints')"><i class="fa fa-times"></i>
                                 {{ fingerprint }}</a>
                         </li>
                     </ul>

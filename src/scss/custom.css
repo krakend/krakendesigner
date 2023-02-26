@@ -18,6 +18,12 @@ code {
     color: #0071CE;
 }
 
+.badge.code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    background-color: #0f265c;
+}
+
 a.badge.badge-inverse:hover {
     color: #FFF;
     background-color: #0071CE;
@@ -29,6 +35,11 @@ a.badge.badge-inverse:hover {
     color: #0071CE;
 }
 
+.tab-description {
+    font-size: 16px;
+    background-color: aliceblue;
+    padding: 10px;
+}
 .wrapper {
     background-color: white !important;
 }
@@ -186,6 +197,10 @@ a.badge.badge-inverse:hover {
 
 .box.box-solid.box-info .box-title small {
     color: #FFF;
+}
+
+.box-title.large {
+    font-size: 22px;
 }
 
 .box.box-info {

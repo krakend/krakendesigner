@@ -25,7 +25,7 @@
             <code>172.17.2.56/32</code>, <code>127.0.0.1</code></span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].CIDR">
-              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'CIDR')"><i class="fa fa-times"></i>
+              <a class="badge code badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'CIDR')"><i class="fa fa-times"></i>
                 {{ val }}</a>
             </li>
           </ul>
@@ -45,7 +45,7 @@
             your application. This list is used to avoid spoofing when trying to get the real IP of the client.</span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].trusted_proxies">
-              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'trusted_proxies')"><i
+              <a class="badge code badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'trusted_proxies')"><i
                   class="fa fa-times"></i>
                 {{ val }}</a>
             </li>
@@ -69,7 +69,7 @@
             The first matching IP in the list will be used</span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].client_ip_headers">
-              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'client_ip_headers')"><i
+              <a class="badge code badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'client_ip_headers')"><i
                   class="fa fa-times"></i>
                 {{ val }}</a>
             </li>

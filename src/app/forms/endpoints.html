@@ -4,7 +4,7 @@
 <div class="box box-info" ng-repeat="(endpoint_index,endpoint) in service.endpoints"
     ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'" id="e{{ endpoint_index }}">
     <div class="box-header with-border">
-        <h3 class="box-title">
+        <h3 class="box-title large">
             <a href="/#!/endpoints?target={{endpoint_index}}">
                 {{ endpoint.endpoint }}<span ng-hide="!hasWildcard(endpoint.endpoint)"
                     class="label-wildcard-asterisk">/<i class="fa fa-asterisk"></i></span>
@@ -106,6 +106,7 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-endpoint{{endpoint_index}}-parameter-forwarding">
+                            <p class="box tab-description"><span class="badge"><i class="fa fa-info"></i></span> KrakenD applies <strong>zero-trust</strong> criteria to incoming requests. Unless explicitly added below, no query strings, headers, or cookies are forwarded to the backend service.</p>
                             <div class="form-group">
                                 <div class="col-md-4">
                                     <label>Recognized query string parameters (?param=value)</label>
@@ -119,27 +120,27 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="help-block">
-                                        <ul class="list-inline">
-                                            <li ng-repeat="(qs_index,qs) in endpoint.input_query_strings">
-                                                <a class="badge badge-remove"
-                                                    ng-click="deleteQuerystring(qs_index,endpoint_index)"
-                                                    title="Click to delettab-security-validatione parameter"><i
-                                                        class="fa fa-times"></i> {{ qs
-                                                    }} </a>
-                                            </li>
-                                            <li ng-if="!endpoint.input_query_strings.length">No query parameters are
-                                                active yet.
-                                                Typical
-                                                parameters are <code>page</code>, <code>limit</code>,
-                                                <code>search</code>...
-                                            </li>
-                                        </ul>
-                                    </div>
                                     <span class="help-block">Query string parameters to be passed to the backends when
                                         present.
                                         Write only the name of the
                                         parameter, no question mark or equal symbols.</span>
+                                        <div class="help-block">
+                                            <ul class="list-inline">
+                                                <li ng-repeat="(qs_index,qs) in endpoint.input_query_strings">
+                                                    <a class="badge code badge-remove"
+                                                        ng-click="deleteQuerystring(qs_index,endpoint_index)"
+                                                        title="Click to delettab-security-validatione parameter"><i
+                                                            class="fa fa-times"></i> {{ qs
+                                                        }} </a>
+                                                </li>
+                                                <li ng-if="!endpoint.input_query_strings.length">No query parameters are
+                                                    active yet.
+                                                    Typical
+                                                    parameters are <code>page</code>, <code>limit</code>,
+                                                    <code>search</code>...
+                                                </li>
+                                            </ul>
+                                        </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label>Headers passing to backend</label>
@@ -153,16 +154,12 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <span class="help-block">Unless added here, no headers from the client will reach
-                                        the backends.
-                                        Use only if you need
-                                        custom headers to reach your backend (e.g.: <code>Content-Type</code>). Add a
-                                        single
-                                        <code>*</code> to pass all headers (security concerns)</span>
+                                    <span class="help-block">Headers sent by the user that will reach your backend (e.g.: <code>Content-Type</code>). Add a
+                                        single <code>*</code> to <strong>forward all headers</strong> (not recommended, security concerns)</span>
                                     <div class="input-group">
-                                        <ul class="list-unstyled">
+                                        <ul class="list-inline">
                                             <li ng-repeat="(index,header) in endpoint.input_headers">
-                                                <a class="badge badge-remove"
+                                                <a class="badge code badge-remove"
                                                     ng-click="deleteHeaderPassing(endpoint_index,index)"><i
                                                         class="fa fa-times"></i>
                                                     {{ header }}</a>
@@ -173,7 +170,9 @@
                                 <div class="col-md-4"
                                     ng-class="isInteger(endpoint.concurrent_calls) ? '' : 'has-error'">
                                     <label>Concurrent Calls</label>
-                                    <input type="number" class="form-control" ng-model="endpoint.concurrent_calls">
+                                    <input type="number" class="form-control"
+                                        ng-disabled="endpoint.output_encoding == 'no-op'"
+                                        ng-model="endpoint.concurrent_calls">
                                     <span class="help-block">
                                         <p ng-hide="isInteger(endpoint.concurrent_calls)" class="badge label-danger">
                                             <i class="fa fa-warning"></i> Use an integer
@@ -233,7 +232,7 @@
                                                                             <ul class="list-inline">
                                                                                 <li
                                                                                     ng-repeat="role in getAPIKeyRoles()">
-                                                                                    <a class="badge badge-inverse"
+                                                                                    <a class="badge code badge-inverse"
                                                                                         ng-click="addAPIKeyRole(endpoint_index, role)">
                                                                                         {{ role }} <i
                                                                                             class="fa fa-arrow-right"></i></a>
@@ -251,7 +250,7 @@
                                                                             <ul class="list-inline">
                                                                                 <li
                                                                                     ng-repeat="(role_index,role) in endpoint.extra_config['auth/api-keys'].roles">
-                                                                                    <a class="badge badge-remove"
+                                                                                    <a class="badge code badge-remove"
                                                                                         ng-click="deleteAPIKeyRole(endpoint_index, role_index)"><i
                                                                                             class="fa fa-times"></i>
                                                                                         {{ role }}</a>
@@ -325,15 +324,15 @@
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <div ng-include src="'/src/app/forms/static-response.html'"></div>
+                                    <div ng-include src="'/src/app/forms/sequential.html'"></div>
                                     <middleware template="jmespath.html" namespace="'modifier/jmespath'"
                                         data="endpoint"></middleware>
-                                    <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
-                                    </middleware>
-
                                 </div>
                                 <div class="col-md-6">
                                     <plugin root="service" placement="endpoint" template="content-replacer.html"
                                         plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
+                                    <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
+                                    </middleware>
                                 </div>
                             </div>
                         </div>
@@ -355,19 +354,6 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <h3>Backends (Upstream) for <code>{{ endpoint.endpoint }}</code></h3>
-                        <input type="checkbox" ng-model="endpoint.extra_config['proxy'].sequential">
-                        <strong>Enable sequential proxy</strong>
-                        <span class="help-block">
-                            When the sequential proxy is enabled a backend call can use data from a previous call. The
-                            data
-                            from previous calls is available in a variable like <code>{resp0_XXXX}</code> where
-                            <code>0</code>
-                            is the index of the backend and <code>XXXX</code> the attribute. E.g:
-                            <code>{resp1_hotel_id}</code>
-                            takes the field <code>hotel_id</code> from the second backend call (index starts at 0).
-                            Inject this variable in the desired backend endpoint.
-                        </span>
-
                     </div>
                     <div class="col-md-12" ng-repeat="(backend_index,backend) in endpoint.backend">
                         <div class="box box-info box-solid">
@@ -376,7 +362,7 @@
                                     <span
                                         class="method_header badge method_{{ backend.method.length ? backend.method : 'GET' }}">{{
                                         backend.method.length ? backend.method : 'GET' }}</span>
-                                    {{ backend.url_pattern }}
+                                    {{ backend.host.length ? backend.host[0] : ''}}{{ backend.url_pattern }}
                                 </h3>
                                 <div class="box-tools pull-right">
                                     <span ng-show="!backend.host.length" class="badge label-danger"><i
@@ -424,80 +410,17 @@
                                         <div class="tab-pane active"
                                             id="tab-backend{{endpoint_index}}-{{backend_index}}-request">
                                             <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <label>Connect to host(s)</label>
-                                                    <button class="btn btn-default btn-flat form-control"
-                                                        ng-class="!backend.host.length ? 'label-danger' : ''"
-                                                        data-toggle="modal" data-target="#add-hosts-modal">
-                                                        <i class="fa fa-wrench"></i> Add host
-                                                    </button>
-                                                    <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
-                                                        value="{{ host.host }}" class="form-control">
-
-                                                        <input type="checkbox" ng-model="checked"
-                                                            ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
-                                                            ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
-                                                        {{ host.host }}
-
-                                                    </div>
-                                                    <div class="radio-inline" ng-repeat="sd in sd_providers.providers">
-                                                        <label>
-                                                            <input type="radio" ng-model="backend.sd" value="{{ sd }}"
-                                                                ng-change="deleteHostsInBackend(endpoint_index, backend_index)">
-                                                            {{ sd }}
-                                                        </label>
-                                                    </div>
-                                                    <span class="help-block">When several, apply round-robin
-                                                        (balancing)</span>
+                                                <div class="col-md-12">
+                                                    <div ng-include src="'/src/app/forms/backend_request.html'"></div>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <label>Method</label>
-                                                    <select id="backend.method" ng-model="backend.method"
-                                                        name="backend.method" class="form-control">
-                                                        <option value="GET">GET</option>
-                                                        <option value="POST">POST</option>
-                                                        <option value="PUT">PUT</option>
-                                                        <option value="PATCH">PATCH</option>
-                                                        <option value="DELETE">DELETE</option>
-                                                    </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <middleware data="backend" template="body-generator.html"
+                                                        namespace="'modifier/body-generator'"></middleware>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <label>URL</label>
-                                                    <input type="text" placeholder="/users/{username}"
-                                                        class="form-control" required="" ng-model="backend.url_pattern">
+                                                <div class="col-md-6">
 
-                                                    <span class="help-block">The endpoint of the backend server to
-                                                        query. Reuse here
-                                                        any <code>{parameters}</code> defined in the parent endpoint.
-                                                        Also see <a
-                                                            href="https://www.krakend.io/docs/enterprise/endpoints/dynamic-routing/">Header
-                                                            routing</a>
-                                                    </span>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label>Decode as:</label>
-                                                    <select class="form-control" ng-model="backend.encoding"
-                                                        ng-disabled="endpoint.output_encoding == 'no-op'"
-                                                        ng-change="setNoOpEncoding(endpoint_index, backend.encoding, '{{ backend.encoding }}', backend_index)">
-                                                        <option selected value="json">JSON</option>
-                                                        <option value="xml">XML</option>
-                                                        <option value="rss">RSS</option>
-                                                        <option value="string">String</option>
-                                                        <option value="no-op">No-Op (Leave as is)</option>
-                                                    </select>
-                                                    <span class="help-block">How to decode the response of the
-                                                        backend.</span>
-                                                </div>
-
-                                                <div class="col-md-2">
-                                                    <label>Resolution</label>
-                                                    <div class="input-group">
-                                                        <input type="checkbox" ng-model="backend.disable_host_sanitize">
-                                                        Disable sanitization
-                                                    </div>
-                                                    <span class="help-block">
-                                                        For non-HTTP hosts. If unsure, leave the proposed value.
-                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -505,7 +428,7 @@
                                             id="tab-backend{{endpoint_index}}-{{backend_index}}-response">
                                             <p ng-if="endpoint.output_encoding == 'no-op'">
                                                 When using <code>no-op</code> (no operation) you are telling KrakenD to
-                                                not perform any manipulation option, and several modules requiring
+                                                not perform any manipulation, and several modules requiring
                                                 parsing the content are now hidden.
                                             </p>
                                             <div class="form-group">
@@ -527,8 +450,6 @@
                                                         ng-if="endpoint.output_encoding != 'no-op'"></div>
                                                     <div ng-include src="'/src/app/forms/martian.html'"
                                                         ng-if="endpoint.output_encoding != 'no-op'"></div>
-                                                    <middleware data="backend" template="body-generator.html"
-                                                        namespace="'modifier/body-generator'"></middleware>
                                                 </div>
                                             </div>
                                         </div>

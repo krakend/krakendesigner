@@ -327,7 +327,7 @@
                   </div>
               <ul class="list-inline help-block">
                 <li ng-repeat="(index,label) in data.extra_config[config_namespace].exporters.stackdriver.default_labels">
-                    <a class="badge badge-remove"
+                    <a class="badge code badge-remove"
                        ng-click="deleteStackDriverLabel(index)"><i
                             class="fa fa-times"></i>
                         {{ index }}={{ label }}</a>
@@ -409,7 +409,7 @@
                   </div>
               <ul class="list-inline help-block">
                 <li ng-repeat="(index,tag) in data.extra_config[config_namespace].exporters.datadog.tags">
-                    <a class="badge badge-remove"
+                    <a class="badge code badge-remove"
                        ng-click="deleteDatadogTag(index, false)"><i
                             class="fa fa-times"></i>
                         {{ tag }}</a>
@@ -434,7 +434,7 @@
                 </div>
             <ul class="list-inline help-block">
               <li ng-repeat="(index,tag) in data.extra_config[config_namespace].exporters.datadog.global_tags">
-                  <a class="badge badge-remove"
+                  <a class="badge code badge-remove"
                      ng-click="deleteDatadogTag(index, true)"><i
                           class="fa fa-times"></i>
                       {{ tag }}</a>
@@ -605,7 +605,7 @@
                 </div>
             <ul class="list-inline help-block">
               <li ng-repeat="(index,header) in data.extra_config[config_namespace].exporters.ocagent.headers">
-                  <a class="badge badge-remove"
+                  <a class="badge code badge-remove"
                       ng-click="deleteOcagentHeader(index)"><i
                           class="fa fa-times"></i>
                       {{ index }}={{ header }}</a>

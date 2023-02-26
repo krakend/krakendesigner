@@ -38,7 +38,7 @@
                     <span class="help-block">OpenAPI segments the endpoints in different tags</span>
                     <ul class="list-inline">
                         <li ng-repeat="(index,tag) in data.extra_config[config_namespace].tags">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'tags')"><i
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'tags')"><i
                                     class="fa fa-times"></i>
                                 {{ tag }}</a>
                         </li>
@@ -57,7 +57,7 @@
                     <span class="help-block">To which audiences you will document this endpoint (e.g.: <code>silver</code> if you have plans like gold, silver, bronze.</span>
                     <ul class="list-inline">
                         <li ng-repeat="(index,aud) in data.extra_config[config_namespace].audience">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'audience')"><i
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'audience')"><i
                                     class="fa fa-times"></i>
                                 {{ aud }}</a>
                         </li>

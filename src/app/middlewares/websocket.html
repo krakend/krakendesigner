@@ -51,7 +51,7 @@
                     <span class="help-block">Defines which input headers are allowed to pass to the backend. Leave <code>*</code> for all headers declared in the endpoint.</span>
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,key) in data.extra_config[config_namespace]['input_headers']">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'input_headers')"><i
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'input_headers')"><i
                                     class="fa fa-times"></i>
                                 {{ key }}</a>
                         </li>

@@ -65,7 +65,7 @@
                             <p>Attributes that you will NOT pick from the response:</p>
                             <ul class="list-inline">
                                 <li ng-repeat="black in backend.deny">
-                                    <a class="badge badge-remove"
+                                    <a class="badge code badge-remove"
                                         ng-click="deleteBlacklist(black,backend_index,endpoint_index)"><i
                                             class="fa fa-times"></i>
                                         {{ black }}</a>
@@ -89,7 +89,7 @@
                             <p>Attributes that you will pick from the response</p>
                             <ul class="list-inline">
                                 <li ng-repeat="white in backend.allow">
-                                    <a class="badge badge-remove"
+                                    <a class="badge code badge-remove"
                                         ng-click="deleteWhitelist(white,backend_index,endpoint_index)"><i
                                             class="fa fa-times"></i>
                                         {{ white }}</a>
@@ -154,7 +154,7 @@
                     <div class="col-xs-4">
                         <ul class="list-unstyled">
                             <li ng-repeat="(origin,target) in backend.mapping">
-                                <a class="badge badge-remove"
+                                <a class="badge code badge-remove"
                                     ng-click="deleteTransformation(origin,endpoint_index, backend_index)"><i
                                         class="fa fa-times"></i>
                                     {{ origin }} <i class="fa fa-arrow-right"></i>

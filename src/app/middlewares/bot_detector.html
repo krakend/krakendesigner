@@ -27,7 +27,7 @@
                             connect.</span>
                         <ul class="list-inline">
                             <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow')"><i
+                                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'allow')"><i
                                         class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>
@@ -51,7 +51,7 @@
                             immediately.</span>
                         <ul class="list-inline">
                             <li ng-repeat="(index,val) in data.extra_config[config_namespace].deny">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'deny')"><i
+                                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'deny')"><i
                                         class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>
@@ -78,7 +78,7 @@
                             bots. Matching bots are rejected.</span>
                         <ul class="list-inline">
                             <li ng-repeat="(index,val) in data.extra_config[config_namespace].patterns">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'patterns')"><i
+                                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'patterns')"><i
                                         class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>

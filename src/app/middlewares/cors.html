@@ -36,7 +36,7 @@
                         <ul class="list-inline">
                             <li ng-if="data.extra_config[config_namespace].allow_methods.length">Your choice:</li>
                             <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow_methods">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow_methods')"><i
+                                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'allow_methods')"><i
                                         class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>
@@ -61,7 +61,7 @@
                             for any origin.</span>
                         <ul class="list-inline">
                             <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow_origins">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow_origins')"><i
+                                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'allow_origins')"><i
                                         class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>
@@ -86,7 +86,7 @@
                         <span class="help-block">Only the headers added here will be allowed</span>
                         <ul class="list-inline">
                             <li ng-repeat="(index,val) in data.extra_config[config_namespace].allow_headers">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'allow_headers')"><i
+                                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'allow_headers')"><i
                                         class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>
@@ -110,7 +110,7 @@
                             specification</span>
                         <ul class="list-inline">
                             <li ng-repeat="(index,val) in data.extra_config[config_namespace].expose_headers">
-                                <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'expose_headers')"><i
+                                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'expose_headers')"><i
                                         class="fa fa-times"></i>
                                     {{ val }}</a>
                             </li>

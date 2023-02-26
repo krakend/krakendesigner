@@ -25,7 +25,7 @@
           <span class="help-block">The literal replacement, the final URL the match will become.</span>
           <ul class="list-inline">
             <li ng-repeat="(key,val) in data.extra_config[plugin_type][plugin_name].literal">
-              <a class="badge badge-remove" ng-click="deleteKey(key,data.extra_config[plugin_type][plugin_name].literal)"><i
+              <a class="badge code badge-remove" ng-click="deleteKey(key,data.extra_config[plugin_type][plugin_name].literal)"><i
                   class="fa fa-times"></i>
                   {{ key }}<i aria-hidden="true" class="fa fa-arrow-right"></i>{{ val }}
               </a>
@@ -53,7 +53,7 @@
           <span class="help-block">You can use the capturing groups (e.g: <code>/hello/${1}</code>) here.</span>
           <ul class="list-inline">
             <li ng-repeat="(idx,val) in data.extra_config[plugin_type][plugin_name].regexp">
-              <a class="badge badge-remove" ng-click="deleteIndexFromList(idx,data.extra_config[plugin_type][plugin_name].regexp)"><i
+              <a class="badge code badge-remove" ng-click="deleteIndexFromList(idx,data.extra_config[plugin_type][plugin_name].regexp)"><i
                   class="fa fa-times"></i>
                   {{ val[0] }}<i aria-hidden="true" class="fa fa-arrow-right"></i>{{ val[1] }}
               </a>

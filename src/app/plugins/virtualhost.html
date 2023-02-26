@@ -22,7 +22,7 @@
           <span class="help-block">All recognized virtual hosts by KrakenD must be listed here. The values declared here must match the content of the <code>Host</code> header when passed by the client.</span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].hosts">
-              <a class="badge badge-remove"
+              <a class="badge code badge-remove"
                 ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'hosts')"><i
                   class="fa fa-times"></i>
                 {{ val }}</a>
