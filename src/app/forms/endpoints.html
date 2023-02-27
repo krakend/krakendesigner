@@ -47,7 +47,7 @@
                         <input type="text" placeholder="/users/{username}" class="form-control input-md" required=""
                             ng-model="endpoint.endpoint" ng-disabled="hasWildcard(endpoint.endpoint)">
                         <span class="help-block">This is the URI your clients will connect to. Must start with slash.
-                            Use curly braces to insert <code>{parameters}</code> that can be passed to the
+                            Use curly braces to insert <code>{endpoint_parameters}</code> that can be passed to the
                             backends.</span>
                     </div>
                     <div class="col-md-2 col-sm-2">
@@ -431,7 +431,7 @@
                                         </li>
                                         <li>
                                             <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-auth"
-                                                data-toggle="tab" aria-expanded="false">User Auth</a>
+                                                data-toggle="tab" aria-expanded="false">Authentication</a>
                                         </li>
                                         <li>
                                             <a data-target="#tab-backend{{endpoint_index}}-{{backend_index}}-security-validation"

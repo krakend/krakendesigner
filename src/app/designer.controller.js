@@ -177,17 +177,17 @@ angular
         $rootScope.isEnterprise = function () {
             $rootScope.modules_in_use = [];
             service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/ganalytics'];
-            endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath','security/policies'];
-            backend_components = ['backend/soap', 'modifier/jmespath','security/policies'];
-            http_server_plugins = ['ip-filter','jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
+            endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies'];
+            backend_components = ['backend/soap', 'modifier/jmespath', 'security/policies'];
+            http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
             http_client_plugins = ['wildcard', 'krakend-afero', 'static-filesystem', 'no-redirect', 'http-proxy'];
             req_resp_plugins = ['ip-filter', 'response-schema-validator', 'content-replacer'];
             individual_flags = [
-                [ 'extra_config', 'router', 'disable_gzip' ]
+                ['extra_config', 'router', 'disable_gzip']
             ]
 
             for (i = 0; i < individual_flags.length; i++) {
-                if ( $rootScope.getObject("service", ...individual_flags[i]) ) {
+                if ($rootScope.getObject("service", ...individual_flags[i])) {
                     // Save as module path1.path2.path3
                     $rootScope.modules_in_use.push(individual_flags[i].join('.'))
                 }
@@ -222,13 +222,13 @@ angular
                 }
 
                 for (i = 0; i < http_server_plugins.length; i++) {
-                    if ($rootScope.getObject("service",  "endpoints", e, "extra_config", "plugin/http-server", http_server_plugins[i])) {
+                    if ($rootScope.getObject("service", "endpoints", e, "extra_config", "plugin/http-server", http_server_plugins[i])) {
                         $rootScope.modules_in_use.push(http_server_plugins[i]);
                     };
                 }
 
                 for (i = 0; i < req_resp_plugins.length; i++) {
-                    if ($rootScope.getObject("service",  "endpoints", e, "extra_config", "plugin/req-resp-modifier", req_resp_plugins[i])) {
+                    if ($rootScope.getObject("service", "endpoints", e, "extra_config", "plugin/req-resp-modifier", req_resp_plugins[i])) {
                         $rootScope.modules_in_use.push(req_resp_plugins[i]);
                     };
                 }
@@ -466,7 +466,7 @@ angular
                 }
             }
 
-            //var needs_sd = ["dns","etcd"].includes(sd_type);
+            //var needs_sd = ["dns", "etcd"].includes(sd_type);
             $rootScope.sd_providers.hosts.push({
                 "sd": sd_type,
                 "host": host,
@@ -592,7 +592,7 @@ angular
             }
 
             $rootScope.service.endpoints.push({
-                "endpoint": "/v1/new-" + new Date().getTime(),
+                "endpoint": $rootScope.randomEndpointName(),
                 "method": "GET",
                 "output_encoding": (typeof $rootScope.service.output_encoding === 'undefined' ? "json" : $rootScope.service.output_encoding)
             });
@@ -741,8 +741,8 @@ angular
 
 
 
-        $rootScope.toggleStaticResponse = function(endpoint_index) {
-            if ($rootScope.getObject("service","endpoints", endpoint_index, "extra_config", "proxy", "static")) {
+        $rootScope.toggleStaticResponse = function (endpoint_index) {
+            if ($rootScope.getObject("service", "endpoints", endpoint_index, "extra_config", "proxy", "static")) {
                 $rootScope.deleteStaticResponse(endpoint_index);
             } else {
                 $rootScope.addDefaultStaticResponse(endpoint_index);
@@ -813,7 +813,7 @@ angular
         };
 
         $rootScope.getAPIKeyRoles = function () {
-            keys = $rootScope.getObject("service","extra_config", "auth/api-keys", "keys");
+            keys = $rootScope.getObject("service", "extra_config", "auth/api-keys", "keys");
             if (keys && keys.length > 0) {
                 roles = [];
                 for (i = 0; i < keys.length; i++) {
@@ -828,24 +828,36 @@ angular
             return false;
         };
 
-        $rootScope.addAPIKeyRole = function(endpoint_index, role) {
+        $rootScope.addAPIKeyRole = function (endpoint_index, role) {
 
-            api_keys = $rootScope.getObject("service","endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles");
-            if ( null == api_keys) {
-                 $rootScope.setObject("service","endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles",[]);
-                 api_keys = $rootScope.getObject("service","endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles");
+            api_keys = $rootScope.getObject("service", "endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles");
+            if (null == api_keys) {
+                $rootScope.setObject("service", "endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles", []);
+                api_keys = $rootScope.getObject("service", "endpoints", endpoint_index, "extra_config", "auth/api-keys", "roles");
             }
-            if ( -1 == api_keys.indexOf(role)) {
+            if (-1 == api_keys.indexOf(role)) {
                 api_keys.push(role);
             }
         };
 
         $rootScope.deleteAPIKeyRole = function (endpoint_index, role_index) {
             $rootScope.service.endpoints[endpoint_index].extra_config["auth/api-keys"].roles.splice(role_index - 1, 1);
-            if ( $rootScope.service.endpoints[endpoint_index].extra_config["auth/api-keys"].roles.length < 1 ) {
+            if ($rootScope.service.endpoints[endpoint_index].extra_config["auth/api-keys"].roles.length < 1) {
                 delete $rootScope.service.endpoints[endpoint_index].extra_config["auth/api-keys"];
             }
         };
+
+        $rootScope.randomEndpointName = function() {
+            dict = {
+                nouns: ["account", "act", "actor", "adjustment", "advertisement", "advertisement", "afternoon", "agreement", "air", "airport", "ambulance", "amount", "amusement", "animal", "animal", "answer", "answer", "apparatus", "apple", "approval", "argument", "army", "art", "attack", "attempt", "attention", "attraction", "australia", "authority", "back", "balance", "balloon", "banana", "base", "battery", "beach", "beard", "bed", "behavior", "belgium", "belief", "birth", "bit", "bite", "blood", "blow", "body", "boy", "branch", "brass", "bread", "breakfast", "breath", "brother", "brother", "building", "burn", "burst", "business", "butter", "camera", "candle", "canvas", "car", "caravan", "care", "carpet", "cartoon", "cause", "chalk", "chance", "change", "church", "cloth", "coal", "color", "comfort", "committee", "company", "comparison", "competition", "condition", "connection", "control", "cook", "copper", "copy", "copy", "cork", "cough", "country", "cover", "crack", "crayon", "credit", "crime", "crowd", "crush", "cry", "current", "curve", "damage", "danger", "daughter", "daughter", "day", "death", "death", "debt", "decision", "degree", "denmark", "design", "desire", "destruction", "detail", "development", "diamond", "digestion", "dinner", "direction", "discovery", "discussion", "disease", "disease", "disgust", "distance", "distribution", "division", "doctor", "dog", "doubt", "dream", "dress", "drink", "driving", "dust", "earth", "easter", "edge", "education", "effect", "egg", "eggplant", "egypt", "elephant", "end", "energy", "engine", "england", "error", "evening", "event", "example", "exchange", "existence", "expansion", "experience", "expert", "eye", "fact", "fall", "family", "family", "father", "fear", "feeling", "fiction", "field", "fight", "finland", "fire", "fish", "flag", "flame", "flight", "flower", "flower", "fold", "food", "football", "force", "forest", "form", "fountain", "france", "friend", "front", "fruit", "furniture", "garage", "garden", "gas", "ghost", "girl", "glass", "glass", "gold", "gold", "government", "grain", "grass", "grass", "greece", "grip", "group", "growth", "guide", "guitar", "hair", "hamburger", "harbor", "harmony", "hate", "hearing", "heat", "helicopter", "helmet", "help", "history", "hole", "holiday", "honey", "hope", "horse", "hospital", "hour", "house", "humor", "hydrogen", "ice", "ice", "idea", "impulse", "increase", "industry", "ink", "insect", "insect", "instrument", "insurance", "insurance", "interest", "invention", "iron", "iron", "island", "jackal", "jelly", "jelly", "jewellery", "join", "jordan", "journey", "judge", "juice", "jump", "kangaroo", "kick", "king", "kiss", "kitchen", "kite", "knife", "knowledge", "lamp", "land", "language", "laugh", "lawyer", "lead", "learning", "leather", "leather", "letter", "level", "library", "lift", "light", "lighter", "limit", "linen", "lion", "liquid", "list", "lizard", "lock", "london", "look", "loss", "love", "low", "lunch", "machine", "machine", "magazine", "magician", "man", "manager", "manchester", "mark", "market", "market", "mass", "match", "meal", "measure", "meat", "meeting", "memory", "metal", "microphone", "middle", "milk", "mind", "mine", "minute", "mist", "money", "monkey", "month", "morning", "morning", "mother", "motion", "motorcycle", "mountain", "move", "music", "nail", "name", "napkin", "nation", "need", "needle", "nest", "news", "nigeria", "night", "night", "noise", "note", "notebook", "number", "observation", "ocean", "offer", "oil", "oil", "operation", "opinion", "orange", "order", "organization", "ornament", "owner", "oxygen", "oyster", "page", "pain", "paint", "painting", "paper", "parrot", "part", "paste", "payment", "peace", "pencil", "person", "piano", "pillow", "pizza", "place", "planet", "plant", "plastic", "play", "pleasure", "point", "poison", "polish", "porter", "portugal", "position", "potato", "powder", "power", "price", "print", "process", "produce", "profit", "property", "prose", "protest", "pull", "punishment", "purpose", "push", "quality", "queen", "question", "quill", "rain", "rain", "rainbow", "raincoat", "range", "rate", "ray", "reaction", "reading", "reason", "record", "refrigerator", "regret", "relation", "religion", "representative", "request", "respect", "rest", "restaurant", "reward", "rhythm", "rice", "river", "river", "road", "rocket", "roll", "room", "room", "rose", "rub", "rule", "run", "russia", "salt", "sand", "sandwich", "scale", "school", "science", "scooter", "sea", "seat", "secretary", "selection", "self", "sense", "servant", "sex", "shade", "shake", "shame", "shampoo", "shock", "shoe", "side", "sign", "silk", "silver", "sister", "size", "sky", "sleep", "slip", "slope", "smash", "smell", "smile", "smoke", "sneeze", "snow", "soap", "soccer", "society", "son", "song", "sort", "sound", "soup", "space", "spoon", "stage", "start", "statement", "steam", "steel", "step", "stitch", "stone", "stone", "stop", "story", "stretch", "structure", "substance", "sugar", "sugar", "suggestion", "summer", "support", "surprise", "sweden", "swim", "system", "talk", "taste", "tax", "teacher", "teaching", "telephone", "television", "tendency", "tent", "test", "thailan", "theory", "thing", "thought", "thunder", "time", "tin", "tomato", "toothbrush", "top", "touch", "trade", "traffic", "train", "transport", "trick", "trouble", "truck", "turn", "twist", "umbrella", "unit", "use", "value", "van", "vase", "vegetable", "verse", "vessel", "view", "voice", "vulture", "walk", "wall", "war", "wash", "waste", "water", "wave", "wax", "way", "weather", "week", "weight", "whale", "wind", "window", "wine", "winter", "wire", "woman", "wood", "wool", "word", "work", "wound", "writing", "xylophone", "yacht", "yak", "year", "zebra", "zoo" ],
+                adj: ["abundant", "accurate", "addicted", "adorable", "adventurous", "afraid", "aggressive", "alcoholic", "alert", "aloof", "ambitious", "ancient", "angry", "animated", "annoying", "anxious", "arrogant", "ashamed", "attractive", "auspicious", "awesome", "awful", "abactinal", "abandoned", "abashed", "abatable", "abatic", "abaxial", "abbatial", "abbreviated", "abducent", "abducting", "aberrant", "abeyant", "abhorrent", "abiding", "abient", "bad", "bashful", "beautiful", "belligerent", "beneficial", "best", "big", "bitter", "bizarre", "black", "blue", "boring", "brainy", "bright", "broad", "broken", "busy", "barren", "barricaded", "barytic", "basal", "basaltic", "baseborn", "based", "baseless", "basic", "bathyal", "battleful", "battlemented", "batty", "batwing", "bias", "calm", "capable", "careful", "careless", "caring", "cautious", "charming", "cheap", "cheerful", "chubby", "clean", "clever", "clumsy", "cold", "colorful", "comfortable", "concerned", "confused", "crowded", "cruel", "curious", "curly", "cute", "damaged", "dangerous", "dark", "deep", "defective", "delicate", "delicious", "depressed", "determined", "different", "dirty", "disgusting", "dry", "dusty", "daft", "daily", "dainty", "damn", "damning", "damp", "dampish", "darkling", "darned", "dauntless", "daylong", "early", "educated", "efficient", "elderly", "elegant", "embarrassed", "empty", "encouraging", "enthusiastic", "excellent", "exciting", "expensive", "fabulous", "fair", "faithful", "famous", "fancy", "fantastic", "fast", "fearful", "fearless", "fertile", "filthy", "foolish", "forgetful", "friendly", "funny", "gentle", "glamorous", "glorious", "gorgeous", "graceful", "grateful", "great", "greedy", "green", "handsome", "happy", "harsh", "healthy", "heavy", "helpful", "hilarious", "historical", "horrible", "hot", "huge", "humorous", "hungry", "ignorant", "illegal", "imaginary", "impolite", "important", "impossible", "innocent", "intelligent", "interesting", "jealous", "jolly", "juicy", "juvenile", "kind", "large", "legal", "light", "literate", "little", "lively", "lonely", "loud", "lovely", "lucky", "macho", "magical", "magnificent", "massive", "mature", "mean", "messy", "modern", "narrow", "nasty", "naughty", "nervous", "new", "noisy", "nutritious", "obedient", "obese", "obnoxious", "old", "overconfident", "peaceful", "pink", "polite", "poor", "powerful", "precious", "pretty", "proud", "quick", "quiet", "rapid", "rare", "red", "remarkable", "responsible", "rich", "romantic", "royal", "rude", "scintillating", "secretive", "selfish", "serious", "sharp", "shiny", "shocking", "short", "shy", "silly", "sincere", "skinny", "slim", "slow", "small", "soft", "spicy", "spiritual", "splendid", "strong", "successful", "sweet", "talented", "tall", "tense", "terrible", "terrific", "thick", "thin", "tiny", "tactful", "tailor-made", "take-charge", "tangible", "tasteful", "tasty", "teachable", "teeming", "tempean", "temperate", "tenable", "tenacious", "tender", "tender-hearted", "terrific", "testimonial", "thankful", "thankworthy", "therapeutic", "thorough", "thoughtful", "ugly", "unique", "untidy", "upset", "victorious", "violent", "vulgar", "warm", "weak", "wealthy", "wide", "wise", "witty", "wonderful", "worried", "young", "youthful", "zealous"],
+                randNoun: function(){ return this.nouns[Math.floor(Math.random() * this.nouns.length)] },
+                randAdjective: function(){ return this.adj[Math.floor(Math.random() * this.adj.length)] }
+            }
+            noun = dict.randNoun();
+            return "/v1/" +  dict.randAdjective() + '-' + noun + '/' + "{id_" + noun + "}";
+        }
+
     });
 
 function downloadDocument (name, content) {
