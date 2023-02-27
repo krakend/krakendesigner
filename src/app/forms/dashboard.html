@@ -14,25 +14,40 @@
                 The KrakenDesigner is an open-source javascript application that helps you configure
                 the API Gateway in a visual way and get familiar with the main functionalities KrakenD has.
             </p>
-            <p>It is a pure static page that does not send any of your configuration elsewhere, neither tracks its
+            <p>It is a pure static page that does not send any of your configurations elsewhere nor tracks its
                 contents.
                 It's hosted online for your convenience, but you can also run it as a <a
-                    href="https://hub.docker.com/r/devopsfaith/krakendesigner">Docker container</a>, or <a
+                    href="https://hub.docker.com/r/devopsfaith/krakendesigner">Docker container</a> or <a
                     href="https://github.com/krakendio/krakendesigner">build it from source</a>.
             </p>
-            <p>By using this tool, you don't need to learn and write from scratch the configuration, and it dramatically
-                reduces the learning curve.</p>
-            <p>The Designer supports <strong>most of the functionalities</strong> of KrakenD</p>
+            <p>By using this tool, you don't need to learn and write the configuration from scratch, dramatically
+                reducing the learning curve.</p>
+            <p>The Designer supports <strong>most of the functionalities</strong> of KrakenD, but it does not support <a href="https://www.krakend.io/docs/configuration/flexible-config/" target="_blank">flexible configuration</a> (multiple files)</p>
         </div>
     </div>
-    <div class="box box-primary">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Development tools</h3>
+        </div>
+        <div class="box-body">
+            <p>The KrakenD designer outputs valid configurations respecting the schema. But we encourage you to <strong>edit the JSON file by hand</strong> and spend some time understanding its structure. There are few resources that might help you:</strong></p>
+
+            <ul class="list-styled">
+                <li><a href="https://www.krakend.io/docs/configuration/structure/" target="_blank">Understanding the configuration file</a></li>
+                <li><a href="https://www.krakend.io/docs/developer/hot-reload/" target="_blank">Hot reloading the configuration</a></li>
+                <li><a href="https://www.krakend.io/docs/developer/ide-integration/" target="_blank">IDE integration</a></li>
+                <li><a href="https://www.krakend.io/docs/configuration/check/" target="_blank">Validating the configuration with <code>check</code></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">Creating your first service?</h3>
         </div>
         <div class="box-body">
-            <p>Hi, thanks for using the <strong>KrakenDesigner</strong>. This application creates the configuration
-                file KrakenD uses to operate. Start with at least the following <strong>steps:</strong>
-            </p>
+            <p>This application creates the configuration file KrakenD uses to operate. Start with at least the following <strong>steps:</strong></p>
 
             <ul class="nav nav-pills nav-justified setup-panel">
                 <li ng-class="service.endpoints.length === 0 || !service.endpoints? '' : 'bg-success'">
@@ -50,11 +65,9 @@
             </ul>
         </div>
     </div>
-</div>
-<div class="col-lg-6">
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Load a previous configuration file</h3>
+            <h3 class="box-title">Loading previous configurations</h3>
         </div>
         <div class="box-body">
             <div ng-if="dropzone_loaded" class="alert alert-success alert-dismissible">
@@ -72,8 +85,8 @@
 
             <div id="drop_zone" drop-box="[application/json, text/json]" file="filename" data="service_configuration"
                 data-max-file-size="3">
-                <h2>Drop configuration file to load it.</h2>
-                (No content uploaded)
+                <h2>Drop a <code>krakend.json</code> to edit it.</h2>
+                (No content uploaded anywhere)
             </div>
         </div>
     </div>
