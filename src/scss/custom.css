@@ -8,6 +8,11 @@ code {
     color: #2752a3;
 }
 
+textarea.form-control {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #252525;
+    color: gold;
+}
 .badge {
     background-color: #0071CE;
 }
@@ -18,9 +23,21 @@ code {
     color: #0071CE;
 }
 
+.badge.code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    background-color: #0f265c;
+}
+
 a.badge.badge-inverse:hover {
     color: #FFF;
     background-color: #0071CE;
+}
+
+.nav-tabs-custom .nav-tabs li a {
+    font-weight: bold;
+    font-size: 15px;
+    color: #0071CE;
 }
 
 .wrapper {
@@ -175,11 +192,22 @@ a.badge.badge-inverse:hover {
 .btn-circle {
     border-radius: 10em!important
 }
-.main-content {}
-
 
 .box.box-solid.box-info .box-title small {
     color: #FFF;
+}
+
+.text-lg {
+    font-size: 16px;
+}
+
+.box-title.text-xl {
+    font-size: 22px;
+}
+
+.box.text-lg {
+    background-color: aliceblue;
+    padding: 10px;
 }
 
 .box.box-info {

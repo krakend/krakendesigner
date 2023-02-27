@@ -2,7 +2,9 @@
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox"
       ng-checked="isMiddlewareEnabled()"
-      ng-click="toggleOpencensusMiddleware()"> Opencensus <small>(Newrelic, Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver, Datadog, and more)</small></h3>
+      ng-click="toggleOpencensusMiddleware()"> Opencensus <small>(Newrelic, Zipkin, InfluxDB, Prometheus, Jaeger, Stackdriver, Datadog, and more)</small>
+    </h3>
+    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/telemetry/opencensus/'}]"></div>
     </div>
     <div class="box-body">
       <p ng-if="!isMiddlewareEnabled()">The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different third party systems.</p>
@@ -325,7 +327,7 @@
                   </div>
               <ul class="list-inline help-block">
                 <li ng-repeat="(index,label) in data.extra_config[config_namespace].exporters.stackdriver.default_labels">
-                    <a class="badge badge-remove"
+                    <a class="badge code badge-remove"
                        ng-click="deleteStackDriverLabel(index)"><i
                             class="fa fa-times"></i>
                         {{ index }}={{ label }}</a>
@@ -407,7 +409,7 @@
                   </div>
               <ul class="list-inline help-block">
                 <li ng-repeat="(index,tag) in data.extra_config[config_namespace].exporters.datadog.tags">
-                    <a class="badge badge-remove"
+                    <a class="badge code badge-remove"
                        ng-click="deleteDatadogTag(index, false)"><i
                             class="fa fa-times"></i>
                         {{ tag }}</a>
@@ -432,7 +434,7 @@
                 </div>
             <ul class="list-inline help-block">
               <li ng-repeat="(index,tag) in data.extra_config[config_namespace].exporters.datadog.global_tags">
-                  <a class="badge badge-remove"
+                  <a class="badge code badge-remove"
                      ng-click="deleteDatadogTag(index, true)"><i
                           class="fa fa-times"></i>
                       {{ tag }}</a>
@@ -603,7 +605,7 @@
                 </div>
             <ul class="list-inline help-block">
               <li ng-repeat="(index,header) in data.extra_config[config_namespace].exporters.ocagent.headers">
-                  <a class="badge badge-remove"
+                  <a class="badge code badge-remove"
                       ng-click="deleteOcagentHeader(index)"><i
                           class="fa fa-times"></i>
                       {{ index }}={{ header }}</a>

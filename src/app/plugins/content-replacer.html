@@ -1,0 +1,52 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
+      Regexp Content Replacer</h3>
+      <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/endpoints/content-replacer/'}]"></div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!hasPluginOfThisType()">The content replacer plugin allows you to modify the response of your services by doing literal replacements or more sophisticated replacements with regular expressions.</p>
+    <div ng-if="hasPluginOfThisType()">
+    <div ng-repeat="(i,key_name) in keys(data.extra_config[plugin_type][plugin_name])" class="form-group row">
+        <div class="col-md-6">
+          <label class="control-label">Find (in <code>{{key_name}}</code>)</label>
+          <input class="form-control" placeholder="" type="text" ng-model="data.extra_config[plugin_type][plugin_name][key_name].find">
+          <span class="help-block">The find expression or literal you want to use.</span>
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Replace by (in <code>{{key_name}})</code></label>
+          <input class="form-control" placeholder="" type="text" ng-model="data.extra_config[plugin_type][plugin_name][key_name].replace">
+          <span class="help-block">The literal string or expression you want to use as a replacement. You can use capture groups with <code>$1</code>, <code>$2</code>, etc.</span>
+        </div>
+        <div class="col-md-9">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="data.extra_config[plugin_type][plugin_name][key_name].regexp" name="data.extra_config[plugin_type][plugin_name][key_name].regexp" ng-model="data.extra_config[plugin_type][plugin_name][key_name].regexp" class="ng-pristine ng-untouched ng-valid ng-empty">
+              <strong>Regexp mode</strong>
+            </label>
+            <span class="help-block">Check if you want to use regular expression instead of a literal string (faster)</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-danger" ng-click="deleteKey(key_name,data.extra_config[plugin_type][plugin_name])">
+            <i class="fa fa-trash"></i> Delete replacement</button>
+        </div>
+        <hr/>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-12">
+          <label>Key to replace</label>
+          <div class="input-group">
+              <input class="form-control" placeholder="" type="text" required="" ng-model="input_key">
+              <div class="input-group-btn">
+                  <button type="button" class="btn btn-success" ng-click="addEmptyKey(input_key,data.extra_config[plugin_type][plugin_name])">
+                      <i class="fa fa-plus"></i>
+                  </button>
+              </div>
+          </div>
+          <span class="help-block">Write the key of the object you would like to replace content.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

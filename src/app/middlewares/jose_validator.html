@@ -1,12 +1,18 @@
 <div class="box box-info box-solid">
     <div class="box-header with-border">
         <h3 class="box-title">
-            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Auth: Token validation
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Token validation
         </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/authorization/jwt-overview/'}]"></div>
     </div>
     <div class="box-body">
         <p ng-if="!isMiddlewareEnabled()">Enables validation of JWT tokens (OAuth) that have been issued by a third party identity provider (e.g.: OpenID Connect)</p>
         <div ng-if="isMiddlewareEnabled()">
+            <p class="box text-lg">
+                <span class="badge"><i class="fa fa-info"></i></span> KrakenD is now in charge of token validation, but if you'd like to
+                keep passing the JWT tokens to the backend, add the <code>Authorization</code>
+                header in the endpoint's parameter forwarding.
+            </p>
             <p>Only the <strong>algorithm</strong> and the location of your <strong>jwk</strong> are mandatory fields.</p>
             <div class="form-group">
                 <div class="col-md-6">
@@ -38,7 +44,7 @@
                     <span class="help-block">List of all (or any) scopes that the user should have to access this endpoint.</span>
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,key) in data.extra_config[config_namespace]['scopes']">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'scopes')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'scopes')"><i class="fa fa-times"></i>
                                 {{ key }}</a>
                         </li>
                     </ul>
@@ -79,7 +85,7 @@
                     <span class="help-block">List of all the audiences supported by this endpoint</span>
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,aud) in data.extra_config[config_namespace].audience">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'audience')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'audience')"><i class="fa fa-times"></i>
                                 {{ aud }}</a>
                         </li>
                     </ul>
@@ -98,7 +104,7 @@
                     <span class="help-block">List of all the roles allowed to access this endpoint</span>
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,aud) in data.extra_config[config_namespace].roles">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'roles')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'roles')"><i class="fa fa-times"></i>
                                 {{ aud }}</a>
                         </li>
                     </ul>
@@ -132,7 +138,7 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <label class="control-label">Fingerprints</label>
-                    <textarea class="form-control" style="margin-bottom:10px;" placeholder="e.g: S3Jha2VuRCBpcyB0aGUgYmVzdCBnYXRld2F5LCBhbmQgeW91IGtub3cgaXQ==" ng-model="fingerprint"></textarea>
+                    <textarea spellcheck="false" class="form-control" style="margin-bottom:10px;" placeholder="e.g: S3Jha2VuRCBpcyB0aGUgYmVzdCBnYXRld2F5LCBhbmQgeW91IGtub3cgaXQ==" ng-model="fingerprint"></textarea>
                     <button type="button" class="btn btn-success pull-right" ng-click="addTermToList(fingerprint,'jwk_fingerprints')">
                         <i class="fa fa-plus"></i> Add fingerprint
                     </button>
@@ -141,7 +147,7 @@
                 <div class="col-md-12">
                     <ul class="list-unstyled">
                         <li ng-repeat="(index,fingerprint) in data.extra_config[config_namespace].jwk_fingerprints">
-                            <a class="badge badge-remove" ng-click="deleteIndexFromList(index,'jwk_fingerprints')"><i class="fa fa-times"></i>
+                            <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'jwk_fingerprints')"><i class="fa fa-times"></i>
                                 {{ fingerprint }}</a>
                         </li>
                     </ul>

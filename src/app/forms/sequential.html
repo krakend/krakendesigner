@@ -1,0 +1,23 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-model="endpoint.extra_config['proxy'].sequential"> Sequential proxy
+        </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+            ng-repeat="doc in [{'ee': false, 'url':'/endpoints/sequential-proxy/'}]"></div>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="col-md-12">
+
+                <strong ng-if="endpoint.extra_config['proxy'].sequential">Sequential proxy <span class="badge">enabled</span></strong>
+                <span class="help-block">
+                    Calls backends sequentially instead of in parallel, so you can inject data from a previous call in the <code>url_pattern</code> of the next call.
+                    injecting variables like <code>{resp0_XXXX}</code> where <code>0</code> is the index of the backend and <code>XXXX</code> the attribute. E.g:
+                    <code>{resp1_hotel_id}</code> takes the field <code>hotel_id</code> from the first backend call (index starts at 0).
+                </span>
+
+            </div>
+        </div>
+    </div>
+</div>

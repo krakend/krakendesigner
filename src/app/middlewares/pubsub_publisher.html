@@ -3,11 +3,7 @@
 		<h3 class="box-title">
 			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Pub/Sub: Publisher
 		</h3>
-		<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse">
-				<i class="fa fa-minus"></i>
-			</button>
-		</div>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/backends/pubsub/'}]"></div>
 	</div>
 	<div class="box-body">
 		<p ng-if="!isMiddlewareEnabled()">Pushes events to a queue</p>

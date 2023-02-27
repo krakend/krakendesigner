@@ -75,6 +75,19 @@ angular
           }
         }
 
+        scope.addEmptyKey = function(key, container) {
+          if ( 'undefined' !== typeof container ) {
+            // Do not override existing keys
+            if ( 'undefined' === typeof container[key] ) {
+              container[key] = {};
+            }
+          }
+        }
+
+        scope.keys = function(container) {
+          return Object.keys(container);
+        }
+
         scope.deleteKey = function(key, container) {
           if ( 'undefined' !== typeof container[key] ) {
             delete container[key];
@@ -110,21 +123,58 @@ angular
           return default_plugin_values;
         };
 
-        scope.hasHttpServerPlugin = function () {
+        scope.hasPluginOfThisType  = function () {
           plugins = scope.getObject(scope.placement, "extra_config", TYPE, "name");
           return (plugins && -1 !== plugins.indexOf(PLUGIN));
         };
 
+        scope.hasHttpClientPlugin = function () {
+          plugin_found = scope.getObject(scope.placement, "extra_config", TYPE, "name");
+          return (plugin_found == PLUGIN);
+        };
+
+        scope.getConflictingPlugin = function () {
+          plugin_found = scope.getObject(scope.placement, "extra_config", TYPE, "name");
+
+          return (plugin_found != PLUGIN ? plugin_found : false );
+        }
+
+
         scope.toggleHttpServerPlugin = function () {
-          scope.hasHttpServerPlugin() ? scope.deleteHttpServerPlugin(scope.placement) : scope.addHttpServerPlugin(scope.placement);
+          scope.hasPluginOfThisType() ? scope.deleteHttpServerPlugin(scope.placement) : scope.addHttpServerPlugin(scope.placement);
+        };
+
+        scope.toggleHttpClientPlugin = function () {
+          // There's only one possible client plugin
+          scope.hasHttpClientPlugin() ? delete scope.placement.extra_config[TYPE] : scope.addHttpClient();
         };
 
 
-        scope.addHttpClientPlugin = function (backend_index) {
+        scope.addHttpClientPluginFromEndpoint = function (backend_index) {
           scope.addPluginEntry();
+
+          // Delete any other existing plugin and associated configurations
+          if ( existing = scope.getObject( scope.placement, "backend", backend_index, "extra_config", "plugin/http-client") ) {
+            alert("Plugin " + existing.name + " has been replaced by " + PLUGIN + " because backends admit only one HTTP Client plugin." );
+            delete scope.placement.backend[backend_index].extra_config["plugin/http-client"];
+          }
           // Set the plugin in the first Backend.
           scope.setObject(
             scope.placement, "backend", backend_index, "extra_config", "plugin/http-client", "name", PLUGIN
+          );
+        };
+
+        scope.addHttpClient = function () {
+          scope.addPluginEntry();
+
+          // Delete any other existing plugin and associated configurations
+          if ( existing = scope.getObject( scope.placement, "extra_config", "plugin/http-client") ) {
+            alert("Plugin " + existing.name + " has been replaced by " + PLUGIN + " because backends admit only one HTTP Client plugin." );
+            delete scope.placement.extra_config["plugin/http-client"];
+          }
+          // Set the new plugin
+          scope.setObject(
+            scope.placement, "extra_config", "plugin/http-client", "name", PLUGIN
           );
         };
 
@@ -241,7 +291,7 @@ angular
 
           } else {
             scope.addHttpServerPlugin(scope.root);
-            scope.addHttpClientPlugin(0);
+            scope.addHttpClientPluginFromEndpoint(0);
             scope.setObject(scope.root, "extra_config", 'plugin/http-server', 'wildcard', "endpoints", scope.placement.endpoint, [scope.placement.endpoint]);
             endpoint_index = scope.getEndpointIndex(scope.placement.endpoint);
             if (false !== endpoint_index) {

@@ -1,8 +1,9 @@
 <div class="box box-info box-solid">
     <div class="box-header with-border">
         <h3 class="box-title">
-            Array Manipulation
+            Flatmap (array manipulation)
         </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/backends/flatmap/'}]"></div>
     </div>
     <div class="box-body">
         <p>Responses using arrays need a special treatment. Add here your desired
@@ -36,7 +37,7 @@
             <div class="col-md-12">
                 <ul class="list-unstyled">
                     <li ng-repeat="(flatmap_index,flatmap_value) in backend.extra_config['proxy'].flatmap_filter">
-                        <a class="badge badge-remove"
+                        <a class="badge code badge-remove"
                             ng-click="deleteFlatmap(flatmap_index,endpoint_index, backend_index)"><i
                                 class="fa fa-times"></i>
                             {{ flatmap_value.type }} <i class="fa fa-arrow-right"></i>

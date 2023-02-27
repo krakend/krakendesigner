@@ -1,0 +1,22 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input ng-disabled="getConflictingPlugin()" type="checkbox" ng-checked="hasHttpClientPlugin()"
+        ng-click="toggleHttpClientPlugin()">
+      Don't follow redirects
+    </h3>
+    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/backends/client-redirect/'}]"></div>
+  </div>
+  <div class="box-body">
+    <p ng-if="getConflictingPlugin()"><strong>To use this plugin you must disable <span class="badge">{{
+          getConflictingPlugin() }}</span></strong></p>
+    <p ng-if="!hasHttpClientPlugin()">Do not allow KrakenD to follow redirections like 301 or 302 and forward them to
+      the client as they are.</p>
+    <div ng-if="hasHttpClientPlugin()">
+      <div class="form-group">
+        <div class="col-md-12">
+          <p><strong>Redirections won't be followed by KrakenD now.</strong> No further configuration is needed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

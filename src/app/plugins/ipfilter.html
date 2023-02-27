@@ -1,16 +1,14 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
       IP Filter</h3>
-    <div class="pull-right">
-      <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
-    </div>
+      <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/endpoints/ipfilter/'}]"></div>
   </div>
   <div class="box-body">
-    <p ng-if="!hasHttpServerPlugin()">The IP filtering plugin allows you to restrict the traffic to your API gateway
+    <p ng-if="!hasPluginOfThisType()">The IP filtering plugin allows you to restrict the traffic to your API gateway
       based on the IP address. It works in two different modes (allow or deny) where you define the list of IPs (CIDR
       blocks) that are authorized to use the API, or that are denied from using the API.</p>
-    <div ng-if="hasHttpServerPlugin()">
+    <div ng-if="hasPluginOfThisType()">
       <div class="form-group row">
         <div class="col-md-6">
           <label class="control-label">CIDR</label>
@@ -27,7 +25,7 @@
             <code>172.17.2.56/32</code>, <code>127.0.0.1</code></span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].CIDR">
-              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'CIDR')"><i class="fa fa-times"></i>
+              <a class="badge code badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'CIDR')"><i class="fa fa-times"></i>
                 {{ val }}</a>
             </li>
           </ul>
@@ -47,7 +45,7 @@
             your application. This list is used to avoid spoofing when trying to get the real IP of the client.</span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].trusted_proxies">
-              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'trusted_proxies')"><i
+              <a class="badge code badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'trusted_proxies')"><i
                   class="fa fa-times"></i>
                 {{ val }}</a>
             </li>
@@ -71,7 +69,7 @@
             The first matching IP in the list will be used</span>
           <ul class="list-inline">
             <li ng-repeat="(index,val) in data.extra_config[plugin_type][plugin_name].client_ip_headers">
-              <a class="badge badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'client_ip_headers')"><i
+              <a class="badge code badge-remove" ng-click="deleteTermFromList(val,data.extra_config[plugin_type][plugin_name],'client_ip_headers')"><i
                   class="fa fa-times"></i>
                 {{ val }}</a>
             </li>

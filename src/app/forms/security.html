@@ -7,6 +7,6 @@
     <div class="col-md-6">
         <plugin root="service" placement="service" template="ipfilter.html" plugin="'ip-filter'" type="'plugin/http-server'"></plugin>
         <middleware data="service" template="httpsecure.html" namespace="'security/http'"></middleware>
-        <plugin root="service" placement="service" template="basic-authentication.html" plugin="'basic-auth'" type="'plugin/http-server'"></plugin>
+        <middleware data="service" template="basic-authentication.html" namespace="'auth/basic'"></middleware>
     </div>
 </div>

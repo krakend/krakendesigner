@@ -3,8 +3,8 @@
         <h3 class="box-title">
             <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> API-Key
             Authentication
-            <a data-toggle="modal" data-target="#enterprise-needed-modal" class="badge badge-inverse">Enterprise</a>
         </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/authentication/api-keys/'}]"></div>
     </div>
     <div class="box-body">
         <p ng-if=" !isMiddlewareEnabled()">The API key authentication enables a Role-Based Access Control (RBAC)
@@ -33,7 +33,7 @@
                             <td>
                                 <ul class="list-inline">
                                     <li ng-repeat="(index,role) in key.roles">
-                                        <span class="badge badge-remove">
+                                        <span class="badge code badge-remove">
                                             {{ role }}</span>
                                     </li>
                                 </ul>
@@ -109,7 +109,7 @@
                                             <td>
                                                 <ul class="list-inline">
                                                     <li ng-repeat="(index,role) in selected_roles">
-                                                        <a class="badge badge-remove" ng-click="deselectRole(index)"><i
+                                                        <a class="badge code badge-remove" ng-click="deselectRole(index)"><i
                                                                 class="fa fa-times"></i>
                                                             {{ role }}</a>
                                                     </li>

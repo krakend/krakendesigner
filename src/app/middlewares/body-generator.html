@@ -1,0 +1,63 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">  Body manipulation and generation
+		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/backends/body-generator/'}]"></div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">The body generator modifier allows you to craft the body you send to a backend through templates, and enables injecting other values from the user request such as the original body, headers, querystrings or URL parameters.</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="row">
+				<div class="col-md-6">
+					<input type="radio" ng-model="mode" value="template"
+					ng-click="deleteKey('path');data.extra_config[config_namespace].template=base64enc(template_editor)">
+					Use the inline body editor
+				</div>
+				<div class="col-md-6">
+					<input type="radio" ng-model="mode" value="path"
+					ng-click="deleteKey('template'); data.extra_config[config_namespace].path = ''">
+					An external file
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label class="control-label">Body editor</label>
+					<textarea spellcheck="false" class="form-control" ng-disabled="mode == 'path'" rows="10"
+					ng-change="data.extra_config[config_namespace].template=base64enc(template_editor)"
+					ng-model="template_editor"
+					ng-init="template_editor=base64dec(data.extra_config[config_namespace].template)"></textarea>
+					<input type="hidden" ng-model="data.extra_config[config_namespace].template"
+						class="form-control" placeholder="base64 calculation" />
+					<span class="help-block">The request body you will send to the server. You can introduce the variables <code>.req_body.xxx</code>, <code>.req_params.Xxx</code>, <code>.req_headers.xxx</code>, <code>.req_querystring.xxx</code>, <code>.req_path</code></span>
+				  </div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<label>Content Type</label>
+					<input type="text" ng-model="data.extra_config[config_namespace].content_type" class="form-control"
+						placeholder="application/json" />
+					<span class="help-block">The Content-Type belonging to the request to the server. Defaults to
+						<code>application/json</code></span>
+				</div>
+				<div class="col-md-6">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].debug">
+							<strong>Enable debug</strong>
+						</label>
+						<span class="help-block">shows useful information in the logs with DEBUG level about the input received and the body generated. Do not enable in production.</span>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<label>Path</label>
+					<input type="text" ng-disabled="mode == 'template'"
+						ng-model="data.extra_config[config_namespace].path" class="form-control"
+						placeholder="./file.tmpl.xml" />
+					<span class="help-block">You can load the request from an external file instead of editing the
+						template.</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

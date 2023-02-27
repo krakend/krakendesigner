@@ -4,9 +4,7 @@
             <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Advanced response
             manipulation (JMESpath)
         </h3>
-        <div class="pull-right">
-            <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
-        </div>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/endpoints/jmespath/'}]"></div>
     </div>
     <div class="box-body">
         <p>Manipulate the response dataset after the aggregation layer using a JSON Query language.</p>
@@ -14,16 +12,16 @@
 
             <div class="form-group row">
                 <div class="col-md-12">
-                    <label class="control-label">Expression for {{ data.endpoint }}</label>
+                    <label class="control-label">Expression</label>
                     <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].expr"
                         placeholder="students[?age > `18` ].name">
-                    <span class="help-block">JMESpath query</span>
+                    <span class="help-block">JMESpath query to execute on returned results of {{ data.endpoint }}{{ data.url_pattern }}</span>
                 </div>
             </div>
             <h4>Example of how JMESpath works</h4>
             <div class="form-group row">
                 <div class="col-md-6">
-                    <label>Aggregated backend responses</label>
+                    <label>Server response</label>
                     <pre>{
   "students": [
     {"name": "Bill", "age": 23 },
@@ -36,7 +34,7 @@
                     <label>Expression</label>
                     <pre>students[?age > `18` ].name</pre>
 
-                    <label>Final response</label>
+                    <label>Returned response</label>
                     <pre>["Bill", "Jessica"]</pre>
                     <p><a href="https://www.krakend.io/docs/enterprise/endpoints/jmespath/"><i class="fa fa-book"></i> JMESpath documentation</a></p>
                 </div>

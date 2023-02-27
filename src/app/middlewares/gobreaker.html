@@ -1,7 +1,9 @@
 <div class="box box-info box-solid">
 	<div class="box-header with-border">
 		<h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
-			Circuit Breaker</h3>
+			Circuit Breaker
+		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/backends/circuit-breaker/'}]"></div>
 	</div>
 	<div class="box-body">
 		<p ng-hide="isMiddlewareEnabled()">Watches the state of the connections to your backend and when it sees more than the configured number of consecutive failures within an interval it stops temporarily all the interaction with the backend</p>

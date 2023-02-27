@@ -1,23 +1,61 @@
 <div class="box box-info box-solid">
     <div class="box-header with-border">
         <h3 class="box-title">
-            Object Manipulation
+            Basic Manipulation
         </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/backends/data-manipulation/'}]"></div>
     </div>
     <div class="box-body">
         <div class="row">
+            <div class="col-md-6">
+                <label>Root object:</label>
+                <input type="text" class="form-control" ng-model="backend.target"
+                    ng-disabled="backend.is_collection == true"
+                    placeholder="Leave blank to use all the reponse">
+                <span class="help-block">Some APIs return all the content
+                    encapsulated
+                    inside
+                    a root object (usually named like <code>data</code>,
+                    <code>response</code>,
+                    <code>items</code>). Specifying here a root object will put all
+                    its
+                    children
+                    in the first level. When manipulating the data only its children
+                    are
+                    visible.</span>
+            </div>
+            <div class="col-md-6">
+                <label>Is a collection?</label>
+                <div class="input-group">
+                    <input type="checkbox" ng-model="backend.is_collection"
+                        ng-change="backend.target = ''"> Response is an array.
+                    <span class="help-block">KrakenD expects an object as a response
+                        (in
+                        json inside brackets, e.g:
+                        <code>{ "status":"OK" }</code> but if
+                        the backend returns a collection instead (e.g:
+                        <code>[ "a", "b" ]</code>) check
+                        this option. The collection will be returned inside the
+                        <code>collection</code>
+                        attribute. Use the renaming below to rename it to anything
+                        else.</span>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="backend.is_collection != true">
             <label class="col-md-2 control-label">Filtering mode</label>
             <div class="col-md-10">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active">
                             <a data-target="#tab_black-{{ endpoint_index }}-{{ backend_index }}" data-toggle="tab"
-                                aria-expanded="false">Blacklist
+                                aria-expanded="false">Deny
                                 (fastest)</a>
                         </li>
                         <li>
                             <a data-target="#tab_white-{{ endpoint_index }}-{{ backend_index }}" data-toggle="tab"
-                                aria-expanded="true">Whitelist</a>
+                                aria-expanded="true">Allow</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -27,7 +65,7 @@
                             <p>Attributes that you will NOT pick from the response:</p>
                             <ul class="list-inline">
                                 <li ng-repeat="black in backend.deny">
-                                    <a class="badge badge-remove"
+                                    <a class="badge code badge-remove"
                                         ng-click="deleteBlacklist(black,backend_index,endpoint_index)"><i
                                             class="fa fa-times"></i>
                                         {{ black }}</a>
@@ -51,7 +89,7 @@
                             <p>Attributes that you will pick from the response</p>
                             <ul class="list-inline">
                                 <li ng-repeat="white in backend.allow">
-                                    <a class="badge badge-remove"
+                                    <a class="badge code badge-remove"
                                         ng-click="deleteWhitelist(white,backend_index,endpoint_index)"><i
                                             class="fa fa-times"></i>
                                         {{ white }}</a>
@@ -82,7 +120,7 @@
             </div>
         </div>
         <div class="row">
-            <label class="col-md-2 control-label">Capturing group</label>
+            <label class="col-md-2 control-label">Wrapping group</label>
             <div class="col-md-10">
                 <input ng-model="backend.group" type="text" class="form-control" placeholder="my-group">
                 <span class="help-block">
@@ -116,7 +154,7 @@
                     <div class="col-xs-4">
                         <ul class="list-unstyled">
                             <li ng-repeat="(origin,target) in backend.mapping">
-                                <a class="badge badge-remove"
+                                <a class="badge code badge-remove"
                                     ng-click="deleteTransformation(origin,endpoint_index, backend_index)"><i
                                         class="fa fa-times"></i>
                                     {{ origin }} <i class="fa fa-arrow-right"></i>

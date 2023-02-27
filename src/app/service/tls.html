@@ -3,6 +3,7 @@
 		<h3 class="box-title">
 			<input type="checkbox" ng-checked="hasTLS()" ng-click="toggleTLS()"> Enable HTTPS
 		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/service-settings/tls/'}]"></div>
 	</div>
 	<div class="box-body">
 		<p ng-if="!hasTLS()">Mark this option to enable TLS in the listening port.</p>

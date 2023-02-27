@@ -1,0 +1,88 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            Connection <span ng-if="endpoint.extra_config['proxy'].sequential">(Sequence #{{backend_index}}, output in <code>{resp{{backend_index}}_xxx}</code>)</span>
+        </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+            ng-repeat="doc in [{'ee': false, 'url':'/backends/'}]"></div>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="col-md-2">
+                <label>Connect to host(s)</label>
+                <button class="btn btn-default btn-flat form-control"
+                    ng-class="!backend.host.length ? 'label-danger' : ''"
+                    data-toggle="modal" data-target="#add-hosts-modal">
+                    <i class="fa fa-wrench"></i> Add host
+                </button>
+                <div ng-repeat="host in sd_providers.hosts | filter: backend.sd"
+                    value="{{ host.host }}" class="form-control">
+
+                    <input type="checkbox" ng-model="checked"
+                        ng-checked="OneOfHostsInBackend(endpoint_index, backend_index,host.host)"
+                        ng-change="syncHostsInBackend(endpoint_index, backend_index, checked, host.host, host.disable_host_sanitize)">
+                    {{ host.host }}
+
+                </div>
+                <div class="radio-inline" ng-repeat="sd in sd_providers.providers">
+                    <label>
+                        <input type="radio" ng-model="backend.sd" value="{{ sd }}"
+                            ng-change="deleteHostsInBackend(endpoint_index, backend_index)">
+                        {{ sd }}
+                    </label>
+                </div>
+                <span class="help-block">When several, apply round-robin
+                    (balancing)</span>
+            </div>
+            <div class="col-md-2">
+                <label>Method</label>
+                <select id="backend.method" ng-model="backend.method"
+                    name="backend.method" class="form-control">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>URL</label>
+                <input type="text" placeholder="/users/{username}"
+                    class="form-control" required="" ng-model="backend.url_pattern">
+
+                <span class="help-block">The endpoint of the backend server to
+                    query. Reuse here
+                    any <code>{parameters}</code> defined in the parent endpoint.
+                    Also see <a
+                        href="https://www.krakend.io/docs/enterprise/endpoints/dynamic-routing/">Header
+                        routing</a>
+                </span>
+            </div>
+            <div class="col-md-2">
+                <label>Decode as:</label>
+                <select class="form-control" ng-model="backend.encoding"
+                    ng-disabled="endpoint.output_encoding == 'no-op'"
+                    ng-change="setNoOpEncoding(endpoint_index, backend.encoding, '{{ backend.encoding }}', backend_index)">
+                    <option selected value="json">JSON</option>
+                    <option value="xml">XML</option>
+                    <option value="rss">RSS</option>
+                    <option value="string">String</option>
+                    <option value="no-op">No-Op (Leave as is)</option>
+                </select>
+                <span class="help-block">How to decode the response of the
+                    backend.</span>
+            </div>
+
+            <div class="col-md-2">
+                <label>Resolution</label>
+                <div class="input-group">
+                    <input type="checkbox" ng-model="backend.disable_host_sanitize">
+                    Disable sanitization
+                </div>
+                <span class="help-block">
+                    For non-HTTP hosts. If unsure, leave the proposed value.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

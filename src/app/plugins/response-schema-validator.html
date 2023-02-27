@@ -1,19 +1,17 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
       Response Schema Validator</h3>
-    <div class="pull-right">
-      <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
-    </div>
+      <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/endpoints/response-schema-validator/'}]"></div>
   </div>
   <div class="box-body">
-    <p ng-if="!hasHttpServerPlugin()">The response schema validator plugin adds a schema validation before the gateway returns the response to the end-user or before it's merged in the endpoint with the rest of the backends.</p>
-    <div ng-if="hasHttpServerPlugin()">
+    <p ng-if="!hasPluginOfThisType()">The response schema validator plugin adds a schema validation before the gateway returns the response to the end-user or before it's merged in the endpoint with the rest of the backends.</p>
+    <div ng-if="hasPluginOfThisType()">
       <div class="form-group row">
         <div class="col-md-12">
           <label class="control-label">JSON schema</label>
           <textarea json-formatter syntax="syntax_validation_jsonschema" class="form-control"
-            ng-model="data.extra_config[plugin_type][plugin_name].schema"></textarea>
+            ng-model="data.extra_config[plugin_type][plugin_name].schema" rows="8"></textarea>
           <span class="help-block">Write your JSON schema directly in this field, with any number of fields or validations you need.</span>
           <p ng-show="syntax_validation_jsonschema" class="badge label-danger">{{syntax_validation_jsonschema}}</p>
         </div>
@@ -29,7 +27,6 @@
           <input class="form-control" placeholder="" type="number" ng-model="data.extra_config[plugin_type][plugin_name].error.status">
           <span class="help-block">The HTTP status code you want to set back in the response.</span>
         </div>
-
       </div>
     </div>
   </div>

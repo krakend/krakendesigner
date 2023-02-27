@@ -1,0 +1,25 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
+            Martian (Req/resp static manipulation)</h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+            ng-repeat="doc in [{'ee': false, 'url':'/backends/martian/'}]"></div>
+    </div>
+    <div class="box-body">
+        <p ng-if="!isMiddlewareEnabled()">Transform requests and responses through a simple DSL definition.
+            The input must be a JSON object with Martian format</p>
+        <div ng-if="isMiddlewareEnabled()">
+            <div class="col-md-12">
+                <label>Martian DSL</label>
+                <textarea spellcheck="false" json-formatter syntax="syntax_validation_martian" class="form-control"
+                    rows="10" ng-model="data.extra_config[config_namespace]"></textarea>
+                <span class="help-block">Paste here your JSON configuration to be used
+                    in the martian modifier.</span>
+                <p ng-show="syntax_validation_martian" class="badge label-danger">
+                    <i class="fa fa-warning"></i> Syntax error -
+                    {{syntax_validation_martian[backend_index]}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

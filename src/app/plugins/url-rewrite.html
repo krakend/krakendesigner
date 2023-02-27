@@ -1,15 +1,13 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
-    <h3 class="box-title"><input type="checkbox" ng-checked="hasHttpServerPlugin()" ng-click="toggleHttpServerPlugin()">
+    <h3 class="box-title"><input type="checkbox" ng-checked="hasPluginOfThisType()" ng-click="toggleHttpServerPlugin()">
       URL Rewrite</h3>
-    <div class="pull-right">
-      <a data-toggle="modal" data-target="#enterprise-needed-modal" class="pull-right-container badge badge-inverse">Enterprise</a>
-    </div>
+      <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/endpoints/url-rewrite/'}]"></div>
   </div>
   <div class="box-body">
-    <p ng-if="!hasHttpServerPlugin()">The url-rewrite plugin allows you to define a set of URLs or <strong>regular
+    <p ng-if="!hasPluginOfThisType()">The url-rewrite plugin allows you to define a set of URLs or <strong>regular
         expressions</strong> that are handled by an endpoint of your choice.</p>
-    <div ng-if="hasHttpServerPlugin()">
+    <div ng-if="hasPluginOfThisType()">
       <div class="form-group row">
         <div class="col-md-4">
           <label class="control-label">Literal match</label>
@@ -27,7 +25,7 @@
           <span class="help-block">The literal replacement, the final URL the match will become.</span>
           <ul class="list-inline">
             <li ng-repeat="(key,val) in data.extra_config[plugin_type][plugin_name].literal">
-              <a class="badge badge-remove" ng-click="deleteKey(key,data.extra_config[plugin_type][plugin_name].literal)"><i
+              <a class="badge code badge-remove" ng-click="deleteKey(key,data.extra_config[plugin_type][plugin_name].literal)"><i
                   class="fa fa-times"></i>
                   {{ key }}<i aria-hidden="true" class="fa fa-arrow-right"></i>{{ val }}
               </a>
@@ -55,7 +53,7 @@
           <span class="help-block">You can use the capturing groups (e.g: <code>/hello/${1}</code>) here.</span>
           <ul class="list-inline">
             <li ng-repeat="(idx,val) in data.extra_config[plugin_type][plugin_name].regexp">
-              <a class="badge badge-remove" ng-click="deleteIndexFromList(idx,data.extra_config[plugin_type][plugin_name].regexp)"><i
+              <a class="badge code badge-remove" ng-click="deleteIndexFromList(idx,data.extra_config[plugin_type][plugin_name].regexp)"><i
                   class="fa fa-times"></i>
                   {{ val[0] }}<i aria-hidden="true" class="fa fa-arrow-right"></i>{{ val[1] }}
               </a>

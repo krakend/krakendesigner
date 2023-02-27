@@ -6,6 +6,7 @@
   </div>
   <div class="col-md-6">
     <div ng-include src="'/src/app/forms/backends.html'"></div>
+    <service data="service" template="gzip.html"></service>
     <service data="service" template="tls.html"></service>
     <plugin root="service" placement="service" template="url-rewrite.html" plugin="'url-rewrite'"
       type="'plugin/http-server'"></plugin>
@@ -15,6 +16,8 @@
       type="'plugin/http-server'"></plugin>
       <plugin root="service" placement="service" template="static-filesystem.html" plugin="'static-filesystem'"
       type="'plugin/http-server'"></plugin>
+      <middleware data="service" namespace="'qos/ratelimit/service'" template="ratelimit_service.html">
+      </middleware>
   </div>
 </div>
 <div class="row">

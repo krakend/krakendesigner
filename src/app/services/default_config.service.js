@@ -60,6 +60,18 @@ angular
                             "X-Real-IP",
                             "X-Appengine-Remote-Addr"
                         ],
+                    },
+                    "response-schema-validator": {
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "required_field_1",
+                                "required_field_2"
+                            ]
+                        },
+                        "error": {
+                            "status": 500
+                        }
                     }
                 }
             },
@@ -84,6 +96,10 @@ angular
                 'security/http': {
                     "allowed_hosts": [],
                     "ssl_proxy_headers": {}
+                },
+                "security/bot-detector": {
+                    "empty_user_agent_is_bot": true,
+                    "cache_size": 10000
                 },
                 'telemetry/logging': {
                     "level": "ERROR",
@@ -145,6 +161,19 @@ angular
                     "operationName": "addMktPreferencesForUser",
                     "variables": {}
                 },
+                "backend/soap": {
+                    "template": "PHNvYXA6RW52ZWxvcGU+CiAgPHNvYXA6Qm9keT4KICAgIDxVc2VyPnt7IC5yZXFfcGFyYW1zLlVzZXIgfX08L1VzZXI+CiAgPC9zb2FwOkJvZHk+Cjwvc29hcDpFbnZlbG9wZT4="
+                },
+                "modifier/body-generator": {
+                    "template": "ewogICJ1cGRhdGUiOnsKICAgICJ1c2VyX2lkIjogInt7IC5yZXFfcGFyYW1zLlVzZXIgfX0iLAogICAgImVtYWlsIjogInt7IC5yZXFfYm9keS5lbWFpbCB9fSIKICB9Cn0="
+                },
+                "modifier/martian": {
+                    "header.Modifier": {
+                      "scope": ["request", "response"],
+                      "name": "X-Martian",
+                      "value": "true"
+                    }
+                },
                 // // Endpoint level middleware
                 'qos/ratelimit/router': {
                     "max_rate": 0,
@@ -191,6 +220,18 @@ angular
                 },
                 "modifier/jmespath": {
                     "expr": "people[?age > `20`].[name, age]"
+                },
+                "validation/json-schema": {
+                    "type": "object",
+                    "required": ["number", "street_name", "street_type"],
+                    "properties": {
+                        "number": { "type": "number" },
+                        "street_name": { "type": "string" },
+                        "street_type": {
+                            "type": "string",
+                            "enum": ["Street", "Avenue", "Boulevard"]
+                        }
+                    }
                 }
             },
             "plugin/http-server": {
