@@ -463,10 +463,15 @@
                                         </div>
                                         <div class="tab-pane"
                                             id="tab-backend{{endpoint_index}}-{{backend_index}}-response">
-                                            <p ng-if="endpoint.output_encoding == 'no-op'">
+                                            <p ng-if="endpoint.output_encoding == 'no-op'" class="box text-lg">
+                                                <span class="badge"><i class="fa fa-warning"></i></span>
                                                 When using <code>no-op</code> (no operation) you are telling KrakenD to
-                                                not perform any manipulation, and several modules requiring
-                                                parsing the content are now hidden.
+                                                not perform any manipulation, almost all modules are now hidden.
+                                            </p>
+                                            <p ng-if="endpoint.output_encoding != 'no-op'" class="box text-lg">
+                                                <span class="badge"><i class="fa fa-info"></i></span> You can modify
+                                                the structure of the data before you return it to the endpoint where is
+                                                aggregated with other endpoints.
                                             </p>
                                             <div class="form-group">
                                                 <div class="col-md-6">
@@ -495,10 +500,14 @@
                                         </div>
                                         <div class="tab-pane"
                                             id="tab-backend{{endpoint_index}}-{{backend_index}}-throttling">
+                                            <p class="box text-lg">
+                                                <span class="badge"><i class="fa fa-info"></i></span> Control and limit
+                                                the interaction between KrakenD and your service.
+                                            </p>
                                             <div class="form-group">
                                                 <div class="col-md-6">
-                                                    <middleware data="backend"
-                                                        template="gobreaker.html" namespace="'qos/circuit-breaker'">
+                                                    <middleware data="backend" template="gobreaker.html"
+                                                        namespace="'qos/circuit-breaker'">
                                                     </middleware>
                                                 </div>
                                                 <div class="col-md-6">
@@ -509,6 +518,11 @@
                                         </div>
                                         <div class="tab-pane"
                                             id="tab-backend{{endpoint_index}}-{{backend_index}}-connectivity">
+                                            <p class="box text-lg">
+                                                <span class="badge"><i class="fa fa-info"></i></span> Interaction with
+                                                services beyond regular REST. Queues, lambdas, GraphQL and other
+                                                services plugged as backend servers.
+                                            </p>
                                             <div class="form-group">
                                                 <div class="col-md-6">
                                                     <middleware data="backend" template="soap.html"
@@ -524,6 +538,9 @@
 
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <plugin root="service" placement="backend"
+                                                        template="grpc.html" plugin="'YOUR-GRPC-PLUGIN-NAME'"
+                                                        type="'plugin/http-client'"></plugin>
                                                     <middleware data="backend" template="pubsub_subscriber.html"
                                                         namespace="'backend/pubsub/susbcriber'"></middleware>
                                                     <middleware data="backend" template="pubsub_publisher.html"
@@ -537,6 +554,12 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="tab-backend{{endpoint_index}}-{{backend_index}}-auth">
+                                            <p class="box text-lg">
+                                                <span class="badge"><i class="fa fa-info"></i></span> Set authentication
+                                                requirements between KrakenD and your services. If you'd like to pass
+                                                JWT tokens to the backend as well, add the <code>Authorization</code>
+                                                header in the endpoint's parameter forwarding.
+                                            </p>
                                             <div class="form-group">
                                                 <div class="col-md-6">
                                                     <middleware data="backend"
@@ -554,6 +577,10 @@
                                         </div>
                                         <div class="tab-pane"
                                             id="tab-backend{{endpoint_index}}-{{backend_index}}-security-validation">
+                                            <p class="box text-lg">
+                                                <span class="badge"><i class="fa fa-info"></i></span> Validate that
+                                                request and responses adhere to your custom policies.
+                                            </p>
                                             <div class="form-group">
                                                 <div class="col-md-6">
                                                     <middleware template="security-policies.html"

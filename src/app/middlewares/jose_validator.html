@@ -8,6 +8,11 @@
     <div class="box-body">
         <p ng-if="!isMiddlewareEnabled()">Enables validation of JWT tokens (OAuth) that have been issued by a third party identity provider (e.g.: OpenID Connect)</p>
         <div ng-if="isMiddlewareEnabled()">
+            <p class="box text-lg">
+                <span class="badge"><i class="fa fa-info"></i></span> KrakenD is now in charge of token validation, but if you'd like to
+                keep passing the JWT tokens to the backend, add the <code>Authorization</code>
+                header in the endpoint's parameter forwarding.
+            </p>
             <p>Only the <strong>algorithm</strong> and the location of your <strong>jwk</strong> are mandatory fields.</p>
             <div class="form-group">
                 <div class="col-md-6">

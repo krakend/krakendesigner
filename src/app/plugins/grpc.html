@@ -1,0 +1,30 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input ng-disabled="getConflictingPlugin()" type="checkbox" ng-checked="hasHttpClientPlugin()"
+        ng-click="toggleHttpClientPlugin()">
+      REST to gRPC
+    </h3>
+    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+      ng-repeat="doc in [{'ee': true, 'url':'/backends/grpc/'}]"></div>
+  </div>
+  <div class="box-body">
+    <p ng-if="getConflictingPlugin()"><strong>To use this plugin you must disable
+        <span class="badge">{{ getConflictingPlugin() }}</span></strong></p>
+    <p ng-if="!hasHttpClientPlugin()">Interacts with a gRPC service</p>
+    <div ng-if="hasHttpClientPlugin()">
+      <div class="form-group">
+        <div class="col-md-12">
+          <p class="box text-lg">
+            <span class="badge"><i class="fa fa-info"></i></span>
+            To connect to a gRPC service, you need to copy the gRPC plugin provided by the KrakenD staff.
+          </p>
+          <label>gRPC address</label>
+          <input type="text" ng-model="data.extra_config[plugin_type][plugin_name]['grpc_address']" class="form-control"
+            placeholder="backend:50051" />
+          <span class="help-block">The address of the gRPC service, including the port.</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
