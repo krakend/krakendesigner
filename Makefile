@@ -1,6 +1,6 @@
 .PHONY: all install watch docker_build clean create_image serve
 
-all: install 
+all: install
 
 # Installs the dependencies and generates the JS bundle
 install:
@@ -15,10 +15,10 @@ build:
 
 # Build the image
 docker_build:
-	docker build -t devopsfaith/krakendesigner .
+	docker build -t krakend/designer .
 
 serve:
-	docker run --rm -d -p 8080:80 -v "${PWD}/designer:/usr/share/nginx/html" devopsfaith/krakendesigner
+	docker run --rm -d -p 8000:80 -v "${PWD}/designer:/usr/share/nginx/html" krakend/designer
 
 clean:
 	rm -fr node_modules

@@ -5,14 +5,14 @@ An application made with AngularJS to visually create the `krakend.json` file.
 
 [Try it live!](http://designer.krakend.io)
 
-![Screenshot](https://github.com/devopsfaith/krakendesigner/blob/master/media/screenshot.png?raw=true)
+![Screenshot](https://github.com/krakend/krakendesigner/blob/master/media/screenshot.png?raw=true)
 
 [Download KrakenD](https://www.krakend.io/download/) | [Build KrakenD](https://github.com/krakendio/krakend-ce) | [Documentation](https://www.krakend.io/docs/overview/) | [Blog](https://www.krakend.io/blog)
 
 ## Usage
 To use the application, it is not necessary to clone the repository. Run the following to start a web server with the KrakenDesigner:
 
-    docker run --rm -p 8080:80 devopsfaith/krakendesigner
+    docker run --rm -p 8000:80 krakend/designer
 
 ## Build
 The build process leaves a single html file and a single JS file in the `designer` folder that is later deployed inside the KrakenD images. Build with:
@@ -31,7 +31,7 @@ If you don't have Docker, you can see your local `npm` to install the dependenci
 ### Testing changes
 Start the web server pointing to `designer/` and mounting the volume:
 
-    docker run --rm -d -p 8080:80 -v "$PWD/designer:/usr/share/nginx/html" devopsfaith/krakendesigner
+    docker run --rm -d -p 8000:80 -v "$PWD/designer:/usr/share/nginx/html" krakend/designer
 
 Remember to `make build` or `make watch` if you change HTML, CSS or JS.
 
