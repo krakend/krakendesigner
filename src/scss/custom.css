@@ -40,6 +40,9 @@ a.badge.badge-inverse:hover {
     color: #0071CE;
 }
 
+.sidebar-menu>li {
+    font-size:16px;
+}
 .wrapper {
     background-color: white !important;
 }

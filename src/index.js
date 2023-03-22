@@ -9,6 +9,7 @@ import './app/designer.module.js';
 import './app/designer.controller.js';
 import './app/service/service.directive.js';
 import './app/services/default_config.service.js';
+import './app/services/fileHandler.service.js';
 import './app/services/constants.service.js';
 import './app/services/input_validator.service.js';
 import './app/middlewares/middleware.directive.js';

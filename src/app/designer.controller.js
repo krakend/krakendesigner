@@ -2,7 +2,8 @@ var FileSaver = require('file-saver');
 
 angular
     .module('KrakenDesigner')
-    .controller('KrakenDesignerController', function ($scope, $rootScope, $location, DefaultConfig, Constants) {
+    .controller('KrakenDesignerController', function ($window, $scope, $rootScope, $location, DefaultConfig, Constants, FileHandleService) {
+        $rootScope.window = $window;
 
         if ('undefined' === typeof $rootScope.service) {
             // Default initial values set in any configuration generation:
@@ -47,17 +48,39 @@ angular
             }
         };
 
-        $rootScope.save = function () {
-            $rootScope.fixCipherSuitesType('auth/signer', false);
-            $rootScope.fixCipherSuitesType('auth/validator', false);
+        $rootScope.open = async function () {
+            try {
+                const [fileHandle] = await window.showOpenFilePicker({
+                    types: [
+                        {
+                            description: 'JSON Files',
+                            accept: { 'application/json': ['.json'] },
+                        },
+                    ],
+                });
 
-            // Make a copy of the service and clean it, do not modify rootScope!
-            save = $rootScope.service
+                FileHandleService.fileHandle = fileHandle;
+                const file = await fileHandle.getFile();
+                const contents = await readFileAsync(file);
 
+                $scope.$apply(() => {
+                    $scope.service_configuration = contents;
+                    $rootScope.loadFile();
+                });
+
+                document.getElementById('save-file').classList.remove('hidden');
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error('Error opening the file:', error);
+                }
+            }
+        };
+
+        function cleanServiceForSaving(service) {
             // Delete empty extra config:
             extra_config = $rootScope.getObject("service", "extra_config");
             if (extra_config && 0 === Object.keys(extra_config).length) {
-                delete save.extra_config;
+                delete service.extra_config;
             }
 
             // Delete empty endpoint extra config:
@@ -66,18 +89,81 @@ angular
                 for (i = 0; i < endpoints.length; i++) {
                     endpoint_extra_config = $rootScope.getObject("service", "endpoints", i, "extra_config");
                     if (endpoint_extra_config && 0 === Object.keys(endpoint_extra_config).length) {
-                        delete save.endpoints[i].extra_config;
+                        delete service.endpoints[i].extra_config;
                     }
 
                     backends = $rootScope.getObject("service", "endpoints", i, "backend");
                     for (b = 0; backends && b < backends.length; b++) {
                         backend_extra_config = $rootScope.getObject("service", "endpoints", i, "backend", b, "extra_config");
                         if (backend_extra_config && 0 === Object.keys(backend_extra_config).length) {
-                            delete save.endpoints[i].backend[b].extra_config;
+                            delete service.endpoints[i].backend[b].extra_config;
                         }
                     }
                 }
             }
+        }
+
+        $rootScope.save = async function () {
+            if (!FileHandleService.fileHandle) {
+                alert('No file selected');
+                return;
+            }
+
+            try {
+                $rootScope.fixCipherSuitesType('auth/signer', false);
+                $rootScope.fixCipherSuitesType('auth/validator', false);
+
+                // Make a copy of the service and clean it, do not modify rootScope!
+                save = angular.copy($rootScope.service);
+                cleanServiceForSaving(save);
+                save_contents = angular.toJson(save, true);
+
+                const writableStream = await FileHandleService.fileHandle.createWritable();
+                await writableStream.write(save_contents);
+                await writableStream.close();
+                alert('File saved successfully');
+            } catch (e) {
+                alert('Failed to save the file.\n\n' + e.message);
+            }
+        };
+
+        document.addEventListener("keydown", function(event) {
+            if (event.ctrlKey && event.key === 'd') {
+                event.preventDefault();
+                $rootScope.download();
+                return;
+            }
+
+            if (!(window.showOpenFilePicker && window.showSaveFilePicker)) return;
+
+            if (event.ctrlKey && event.key === 'o') {
+                event.preventDefault();
+                $rootScope.open();
+            }
+            if (event.ctrlKey && event.key === 's') {
+                event.preventDefault();
+                $rootScope.save();
+            }
+        });
+
+        function readFileAsync(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    resolve(reader.result);
+                };
+                reader.onerror = reject;
+                reader.readAsText(file);
+            });
+        }
+
+        $rootScope.download = function () {
+            $rootScope.fixCipherSuitesType('auth/signer', false);
+            $rootScope.fixCipherSuitesType('auth/validator', false);
+
+            // Make a copy of the service and clean it, do not modify rootScope!
+            save = angular.copy($rootScope.service);
+            cleanServiceForSaving(save)
 
             var date = new Date().getTime();
             downloadDocument(date + "-krakend.json", angular.toJson(save, true)); // Beautify
