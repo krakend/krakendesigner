@@ -3,16 +3,19 @@
 
 An application made with AngularJS to visually create the `krakend.json` file.
 
-[Try it live!](http://designer.krakend.io)
-
-![Screenshot](https://github.com/krakend/krakendesigner/blob/master/media/screenshot.png?raw=true)
-
-[Download KrakenD](https://www.krakend.io/download/) | [Build KrakenD](https://github.com/krakendio/krakend-ce) | [Documentation](https://www.krakend.io/docs/overview/) | [Blog](https://www.krakend.io/blog)
+- [Try it live!](http://designer.krakend.io)
+- [Documentation](https://www.krakend.io/docs/configuration/designer/)
 
 ## Usage
-To use the application, it is not necessary to clone the repository. Run the following to start a web server with the KrakenDesigner:
+There are different ways of using the Designer:
 
-    docker run --rm -p 8000:80 krakend/designer
+- Use its [hosted version online](http://designer.krakend.io). Your configurations are not uploaded elsewhere.
+- Run a local container: `docker run --rm -p 8000:80 krakend/designer`
+- Clone the repo and build with NPM.
+
+**Important**: Notice that when used locally, you cannot edit files as the HTML5 library used to **access local files works only under HTTPS**, but you can still download edited copies. Use Ngrok or a similar solution to serve under HTTPS locally.
+
+The master branch of this repository is [automatically built and pushed to the online version](https://github.com/krakendio/krakendesigner/blob/master/.github/workflows/deploy.yml).
 
 ## Build
 The build process leaves a single html file and a single JS file in the `designer` folder that is later deployed inside the KrakenD images. Build with:

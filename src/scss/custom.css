@@ -213,6 +213,10 @@ a.badge.badge-inverse:hover {
     padding: 10px;
 }
 
+.box.box-danger {
+    background-color: #fee;
+}
+
 .box.box-info {
     border-top-color: #0071CE;
 }
@@ -367,6 +371,19 @@ a.badge-remove:hover {
     color: white;
     font-weight: bold;
 }
+
+.toolbar {
+    margin:8px 10px 0 0;
+}
+.btn-toolbar {
+    font-size: 17px;
+    margin: 0 5px;
+}
+
+.btn-toolbar:hover {
+    background-color: #d8d9d9;
+}
+
 
 table.downloads a {
     color: #2752a3;

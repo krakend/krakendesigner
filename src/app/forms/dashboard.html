@@ -1,28 +1,30 @@
 <div class="col-md-12">
-    <p class="box text-lg">
-        <span class="badge"><i class="fa fa-info"></i></span> The Designer is an editor of
-        <code>krakend.json</code> files. No content edited or loaded into the editor is tracked or uploaded in any way.
+    <p class="box text-lg" ng-if="hasLocalSaveSupport()">
+        <span class="badge"><i class="fa fa-info"></i></span> The Designer is an editor of KrakenD configuration files in JSON, that uses HTML5
+        to edit files stored in your computer if you give it access.
+    </p>
+    <p class="box box-danger text-lg" ng-if="!hasLocalSaveSupport()">
+        <span class="badge label-danger"><i class="fa fa-warning"></i></span> KrakenD Designer works partially in this browser, as it does not seem to have full support to <strong>edit local files using HTML5</strong>. Switch to a Chromium-based browser (e.g.: Chrome, Edge) accessing the Designer with HTTPS for full support. You can still edit files and download a copy of the generated configuration. <a href="">Learn more</a>
     </p>
 </div>
 <div class="col-lg-6">
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">KrakenDesigner</h3>
+            <h3 class="box-title">What is the KrakenD Designer</h3>
         </div>
         <div class="box-body">
             <p>
-                The KrakenDesigner is an open-source javascript application that helps you configure
+                The KrakenD Designer is an open-source javascript application that helps you configure
                 the API Gateway in a visual way and get familiar with the main functionalities KrakenD has.
             </p>
-            <p>It is a pure static page that does not send any of your configurations elsewhere nor tracks its
-                contents.
-                It's hosted online for your convenience, but you can also run it as a <a
-                    href="https://hub.docker.com/r/krakend/designer">Docker container</a> or <a
-                    href="https://github.com/krakendio/krakendesigner">build it from source</a>.
+            <p>It is a pure static page that <strong>does not send any of your configurations elsewhere nor tracks its
+                contents.</strong>
+                It's hosted online for your convenience, but you can also run it locally.
             </p>
-            <p>By using this tool, you don't need to learn and write the configuration from scratch, dramatically
-                reducing the learning curve.</p>
-            <p>The Designer supports <strong>most of the functionalities</strong> of KrakenD, but it does not support <a href="https://www.krakend.io/docs/configuration/flexible-config/" target="_blank">flexible configuration</a> (multiple files)</p>
+            <p>Use this page together with a <a href="https://www.krakend.io/docs/developer/hot-reload/">KrakenD Watch</a> image to automatically apply the changes in your local server.</p>
+            <p>
+              <a class="btn btn-primary" target="_blank" href="https://www.krakend.io/docs/configuration/designer/"><i class="fa fa-book"></i> Documentation</a>
+            </p>
         </div>
     </div>
     <div class="box box-info">
@@ -42,32 +44,25 @@
     </div>
 </div>
 <div class="col-lg-6">
-    <div class="box box-info">
+    <div class="box box-info" ng-if="hasLocalSaveSupport()">
         <div class="box-header with-border">
-            <h3 class="box-title">Creating your first service?</h3>
+            <h3 class="box-title">Open and edit a file in your disk</h3>
         </div>
         <div class="box-body">
-            <p>This application creates the configuration file KrakenD uses to operate. Start with at least the following <strong>steps:</strong></p>
-
-            <ul class="nav nav-pills nav-justified setup-panel">
-                <li ng-class="service.endpoints.length === 0 || !service.endpoints? '' : 'bg-success'">
-                    <a href="/#!/endpoints">
-                        <h4 class="list-group-item-heading">Step 1</h4>
-                        <p class="list-group-item-text text-bold">Add an endpoint</p>
-                    </a>
-                </li>
-                <li ng-class="saved_once ? 'bg-success' : '' ">
-                    <a href="/#!/" ng-click="save()">
-                        <h4 class="list-group-item-heading">Step 2</h4>
-                        <p class="list-group-item-text text-bold">Download the config</p>
-                    </a>
-                </li>
-            </ul>
+            <div ng-if="getOpenedFile()" class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                </button>
+                <h4><i class="fa fa-check"></i> Editing {{ getOpenedFile()}}</h4>
+                The configuration file <strong>{{getOpenedFile()}}</strong> has been successfully loaded and it will be ovewritten every time you press Save.
+            </div>
+            <p>Edit a file directly from your disk, and overwrite when you press Save. Only the <code>application/json</code> file type is
+                accepted by the Designer.
+            </p>
         </div>
     </div>
-    <div class="box box-info">
+    <div class="box box-info" ng-if="!opened_file">
         <div class="box-header with-border">
-            <h3 class="box-title">Loading previous configurations</h3>
+            <h3 class="box-title">Create a new config from an existing file (copy)</h3>
         </div>
         <div class="box-body">
             <div ng-if="dropzone_loaded" class="alert alert-success alert-dismissible">
@@ -75,18 +70,18 @@
                     ng-click="dropzone_loaded=!dropzone_loaded">×
                 </button>
                 <h4><i class="fa fa-check"></i> Configuration loaded</h4>
-                The configuration file <strong>{{filename}}</strong> has been successfully loaded in KrakenDesigner.
+                The configuration file <strong>{{filename}}</strong> has been successfully loaded in the Designer.
             </div>
-            <p>Drag and drop a previous configuration file below to resume a configuration. After reviewing the values
+            <p>Drag and drop a previous configuration file below to create a copy of its configuration. After reviewing the values
                 press the button to load it in the application. Only <code>application/json</code> file type is
                 accepted
-                by the KrakenDesigner.
+                by the Designer.
             </p>
 
             <div id="drop_zone" drop-box="[application/json, text/json]" file="filename" data="service_configuration"
                 data-max-file-size="3">
-                <h2>Drop a <code>krakend.json</code> to edit it.</h2>
-                (No content uploaded anywhere)
+                <h2>Drop a <code>krakend.json</code> to load a copy.</h2>
+                (No content uploaded anywhere, your original file remains intact)
             </div>
         </div>
     </div>
