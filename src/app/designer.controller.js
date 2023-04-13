@@ -68,6 +68,11 @@ angular
                 });
 
                 FileHandleService.fileHandle = fileHandle;
+
+                if (!fileHandle.name.toLowerCase().endsWith('.json')) {
+                    throw 'Please select a file with a .json extension.';
+                }
+
                 const file = await fileHandle.getFile();
                 const contents = await readFileAsync(file);
 
@@ -80,6 +85,7 @@ angular
                 document.getElementById('save-file').classList.remove('hidden');
             } catch (error) {
                 if (error.name !== 'AbortError') {
+                    alert('Error while opening the file:' + error);
                     console.error('Error opening the file:', error);
                 }
             }
@@ -131,6 +137,7 @@ angular
                 const writableStream = await FileHandleService.fileHandle.createWritable();
                 await writableStream.write(save_contents);
                 await writableStream.close();
+                alert("File saved on disk!");
                 console.log("File saved on disk: " + $rootScope.getOpenedFile());
             } catch (e) {
                 alert('Failed to save the file locally:\n\n' + e.message);
@@ -196,13 +203,17 @@ angular
                 $rootScope.service = DefaultConfig.service;
                 $rootScope.dropzone_loaded = true;
                 $rootScope.sd_providers = {};
+
+                $rootScope.fixCipherSuitesType('auth/validator', true);
+                $rootScope.fixCipherSuitesType('auth/signer', true);
+                $rootScope.loadSDOptions();
+
             } catch (e) {
                 alert("Failed to parse the selected JSON file.\n\n" + e.message);
+                return false;
             }
 
-            $rootScope.fixCipherSuitesType('auth/validator', true);
-            $rootScope.fixCipherSuitesType('auth/signer', true);
-            $rootScope.loadSDOptions();
+            return true;
         };
 
         // The krakend-jose cipher_suites need to be stored as integer but Angular treats multiselect as strings:

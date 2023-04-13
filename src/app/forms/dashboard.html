@@ -1,10 +1,11 @@
 <div class="col-md-12">
     <p class="box text-lg" ng-if="hasLocalSaveSupport()">
-        <span class="badge"><i class="fa fa-info"></i></span> The Designer is an editor of KrakenD configuration files in JSON, that uses HTML5
-        to edit files stored in your computer if you give it access.
+        <span class="badge"><i class="fa fa-info"></i></span>
+        Good! Your browser seems to support all the Designer features! You can push changes to a local KrakenD from this website. <a href="https://www.krakend.io/docs/configuration/designer/">Learn more</a>.
     </p>
     <p class="box box-danger text-lg" ng-if="!hasLocalSaveSupport()">
-        <span class="badge label-danger"><i class="fa fa-warning"></i></span> KrakenD Designer works partially in this browser, as it does not seem to have full support to <strong>edit local files using HTML5</strong>. Switch to a Chromium-based browser (e.g.: Chrome, Edge) accessing the Designer with HTTPS for full support. You can still edit files and download a copy of the generated configuration. <a href="">Learn more</a>
+        <span class="badge label-danger"><i class="fa fa-warning"></i></span>
+        KrakenD Designer uses <strong>experimental technology</strong> available in Chrome, Edge, or Opera but not in your browser. You can still fully use the editor, except you cannot edit files on your hard drive and apply changes to KrakenD automatically after saving. Instead, you can load and download copies of configurations and operate KrakenD manually. <a href="https://www.krakend.io/docs/configuration/designer/">Learn more</a>.
     </p>
 </div>
 <div class="col-lg-6">
@@ -17,11 +18,11 @@
                 The KrakenD Designer is an open-source javascript application that helps you configure
                 the API Gateway in a visual way and get familiar with the main functionalities KrakenD has.
             </p>
-            <p>It is a pure static page that <strong>does not send any of your configurations elsewhere nor tracks its
+            <p>It is a pure static page that <strong>does not send any of your configurations elsewhere nor track its
                 contents.</strong>
-                It's hosted online for your convenience, but you can also run it locally.
+                It's hosted online for convenience, but you can also run it locally.
             </p>
-            <p>Use this page together with a <a href="https://www.krakend.io/docs/developer/hot-reload/">KrakenD Watch</a> image to automatically apply the changes in your local server.</p>
+            <p>Use this page together with a <a href="https://www.krakend.io/docs/developer/hot-reload/">KrakenD Watch</a> image to apply the changes in your local server automatically.</p>
             <p>
               <a class="btn btn-primary" target="_blank" href="https://www.krakend.io/docs/configuration/designer/"><i class="fa fa-book"></i> Documentation</a>
             </p>
@@ -32,7 +33,7 @@
             <h3 class="box-title">Development tools</h3>
         </div>
         <div class="box-body">
-            <p>The KrakenD designer outputs valid configurations respecting the schema. But we encourage you to <strong>edit the JSON file by hand</strong> and spend some time understanding its structure. There are few resources that might help you:</strong></p>
+            <p>The KrakenD designer outputs valid configurations respecting the schema. But we encourage you to <strong>edit the JSON file by hand</strong> and spend some time understanding its structure. There are a few resources that might help you:</strong></p>
 
             <ul class="list-styled">
                 <li><a href="https://www.krakend.io/docs/configuration/structure/" target="_blank">Understanding the configuration file</a></li>
@@ -53,14 +54,14 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
                 </button>
                 <h4><i class="fa fa-check"></i> Editing {{ getOpenedFile()}}</h4>
-                The configuration file <strong>{{getOpenedFile()}}</strong> has been successfully loaded and it will be ovewritten every time you press Save.
+                The configuration file <strong>{{getOpenedFile()}}</strong> has been successfully loaded, and it will be overwritten every time you press Save.
             </div>
-            <p>Edit a file directly from your disk, and overwrite when you press Save. Only the <code>application/json</code> file type is
+            <p>Edit a file directly from your disk, and overwrite it when you press Save. Only the <code>application/json</code> file type is
                 accepted by the Designer.
             </p>
         </div>
     </div>
-    <div class="box box-info" ng-if="!opened_file">
+    <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">Create a new config from an existing file (copy)</h3>
         </div>
@@ -73,7 +74,7 @@
                 The configuration file <strong>{{filename}}</strong> has been successfully loaded in the Designer.
             </div>
             <p>Drag and drop a previous configuration file below to create a copy of its configuration. After reviewing the values
-                press the button to load it in the application. Only <code>application/json</code> file type is
+                press the button to load it into the application. Only <code>application/json</code> file type is
                 accepted
                 by the Designer.
             </p>
@@ -97,7 +98,7 @@
                 <h4 class="modal-title">Load configuration from file <strong>{{filename}}</strong>?</h4>
             </div>
             <div class="modal-body">
-                <p>Current session data will be replaced with the configuration below. Proceed? </p>
+                <p>The current session data will be replaced with the configuration below. Proceed? </p>
                 <pre>{{ service_configuration }}</pre>
 
             </div>
