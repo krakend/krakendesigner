@@ -714,7 +714,7 @@ angular
 
         // Valid endpoints start with Slash and do not contain /__debug[/] or /__health
         $rootScope.isValidEndpoint = function (endpoint) {
-            return !(/^[^\/]|\/__debug(\/.*)?$|\/__health$|\/favicon\.ico/i.test(endpoint));
+            return !(/^[^\/]|\/__debug(\/.*)?$|\/__health$|\/__echo(\/.*)?$|\/favicon\.ico/i.test(endpoint));
         };
 
         $rootScope.isValidTimeUnit = function (time_with_unit) {
