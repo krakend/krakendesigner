@@ -48,9 +48,8 @@ angular
             }
         };
 
-        $rootScope.getOpenedFile = function() {
-            if ( FileHandleService.fileHandle )
-            {
+        $rootScope.getOpenedFile = function () {
+            if (FileHandleService.fileHandle) {
                 return FileHandleService.fileHandle.name
             }
             return false;
@@ -715,30 +714,44 @@ angular
 
         // Valid endpoints start with Slash and do not contain /__debug[/] or /__health
         $rootScope.isValidEndpoint = function (endpoint) {
-            // Valid endpoints cannot contain multiple * or do not finish in them when used.
-            // /valid/endpoint/{or}/whatever
-            // /valid/endpoint/{or}/whatever/*
-            // /valid/endpoint
-            // /valid/endpoint/*
-            // /valid/{endpoint}/*
+            // Invalid:
+            //  /invalid*
+            //  /invalid:endpoint
+            //  /invalid/endpoint*
+            //  invalid
+            //  favicon.icon
+            //  /*
+            //  /
+            //  /invalid/?/./*
+            //  /invalid/*/endpoint
+            //  /invalid/**
+            //  /invalid/*/endpoint/*
+            //  /__health/lolo
+            //  /__health
+            //  /__debug/lolo
+            //  /__debug/*
+            //  /__debug
+            //  /__echo/lolo
+            //  /__echo
 
-            // /invalid*
-            // /invalid/endpoint*
-            // invalid
-            // favicon.icon
-            // /*
-            // /favicon.ico
-            // /invalid/*/endpoint
-            // /invalid/**
-            // /invalid/*/endpoint/*
-            // /__health/lolo
-            // /__health
-            // /__debug/lolo
-            // /__debug/*
-            // /__debug
-            // /__echo/lolo
-            // /__echo
-            return !(/^[^\/]|\/__(debug|health|echo)(\/.*)?|\/favicon\.ico|(.*\*.*){2,}|(.*\*.+$)|^\/\*$|([^\/]\*)/i.test(endpoint));
+            // Valid:
+            //  /
+            //  /valid/endpoint/{or}/whatever
+            //  /valid/endpoint/{or}/whatever/*
+            //  /valid.json
+            //  /hey/yo
+            //  /hey/yo/*
+            //  /hey/{yo}/*
+            //  /_valid
+            //  /v1/__debug
+
+
+            return (
+                // JSON schema validation
+                /^\/[^:\*\?\&\%]*(\/\*)?$/.test(endpoint) &&
+                // Avoid user frustration:
+                !(/^\/__(debug|echo)\/+|^\/__health\/*$|^\/favicon\.ico$/i.test(endpoint))
+            );
         };
 
         $rootScope.isValidTimeUnit = function (time_with_unit) {
