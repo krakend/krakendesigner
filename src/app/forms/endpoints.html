@@ -6,9 +6,7 @@
     <div class="box-header with-border">
         <h3 class="box-title text-xl">
             <a href="/#!/endpoints?target={{endpoint_index}}">
-                {{ endpoint.endpoint }}<span ng-hide="!hasWildcard(endpoint.endpoint)"
-                    class="label-wildcard-asterisk">/<i class="fa fa-asterisk"></i></span>
-                <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-wildcard">Wildcard</span>
+                {{ endpoint.endpoint }} <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-wildcard">Wildcard</span>
                 <code class="small" ng-if="endpoint.input_query_strings.length > 0">
                     ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
                 </code>
@@ -42,17 +40,13 @@
                                 endpoints</a>.
                         </p>
                     </div>
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-8 col-sm-8">
                         <label>KrakenD Endpoint</label>
                         <input type="text" placeholder="/users/{username}" class="form-control input-md" required=""
-                            ng-model="endpoint.endpoint" ng-disabled="hasWildcard(endpoint.endpoint)">
+                            ng-model="endpoint.endpoint">
                         <span class="help-block">This is the URI your clients will connect to. Must start with slash.
                             Use curly braces to insert <code>{endpoint_parameters}</code> that can be passed to the
-                            backends.</span>
-                    </div>
-                    <div class="col-md-2 col-sm-2">
-                        <plugin root="service" placement="endpoint" template="wildcard.html" plugin="'wildcard'"
-                            type="'plugin/http-server'"></plugin>
+                            backends. URLs ending in <code>/*</code> are treated as <strong>wildcards</strong>.</span>
                     </div>
                     <div class="col-md-2 col-sm-2">
                         <label>Method</label>

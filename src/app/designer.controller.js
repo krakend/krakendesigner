@@ -344,6 +344,10 @@ angular
                     };
                 }
 
+                if ($rootScope.hasWildcard($rootScope.getObject("service", "endpoints", e, "endpoint"))) {
+                    $rootScope.modules_in_use.push('wildcard');
+                }
+
                 backends = $rootScope.getObject("service", "endpoints", e, "backend");
                 for (b = 0; backends && b < backends.length; b++) {
                     client_plugin = $rootScope.getObject("service", "endpoints", e, "backend", b, "extra_config", "plugin/http-client", "name");
@@ -479,10 +483,7 @@ angular
         };
 
         $rootScope.hasWildcard = function (endpoint) {
-            return (
-                $rootScope.hasPluginOfThisType('wildcard') &&
-                null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "wildcard", "endpoints", endpoint)
-            );
+            return endpoint.endsWith("/*");
         }
         // Destroy middleware or create it with default data:
         $rootScope.toggleMiddleware = function (namespace) {
@@ -714,7 +715,30 @@ angular
 
         // Valid endpoints start with Slash and do not contain /__debug[/] or /__health
         $rootScope.isValidEndpoint = function (endpoint) {
-            return !(/^[^\/]|\/__debug(\/.*)?$|\/__health$|\/favicon\.ico/i.test(endpoint));
+            // Valid endpoints cannot contain multiple * or do not finish in them when used.
+            // /valid/endpoint/{or}/whatever
+            // /valid/endpoint/{or}/whatever/*
+            // /valid/endpoint
+            // /valid/endpoint/*
+            // /valid/{endpoint}/*
+
+            // /invalid*
+            // /invalid/endpoint*
+            // invalid
+            // favicon.icon
+            // /*
+            // /favicon.ico
+            // /invalid/*/endpoint
+            // /invalid/**
+            // /invalid/*/endpoint/*
+            // /__health/lolo
+            // /__health
+            // /__debug/lolo
+            // /__debug/*
+            // /__debug
+            // /__echo/lolo
+            // /__echo
+            return !(/^[^\/]|\/__(debug|health|echo)(\/.*)?|\/favicon\.ico|(.*\*.*){2,}|(.*\*.+$)|^\/\*$|([^\/]\*)/i.test(endpoint));
         };
 
         $rootScope.isValidTimeUnit = function (time_with_unit) {
