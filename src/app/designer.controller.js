@@ -286,7 +286,7 @@ angular
         // Looks in the configuration for EE functionality:
         $rootScope.isEnterprise = function () {
             $rootScope.modules_in_use = [];
-            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/ganalytics'];
+            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/newrelic', 'telemetry/ganalytics'];
             endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies'];
             backend_components = ['auth/ntlm','backend/http/client','backend/soap', 'modifier/jmespath', 'security/policies'];
             http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
