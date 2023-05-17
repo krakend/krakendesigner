@@ -1,0 +1,132 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> REST to gRPC
+        </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+            ng-repeat="doc in [{'ee': true, 'url':'/backends/grpc/'}]"></div>
+    </div>
+    <div class="box-body">
+        <p ng-if="!isMiddlewareEnabled()">This backend is a gRPC server and will connect to a service defined in the <a
+                href="/#!/service">gRPC catalog</a></p>
+        <div ng-if="isMiddlewareEnabled()">
+            <p>Set in the URL of this backend the full name of the gRPC service and method call, for instance
+                <code>/flight_finder.Flights/FindFlight</code>. The service must be declared in the <a
+                    href="/#!/service">gRPC catalog</a>
+            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Naming convention</label>
+                    <select ng-model="data.extra_config[config_namespace].response_naming_convention"
+                        class="form-control">
+                        <option value="snake_case">snake_case</option>
+                        <option value="camelCase">camelCase</option>
+                    </select>
+                    <span class="help-block">Defines the naming convention used to format the data.</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                ng-model="data.extra_config[config_namespace].client_tls.allow_insecure_connections">
+                            <strong>Allow insecure connections</strong>
+                        </label>
+                        <span class="help-block">Allow untrusted certificates in development stage.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                ng-model="data.extra_config[config_namespace].output_remove_unset_values">
+                            <strong>Remove unset values</strong>
+                        </label>
+                        <span class="help-block">When the response has missing fields from the definition, they are
+                            returned with default values. Setting this flag to true removes those fields from the
+                            response, while setting it to false or not setting it, returns all the fields in the
+                            definition.</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].output_enum_as_string">
+                            <strong>Enums as strings</strong>
+                        </label>
+                        <span class="help-block">Enum types are returned as numeric values (flag set to false). Set this
+                            flag to true to return the string representation of the enum value. For instance, an enum
+                            representing allergies, such as ['NUTS', 'MILK', ' SOY', 'WHEAT'] would return a value SOY
+                            when this flag is true, or 2 when false.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                ng-model="data.extra_config[config_namespace].output_timestamp_as_string">
+                            <strong>Timestamp as strings</strong>
+                        </label>
+                        <span class="help-block">Well-known Timestamp types (<code>google.protobuf.Timestamp</code>) are
+                            returned as a struct containing fields with seconds and nanos fields (flag set to false).
+                            Setting this flag to true transforms the timestamps into a string representation in RFC3999
+                            format.</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                ng-model="data.extra_config[config_namespace].output_duration_as_string">
+                            <strong>Duration as strings</strong>
+                        </label>
+                        <span class="help-block">Well-known Duration types (google.protobuf.Duration) are returned as a
+                            struct containing fields with seconds and nanos fields (flag set to false). Setting this
+                            flag to true transforms the timestamps into a string representation in seconds. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Input mapping</label>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Field</th>
+                                <th>Map as</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="(field,value) in data.extra_config[config_namespace].input_mapping">
+                                <td>{{ field }}</td>
+                                <td>{{ value }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger"
+                                        ng-click="deleteKey(field,'input_mapping')">
+                                        <i class="fa fa-trash"></i> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="form-control" ng-model="input_field"
+                                        placeholder="input_field"></td>
+                                <td><input type="text" class="form-control" ng-model="input_field_value"
+                                        placeholder="destination.field"></td>
+                                <td>
+                                    <button type="button" class="btn btn-success"
+                                        ng-click="addKeyPair(input_field,input_field_value,'input_mapping')">
+                                        <i class="fa fa-plus"></i> Add mapping
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <span class="help-block">A dictionary that converts the user input into a different field during the
+                        backend request. </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

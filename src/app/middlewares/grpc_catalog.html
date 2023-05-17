@@ -1,0 +1,37 @@
+<div class="box box-info box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> gRPC Catalog
+        </h3>
+        <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/backends/grpc/'}]"></div>
+    </div>
+    <div class="box-body">
+        <p ng-if="!isMiddlewareEnabled()">gRPC is a protocol that creates a channel connection between a client and a server and allows calling methods to send and receive payloads serialized with protocol buffers. With the gRPC integration, KrakenD acts as the gRPC client.</p>
+        <div ng-if="isMiddlewareEnabled()">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Directory or file</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="grpcatalog/flights/fligths.pb" type="text" required=""
+                                ng-model="input_catalog">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-success"
+                                    ng-click="addTermToList(input_catalog,'catalog')">
+                                    <i class="fa fa-plus"></i> Add path
+                                </button>
+                            </div>
+                        </div>
+                        <span class="help-block">The paths to the different <code>.pb</code> files you want to load, or the paths to directories containing .pb files. Relative paths point to <code>/etc/krakend</code> by default.</code></span>
+                        <ul class="list-inline">
+                            <li ng-repeat="(index,val) in data.extra_config[config_namespace].catalog">
+                                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'catalog')"><i
+                                        class="fa fa-times"></i> {{ val }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

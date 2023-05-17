@@ -356,8 +356,7 @@
                                     <div ng-include src="'/src/app/forms/sequential.html'"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
-                                    </middleware>
+                                    <middleware template="websocket.html" namespace="'websocket'" data="endpoint"></middleware>
                                 </div>
                             </div>
                         </div>
@@ -532,9 +531,7 @@
 
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <plugin root="service" placement="backend"
-                                                        template="grpc.html" plugin="'YOUR-GRPC-PLUGIN-NAME'"
-                                                        type="'plugin/http-client'"></plugin>
+                                                    <middleware template="grpc_backend.html" namespace="'backend/grpc'" data="backend"></middleware>
                                                     <middleware data="backend" template="pubsub_subscriber.html"
                                                         namespace="'backend/pubsub/susbcriber'"></middleware>
                                                     <middleware data="backend" template="pubsub_publisher.html"
@@ -611,7 +608,7 @@
                                     <div class="modal-body">
                                         <p>Define at least one host (upstream service) where KrakenD will take the data
                                             from.</p>
-                                        <div ng-include src="'/src/app/forms/backends.html'"></div>
+                                        <div ng-include src="'/src/app/forms/hosts.html'"></div>
                                     </div>
                                 </div>
                             </div>

@@ -164,6 +164,10 @@ angular
                 "backend/soap": {
                     "template": "PHNvYXA6RW52ZWxvcGU+CiAgPHNvYXA6Qm9keT4KICAgIDxVc2VyPnt7IC5yZXFfcGFyYW1zLlVzZXIgfX08L1VzZXI+CiAgPC9zb2FwOkJvZHk+Cjwvc29hcDpFbnZlbG9wZT4="
                 },
+                "backend/grpc": {
+                    "response_naming_convention": "snake_case",
+                    "input_mapping": {}
+                },
                 "modifier/body-generator": {
                     "template": "ewogICJ1cGRhdGUiOnsKICAgICJ1c2VyX2lkIjogInt7IC5yZXFfcGFyYW1zLlVzZXIgfX0iLAogICAgImVtYWlsIjogInt7IC5yZXFfYm9keS5lbWFpbCB9fSIKICB9Cn0="
                 },
