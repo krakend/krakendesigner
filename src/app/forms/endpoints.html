@@ -356,7 +356,8 @@
                                     <div ng-include src="'/src/app/forms/sequential.html'"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <middleware template="websocket.html" namespace="'websocket'" data="endpoint"></middleware>
+                                    <middleware template="websocket.html" namespace="'websocket'" data="endpoint">
+                                    </middleware>
                                 </div>
                             </div>
                         </div>
@@ -521,6 +522,8 @@
                                                     <middleware data="backend" template="soap.html"
                                                         ng-click="backend.encoding = 'xml'; backend.method='POST'"
                                                         namespace="'backend/soap'"></middleware>
+                                                    <middleware data="backend" template="http_client.html"
+                                                        namespace="'backend/http/client'"></middleware>
                                                     <middleware data="backend" template="graphql.html"
                                                         namespace="'backend/graphql'"></middleware>
                                                     <middleware data="backend" template="amqp_consumer.html"
@@ -531,16 +534,14 @@
 
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <middleware template="grpc_backend.html" namespace="'backend/grpc'" data="backend"></middleware>
+                                                    <middleware template="grpc_backend.html" namespace="'backend/grpc'"
+                                                        data="backend"></middleware>
                                                     <middleware data="backend" template="pubsub_subscriber.html"
                                                         namespace="'backend/pubsub/susbcriber'"></middleware>
                                                     <middleware data="backend" template="pubsub_publisher.html"
                                                         namespace="'backend/pubsub/publisher'"></middleware>
                                                     <middleware data="backend" template="amqp_producer.html"
                                                         namespace="'backend/amqp/producer'"></middleware>
-                                                    <plugin root="service" placement="backend"
-                                                        template="no-redirect.html" plugin="'no-redirect'"
-                                                        type="'plugin/http-client'"></plugin>
                                                 </div>
                                             </div>
                                         </div>
@@ -560,9 +561,7 @@
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <plugin root="service" placement="backend"
-                                                        template="http-proxy.html" plugin="'http-proxy'"
-                                                        type="'plugin/http-client'"></plugin>
+
                                                 </div>
                                             </div>
                                         </div>
