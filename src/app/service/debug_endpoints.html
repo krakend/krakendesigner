@@ -1,0 +1,29 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">Debug endpoints</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/endpoints/echo-endpoint/'}]"></div>
+	</div>
+	<div class="box-body">
+		<p>Debug endpoints enable <strong>additional endpoints</strong> that help you troubleshoot different scenarios.</p>
+		<div class="form-group">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="checkbox">
+						<label for="data.debug_endpoint">
+							<input type="checkbox" id="data.debug_endpoint" name="data.debug_endpoint"
+								ng-model="data.debug_endpoint">
+							<strong>Enable <code>/__debug/</code> endpoint</strong>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label for="data.echo_endpoint">
+							<input type="checkbox" id="data.echo_endpoint" name="data.echo_endpoint"
+								ng-model="data.echo_endpoint">
+							<strong>Enable <code>/__echo/</code> endpoint</strong>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
