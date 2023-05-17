@@ -184,9 +184,6 @@ angular
                 'auth/signer': {
                     "alg": "HS256"
                 },
-                'auth/validator': {
-                    "alg": "HS256"
-                },
                 'auth/api-keys': {
                     "keys": []
                 },

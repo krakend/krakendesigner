@@ -5,6 +5,7 @@
     <middleware data="service" namespace="'grpc'" template="grpc_catalog.html"></middleware>
     <div ng-include src="'/src/app/service/timeouts.html'"></div>
     <div ng-include src="'/src/app/service/options.html'"></div>
+    <middleware data="service" namespace="'auth/validator'" template="shared_jwk.html"></middleware>
   </div>
   <div class="col-md-6">
     <div ng-include src="'/src/app/forms/hosts.html'"></div>
@@ -18,8 +19,7 @@
       type="'plugin/http-server'"></plugin>
       <plugin root="service" placement="service" template="static-filesystem.html" plugin="'static-filesystem'"
       type="'plugin/http-server'"></plugin>
-      <middleware data="service" namespace="'qos/ratelimit/service'" template="ratelimit_service.html">
-      </middleware>
+      <middleware data="service" namespace="'qos/ratelimit/service'" template="ratelimit_service.html"></middleware>
   </div>
 </div>
 <div class="row">
