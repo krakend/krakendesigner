@@ -10,17 +10,26 @@
 			servers such as RabbitMQ</p>
 		<div ng-if="isMiddlewareEnabled()">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<label>Queue name</label>
 					<input type="text" ng-model="data.extra_config[config_namespace]['name']" class="form-control" />
 					<span class="help-block">The name of the queue you want to connect to</span>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<label>Exchange</label>
 					<input type="text" ng-model="data.extra_config[config_namespace]['exchange']"
 						class="form-control" />
 					<span class="help-block">The entity name where messages are sent for routing</span>
 				</div>
+				<div class="col-md-4">
+                    <label>Backoff Strategy</label>
+                    <select class="form-control" ng-model="data.extra_config[config_namespace].backoff_strategy"
+                        id="data.extra_config[config_namespace].backoff_strategy" name="data.extra_config[config_namespace].backoff_strategy">
+                        <option ng-repeat="(strategy,desc) in constants.backoff_strategy" value="{{ strategy }}">{{ desc
+                            }}</option>
+                    </select>
+                    <span class="help-block">When the connection to your event source gets interrupted for whatever reason, KrakenD keeps trying to reconnect after a delay</span>
+                </div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
@@ -64,33 +73,11 @@
 							<input type="checkbox" ng-model="data.extra_config[config_namespace].durable">
 							<strong>Durable</strong>
 						</label>
-						<span class="help-block">Durable exchanges survive broker restart whereas transient
-							exchanges do
-							not</span>
+						<span class="help-block">Durable exchanges survive broker restart (persist to disk) whereas transient
+							exchanges do not</span>
 					</div>
 				</div>
 				<div class="col-md-6">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="data.extra_config[config_namespace].delete">
-							<strong>Auto-delete</strong>
-						</label>
-						<span class="help-block">The exchange is deleted when last queue is unbound from it</span>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="data.extra_config[config_namespace].no_wait">
-							<strong>No-wait</strong>
-						</label>
-						<span class="help-block">The AMQP broker won't wait for the acknowledgement.</span>
-					</div>
-				</div>
-				<div class="col-md-6">
-
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" ng-model="data.extra_config[config_namespace].no_local">

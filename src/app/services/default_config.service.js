@@ -138,21 +138,16 @@ angular
                 },
                 "backend/amqp/producer": {
                     "exchange": "some-exchange",
+                    "backoff_strategy": "exponential-jitter",
                     "durable": true,
-                    "delete": false,
-                    "exclusive": false,
-                    "no_wait": true,
                     "mandatory": true,
                     "immediate": false
                 },
                 "backend/amqp/consumer": {
                     "name": "queue-1",
                     "exchange": "some-exchange",
+                    "backoff_strategy": "exponential-jitter",
                     "durable": true,
-                    "delete": false,
-                    "exclusive": false,
-                    "no_wait": true,
-                    "no_local": false,
                     "routing_key": ["#"],
                     "prefetch_count": 10
                 },
@@ -220,7 +215,7 @@ angular
                     "pong_wait": "60s",
                     "ping_period": "54s",
                     "max_retries": 0,
-                    "backoff_strategy": "exponential"
+                    "backoff_strategy": "exponential-jitter"
                 },
                 "modifier/jmespath": {
                     "expr": "people[?age > `20`].[name, age]"
