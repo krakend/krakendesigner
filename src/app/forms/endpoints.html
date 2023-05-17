@@ -558,6 +558,9 @@
                                                         inherit="service.extra_config['auth/client-credentials']"
                                                         template="oauth.html" namespace="'auth/client-credentials'">
                                                     </middleware>
+                                                    <middleware data="backend"
+                                                        template="gcp.html" namespace="'auth/gcp'">
+                                                    </middleware>
                                                 </div>
 
                                                 <div class="col-md-6">
