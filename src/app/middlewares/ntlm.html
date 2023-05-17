@@ -1,0 +1,25 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> NTLM authentication
+		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/authentication/ntlm/'}]"></div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">NTLM (NT Lan Manager) is a suite of Microsoft security protocols used for authentication, integrity, and confidentiality of network communications. It is primarily used for authentication on Windows-based systems</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="row">
+				<div class="col-md-6">
+					<label>User</label>
+					<input type="text" ng-model="data.extra_config[config_namespace].user" class="form-control" />
+					<span class="help-block">The proxy address used to forward the traffic. The address must contain the protocol and the port.</span>
+				</div>
+				<div class="col-md-6">
+					<label>Password</label>
+					<input type="password" ng-model="data.extra_config[config_namespace].password" class="form-control" />
+					<span class="help-block">The proxy address used to forward the traffic. The address must contain the protocol and the port.</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
