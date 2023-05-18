@@ -16,13 +16,33 @@
             </p>
             <div class="row">
                 <div class="col-md-6">
-                    <label>Naming convention</label>
+                    <label>Request naming convention</label>
+                    <select ng-model="data.extra_config[config_namespace].request_naming_convention"
+                        class="form-control">
+                        <option value="snake_case">snake_case</option>
+                        <option value="camelCase">camelCase</option>
+                    </select>
+                    <span class="help-block">Defines the naming convention used to format the data.</span>
+                </div>
+                <div class="col-md-6">
+                    <label>Response naming convention</label>
                     <select ng-model="data.extra_config[config_namespace].response_naming_convention"
                         class="form-control">
                         <option value="snake_case">snake_case</option>
                         <option value="camelCase">camelCase</option>
                     </select>
                     <span class="help-block">Defines the naming convention used to format the data.</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="data.extra_config[config_namespace].use_request_body">
+                            <strong>Use request body</strong>
+                        </label>
+                        <span class="help-block">Enables the use of the sent body to fill the gRPC request.</span>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="checkbox">
@@ -86,6 +106,18 @@
                         <span class="help-block">Well-known Duration types (google.protobuf.Duration) are returned as a
                             struct containing fields with seconds and nanos fields (flag set to false). Setting this
                             flag to true transforms the timestamps into a string representation in seconds. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                ng-model="data.extra_config[config_namespace].disable_query_params">
+                            <strong>Disable query parameters</strong>
+                        </label>
+                        <span class="help-block">When checked it does not use URL parameters or query strings to fill the gRPC payload to send. If you don't set request body, there will be no input used for the gRPC message (it's fine if you want an <a href="https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/empty.proto" target="_blank">empty message</a>)</span>
                     </div>
                 </div>
             </div>

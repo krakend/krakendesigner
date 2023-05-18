@@ -161,6 +161,7 @@ angular
                 },
                 "backend/grpc": {
                     "response_naming_convention": "snake_case",
+                    "request_naming_convention": "snake_case",
                     "input_mapping": {}
                 },
                 "modifier/body-generator": {
