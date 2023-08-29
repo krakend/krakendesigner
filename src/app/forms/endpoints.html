@@ -6,9 +6,7 @@
     <div class="box-header with-border">
         <h3 class="box-title text-xl">
             <a href="/#!/endpoints?target={{endpoint_index}}">
-                {{ endpoint.endpoint }}<span ng-hide="!hasWildcard(endpoint.endpoint)"
-                    class="label-wildcard-asterisk">/<i class="fa fa-asterisk"></i></span>
-                <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge label-wildcard">Wildcard</span>
+                {{ endpoint.endpoint }} <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge">Enterprise</span>
                 <code class="small" ng-if="endpoint.input_query_strings.length > 0">
                     ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
                 </code>
@@ -42,17 +40,13 @@
                                 endpoints</a>.
                         </p>
                     </div>
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-8 col-sm-8">
                         <label>KrakenD Endpoint</label>
                         <input type="text" placeholder="/users/{username}" class="form-control input-md" required=""
-                            ng-model="endpoint.endpoint" ng-disabled="hasWildcard(endpoint.endpoint)">
+                            ng-model="endpoint.endpoint">
                         <span class="help-block">This is the URI your clients will connect to. Must start with slash.
                             Use curly braces to insert <code>{endpoint_parameters}</code> that can be passed to the
-                            backends.</span>
-                    </div>
-                    <div class="col-md-2 col-sm-2">
-                        <plugin root="service" placement="endpoint" template="wildcard.html" plugin="'wildcard'"
-                            type="'plugin/http-server'"></plugin>
+                            backends. URLs ending in <code>/*</code> are treated as <strong>wildcards</strong>.</span>
                     </div>
                     <div class="col-md-2 col-sm-2">
                         <label>Method</label>
@@ -528,6 +522,8 @@
                                                     <middleware data="backend" template="soap.html"
                                                         ng-click="backend.encoding = 'xml'; backend.method='POST'"
                                                         namespace="'backend/soap'"></middleware>
+                                                    <middleware data="backend" template="http_client.html"
+                                                        namespace="'backend/http/client'"></middleware>
                                                     <middleware data="backend" template="graphql.html"
                                                         namespace="'backend/graphql'"></middleware>
                                                     <middleware data="backend" template="amqp_consumer.html"
@@ -538,18 +534,14 @@
 
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <plugin root="service" placement="backend"
-                                                        template="grpc.html" plugin="'YOUR-GRPC-PLUGIN-NAME'"
-                                                        type="'plugin/http-client'"></plugin>
+                                                    <middleware template="grpc_backend.html" namespace="'backend/grpc'"
+                                                        data="backend"></middleware>
                                                     <middleware data="backend" template="pubsub_subscriber.html"
                                                         namespace="'backend/pubsub/susbcriber'"></middleware>
                                                     <middleware data="backend" template="pubsub_publisher.html"
                                                         namespace="'backend/pubsub/publisher'"></middleware>
                                                     <middleware data="backend" template="amqp_producer.html"
                                                         namespace="'backend/amqp/producer'"></middleware>
-                                                    <plugin root="service" placement="backend"
-                                                        template="no-redirect.html" plugin="'no-redirect'"
-                                                        type="'plugin/http-client'"></plugin>
                                                 </div>
                                             </div>
                                         </div>
@@ -566,12 +558,13 @@
                                                         inherit="service.extra_config['auth/client-credentials']"
                                                         template="oauth.html" namespace="'auth/client-credentials'">
                                                     </middleware>
+                                                    <middleware data="backend"
+                                                        template="gcp.html" namespace="'auth/gcp'">
+                                                    </middleware>
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <plugin root="service" placement="backend"
-                                                        template="http-proxy.html" plugin="'http-proxy'"
-                                                        type="'plugin/http-client'"></plugin>
+                                                    <middleware data="backend" template="ntlm.html" namespace="'auth/ntlm'"></middleware>
                                                 </div>
                                             </div>
                                         </div>
@@ -617,7 +610,7 @@
                                     <div class="modal-body">
                                         <p>Define at least one host (upstream service) where KrakenD will take the data
                                             from.</p>
-                                        <div ng-include src="'/src/app/forms/backends.html'"></div>
+                                        <div ng-include src="'/src/app/forms/hosts.html'"></div>
                                     </div>
                                 </div>
                             </div>

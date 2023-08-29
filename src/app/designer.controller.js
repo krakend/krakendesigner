@@ -48,9 +48,8 @@ angular
             }
         };
 
-        $rootScope.getOpenedFile = function() {
-            if ( FileHandleService.fileHandle )
-            {
+        $rootScope.getOpenedFile = function () {
+            if (FileHandleService.fileHandle) {
                 return FileHandleService.fileHandle.name
             }
             return false;
@@ -287,9 +286,9 @@ angular
         // Looks in the configuration for EE functionality:
         $rootScope.isEnterprise = function () {
             $rootScope.modules_in_use = [];
-            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/ganalytics'];
+            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/newrelic', 'telemetry/ganalytics'];
             endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies'];
-            backend_components = ['backend/soap', 'modifier/jmespath', 'security/policies'];
+            backend_components = ['auth/gcp','auth/ntlm','backend/http/client','backend/soap', 'modifier/jmespath', 'security/policies'];
             http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
             http_client_plugins = ['wildcard', 'krakend-afero', 'static-filesystem', 'no-redirect', 'http-proxy'];
             req_resp_plugins = ['ip-filter', 'response-schema-validator', 'content-replacer'];
@@ -342,6 +341,10 @@ angular
                     if ($rootScope.getObject("service", "endpoints", e, "extra_config", "plugin/req-resp-modifier", req_resp_plugins[i])) {
                         $rootScope.modules_in_use.push(req_resp_plugins[i]);
                     };
+                }
+
+                if ($rootScope.hasWildcard($rootScope.getObject("service", "endpoints", e, "endpoint"))) {
+                    $rootScope.modules_in_use.push('wildcard');
                 }
 
                 backends = $rootScope.getObject("service", "endpoints", e, "backend");
@@ -479,10 +482,7 @@ angular
         };
 
         $rootScope.hasWildcard = function (endpoint) {
-            return (
-                $rootScope.hasPluginOfThisType('wildcard') &&
-                null !== $rootScope.getObject("service", "extra_config", "plugin/http-server", "wildcard", "endpoints", endpoint)
-            );
+            return endpoint.endsWith("/*");
         }
         // Destroy middleware or create it with default data:
         $rootScope.toggleMiddleware = function (namespace) {
@@ -714,7 +714,44 @@ angular
 
         // Valid endpoints start with Slash and do not contain /__debug[/] or /__health
         $rootScope.isValidEndpoint = function (endpoint) {
-            return !(/^[^\/]|\/__debug(\/.*)?$|\/__health$|\/__echo(\/.*)?$|\/favicon\.ico/i.test(endpoint));
+            // Invalid:
+            //  /invalid*
+            //  /invalid:endpoint
+            //  /invalid/endpoint*
+            //  invalid
+            //  favicon.icon
+            //  /*
+            //  /
+            //  /invalid/?/./*
+            //  /invalid/*/endpoint
+            //  /invalid/**
+            //  /invalid/*/endpoint/*
+            //  /__health/lolo
+            //  /__health
+            //  /__debug/lolo
+            //  /__debug/*
+            //  /__debug
+            //  /__echo/lolo
+            //  /__echo
+
+            // Valid:
+            //  /
+            //  /valid/endpoint/{or}/whatever
+            //  /valid/endpoint/{or}/whatever/*
+            //  /valid.json
+            //  /hey/yo
+            //  /hey/yo/*
+            //  /hey/{yo}/*
+            //  /_valid
+            //  /v1/__debug
+
+
+            return (
+                // JSON schema validation
+                /^\/[^:\*\?\&\%]*(\/\*)?$/.test(endpoint) &&
+                // Avoid user frustration:
+                !(/^\/__(debug|echo)\/+|^\/__health\/*$|^\/favicon\.ico$/i.test(endpoint))
+            );
         };
 
         $rootScope.isValidTimeUnit = function (time_with_unit) {

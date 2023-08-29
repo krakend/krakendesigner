@@ -1,0 +1,29 @@
+<div class="box box-info box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> HTTP client settings, no redirect, and web proxy
+		</h3>
+		<div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': true, 'url':'/backends/http-client/'}]"></div>
+	</div>
+	<div class="box-body">
+		<p ng-if="!isMiddlewareEnabled()">Configure the no-redirect behavior, or connect through an external proxy.</p>
+		<div ng-if="isMiddlewareEnabled()">
+			<div class="row">
+				<div class="col-md-6">
+					<label>Connect via Web Proxy</label>
+					<input type="text" ng-model="data.extra_config[config_namespace].proxy_address" class="form-control" />
+					<span class="help-block">The proxy address used to forward the traffic. The address must contain the protocol and the port. </span>
+				</div>
+				<div class="col-md-6">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="data.extra_config[config_namespace].no_redirect">
+							<strong>Don't follow redirects</strong>
+						</label>
+						<span class="help-block">Check if you don't want KrakenD to follow redirects and let the consuming user to receive the 30x status code.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

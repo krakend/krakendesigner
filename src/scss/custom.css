@@ -266,13 +266,6 @@ a.badge.badge-inverse:hover {
     padding:1rem;
 }
 
-.label-wildcard {
-    background-color: #888;
-}
-.label-wildcard-asterisk {
-    color:#0a0;
-}
-
 .method_header {
     width: 55px;
     font-size: 12px;

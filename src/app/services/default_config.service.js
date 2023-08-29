@@ -138,21 +138,16 @@ angular
                 },
                 "backend/amqp/producer": {
                     "exchange": "some-exchange",
+                    "backoff_strategy": "exponential-jitter",
                     "durable": true,
-                    "delete": false,
-                    "exclusive": false,
-                    "no_wait": true,
                     "mandatory": true,
                     "immediate": false
                 },
                 "backend/amqp/consumer": {
                     "name": "queue-1",
                     "exchange": "some-exchange",
+                    "backoff_strategy": "exponential-jitter",
                     "durable": true,
-                    "delete": false,
-                    "exclusive": false,
-                    "no_wait": true,
-                    "no_local": false,
                     "routing_key": ["#"],
                     "prefetch_count": 10
                 },
@@ -163,6 +158,11 @@ angular
                 },
                 "backend/soap": {
                     "template": "PHNvYXA6RW52ZWxvcGU+CiAgPHNvYXA6Qm9keT4KICAgIDxVc2VyPnt7IC5yZXFfcGFyYW1zLlVzZXIgfX08L1VzZXI+CiAgPC9zb2FwOkJvZHk+Cjwvc29hcDpFbnZlbG9wZT4="
+                },
+                "backend/grpc": {
+                    "response_naming_convention": "snake_case",
+                    "request_naming_convention": "snake_case",
+                    "input_mapping": {}
                 },
                 "modifier/body-generator": {
                     "template": "ewogICJ1cGRhdGUiOnsKICAgICJ1c2VyX2lkIjogInt7IC5yZXFfcGFyYW1zLlVzZXIgfX0iLAogICAgImVtYWlsIjogInt7IC5yZXFfYm9keS5lbWFpbCB9fSIKICB9Cn0="
@@ -183,9 +183,6 @@ angular
                     "client_capacity": 0
                 },
                 'auth/signer': {
-                    "alg": "HS256"
-                },
-                'auth/validator': {
                     "alg": "HS256"
                 },
                 'auth/api-keys': {
@@ -216,7 +213,7 @@ angular
                     "pong_wait": "60s",
                     "ping_period": "54s",
                     "max_retries": 0,
-                    "backoff_strategy": "exponential"
+                    "backoff_strategy": "exponential-jitter"
                 },
                 "modifier/jmespath": {
                     "expr": "people[?age > `20`].[name, age]"

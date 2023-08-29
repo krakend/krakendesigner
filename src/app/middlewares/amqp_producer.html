@@ -24,6 +24,15 @@
 			</div>
 			<div class="row">
 				<div class="col-md-6">
+                    <label>Backoff Strategy</label>
+                    <select class="form-control" ng-model="data.extra_config[config_namespace].backoff_strategy"
+                        id="data.extra_config[config_namespace].backoff_strategy" name="data.extra_config[config_namespace].backoff_strategy">
+                        <option ng-repeat="(strategy,desc) in constants.backoff_strategy" value="{{ strategy }}">{{ desc
+                            }}</option>
+                    </select>
+                    <span class="help-block">When the connection to your event source gets interrupted for whatever reason, KrakenD keeps trying to reconnect after a delay</span>
+                </div>
+				<div class="col-md-6">
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" ng-model="data.extra_config[config_namespace].durable">
@@ -31,57 +40,6 @@
 						</label>
 						<span class="help-block">Durable exchanges survive broker restart whereas transient exchanges do
 							not</span>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="data.extra_config[config_namespace].delete">
-							<strong>Auto-delete</strong>
-						</label>
-						<span class="help-block">The exchange is deleted when last queue is unbound from it</span>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="data.extra_config[config_namespace].no_wait">
-							<strong>No-wait</strong>
-						</label>
-						<span class="help-block">The AMQP broker won't wait for the acknowledgement.</span>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="data.extra_config[config_namespace].exclusive">
-							<strong>Exclusive</strong>
-						</label>
-						<span class="help-block">Only this consumer can access the queue</span>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="data.extra_config[config_namespace].mandatory">
-							<strong>Mandatory</strong>
-						</label>
-						<span class="help-block">Return an unroutable message if the message cannot be routed to a
-							queue</span>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="data.extra_config[config_namespace].immediate">
-							<strong>Immediate</strong>
-						</label>
-						<span class="help-block">Return an undeliverable message if the message cannot be routed
-							immediately</span>
 					</div>
 				</div>
 			</div>
