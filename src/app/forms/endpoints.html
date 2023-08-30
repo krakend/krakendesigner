@@ -337,11 +337,13 @@
                                 <div class="col-md-6">
                                     <div ng-include src="'/src/app/forms/static-response.html'"></div>
                                     <middleware template="jmespath.html" namespace="'modifier/jmespath'"
-                                        data="endpoint"></middleware>
+                                        data="endpoint" ng-if="endpoint.output_encoding != 'no-op'"></middleware>
                                 </div>
                                 <div class="col-md-6">
                                     <plugin root="service" placement="endpoint" template="content-replacer.html"
                                         plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
+                                    <middleware template="response-body-generator.html" namespace="'modifier/response-body-generator'"
+                                        data="endpoint"></middleware>
                                 </div>
                             </div>
                         </div>
@@ -477,6 +479,9 @@
                                                 <div class="col-md-6">
                                                     <middleware template="jmespath.html" namespace="'modifier/jmespath'"
                                                         data="backend" ng-if="endpoint.output_encoding != 'no-op'">
+                                                    </middleware>
+                                                    <middleware template="response-body-generator.html" namespace="'modifier/response-body-generator'"
+                                                        data="backend">
                                                     </middleware>
                                                     <plugin root="service" placement="backend"
                                                         template="content-replacer.html" plugin="'content-replacer'"

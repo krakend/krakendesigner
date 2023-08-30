@@ -3,7 +3,7 @@ angular
     .service("DefaultConfig", function () {
         return {
             service: {
-                $schema: "https://www.krakend.io/schema/v3.json",
+                $schema: "https://www.krakend.io/schema/krakend.json",
                 version: 3,
                 name: 'KrakenD - API Gateway',
                 extra_config: {},
