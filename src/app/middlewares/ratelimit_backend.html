@@ -10,24 +10,35 @@
     <div class="box-body">
         <p ng-if="!isMiddlewareEnabled()">Limits the number of requests KrakenD can do to your backend service {{data.url_pattern}}</p>
         <div ng-if="isMiddlewareEnabled()">
-            <div class="form-group row">
-                <div class="col-md-12"
+            <div class="form-group">
+                <div class="col-md-6"
                     ng-class="validator.isInteger(data.extra_config[config_namespace].max_rate) ? '' : 'has-error'">
                     <label>Max rate limit</label>
                     <div class="input-group">
                         <input class="form-control" type="number"
                             ng-model="data.extra_config[config_namespace].max_rate"
                             ng-change="data.extra_config[config_namespace].capacity=data.extra_config[config_namespace].max_rate">
-                        <div class="input-group-addon">reqs/sec</div>
+                        <div class="input-group-addon">reqs</div>
                     </div>
                     <div class="help-block">
                         <p ng-hide="validator.isInteger(data.extra_config[config_namespace].max_rate)"
                             class="badge label-danger"><i class="fa fa-warning"></i>
                             Write a number</p>
-                        <p>Maximum requests per second you want to accept in this
-                            backend.</p>
+                        <p>Maximum requests you want to let this backend handle in the specified
+                            time (<code>every</code>)</p>
                     </div>
                 </div>
+                <div class="col-md-6"
+					ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].every) ? '' : 'has-error'">
+					<label class="control-label">Every</label>
+					<input class="form-control" ng-model="data.extra_config[config_namespace].every"
+						id="data.extra_config[config_namespace].every" name="data.extra_config[config_namespace].every">
+					<span class="help-block">
+						<p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].every)" ng-include
+							src="'/src/app/forms/time_units.html'"></p>
+						<p>Time window where this rate limit applies.</p>
+					</span>
+				</div>
             </div>
 
             <div class="form-group"

@@ -7,20 +7,35 @@
 			ng-repeat="doc in [{'ee': true, 'url':'/service-settings/service-rate-limit/'}]"></div>
 	</div>
 	<div class="box-body">
-		<p ng-if="!isMiddlewareEnabled()">Puts a limit on the maximum number of requests users can do globally to the service</p>
+		<p ng-if="!isMiddlewareEnabled()">Puts a limit on the maximum number of requests users can do globally to the
+			service</p>
 		<div ng-if="isMiddlewareEnabled()">
-			<div class="form-group"
-				ng-class="validator.isInteger(data.extra_config[config_namespace].max_rate) ? '' : 'has-error'">
-				<label class="control-label">Rate limit</label>
-				<div class="input-group">
-					<input class="form-control" ng-model="data.extra_config[config_namespace].max_rate"
-						id="data.extra_config[config_namespace].max_rate"
-						name="data.extra_config[config_namespace].max_rate" type="number">
-					<div class="input-group-addon">reqs/sec</div>
+			<div class="form-group row">
+				<div class="col-md-6"
+					ng-class="validator.isInteger(data.extra_config[config_namespace].max_rate) ? '' : 'has-error'">
+					<label class="control-label">Rate limit</label>
+					<div class="input-group">
+						<input class="form-control" ng-model="data.extra_config[config_namespace].max_rate"
+							id="data.extra_config[config_namespace].max_rate"
+							name="data.extra_config[config_namespace].max_rate" type="number">
+						<div class="input-group-addon">reqs</div>
+					</div>
+					<span class="help-block">Maximum requests you want to let the service handle in the specified
+						time (<code>every</code>). Leave
+						<code>0</code> for no default limit.
+					</span>
 				</div>
-				<span class="help-block">Maximum requests per second you want to allow. Leave
-					<code>0</code> for no default limit.
-				</span>
+				<div class="col-md-6"
+					ng-class="validator.isValidTimeUnit(data.extra_config[config_namespace].every) ? '' : 'has-error'">
+					<label class="control-label">Every</label>
+					<input class="form-control" ng-model="data.extra_config[config_namespace].every"
+						id="data.extra_config[config_namespace].every" name="data.extra_config[config_namespace].every">
+					<span class="help-block">
+						<p ng-hide="validator.isValidTimeUnit(data.extra_config[config_namespace].every)" ng-include
+							src="'/src/app/forms/time_units.html'"></p>
+						<p>Time window where this rate limit applies.</p>
+					</span>
+				</div>
 			</div>
 			<div class="form-group"
 				ng-class="validator.isInteger(data.extra_config[config_namespace].capacity) ? '' : 'has-error'">
@@ -61,8 +76,8 @@
 						<input type="radio" name="strategy_header" value="header"
 							ng-checked="data.extra_config[config_namespace].key!=''"
 							ng-model="data.extra_config[config_namespace].strategy">
-						A custom header:
-						<input type="text" ng-model="data.extra_config[config_namespace].key" placeholder="X-TOKEN">
+						A header:
+						<input type="text" ng-model="data.extra_config[config_namespace].key" placeholder="Authorization">
 					</div>
 				</div>
 			</div>

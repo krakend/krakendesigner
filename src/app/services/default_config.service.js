@@ -180,6 +180,7 @@ angular
                     "client_max_rate": 0,
                     "strategy": "ip",
                     "capacity": 0,
+                    "every": "0m",
                     "client_capacity": 0
                 },
                 'auth/signer': {
