@@ -285,6 +285,11 @@ angular
 
         // Looks in the configuration for EE functionality:
         $rootScope.isEnterprise = function () {
+            if ($rootScope.hasCatchall())
+            {
+                return true;
+            }
+
             $rootScope.modules_in_use = [];
             service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/newrelic', 'telemetry/ganalytics'];
             endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies', 'modifier/response-body-generator'];
@@ -696,6 +701,37 @@ angular
 
         };
 
+
+        $rootScope.hasCatchall = function () {
+            endpoints = $rootScope.getObject("service", "endpoints");
+            if (endpoints) {
+                for (i = 0; i < endpoints.length; i++) {
+                    if ($rootScope.service.endpoints[i].endpoint == "/__catchall" ) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+
+        $rootScope.addCatchall = function () {
+            if ($rootScope.hasCatchall()) {
+                return false;
+            }
+
+            if (typeof $rootScope.service.endpoints === "undefined") {
+                $rootScope.service.endpoints = [];
+            }
+
+            $rootScope.service.endpoints.push({
+                "endpoint": "/__catchall",
+                "output_encoding": "no-op",
+                "input_headers": ["*"],
+                "input_query_strings": ["*"],
+            });
+            $rootScope.addBackendQuery($rootScope.service.endpoints.length - 1);
+
+        }
         $rootScope.addEndpoint = function () {
 
             if (typeof $rootScope.service.endpoints === "undefined") {

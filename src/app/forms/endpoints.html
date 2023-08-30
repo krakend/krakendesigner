@@ -6,7 +6,7 @@
     <div class="box-header with-border">
         <h3 class="box-title text-xl">
             <a href="/#!/endpoints?target={{endpoint_index}}">
-                {{ endpoint.endpoint }} <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge">Enterprise</span>
+                {{ endpoint.endpoint }} <span ng-hide="!hasWildcard(endpoint.endpoint) && !hasCatchall()" class="badge">Enterprise</span>
                 <code class="small" ng-if="endpoint.input_query_strings.length > 0">
                     ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
                 </code>
@@ -636,3 +636,4 @@
     </div><!-- /.box-body -->
 </div><!-- endpoint index -->
 <button class="btn btn-lg btn-success" ng-click="addEndpoint()">Add endpoint</button>
+<button class="btn btn-lg btn-success" ng-disabled="hasCatchall()" ng-click="addCatchall()">Add Catchall</button>
