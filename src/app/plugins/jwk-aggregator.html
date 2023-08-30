@@ -8,7 +8,7 @@
     <p ng-if="!hasPluginOfThisType()">The JWK aggregator plugin allows KrakenD to validate tokens issued by multiple Identity Providers.</p>
     <div ng-if="hasPluginOfThisType()">
       <div class="form-group">
-        <div class="col-md-8">
+        <div class="col-md-7">
           <label class="control-label">Identity Provider origins</label>
           <div class="input-group">
             <input class="form-control" placeholder="http://foo.bar/public_keys" type="text" required="" ng-model="origin">
@@ -29,11 +29,18 @@
             </li>
           </ul>
         </div>
-        <div class="col-md-4" ng-class="validator.isInteger(data.extra_config[plugin_type][plugin_name].port) ? '' : 'has-error'">
+        <div class="col-md-3" ng-class="validator.isInteger(data.extra_config[plugin_type][plugin_name].port) ? '' : 'has-error'">
           <label class="control-label">Port</label>
           <input class="form-control" placeholder="9876" type="number"
             ng-model="data.extra_config[plugin_type][plugin_name].port">
-          <span class="help-block">The port of the local server doing the aggregation, accessible only within the gateway using localhost.</span>
+          <span class="help-block">The port of the local key server.</span>
+        </div>
+        <div class="col-md-2">
+          <label class="control-label">
+            <input type="checkbox"
+              ng-model="data.extra_config[plugin_type][plugin_name].cache"> Cache
+          </label>
+          <span class="help-block">Cache keys</span>
         </div>
       </div>
     </div>
