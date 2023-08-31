@@ -291,7 +291,7 @@ angular
             }
 
             $rootScope.modules_in_use = [];
-            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/newrelic', 'telemetry/ganalytics'];
+            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/newrelic'];
             endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies', 'modifier/response-body-generator'];
             backend_components = ['auth/gcp','auth/ntlm','backend/http/client','backend/soap', 'modifier/jmespath', 'security/policies', 'modifier/body-generator', 'modifier/response-body-generator'];
             http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];

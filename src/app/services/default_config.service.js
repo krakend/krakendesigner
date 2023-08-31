@@ -123,19 +123,6 @@ angular
                         "POST"
                     ]
                 },
-                'telemetry/instana': {
-                    "AgentHost": "localhost",
-                    "AgentPort": 46999,
-                    "Service": "krakend"
-                },
-                'telemetry/ganalytics': {
-                    "track_id": "UA-12345678-9",
-                    "url": "https://www.google-analytics.com/batch",
-                    "buffer_size": 1000,
-                    "workers": 5,
-                    "timeout": "250ms",
-                    "tags": {}
-                },
                 "backend/amqp/producer": {
                     "exchange": "some-exchange",
                     "backoff_strategy": "exponential-jitter",
