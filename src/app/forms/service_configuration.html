@@ -13,12 +13,10 @@
     <service data="service" template="tls.html"></service>
     <plugin root="service" placement="service" template="url-rewrite.html" plugin="'url-rewrite'"
       type="'plugin/http-server'"></plugin>
-    <plugin root="service" placement="service" template="virtualhost.html" plugin="'virtualhost'"
-      type="'plugin/http-server'"></plugin>
+      <middleware data="service" namespace="'server/virtualhost'" template="virtualhost.html"></middleware>
       <plugin root="service" placement="service" template="geoip.html" plugin="'geoip'"
       type="'plugin/http-server'"></plugin>
-      <plugin root="service" placement="service" template="static-filesystem.html" plugin="'static-filesystem'"
-      type="'plugin/http-server'"></plugin>
+      <middleware data="service" namespace="'server/static-filesystem'" template="static-filesystem.html"></middleware>
       <middleware data="service" namespace="'qos/ratelimit/service'" template="ratelimit_service.html"></middleware>
   </div>
 </div>

@@ -1,0 +1,60 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title">
+      <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Static Server
+    </h3>
+    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+      ng-repeat="doc in [{'ee': true, 'url':'/endpoints/serve-static-content/'}]"></div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!isMiddlewareEnabled()">It works similarly to a regular web server; it loads content from the disk and
+      presents it to the users for a given path.</p>
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="form-group">
+        <div class="col-md-8">
+          <label class="control-label">Path</label>
+          <input class="form-control" placeholder="/etc/krakend/assets" type="text" required=""
+            ng-model="data.extra_config[config_namespace].path">
+          <span class="help-block">The folder in the filesystem containing the static files. Relative to the working dir
+            where KrakenD config is (e.g.: <code>./assets</code>) or absolute (e.g.:
+            <code>/etc/krakend/assets</code>).</span>
+        </div>
+        <div class="col-md-4">
+          <label class="control-label">
+            <input type="checkbox" ng-model="data.extra_config[config_namespace].directory_listing">
+            Directory listing
+          </label>
+          <span class="help-block">Allow users to browse the directory contents</span>
+        </div>
+        <div class="col-md-12" ng-if="config_namespace=='server/static-filesystem'">
+          <label class="control-label">Prefix</label>
+          <input class="form-control" placeholder="/media" type="text" required=""
+            ng-model="data.extra_config[config_namespace].prefix">
+          <span class="help-block">This is the beginning (prefix) of all URLs that are resolved using this plugin. All
+            matching URLs won’t be passed to the router, meaning that they are not considered endpoints. Make sure you
+            are not overwriting valid endpoints. When the prefix is /, then all traffic is served as static and you must
+            declare a prefix under skip (e.g.: /api) to match endpoints.</span>
+        </div>
+        <div class="col-md-12" ng-if="config_namespace=='server/static-filesystem'">
+          <label class="control-label">Skip</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="/media/excluded" type="text" required="" ng-model="skip_path">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-success" ng-click="addTermToList(skip_path,'skip')">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <span class="help-block">An array with all the prefix URLs that despite they could match with the prefix, you
+            don’t want to treat them as static content and pass them to the router.</span>
+          <ul class="list-inline">
+            <li ng-repeat="(index,val) in data.extra_config[config_namespace].skip">
+              <a class="badge code badge-remove" ng-click="deleteTermFromList(val,'skip')"><i class="fa fa-times"></i>
+                {{ val }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

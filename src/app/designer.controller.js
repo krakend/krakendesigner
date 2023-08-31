@@ -291,10 +291,10 @@ angular
             }
 
             $rootScope.modules_in_use = [];
-            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/newrelic'];
+            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/newrelic', 'server/virtualhost', 'server/static-filesystem'];
             endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies', 'modifier/response-body-generator'];
-            backend_components = ['auth/gcp','auth/ntlm','backend/http/client','backend/soap', 'modifier/jmespath', 'security/policies', 'modifier/body-generator', 'modifier/response-body-generator'];
-            http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
+            backend_components = ['auth/gcp','auth/ntlm','backend/http/client','backend/soap', 'modifier/jmespath', 'security/policies', 'modifier/body-generator', 'modifier/response-body-generator', 'backend/static-filesystem'];
+            http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'redis-ratelimit', 'url-rewrite', 'wildcard'];
             http_client_plugins = ['wildcard', 'krakend-afero', 'static-filesystem', 'no-redirect', 'http-proxy'];
             req_resp_plugins = ['ip-filter', 'response-schema-validator', 'content-replacer'];
             individual_flags = [
