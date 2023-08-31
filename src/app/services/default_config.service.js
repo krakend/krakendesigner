@@ -3,7 +3,7 @@ angular
     .service("DefaultConfig", function () {
         return {
             service: {
-                $schema: "https://www.krakend.io/schema/v3.json",
+                $schema: "https://www.krakend.io/schema/krakend.json",
                 version: 3,
                 name: 'KrakenD - API Gateway',
                 extra_config: {},
@@ -123,19 +123,6 @@ angular
                         "POST"
                     ]
                 },
-                'telemetry/instana': {
-                    "AgentHost": "localhost",
-                    "AgentPort": 46999,
-                    "Service": "krakend"
-                },
-                'telemetry/ganalytics': {
-                    "track_id": "UA-12345678-9",
-                    "url": "https://www.google-analytics.com/batch",
-                    "buffer_size": 1000,
-                    "workers": 5,
-                    "timeout": "250ms",
-                    "tags": {}
-                },
                 "backend/amqp/producer": {
                     "exchange": "some-exchange",
                     "backoff_strategy": "exponential-jitter",
@@ -180,6 +167,7 @@ angular
                     "client_max_rate": 0,
                     "strategy": "ip",
                     "capacity": 0,
+                    "every": "0m",
                     "client_capacity": 0
                 },
                 'auth/signer': {

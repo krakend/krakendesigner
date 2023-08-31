@@ -1,0 +1,37 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title">
+      <input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> Virtualhost
+    </h3>
+    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+      ng-repeat="doc in [{'ee': true, 'url':'/service-settings/virtual-hosts'}]">
+    </div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!isMiddlewareEnabled()">Run different configurations of KrakenD endpoints based on the host accessing
+      the server.</p>
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="form-group">
+        <div class="col-md-12">
+          <label class="control-label">Hosts</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="a.host.com" type="text" required="" ng-model="host">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-success" ng-click="addTermToList(host,'hosts')">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <span class="help-block">All recognized virtual hosts by KrakenD must be listed here. The values declared
+            here must match the content of the <code>Host</code> header when passed by the client.</span>
+          <ul class="list-inline">
+            <li ng-repeat="(index,val) in data.extra_config[config_namespace].hosts">
+              <a class="badge code badge-remove" ng-click="deleteTermFromList(val,'hosts')"><i class="fa fa-times"></i>
+                {{ val }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

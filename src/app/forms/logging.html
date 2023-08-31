@@ -2,10 +2,9 @@
   <middleware data="service" template="gologging.html" namespace="'telemetry/logging'"></middleware>
   <middleware ng-if="service.extra_config['telemetry/logging']" data="service" template="gelf.html" namespace="'telemetry/gelf'"></middleware>
   <middleware data="service" template="metrics.html" namespace="'telemetry/metrics'"></middleware>
-  <middleware data="service" template="instana.html" namespace="'telemetry/instana'"></middleware>
+
 </div>
 <div class="col-md-6">
   <opencensus data="service"></opencensus>
   <middleware data="service" template="newrelic.html" namespace="'telemetry/newrelic'"></middleware>
-  <middleware data="service" template="ganalytics.html" namespace="'telemetry/ganalytics'"></middleware>
 </div>

@@ -6,7 +6,7 @@
     <div class="box-header with-border">
         <h3 class="box-title text-xl">
             <a href="/#!/endpoints?target={{endpoint_index}}">
-                {{ endpoint.endpoint }} <span ng-hide="!hasWildcard(endpoint.endpoint)" class="badge">Enterprise</span>
+                {{ endpoint.endpoint }} <span ng-hide="!hasWildcard(endpoint.endpoint) && !hasCatchall()" class="badge">Enterprise</span>
                 <code class="small" ng-if="endpoint.input_query_strings.length > 0">
                     ?<span ng-repeat="qs in endpoint.input_query_strings">{{ qs }}=X{{ $last ? '' : '&' }}</span>
                 </code>
@@ -337,11 +337,13 @@
                                 <div class="col-md-6">
                                     <div ng-include src="'/src/app/forms/static-response.html'"></div>
                                     <middleware template="jmespath.html" namespace="'modifier/jmespath'"
-                                        data="endpoint"></middleware>
+                                        data="endpoint" ng-if="endpoint.output_encoding != 'no-op'"></middleware>
                                 </div>
                                 <div class="col-md-6">
                                     <plugin root="service" placement="endpoint" template="content-replacer.html"
                                         plugin="'content-replacer'" type="'plugin/req-resp-modifier'"></plugin>
+                                    <middleware template="response-body-generator.html" namespace="'modifier/response-body-generator'"
+                                        data="endpoint"></middleware>
                                 </div>
                             </div>
                         </div>
@@ -445,6 +447,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-6">
+                                                    <middleware data="backend" namespace="'backend/static-filesystem'" template="static-filesystem.html"></middleware>
                                                     <middleware data="backend" template="body-generator.html"
                                                         namespace="'modifier/body-generator'"></middleware>
                                                 </div>
@@ -477,6 +480,9 @@
                                                 <div class="col-md-6">
                                                     <middleware template="jmespath.html" namespace="'modifier/jmespath'"
                                                         data="backend" ng-if="endpoint.output_encoding != 'no-op'">
+                                                    </middleware>
+                                                    <middleware template="response-body-generator.html" namespace="'modifier/response-body-generator'"
+                                                        data="backend">
                                                     </middleware>
                                                     <plugin root="service" placement="backend"
                                                         template="content-replacer.html" plugin="'content-replacer'"
@@ -631,3 +637,4 @@
     </div><!-- /.box-body -->
 </div><!-- endpoint index -->
 <button class="btn btn-lg btn-success" ng-click="addEndpoint()">Add endpoint</button>
+<button class="btn btn-lg btn-success" ng-disabled="hasCatchall()" ng-click="addCatchall()">Add Catchall</button>

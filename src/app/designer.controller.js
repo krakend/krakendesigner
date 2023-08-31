@@ -285,11 +285,16 @@ angular
 
         // Looks in the configuration for EE functionality:
         $rootScope.isEnterprise = function () {
+            if ($rootScope.hasCatchall())
+            {
+                return true;
+            }
+
             $rootScope.modules_in_use = [];
-            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/instana', 'telemetry/newrelic', 'telemetry/ganalytics'];
-            endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies'];
-            backend_components = ['auth/gcp','auth/ntlm','backend/http/client','backend/soap', 'modifier/jmespath', 'security/policies'];
-            http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'static-filesystem', 'redis-ratelimit', 'url-rewrite', 'virtualhost', 'wildcard'];
+            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/newrelic', 'server/virtualhost', 'server/static-filesystem'];
+            endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies', 'modifier/response-body-generator'];
+            backend_components = ['auth/gcp','auth/ntlm','backend/http/client','backend/soap', 'modifier/jmespath', 'security/policies', 'modifier/body-generator', 'modifier/response-body-generator', 'backend/static-filesystem'];
+            http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'redis-ratelimit', 'url-rewrite', 'wildcard'];
             http_client_plugins = ['wildcard', 'krakend-afero', 'static-filesystem', 'no-redirect', 'http-proxy'];
             req_resp_plugins = ['ip-filter', 'response-schema-validator', 'content-replacer'];
             individual_flags = [
@@ -696,6 +701,37 @@ angular
 
         };
 
+
+        $rootScope.hasCatchall = function () {
+            endpoints = $rootScope.getObject("service", "endpoints");
+            if (endpoints) {
+                for (i = 0; i < endpoints.length; i++) {
+                    if ($rootScope.service.endpoints[i].endpoint == "/__catchall" ) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+
+        $rootScope.addCatchall = function () {
+            if ($rootScope.hasCatchall()) {
+                return false;
+            }
+
+            if (typeof $rootScope.service.endpoints === "undefined") {
+                $rootScope.service.endpoints = [];
+            }
+
+            $rootScope.service.endpoints.push({
+                "endpoint": "/__catchall",
+                "output_encoding": "no-op",
+                "input_headers": ["*"],
+                "input_query_strings": ["*"],
+            });
+            $rootScope.addBackendQuery($rootScope.service.endpoints.length - 1);
+
+        }
         $rootScope.addEndpoint = function () {
 
             if (typeof $rootScope.service.endpoints === "undefined") {
