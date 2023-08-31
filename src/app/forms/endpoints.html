@@ -1,6 +1,3 @@
-<plugin root="service" placement="service" template="static-filesystem.html" plugin="'static-filesystem'"
-    type="'plugin/http-server'"></plugin>
-
 <div class="box box-info" ng-repeat="(endpoint_index,endpoint) in service.endpoints"
     ng-class="isValidEndpoint(endpoint.endpoint) ? '' : 'box-danger'" id="e{{ endpoint_index }}">
     <div class="box-header with-border">
