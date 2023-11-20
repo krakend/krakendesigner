@@ -814,19 +814,6 @@ angular
             }
         };
 
-        $rootScope.updateNonGETBackends = function (endpoint_index, old_value, message) {
-
-            var num_backends = ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend ? 0 : $rootScope.service.endpoints[endpoint_index].backend.length);
-            if (num_backends > 1) {
-                if (old_value == 'GET' && confirm(message)) {
-                    $rootScope.service.endpoints[endpoint_index].backend.splice(1, 10000);
-                } else {
-                    // Angular already updated the value, revert:
-                    $rootScope.service.endpoints[endpoint_index].method = 'GET';
-                }
-            }
-        };
-
         /**
          * The setNoOpEncoding is called when the backend or the endpoint change their encoding.
          * It deletes all backend configuration and adds a backend with no-op.
