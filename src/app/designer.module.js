@@ -42,6 +42,10 @@
                 templateUrl: '/src/app/forms/api-keys.html',
                 controller: 'KrakenDesignerController'
             })
+            .when('/monetization', {
+                templateUrl: '/src/app/forms/monetization.html',
+                controller: 'KrakenDesignerController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
