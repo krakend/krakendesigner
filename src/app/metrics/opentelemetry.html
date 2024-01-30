@@ -1,0 +1,123 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()"
+        ng-click="toggleOpenTelemetryMiddleware()"> OpenTelemetry <small>(Newrelic, Datadog, Elastic APM, Grafana,
+        Prometheus, Jaeger, and more)</small>
+    </h3>
+    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+      ng-repeat="doc in [{'ee': false, 'url':'/telemetry/opentelemetry/'}]"></div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!isMiddlewareEnabled()">The OpenTelemetry <em>middleware</em> provides several integrations to export
+      tracing and metrics to different third party systems.</p>
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="control-label">Tracing sample rate</label>
+          <div class="input-group">
+            <input type="number" class="form-control" ng-model="data.extra_config[config_namespace].trace_sample_rate"
+              placeholder="0.75">
+          </div>
+          <div class="help-block">
+            Percentage of traces you want to sample (decimal between 0 and 1).
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="control-label">Reporting period</label>
+          <div class="input-group">
+            <input type="number" class="form-control" ng-model="data.extra_config[config_namespace].metric_reporting_period"
+              placeholder="1">
+            <div class="input-group-addon">seconds</div>
+          </div>
+          <div class="help-block">
+            Time between sent reports to the backend
+          </div>
+        </div>
+      </div>
+      <h4>Exporters</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-primary" ng-click="addExporter('prometheus')">
+            <i class="fa fa-plus"></i>
+            New Prometheus Exporter
+          </button>
+          <span class="help-block">KrakenD will start listening on a port that Prometheus can use to scrap
+            metrics</span>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-primary" ng-click="addExporter('otlp')">
+            <i class="fa fa-plus"></i>
+            New OTLP Exporter
+          </button>
+          <span class="help-block">Integrate with many third parties using OpenTelemetry Protocol (OTLP)</span>
+        </div>
+      </div>
+      <div class="">
+        <div class="box" ng-repeat="(pi,p) in data.extra_config[config_namespace].exporters['otlp'] track by $index">
+          <div class="box-header with-border">
+            <h3 class="box-title">Exporter <code>{{p.name}}</code></h3>
+            <div class="pull-right ng-scope">
+              <span class="badge">OTLP</span>
+              <a ng-click="deleteExporter(pi,'otlp')" class="badge badge-info badge-remove"><i
+                  class="fa fa-trash"></i></a>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="control-label">Name</label>
+                <input type="text" class="form-control" ng-model="p.name" placeholder="your_exporter_name">
+                <span class="help-block">A unique name to identify this exporter.</span>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" ng-model="data.extra_config[config_namespace].exporters.otlp.use_http">
+                      <strong>Use HTTP</strong>
+                    </label>
+                    <span class="help-block">Check when the collector uses HTTP instead of gRPC</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label class="control-label">Hostname</label>
+                <input type="text" class="form-control" ng-model="p.host" placeholder="e.g. localhost">
+                <span class="help-block">The host where you want to push the data</span>
+              </div>
+              <div class="col-md-6">
+                <label class="control-label">Port</label>
+                <input type="number" class="form-control" ng-model="p.port" placeholder="e.g: 9090">
+                <span class="help-block">The port where the collector listens</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box"
+          ng-repeat="(pi,p) in data.extra_config[config_namespace].exporters['prometheus'] track by $index">
+          <div class="box-header with-border">
+            <h3 class="box-title">Exporter <code>{{p.name}}</code></h3>
+            <div class="pull-right ng-scope">
+              <span class="badge badge-info">Prometheus</span>
+              <a ng-click="deleteExporter(pi,'prometheus')" class="badge badge-info badge-remove"><i
+                  class="fa fa-trash"></i></a>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="col-md-6">
+              <label class="control-label">Name</label>
+              <input type="text" class="form-control" ng-model="p.name" placeholder="your_exporter_name">
+              <span class="help-block">A unique name to identify this exporter.</span>
+            </div>
+            <div class="col-md-6">
+              <label class="control-label">Port</label>
+              <input type="number" class="form-control" ng-model="p.port" placeholder="e.g: 9092">
+              <span class="help-block">The port in KrakenD where Prometheus will connect to</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
