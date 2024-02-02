@@ -15,17 +15,34 @@
         </div>
         <div class="box-body">
             <p>
-                The KrakenD Designer is an open-source javascript application that helps you configure
-                the API Gateway in a visual way and get familiar with the main functionalities KrakenD has.
+                The KrakenD Designer is configuration builder, released as an open-source javascript application. It helps you create and edit
+                <code>krakend.json</code> files to get started with the API Gateway in a visual way.
             </p>
             <p>It is a pure static page that <strong>does not send any of your configurations elsewhere nor track its
-                contents.</strong>
-                It's hosted online for convenience, but you can also run it locally.
+                contents.</strong> It's hosted online for convenience, but you can also run it locally.
             </p>
             <p>Use this page together with a <a href="https://www.krakend.io/docs/developer/hot-reload/">KrakenD Watch</a> image to apply the changes in your local server automatically.</p>
             <p>
               <a class="btn btn-primary" target="_blank" href="https://www.krakend.io/docs/configuration/designer/"><i class="fa fa-book"></i> Documentation</a>
             </p>
+        </div>
+    </div>
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">What can I do with KrakenD Designer?</h3>
+        </div>
+        <div class="box-body">
+            <p>
+                The KrakenD Designer generates a single configuration file. It is meant to become familiar with the JSON file and contains <strong>many number of functionalities</strong>.
+            </p>
+            <p>Because the interface might already look overwhelming given the number of features it displays, the most advanced flags and some features are not configurable here. Still, if you import and export files with these hidden attributes, the designer respects them.</p>
+            <p>The main <strong>limitations</strong> of this tool are:</p>
+            <ul>
+                <li>You cannot work with Flexible Configuration (multiple configuration files)</li>
+                <li>Use non-JSON formats, like YAML or TOML</li>
+                <li>Administer a production gateway. This is meant to be a development tool.</li>
+                <li>It does not check the validity of what you type.</li>
+            </ul>
         </div>
     </div>
     <div class="box box-info">
