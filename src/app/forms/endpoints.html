@@ -623,7 +623,7 @@
 
                     <div class="col-md-12">
                         <button class="btn btn-primary" ng-click="addBackendQuery(endpoint_index)"
-                            ng-if="! endpoint.backend || endpoint.backend.length < 1 || ( endpoint.method =='GET' && !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0))">
+                            ng-if="! endpoint.backend || endpoint.backend.length < 1 || !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0)">
                             <i class="fa fa-plus"></i>
                             Add backend query
                         </button>
