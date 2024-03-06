@@ -150,6 +150,12 @@ angular
                 return;
             }
 
+            if (event.ctrlKey && event.key === 'e') {
+                event.preventDefault();
+                $rootScope.viewConfig();
+                return;
+            }
+
             if (!($rootScope.hasLocalSaveSupport())) return;
 
             if (event.ctrlKey && event.key === 'o') {
@@ -187,6 +193,22 @@ angular
 
             var date = new Date().getTime();
             downloadDocument("krakend.json", angular.toJson(save, true)); // Beautify
+            $rootScope.saved_once = true;
+        };
+
+        $rootScope.viewConfig = function () {
+            $rootScope.fixCipherSuitesType('auth/signer', false);
+            $rootScope.fixCipherSuitesType('auth/validator', false);
+
+            // Make a copy of the service and clean it, do not modify rootScope!
+            save = angular.copy($rootScope.service);
+            cleanServiceForSaving(save)
+
+            // open new tab with the json preview pretty printed
+            var newWindow = window.open();
+            if (newWindow.document) {
+                newWindow.document.write('<pre>' + angular.toJson(save, true) + '</pre>');
+            }
             $rootScope.saved_once = true;
         };
 
