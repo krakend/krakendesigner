@@ -1,0 +1,85 @@
+<div class="box box-info box-solid">
+  <div class="box-header with-border">
+    <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()"> API
+      Monetization and API Governance (Moesif partnership)</h3>
+    <div class="pull-right" ng-include src="'/src/app/layout/docs.html'"
+      ng-repeat="doc in [{'ee': true, 'url':'/governance/moesif/'}]"></div>
+  </div>
+  <div class="box-body">
+    <p ng-if="!isMiddlewareEnabled()">Enable the API Monetization module and start generating revenue from your APIs.
+      The monetization integration
+      is possible thanks to our partnership with Moesif.</p>
+    <div ng-if="isMiddlewareEnabled()">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Check the <a href="https://www.krakend.io/governance/moesif/">documentation</a> for more advanced usages
+              and company identification</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="control-label">Application ID</label>
+            <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].application_id"
+              placeholder="XXXX">
+            <span class="help-block">
+              The Collector Application ID is used to send events, actions, users, and companies to Moesif's Collector
+              API. Moesif provides it under the 'API Keys' section.
+            </span>
+          </div>
+          <div class="col-md-6">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="data.extra_config[config_namespace].debug">
+                <strong>Debug</strong>
+              </label>
+              <span class="help-block">Set to true when configuring Moesif for the first time while in development, to
+                see the activity in the logs. Set to false in production.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-8">
+            <label class="control-label" for="data.extra_config[config_namespace].user_id_headers">Headers to
+              identify user ID</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="my-indexing" type="text" required=""
+                ng-model="input_user_id_headers">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-success"
+                  ng-click="addTermToList(input_user_id_headers,'user_id_headers')">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <span class="help-block">Defines the list of possible headers that can identify a user uniquely. When the
+              header is <code>Authorization</code>, it automatically extracts the username if it contains an
+              <code>Authorization: Basic</code> value with no additional configuration. If, on the other hand, you use
+              tokens and pass an <code>Authorization: Bearer</code>, it will extract the user ID from the JWT claim
+              defined under <code>user_id_jwt_claim</code>. If there are multiple headers in the list, all of them are
+              tested in the given order, and the first existing header in the list is used to extract the user ID
+              (successfully or not). </span>
+            <ul class="list-unstyled list-inline">
+              <li ng-repeat="(index,header) in data.extra_config[config_namespace].user_id_headers">
+                <a class="badge code badge-remove" ng-click="deleteIndexFromList(index,'user_id_headers')"><i
+                    class="fa fa-times"></i>
+                  {{ header }}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <label class="control-label">Claim with User ID</label>
+            <input type="text" class="form-control" ng-model="data.extra_config[config_namespace].user_id_jwt_claim"
+              placeholder="sub">
+            <span class="help-block">
+              When using JWT tokens, it defines which claim contains the user ID.
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
