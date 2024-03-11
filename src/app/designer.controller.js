@@ -291,7 +291,7 @@ angular
             }
 
             $rootScope.modules_in_use = [];
-            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/newrelic', 'server/virtualhost', 'server/static-filesystem'];
+            service_components = ['documentation/openapi', 'auth/api-keys', 'telemetry/newrelic', 'telemetry/moesif', 'server/virtualhost', 'server/static-filesystem'];
             endpoint_components = ['documentation/openapi', 'websocket', 'modifier/jmespath', 'security/policies', 'modifier/response-body-generator'];
             backend_components = ['auth/gcp','auth/ntlm','backend/http/client','backend/soap', 'modifier/jmespath', 'security/policies', 'modifier/body-generator', 'modifier/response-body-generator', 'backend/static-filesystem'];
             http_server_plugins = ['ip-filter', 'jwk-aggregator', 'krakend-afero', 'basic-auth', 'geoip', 'redis-ratelimit', 'url-rewrite', 'wildcard'];
@@ -811,19 +811,6 @@ angular
         $rootScope.deleteEndpoint = function (endpoint_index, message) {
             if (confirm(message)) {
                 $rootScope.service.endpoints.splice(endpoint_index, 1);
-            }
-        };
-
-        $rootScope.updateNonGETBackends = function (endpoint_index, old_value, message) {
-
-            var num_backends = ('undefined' === typeof $rootScope.service.endpoints[endpoint_index].backend ? 0 : $rootScope.service.endpoints[endpoint_index].backend.length);
-            if (num_backends > 1) {
-                if (old_value == 'GET' && confirm(message)) {
-                    $rootScope.service.endpoints[endpoint_index].backend.splice(1, 10000);
-                } else {
-                    // Angular already updated the value, revert:
-                    $rootScope.service.endpoints[endpoint_index].method = 'GET';
-                }
             }
         };
 

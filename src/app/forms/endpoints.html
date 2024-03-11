@@ -48,8 +48,7 @@
                     <div class="col-md-2 col-sm-2">
                         <label>Method</label>
                         <select id="endpoint.method" ng-model="endpoint.method" name="endpoint.method"
-                            class="form-control"
-                            ng-change="updateNonGETBackends(endpoint_index, '{{ endpoint.method }}', 'Non-GET methods forward the request to a single backend query (the first one). The rest will be deleted from this form. Proceed?')">
+                            class="form-control">
                             <option value="GET">GET</option>
                             <option value="POST">POST</option>
                             <option value="PUT">PUT</option>
@@ -623,7 +622,7 @@
 
                     <div class="col-md-12">
                         <button class="btn btn-primary" ng-click="addBackendQuery(endpoint_index)"
-                            ng-if="! endpoint.backend || endpoint.backend.length < 1 || ( endpoint.method =='GET' && !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0))">
+                            ng-if="! endpoint.backend || endpoint.backend.length < 1 || !(endpoint.output_encoding == 'no-op' && endpoint.backend.length > 0)">
                             <i class="fa fa-plus"></i>
                             Add backend query
                         </button>
