@@ -1,10 +1,10 @@
 <div class="col-md-6">
   <middleware data="service" template="gologging.html" namespace="'telemetry/logging'"></middleware>
   <middleware ng-if="service.extra_config['telemetry/logging']" data="service" template="gelf.html" namespace="'telemetry/gelf'"></middleware>
-  <middleware data="service" template="metrics.html" namespace="'telemetry/metrics'"></middleware>
-
+  <opentelemetry data="service"></opentelemetry>
 </div>
 <div class="col-md-6">
+  <middleware data="service" template="metrics.html" namespace="'telemetry/metrics'"></middleware>
   <opencensus data="service"></opencensus>
   <middleware data="service" template="newrelic.html" namespace="'telemetry/newrelic'"></middleware>
 </div>

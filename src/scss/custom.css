@@ -34,6 +34,11 @@ a.badge.badge-inverse:hover {
     background-color: #0071CE;
 }
 
+.badge.badge-info {
+    background-color: #dfdfdf;
+    color: black;
+}
+
 .nav-tabs-custom .nav-tabs li a {
     font-weight: bold;
     font-size: 15px;
