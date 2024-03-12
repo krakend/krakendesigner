@@ -208,6 +208,8 @@ angular
             var newWindow = window.open();
             if (newWindow.document) {
                 newWindow.document.write('<pre>' + angular.toJson(save, true) + '</pre>');
+            } else {
+                alert("Your browser prevented to open the configuration in a new window.");
             }
             $rootScope.saved_once = true;
         };

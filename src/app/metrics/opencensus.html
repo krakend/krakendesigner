@@ -2,13 +2,14 @@
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox"
       ng-checked="isMiddlewareEnabled()"
-      ng-click="toggleOpencensusMiddleware()"> Opencensus (DEPRECATED)
+      ng-click="toggleOpencensusMiddleware()"> Opencensus
     </h3>
     <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/telemetry/opencensus/'}]"></div>
     </div>
     <div class="box-body">
       <p ng-if="!isMiddlewareEnabled()">The Opencensus <em>middleware</em> provides several integrations to export tracing and metrics to different third party systems.</p>
       <div ng-if="isMiddlewareEnabled()">
+        <p class="box box-danger text-lg">The development of this component is frozen. Use OpenTelemetry for new projects instead.</p>
       <div class="form-group">
         <div class="checkbox">
           <label>

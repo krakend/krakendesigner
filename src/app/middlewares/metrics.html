@@ -1,19 +1,19 @@
 <div class="box box-info box-solid">
   <div class="box-header with-border">
     <h3 class="box-title"><input type="checkbox" ng-checked="isMiddlewareEnabled()" ng-click="toggleMiddleware()">
-      Metrics</h3>
+      Metrics API</h3>
       <div class="pull-right" ng-include src="'/src/app/layout/docs.html'" ng-repeat="doc in [{'ee': false, 'url':'/telemetry/extended-metrics/'}]"></div>
   </div>
 
   <div class="box-body">
-    <p ng-if="!isMiddlewareEnabled()">The metrics <em>middleware</em> listens in a new address and exposes a
+    <p ng-if="!isMiddlewareEnabled()">The metrics API listens in a new address and exposes a
       <code>/__stats/</code> endpoint with all the KrakenD metrics.</p>
     <div ng-if="isMiddlewareEnabled()">
       <div class="form-group">
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="data.extra_config[config_namespace].endpoint_disabled">
-            <strong>Disable /__stats/ endpoint</strong> - Metrics won't be published but still collected.
+            <strong>Disable <code>/__stats/</code> endpoint</strong> - Metrics won't be published but still collected (can be sent to InfluxDB).
           </label>
         </div>
         <div class="checkbox">
