@@ -1,0 +1,216 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom base styles */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-dark-900 text-gray-100;
+  }
+}
+
+/* Custom component styles with dark theme */
+@layer components {
+  /* Box components - dark theme */
+  .config-box {
+    @apply bg-dark-800 rounded-lg border border-dark-700 shadow-xl mb-6;
+  }
+  
+  .config-box-header {
+    @apply px-4 py-3 border-b border-dark-700 bg-dark-700 rounded-t-lg;
+  }
+  
+  .config-box-title {
+    @apply text-base font-medium text-gray-100 m-0;
+  }
+  
+  .config-box-body {
+    @apply p-4;
+  }
+  
+  .config-box-info {
+    @apply border-t-4 border-t-blue-600;
+  }
+  
+  .config-box-success {
+    @apply border-t-4 border-t-success;
+  }
+  
+  .config-box-warning {
+    @apply border-t-4 border-t-warning;
+  }
+  
+  .config-box-danger {
+    @apply border-t-4 border-t-danger;
+  }
+  
+  /* Form components - dark theme */
+  .form-group {
+    @apply mb-4;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-gray-300 mb-1;
+  }
+  
+  .form-input {
+    @apply w-full px-3 py-2 border border-dark-600 rounded-md shadow-sm 
+           bg-dark-700 text-gray-100 placeholder-gray-400
+           focus:ring-2 focus:ring-gradient-blue focus:border-gradient-blue
+           disabled:bg-dark-800 disabled:text-gray-500;
+  }
+  
+  .form-select {
+    @apply w-full px-3 py-2 border border-dark-600 rounded-md shadow-sm
+           bg-dark-700 text-gray-100
+           focus:ring-2 focus:ring-gradient-blue focus:border-gradient-blue;
+  }
+  
+  .form-textarea {
+    @apply w-full px-3 py-2 border border-dark-600 rounded-md shadow-sm
+           bg-dark-700 text-gray-100 placeholder-gray-400
+           focus:ring-2 focus:ring-gradient-blue focus:border-gradient-blue
+           resize-vertical;
+  }
+  
+  .form-checkbox {
+    @apply rounded border-dark-600 bg-dark-700 text-gradient-blue 
+           focus:ring-2 focus:ring-gradient-blue;
+  }
+  
+  .form-help {
+    @apply text-xs text-gray-400 mt-1;
+  }
+  
+  .form-error {
+    @apply text-xs text-red-400 mt-1;
+  }
+  
+  .form-warning {
+    @apply text-xs text-yellow-400 mt-1;
+  }
+  
+  /* Field validation states */
+  .form-field-error {
+    @apply border-red-500 bg-red-900/10;
+  }
+  
+  .form-field-warning {
+    @apply border-yellow-500 bg-yellow-900/10;
+  }
+  
+  /* Validation icons */
+  .validation-icon {
+    @apply absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4;
+  }
+  
+  .validation-icon-error {
+    @apply text-red-500;
+  }
+  
+  .validation-icon-warning {
+    @apply text-yellow-500;
+  }
+  
+  .validation-message {
+    @apply text-xs mt-1 font-medium;
+  }
+  
+  /* Button components */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent
+           text-sm font-medium rounded-md transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-dark-600 text-gray-100 hover:bg-dark-500 focus:ring-gray-500 border-dark-500;
+  }
+  
+  .btn-success {
+    @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+  
+  .btn-warning {
+    @apply bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent border-dark-600 text-gray-300 hover:bg-dark-700 hover:border-dark-500 focus:ring-blue-500;
+  }
+  
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+  
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+  
+  /* Toggle switch component */
+  .toggle-switch {
+    @apply relative inline-flex h-6 w-11 items-center rounded-full border-2 border-transparent
+           transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  
+  .toggle-switch.enabled {
+    @apply bg-blue-600;
+  }
+  
+  .toggle-switch.disabled {
+    @apply bg-gray-200;
+  }
+  
+  .toggle-switch-thumb {
+    @apply inline-block h-4 w-4 transform rounded-full bg-white transition;
+  }
+  
+  .toggle-switch.enabled .toggle-switch-thumb {
+    @apply translate-x-6;
+  }
+  
+  .toggle-switch.disabled .toggle-switch-thumb {
+    @apply translate-x-1;
+  }
+  
+  /* Badge components */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply bg-blue-900/50 text-blue-300 border border-blue-700;
+  }
+  
+  .badge-success {
+    @apply bg-green-900/50 text-green-300 border border-green-700;
+  }
+  
+  .badge-warning {
+    @apply bg-yellow-900/50 text-yellow-300 border border-yellow-700;
+  }
+  
+  .badge-danger {
+    @apply bg-red-900/50 text-red-300 border border-red-700;
+  }
+  
+  .badge-enterprise {
+    @apply bg-purple-900/50 text-purple-300 border border-purple-700;
+  }
+  
+  .badge-gradient {
+    @apply bg-blue-900/50 text-blue-300 border border-blue-700;
+  }
+}
