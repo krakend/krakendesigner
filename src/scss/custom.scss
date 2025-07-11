@@ -5,8 +5,17 @@ pre {
     border-left: 4px solid #2094ce;
 }
 code {
-    color: #2752a3;
+    color: #24b351;
+    background-color: rgba(0,0,0,.5);
 }
+
+body {
+    font-size: 1.6em;
+} 
+
+.form-control {
+ padding: 18px 12px;
+}  
 
 textarea.form-control {
     font-family: 'Courier New', Courier, monospace;
@@ -20,7 +29,7 @@ textarea.form-control {
 .badge.badge-inverse,
 .box.box-solid.box-info > .box-header a.badge.badge-inverse {
     background-color: #FFF;
-    color: #0071CE;
+    color: #000;
 }
 
 .badge.code {
@@ -31,7 +40,7 @@ textarea.form-control {
 
 a.badge.badge-inverse:hover {
     color: #FFF;
-    background-color: #0071CE;
+    background-color: #000;
 }
 
 .badge.badge-info {
@@ -42,7 +51,7 @@ a.badge.badge-inverse:hover {
 .nav-tabs-custom .nav-tabs li a {
     font-weight: bold;
     font-size: 15px;
-    color: #0071CE;
+    color: #A2A9BE;
 }
 
 .sidebar-menu>li {
@@ -72,8 +81,8 @@ a.badge.badge-inverse:hover {
 
 
 .skin-black-light .sidebar-menu>li:hover>a, .skin-black-light .sidebar-menu>li.active>a {
-    color: #0071CE;
-    background: #ececec;
+    color: #ab83ff; 
+    background: rgba(255,255,255,.1);
 }
 
 .skin-black-light .main-header .navbar .navbar-custom-menu .navbar-nav > li > a,
@@ -86,18 +95,18 @@ a.badge.badge-inverse:hover {
 }
 
 .skin-black-light .navbar-collapse.pull-left {
-    background: #0071CE;
+    background: transparent;
 }
 .skin-black-light .main-header .navbar-toggle {
     color: white;
 }
 
 .skin-black-light .wrapper, .skin-black-light .main-sidebar, .skin-black-light .left-side {
-    background-color: #fff;
+background: #37353d;
 }
 
 .skin-black-light .sidebar-menu>li>.treeview-menu {
-    background: #f0f7fb;
+    background: rgba(0,0,0,.3);
 }
 
 .skin-black-light .content-wrapper, .skin-black-light .main-footer {
@@ -106,7 +115,8 @@ a.badge.badge-inverse:hover {
 
 .content-wrapper, .right-side {
     min-height: 100%;
-    background-color: #f7f7f7;
+    background: #37353d;
+    background: linear-gradient(90deg,rgba(55, 53, 61, 1) 1%, rgba(0, 0, 0, 1) 100%);
     z-index: 800;
 }
 
@@ -134,8 +144,9 @@ a.badge.badge-inverse:hover {
     margin: 0;
     width: 100%;
     padding: 0;
-    background-color: #0071CE;
     z-index: 9999;
+    background: #A983FF;
+    background: linear-gradient(90deg,rgba(169, 131, 255, 1) 0%, rgba(65, 119, 253, 1) 100%);
 }
 
 
@@ -145,10 +156,6 @@ a.badge.badge-inverse:hover {
     border-left: 1px solid #eee;
 }
 
-.btn-primary, .btn-success {
-    background-color: #0071CE;
-    border-color: #0071CE;
-}
 
 .btn-success:hover,
 .btn-success:active,
@@ -158,29 +165,25 @@ a.badge.badge-inverse:hover {
 .btn-primary:active,
 .btn-primary.hover
 .btn-primary:hover {
-    background-color: #0071CE;
-    border-color: #006cff;
+    background-color: #CCC;
+    color: #000;
 }
 
 .btn-success {
-    color: #fff;
-    background-color: #0071CE;
-    border-color: #0071CE;
+    background-color: #AB83FE;
+    border-color: #AB83FE;
   }
   .btn-success:focus,
   .btn-success.focus {
-    color: #fff;
     background-color: #0071CE;
     border-color: #006cff;
   }
   .btn-success:hover {
-    color: #fff;
     background-color: #0071CE;
   }
   .btn-success:active,
   .btn-success.active,
   .open > .dropdown-toggle.btn-success {
-    color: #fff;
         border-color: #006cff;
   }
   .btn-success:active:hover,
@@ -192,9 +195,7 @@ a.badge.badge-inverse:hover {
   .btn-success:active.focus,
   .btn-success.active.focus,
   .open > .dropdown-toggle.btn-success.focus {
-    color: #fff;
-    background-color: #0071CE;
-    border-color: #006cff;
+    background-color: #CCC;
   }
 
 .btn-circle {
@@ -354,8 +355,13 @@ a.badge-remove:hover {
     white-space: pre !important;
 }
 
+.help-block {
+      color: #73809e;
+      font-size: 0.8em;
+}  
+
 .secondary-box {
-    background-color: #f1f1f1;
+    background-color: rgba(255,255,255,.1);
 }
 
 .big-label .label {
