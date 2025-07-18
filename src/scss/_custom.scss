@@ -77,6 +77,10 @@ a.badge.badge-inverse:hover {
 .skin-black-light .main-header {
   -webkit-box-shadow: none;
   box-shadow: none;
+  text-align: left;
+  .navbar .navbar-nav>li>a {
+    border-right: 0px none;
+  }
 }
 
 .skin-black-light .main-header .navbar {
