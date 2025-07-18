@@ -2459,9 +2459,8 @@ a:focus {
 }
 /* NAV STACKED */
 .nav-stacked > li > a {
-  border-radius: 0;
+  border-radius: 5px 0 0 5px;
   border-top: 0;
-  border-left: 3px solid transparent;
   color: #444;
 }
 .nav-stacked > li.active > a,
@@ -2469,7 +2468,6 @@ a:focus {
   background: transparent;
   color: #444;
   border-top: 0;
-  border-left-color: #ab83ff;
 }
 .nav-stacked > li.header {
   border-bottom: 1px solid #ddd;
@@ -2509,7 +2507,7 @@ a:focus {
   margin: 0;
 }
 .nav-tabs-custom > .nav-tabs > li > a:hover {
-  color: #999;
+  color: #2463EB;
 }
 .nav-tabs-custom > .nav-tabs > li:not(.active) > a:hover,
 .nav-tabs-custom > .nav-tabs > li:not(.active) > a:focus,
@@ -2521,19 +2519,15 @@ a:focus {
 }
 .nav-tabs-custom > .nav-tabs > li.active > a,
 .nav-tabs-custom > .nav-tabs > li.active:hover > a {
-  background-color: #000;
   color: #FFF;
-}
-.nav-tabs-custom > .nav-tabs > li.active > a {
-  border-top-color: transparent;
-  border-left-color: #A2A9BE;
-  border-right-color: #A2A9BE;
+  border-color: transparent;
+  cursor: pointer;
 }
 .nav-tabs-custom > .nav-tabs > li:first-of-type {
   margin-left: 0;
 }
 .nav-tabs-custom > .nav-tabs > li:first-of-type.active > a {
-  border-left-color: transparent;
+  border-color: transparent;
 }
 .nav-tabs-custom > .nav-tabs.pull-right {
   float: none !important;
@@ -2548,7 +2542,6 @@ a:focus {
   border-left-width: 1px;
 }
 .nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type.active > a {
-  border-left-color: #f4f4f4;
   border-right-color: transparent;
 }
 .nav-tabs-custom > .nav-tabs > li.header {
@@ -2565,12 +2558,9 @@ a:focus {
 .nav-tabs-custom > .tab-content {
   color: #A0A6C0;
   background: #2f2f40;
-  background: radial-gradient(circle,rgba(47, 47, 64, 1) 1%, rgba(19, 21, 29, 1) 100%);
   border: 1px solid #2c3140;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   padding: 10px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
 }
 .nav-tabs-custom .dropdown.open > a:active,
 .nav-tabs-custom .dropdown.open > a:focus {
