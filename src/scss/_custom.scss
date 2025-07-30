@@ -1,0 +1,457 @@
+/* Override main theme */
+pre {
+  border: 0;
+  border-radius: 0;
+  border-left: 4px solid #2094ce;
+}
+code {
+  color: #24b351;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  font-size: 1.6em;
+}
+
+input.form-control {
+  padding: 18px 12px;
+}
+select.form-control {
+  min-height: 38px;
+}
+
+textarea.form-control {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #252525;
+  color: gold;
+}
+.badge {
+  background-color: #0071ce;
+}
+
+.badge.badge-inverse,
+.box.box-solid.box-info > .box-header a.badge.badge-inverse {
+  background-color: #fff;
+  color: #000;
+}
+
+.badge.code {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  background-color: #0f265c;
+}
+
+a.badge.badge-inverse:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+.badge.badge-info {
+  background-color: #dfdfdf;
+  color: black;
+}
+
+.nav-tabs-custom .nav-tabs li a {
+  font-weight: bold;
+  font-size: 15px;
+  color: #a2a9be;
+}
+
+.sidebar-menu > li {
+  font-size: 16px;
+}
+.wrapper {
+  background-color: white !important;
+}
+.skin-black-light .main-header .navbar .nav > li > a:hover,
+.skin-black-light .main-header .navbar .nav > li > a:active,
+.skin-black-light .main-header .navbar .nav > li > a:focus,
+.skin-black-light .main-header .navbar .nav .open > a,
+.skin-black-light .main-header .navbar .nav .open > a:hover,
+.skin-black-light .main-header .navbar .nav .open > a:focus,
+.skin-black-light .main-header .navbar .nav > .active > a {
+  background: none;
+  color: #fff;
+  text-decoration: underline;
+}
+.skin-black-light .main-header {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  text-align: left;
+  .navbar .navbar-nav>li>a {
+    border-right: 0px none;
+  }
+}
+
+.skin-black-light .main-header .navbar {
+  background: rgba(255, 255, 255, 0);
+}
+
+.skin-black-light .main-header > .logo {
+  border: 0;
+  background-color: transparent;
+}
+
+.skin-black-light .sidebar-menu {
+  border-right: 1px solid #374151 !important;
+}
+.skin-black-light .sidebar-menu > li {
+  border-bottom: 1px solid #374151;
+  &.header {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    padding: 0.5em 0 0 0.1em;
+    background-color: #1f2937;
+    a {
+      color: #5fa5f9;
+    }
+  }
+  &:hover > a {
+    color: #2463eb;
+    background: transparent;
+  }
+  &.active > a {
+    color: #fff;
+    background: #2463eb;
+  }
+}
+
+.skin-black-light .main-header .navbar .navbar-custom-menu .navbar-nav > li > a,
+.skin-black-light .main-header .navbar .navbar-right > li > a,
+.skin-black-light .main-header .navbar .navbar-nav > li > a {
+  border: 0 0 1px 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: white;
+}
+
+.skin-black-light .navbar-collapse.pull-left {
+  background: transparent;
+}
+.skin-black-light .main-header .navbar-toggle {
+  color: white;
+}
+
+.skin-black-light .wrapper,
+.skin-black-light .main-sidebar,
+.skin-black-light .left-side {
+  background: #111827;
+}
+
+.skin-black-light .sidebar-menu > li > .treeview-menu {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.skin-black-light .content-wrapper,
+.skin-black-light .main-footer {
+  border-left: none;
+}
+
+.content-wrapper,
+.right-side {
+  min-height: 100%;
+  background: #111827;
+  z-index: 800;
+}
+.content-header {
+  padding: 15px 15px 0;
+  & > h1 {
+    font-size: 30px;
+    font-weight: 300;
+    & > a {
+        color: #FFF;
+        font-weight: bold;
+        font-size: 3rem;
+    } 
+  }
+}
+
+.github-container {
+  margin-top: 15px;
+}
+
+/* Remove black background from logo */
+.skin-black-light .main-header > .logo:hover {
+  background: rgba(255, 255, 255, 0);
+}
+
+.main-footer {
+  margin: 0;
+}
+
+.main-header {
+  margin: 0;
+  width: 100%;
+  padding: 0;
+  z-index: 9999;
+  background: #a983ff;
+  background: linear-gradient(
+    90deg,
+    rgba(169, 131, 255, 1) 0%,
+    rgba(65, 119, 253, 1) 100%
+  );
+}
+
+.main-header .navbar > .sidebar-toggle {
+  color: #333;
+  border-right: 1px solid #eee;
+  border-left: 1px solid #eee;
+}
+
+.btn-success:hover,
+.btn-success:active,
+.btn-success:focus,
+.btn-success.hover,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.hover .btn-primary:hover {
+  color: #5FA5F9;
+ 
+}
+.btn[disabled]:hover{
+    background: #0d2456 !important;
+  } 
+
+.btn-success {
+  background-color: #2463EB;
+  border-color: #2463EB;
+}
+.btn-success:focus,
+.btn-success.focus {
+  background-color: #0071ce;
+  border-color: #006cff;
+}
+.btn-success:hover {
+  background-color: #0071ce;
+}
+.btn-success:active,
+.btn-success.active,
+.open > .dropdown-toggle.btn-success {
+  border-color: #006cff;
+}
+.btn-success:active:hover,
+.btn-success.active:hover,
+.open > .dropdown-toggle.btn-success:hover,
+.btn-success:active:focus,
+.btn-success.active:focus,
+.open > .dropdown-toggle.btn-success:focus,
+.btn-success:active.focus,
+.btn-success.active.focus,
+.open > .dropdown-toggle.btn-success.focus {
+background: #a983ff;
+  background: linear-gradient(
+    90deg,
+    rgba(169, 131, 255, 1) 0%,
+    rgba(65, 119, 253, 1) 100%
+  );
+}
+
+.btn-circle {
+  border-radius: 10em !important;
+}
+
+.box {
+  & {
+    background: #1f2937;
+    border-radius: 5px ;
+  }
+  &.box-solid {
+    &.box-info > .box-header {
+        background-color: #374151;
+        border-top: 2px solid #2463EB;
+    }
+  }
+  &.text-lg {
+    padding: 10px;
+  }
+    &.box-primary, &.box-success {
+    border-top-width: 2px;
+  }
+  .box-title-xl {
+    font-size: 22px;
+  }
+
+  .box-header {
+    border-radius: 5px;
+    background-color: #374151;
+    &.with-border {
+        border-top-width: 2px;
+    } 
+    & > h3 {
+      font-size: 1em;
+      font-weight: normal;
+      a {
+        color: #FFF;
+        &:hover {
+           color: #2463EB; 
+        }
+      } 
+    } 
+  } 
+}
+
+.text-lg {
+  font-size: 16px;
+}
+/* END Override  */
+
+.announcement {
+  padding-top: 10px;
+  text-align: center;
+  background-color: #2093cd;
+  color: white;
+  vertical-align: middle;
+  font-weight: bolder;
+  border-bottom: 1px solid #666;
+  font-size: 16px;
+}
+
+.announcement a,
+.announcement i {
+  color: #d2e7f5;
+}
+
+.announcement a:hover {
+  color: #78caf1;
+}
+
+.footer {
+  background-color: #0f265c;
+  color: white;
+
+  font-size: 14px;
+  padding-top: 10px;
+}
+
+.footer-logo {
+  max-height: 35px;
+  margin-bottom: 5px;
+}
+
+/* KrakenDesigner */
+.logo-mini {
+  padding: 1rem;
+}
+
+.method_header {
+  width: 55px;
+  font-size: 12px;
+}
+.method_GET {
+  background-color: #00a65a;
+  color: white;
+}
+
+.method_POST {
+  background-color: #3c8dbc;
+  color: white;
+}
+
+.method_PUT {
+  background-color: #f39c12;
+  color: white;
+}
+
+.method_DELETE {
+  background-color: #a94442;
+  color: white;
+}
+
+.method_PATCH {
+  background-color: #00a0a7;
+  color: white;
+}
+
+.method_path {
+  display: inline-block;
+  width: 12rem;
+  margin: 8px 0 -8px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list-group-item-text.text-bold {
+  color: #2752a3;
+}
+
+a.badge-remove:hover {
+  background-color: #a94442;
+  color: white;
+}
+
+.icon-warning {
+  background-color: inherit;
+  color: #a94442;
+}
+
+.font-fixed {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+#drop_zone {
+  display: block;
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-style: dashed;
+}
+
+#drop_zone:hover {
+  background-color: #bfc9d0;
+}
+
+.modal-dialog {
+  margin: 100px auto;
+}
+
+.modal-body pre {
+  /* Show scroll in code blocks inside modals */
+  height: auto;
+  max-height: 500px;
+  overflow: auto;
+  word-break: normal !important;
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+
+.help-block {
+  color: #73809e;
+  font-size: 0.8em;
+}
+
+.secondary-box {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.big-label .label {
+  font-size: 17px;
+  padding: 5px 20px;
+  line-height: 50px;
+}
+
+.btn-border-only {
+  border: 1px solid #fff;
+  color: white;
+  font-weight: bold;
+}
+
+.toolbar {
+  margin: 8px 10px 0 0;
+}
+.btn-toolbar {
+  font-size: 17px;
+  margin: 0 5px;
+}
+
+.btn-toolbar:hover {
+  background-color: #d8d9d9;
+}
+
+table.downloads a {
+  color: #2752a3;
+}
+
+table.downloads a.sha {
+  color: #666;
+}
