@@ -15,7 +15,7 @@ There are different ways of using the Designer:
 
 **Important**: Notice that when used locally, you cannot edit files as the HTML5 library used to **access local files works only under HTTPS**, but you can still download edited copies. Use Ngrok or a similar solution to serve under HTTPS locally.
 
-The master branch of this repository is [automatically built and pushed to the online version](https://github.com/krakendio/krakendesigner/blob/master/.github/workflows/deploy.yml).
+The master branch of this repository is [automatically built and pushed to the online version](https://github.com/krakend/krakendesigner/blob/master/.github/workflows/deploy.yml).
 
 ## Build
 The build process leaves a single html file and a single JS file in the `designer` folder that is later deployed inside the KrakenD images. Build with:
